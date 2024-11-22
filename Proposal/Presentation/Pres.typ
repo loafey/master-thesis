@@ -10,9 +10,7 @@
   title-color: none,
 )
 
-= System level programming today
-
-#pagebreak()
+#include "1. SystemLevel.typ"
 
 = Using Functional programming on a system level 
 
