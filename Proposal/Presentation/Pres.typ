@@ -13,6 +13,9 @@
 #pagebreak()
 #include "1. SystemLevel.typ"
 #pagebreak()
+#include "2. Related Work.typ"
+#pagebreak()
+
 = Using Functional programming on a system level 
 
 #pagebreak()
@@ -25,6 +28,4 @@
 
 #pagebreak()
 
-= Previous attempts
-
-#pagebreak()
+#bibliography("../bib.bib")
