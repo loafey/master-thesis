@@ -10,19 +10,15 @@
   title-color: none,
 )
 
-= Functional programming on a low level
+= System level programming today
+
+#pagebreak()
+
+= Using Functional programming on a system level 
 
 #pagebreak()
 
 = What is linear types?
-
-#pagebreak()
-
-= Why use linear types?
-
-#pagebreak()
-
-= Linear types in system-level programming
 
 #pagebreak()
 
