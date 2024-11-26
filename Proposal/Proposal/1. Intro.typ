@@ -18,8 +18,8 @@ As per Wikipedia#todo[kinda cringe] a system level language fulfills the followi
     language
 ];
 
-When doing system-level and flexibility is key, but many pre-existing ones lacking
-one of the following: #todo[shite]
+When doing system-level and flexibility is key, but many pre-existing ones are lacking
+one or more of the following: #todo[shite]
 - referential transparency
 - higher-order functions
 - algebraic datatypes
