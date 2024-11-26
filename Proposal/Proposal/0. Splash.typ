@@ -26,18 +26,18 @@
   #grid(
     columns: (1fr, 1fr),
     column-gutter: 8pt,
-    align(left, text(size: frontPageSize - 2pt, [
+    align(left, text(size: frontPageSize - 3pt, [
       Sebastian Selander:\
       _DIT235, Types for Programs and Proofs_\
-      _DIT260, Advanced Functional Programming_\
-      _DIT261, Parallel Functional Programming_\
+      _DIT260, Advanced Functional Prog_\
+      _DIT261, Parallel Functional Prog_\
       _DIT203, Logic in Computer Science_\
       _DIT301, Compiler Construction_
-    ])), align(left, text(size: frontPageSize - 2pt, [
+    ])), align(left, text(size: frontPageSize - 3pt, [
       Samuel Hammersberg:\
       _DIT235, Types for Programs and Proofs_\
-      _DIT260, Advanced Functional Programming_\
-      _DIT261, Parallel Functional Programming_\
+      _DIT260, Advanced Functional Prog_\
+      _DIT261, Parallel Functional Prog_\
       _DIT301, Compiler Construction_
     ]))
   )
