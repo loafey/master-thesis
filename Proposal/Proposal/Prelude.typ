@@ -11,3 +11,5 @@
     i += 1
   }
 }
+
+#let red_text(txt) = text(fill: red)[#txt]
