@@ -1,12 +1,12 @@
 #let frontPageSize = 14pt;
 
 #align(center, [
-  #v(2cm)
+  #v(1.5cm)
   #text(size: frontPageSize, [MASTER THESIS PROJECT PROPOSAL])
 
   #text(size: frontPageSize + 8pt, weight: "bold", [Towards a System-Level Functional Language])
 
-  #v(2cm)
+  #v(1.5cm)
 
   #text(size: frontPageSize,[
     Sebastian Selander\
@@ -16,11 +16,11 @@
     `gushamsak@student.gu.se`
   ])
 
-  #v(1.8cm)
+  #v(1cm)
 
   #text(size: frontPageSize, [Suggested supervisor at CSE: Jean-Philippe Bernardy])
 
-  #v(1.8cm)
+  #v(0.7cm)
 
   #text(size: frontPageSize, [Relevant completed courses:])
   #grid(
