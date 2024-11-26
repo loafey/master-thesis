@@ -1,4 +1,4 @@
-#import "@preview/dashy-todo:0.0.1": todo
+#import "Prelude.typ": *
 
 = Background
 == System-level programming
@@ -28,6 +28,15 @@ The reader might recognize that these are important tenets of functional program
 a rare paradigm when it comes to system-level programming. #todo[source: my ass] 
 
 == Motivation (why is SLFL interesting)
+One of the reason why functional languages are not frequently used in system-level
+programming is memory control. Most functional languages lack direct control and instead
+feature garbage collection#todo[source: my ass]. While garbage collectors make
+development easier by removing the need to reason about memory management,
+runtime time suffers depending on the type of garbage collector. #todo[expand]
+Manual management ala C, is not preferred either, due to it being easy to introduce 
+bugs such as use after free, dangling pointers etc. A middle ground here
+would be using Linear Types. 
+
 #block(width: 100%, stroke: red, inset: 10pt)[
 -   Principle 1: most of the compiliation steps are done within a typed
     (logic-inspired) language
