@@ -4,7 +4,7 @@
   #v(2cm)
   #text(size: frontPageSize, [MASTER THESIS PROJECT PROPOSAL])
 
-  #text(size: frontPageSize + 8pt, weight: "bold", [Linear types may change the world])
+  #text(size: frontPageSize + 8pt, weight: "bold", [Towards a System-Level Functional Language])
 
   #v(2cm)
 
