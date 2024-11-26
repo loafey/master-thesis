@@ -1,5 +1,5 @@
 = Compilation
-#block(stroke: red, inset: 10pt)[
+#block(width: 100%, stroke: red, inset: 10pt)[
 -   how it differs from previous work (Nordmark)
   -   Nordmark has a special purpose VM.
   -   using Nordmark\'s VM as an intermediate language goes against

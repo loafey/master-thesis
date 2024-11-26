@@ -1,6 +1,6 @@
 = Background
 == System-level programming
-#block(stroke: red, inset: 10pt)[
+#block(width: 100%, stroke: red, inset: 10pt)[
   Wikipedia:
 
 -   Programs can operate in resource-constrained environments
@@ -13,7 +13,7 @@
 ];
 
 == Motivation (why is SLFL interesting)
-#block(stroke: red, inset: 10pt)[
+#block(width: 100%, stroke: red, inset: 10pt)[
   -   Principle 1: most of the compiliation steps are done within a typed
     (logic-inspired) language
 
@@ -27,17 +27,17 @@ low-level behaviour of programs.
 ]
 
 == Pre-existing work in the literature
-#block(stroke: red, inset: 10pt)[
+#block(width: 100%, stroke: red, inset: 10pt)[
 TODO \[citations\]
 ]
 
 == Pre-existing work in the group
-#block(stroke: red, inset: 10pt)[
+#block(width: 100%, stroke: red, inset: 10pt)[
 -   previous work by nordmark
 -   stub design/compiler by supervisor
 ]
 
 == Transition paragraph
-#block(stroke: red, inset: 10pt)[
+#block(width: 100%, stroke: red, inset: 10pt)[
 -   What is in the scope for this thesis, more precisely
 ]
