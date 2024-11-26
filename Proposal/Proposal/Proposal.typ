@@ -1,5 +1,6 @@
-#import "@preview/dashy-todo:0.0.1"
+#import "@preview/dashy-todo:0.0.1": todo
 #set text(font: "New Computer Modern", size: 12pt)
+#set par(justify: true)
 #set page(margin: 1.4in)
 
 #include "0. Splash.typ"
