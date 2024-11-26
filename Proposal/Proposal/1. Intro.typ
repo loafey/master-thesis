@@ -35,7 +35,10 @@ development easier by removing the need to reason about memory management,
 runtime time suffers depending on the type of garbage collector. #todo[expand]
 Manual management ala C, is not preferred either, due to it being easy to introduce 
 bugs such as use after free, dangling pointers etc. A middle ground here
-would be using Linear Types. 
+would be using linear types. Linear types lets us constrain values to only being used 
+once and _have_ to be used. Informally speaking, forcing all values to be used removes
+the need for garbage collection as we simply free a values memory when we use that value.
+#todo[stanky tihi]
 
 #block(width: 100%, stroke: red, inset: 10pt)[
 -   Principle 1: most of the compiliation steps are done within a typed
