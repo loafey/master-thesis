@@ -43,7 +43,7 @@
   )
 ])
 
-#align(bottom + center, text([September 9, 1999]))
+#align(bottom + center, text([December 13, 2024]))
 #v(2cm)
 
 #pagebreak()
