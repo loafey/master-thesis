@@ -15,7 +15,7 @@ For the compilation part we preliminary want to compile the language to LLVM @la
 Time will be spent on investigating if LLVM is a good compilation target, and if not, other
 low level targets such as x86-64 assembly will be considered.
 
-#figure(caption: [An outline of our planned work schedule])[
+#block(stroke: red, inset: 10pt)[#figure(caption: [An outline of our planned work schedule])[
   #timeliney.timeline(
     show-grid: true,
     {
@@ -42,7 +42,7 @@ low level targets such as x86-64 assembly will be considered.
       })
     }
   )
-]
+]]
 
 #block(width: 100%, stroke: red, inset: 10pt)[
 -   how it differs from previous work (Nordmark)
