@@ -8,12 +8,32 @@
   - exponentials
   - records
   - recursive data types
-  - laziness
+  - laziness #todo[expand here?]
+
+  For the compilation part we preliminary want to compile the language to LLVM @lattner2004llvm.
+  Time will be spent on investigating if LLVM is a good compilation target, and if not, other
+  low level targets such as x86-64 assembly will be considered.
+
+  == Language extensions
+  #todo[add text]
+  === Exponentials
+  #todo[figure out what this means, closures??]
+  === Records
+  While simple data types suffice in a lot of places, records provide important 
+  context to data types, allowing for labeled fields.
+  === Recursive data types
+  When representing more complicated data types such as different types of trees or list
+  in functional programming, they are almost always implemented using recursive data types.
+  In theory this is fine, but in practice it leads to overhead such as pointer 
+  indirection, bad cache locality and more. Due to the linearity of our memory management
+  we will investigate if an automatic "flattening" can occur, #todo[spit ballar ba, men contigous minne är viktigt pga prestanda]
+  converting for example a linearly recursive type such as a linked list into a contiguously 
+  allocated list. #todo[kanske är out of scope? kanske är crazy? cooky]
+
+  === Laziness
+  #red_text[lite osäker på hur vi ska justifya de]
 ]
 
-For the compilation part we preliminary want to compile the language to LLVM @lattner2004llvm.
-Time will be spent on investigating if LLVM is a good compilation target, and if not, other
-low level targets such as x86-64 assembly will be considered.
 
 #block(stroke: red, inset: 10pt)[#figure(caption: [An outline of our planned work schedule])[
   #timeliney.timeline(
