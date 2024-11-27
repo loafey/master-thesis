@@ -2,52 +2,21 @@
 
 = Background
 == System-level programming
-#options((
-  [
-    One of the most important sectors in programming is system-level programming.
-    If you are developing for a constrained environment, such as one with a slower CPU
-    or lower memory, or just need to squeeze out every inch of performance you can,
-    system-level programming is a good fit.
-  ],
-  [
-    System-level programming is the act of developing software that interacts directly with a computer's hardware, or providing foundational services to other software.
-    The following are some properties of system-level programming as defined on Wikipedia:
+System-level programming is the act of developing software that interacts directly with a computer's 
+hardware, or providing foundational services to other software.
+The following are some properties of system-level programming as defined on Wikipedia:
 
-    - Programs can operate in resource-constrained environments
-    - Programs can be efficient with little runtime overhead, possibly
-      having either a small runtime library or none at all
-    - Programs may use direct and \"raw\" control over memory access and
-      control flow
-    - The programmer may write parts of the program directly in assembly
-      language
-  ],
-))
-
-#red_text[
-As per Wikipedia a system level language fulfills the following:
-#block(width: 100%, stroke: red, inset: 10pt)[
-  - Programs can operate in resource-constrained environments
-  - Programs can be efficient with little runtime overhead, possibly
-    having either a small runtime library or none at all
-  - Programs may use direct and \"raw\" control over memory access and
-    control flow
-  - The programmer may write parts of the program directly in assembly
-    language
-];
-
-When doing system-level and flexibility is key, but many pre-existing ones are lacking
-one or more of the following:
-- referential transparency
-- higher-order functions
-- algebraic datatypes
-- strong type systems
-The reader might recognize that these are important tenets of functional programming,
-a rare paradigm when it comes to system-level programming.
-]
+- Programs can operate in resource-constrained environments
+- Programs can be efficient with little runtime overhead, possibly
+  having either a small runtime library or none at all
+- Programs may use direct and \"raw\" control over memory access and
+  control flow
+- The programmer may write parts of the program directly in assembly
+  language
 
 == Motivation #red_text[(why is SLFL interesting)]
 There are advantages to functional programming @hughes1989. Functional
-programmers especially emphasize _referential transparency_, _higher-order
+programming tends to emphasize _referential transparency_, _higher-order
 functions_, _algebraic type systems_, and _strong type systems_.
 Although the merits of functional programming are evident, it is under
 represented in system-level programming. The reason functional languages are
@@ -65,7 +34,7 @@ which are of critical importance in system-level programming.
 
 System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
 logic. SLFL is proposed as an alternative to system-level languages, as
-well as an being an intermediate compilation target for higher-level functional
+well as being an intermediate compilation target for higher-level functional
 languages.
 
 /*
