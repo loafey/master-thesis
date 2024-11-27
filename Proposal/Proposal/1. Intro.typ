@@ -39,7 +39,7 @@ alleviating the need of a garbage collector.
   well as being an intermediate compilation target for higher-level functional
   languages.
   The main purpose of this thesis would be to create a compiler for SLFL, as well as extending 
-  the language to fit the requirements of system-level language.
+  the language to fit the requirements of a system-level language.
 ]
 
 /*
