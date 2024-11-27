@@ -30,7 +30,8 @@ Girard's linear logic @girard1987linear is a refinement of classical and
 intuistionistic logic, where, rather than proposition being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.
 Linear logic models the problems of shared and mutable data, both of
-which are of critical importance in system-level programming.
+which are of critical importance in system-level programming, as well as 
+alleviating the need of a garbage collector.
 
 System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
 logic. SLFL is proposed as an alternative to system-level languages, as
