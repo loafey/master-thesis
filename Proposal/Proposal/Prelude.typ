@@ -13,3 +13,5 @@
 }
 
 #let red_text(txt) = text(fill: red)[#txt]
+
+#let green_text(txt) = text(fill: rgb(0, 125, 0, 255))[#txt]

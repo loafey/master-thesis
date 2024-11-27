@@ -33,10 +33,14 @@ Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming, as well as 
 alleviating the need of a garbage collector.
 
-System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
-logic. SLFL is proposed as an alternative to system-level languages, as
-well as being an intermediate compilation target for higher-level functional
-languages.
+#green_text[
+  System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
+  logic. SLFL is proposed as an alternative to system-level languages, as
+  well as being an intermediate compilation target for higher-level functional
+  languages.
+  The main purpose of this thesis would be to create a compiler for SLFL, as well as extending 
+  the language to fit the requirements of system-level language.
+]
 
 /*
     #red_text[
