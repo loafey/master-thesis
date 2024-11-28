@@ -31,7 +31,7 @@ _resources_, meaning propositions are objects that can be modified into other ob
 Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming.
 
-System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
+System-Level Functional Language (SLFL) is a prototype #todo[is this correct?] of a language based on Girard's linear #todo[Should PLL be referenced here too?]
 logic created by Jean-Philippe Bernardy #todo[Is this a correct and clear
 message of reality?]. SLFL is proposed as an alternative to system-level
 languages, as
@@ -70,19 +70,32 @@ higher level language
 */
 
 == Pre-existing work in the literature
-#block(width: 100%, stroke: red, inset: 10pt)[
-  TODO \[citations\]
-]
+- Lilac: a functional programming language based on linear logic @lilac1994
+
+- Linear Haskell: practical linearity in a higher-order polymorphic language @linearhaskell2017
+
+- Efficient Implementation of a Linear Logic Programming Language @efficient1998
+
+- A type system for bounded space and functional in-place update @hofmann2000
+
+- Efficient Functional Program ming using Linear Types: The Array Fragment @juan2015efficient
 
 == Pre-existing work in the group
 #block(width: 100%, stroke: red, inset: 10pt)[
-  - previous work by nordmark
-  - stub design/compiler by supervisor
+  SLFL is a language designed by Jean-Philippe Bernardy with contributions by Filip Nordmark.
+  Bernardy's "vision" is a strongly typed common machine-level language that can be used as an intermediate target.
+  Currently only a prototype implementation of SLFL exists.
+
+  In the master's thesis "Towards a practical execution model for functional
+  languages with linear types" @nordmark2024. Nordmark implements an virtual
+  machine for a linearly typed language. Unfortunately the virtual machine
+  language is untyped, and hence by Principle 1, it can not be utilized in this
+  thesis.
 ]
 
 == Transition paragraph
 #block(width: 100%, stroke: red, inset: 10pt)[
   //- What is in the scope for this thesis, more precisely
   The purpose of this thesis is to create a compiler for SLFL, and also extend
-  SLFL with: exponentials, recursive data types, laziness, and records. 
+  SLFL with: exponentials, recursive data types, laziness, and records.
 ]
