@@ -33,7 +33,7 @@ jobs:
           typst compile Proposal/Proposal/Proposal.typ Output/Proposal.pdf --root Proposal
           
           git config --global user.name 'pdf bot'
-          git config --global user.email 'loafey@users.noreply.github.com'
+          git config --global user.email 'pdfbot@loafey.se'
           git add -f Output/Proposal.pdf || true
           git commit -m "build pdf(s)" || true
           git push || true
