@@ -28,7 +28,8 @@
   indirection, bad cache locality and more. Due to the linearity of our memory management
   we will investigate if an automatic "flattening" can occur, #todo[spit ballar ba, men contigous minne är viktigt pga prestanda]
   converting for example a linearly recursive type such as a linked list into a contiguously 
-  allocated list. #todo[kanske är out of scope? kanske är crazy? cooky]
+  allocated list. #todo[kanske är out of scope? kanske är crazy? cooky, har inte allt tänkt på hur 
+  man ska implementera det]
 
   === Laziness
   #red_text[lite osäker på hur vi ska justifya de]
