@@ -2,7 +2,7 @@
 
 = Background
 == System-level programming
-System-level programming is the act of developing software that interacts directly with a computer's 
+System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
 The following are some properties of system-level programming as defined on Wikipedia:
 
@@ -32,38 +32,40 @@ Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming.
 
 System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
-logic created by Jean-Philippe Bernardy #todo[Is this a correct and clear message of reality?]. SLFL is proposed as an alternative to system-level languages, as
+logic created by Jean-Philippe Bernardy #todo[Is this a correct and clear
+message of reality?]. SLFL is proposed as an alternative to system-level
+languages, as
 well as being an intermediate compilation target for higher-level functional
 languages.
 
 /*
-    #red_text[
-    One of the reason why functional languages are not frequently used in system-level
-    programming is memory control. Most functional languages lack direct control and instead
-    feature garbage collection#todo[source: my ass]. While garbage collectors make
-    development easier by removing the need to reason about memory management,
-    runtime time suffers depending on the type of garbage collector. #todo[expand]
-    Manual management ala C, is not preferred either, due to it being easy to introduce
-    bugs such as use after free, dangling pointers etc. A middle ground here
-    would be using linear types. Linear types lets us constrain values to only being used
-    once and _have_ to be used. Informally speaking, forcing all values to be used removes
-    the need for garbage collection as we simply free a values memory when we use that value.
+#red_text[
+One of the reason why functional languages are not frequently used in system-level
+programming is memory control. Most functional languages lack direct control and instead
+feature garbage collection#todo[source: my ass]. While garbage collectors make
+development easier by removing the need to reason about memory management,
+runtime time suffers depending on the type of garbage collector. #todo[expand]
+Manual management ala C, is not preferred either, due to it being easy to introduce
+bugs such as use after free, dangling pointers etc. A middle ground here
+would be using linear types. Linear types lets us constrain values to only being used
+once and _have_ to be used. Informally speaking, forcing all values to be used removes
+the need for garbage collection as we simply free a values memory when we use that value.
 
 
 
-    #block(width: 100%, stroke: red, inset: 10pt)[
-      - Principle 1: most of the compiliation steps are done within a typed
-        (logic-inspired) language
+#block(width: 100%, stroke: red, inset: 10pt)[
+- Principle 1: most of the compiliation steps are done within a typed
+(logic-inspired) language
 
-      Compared to usual functional languages, a key advantage of such a
-      language is that the programmer will be able to precisely control the
-      low-level behaviour of programs.
+Compared to usual functional languages, a key advantage of such a
+language is that the programmer will be able to precisely control the
+low-level behaviour of programs.
 
-      - Parts of the program (perhaps just type annotations) can be written
-        in SLFL for control, while most of the program can be written in the
-        higher level language
-    ]
-    ]
+- Parts of the program (perhaps just type annotations) can be written
+in SLFL for control, while most of the program can be written in the
+higher level language
+]
+]
 
 */
 
@@ -80,7 +82,7 @@ languages.
 
 == Transition paragraph
 #block(width: 100%, stroke: red, inset: 10pt)[
-  - What is in the scope for this thesis, more precisely
-The purpose of this thesis is to create a compiler for SLFL, and also extending SLFL with adding useful features, while making sure that those
-features work in the context of linear types. #todo[Move to "transition paragraph"]
+  //- What is in the scope for this thesis, more precisely
+  The purpose of this thesis is to create a compiler for SLFL, and also extend
+  SLFL with: exponentials, recursive data types, laziness, and records. 
 ]
