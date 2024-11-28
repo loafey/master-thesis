@@ -35,9 +35,6 @@ System-Level Functional Language (SLFL) is a language based on Girard's linear #
 logic created by Jean-Philippe Bernardy #todo[Is this a correct and clear message of reality?]. SLFL is proposed as an alternative to system-level languages, as
 well as being an intermediate compilation target for higher-level functional
 languages.
-The main purpose of this thesis would be to create a compiler for SLFL, as well
-as extending the language adding useful features, while making sure that those
-features work in the context of linear types. #todo[Move to "transition paragraph"]
 
 /*
     #red_text[
@@ -84,4 +81,6 @@ features work in the context of linear types. #todo[Move to "transition paragrap
 == Transition paragraph
 #block(width: 100%, stroke: red, inset: 10pt)[
   - What is in the scope for this thesis, more precisely
+The purpose of this thesis is to create a compiler for SLFL, and also extending SLFL with adding useful features, while making sure that those
+features work in the context of linear types. #todo[Move to "transition paragraph"]
 ]
