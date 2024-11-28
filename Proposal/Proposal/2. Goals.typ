@@ -9,7 +9,9 @@
 
   == Language extensions
   Currently the language is somewhat simple, and the following sections cover extensions
-  to the language we want to add if time allows. 
+  to the language we want to add if time allows. As SLFL follows a formal specification,
+  all of these new rules have to do so as well. For each new feature new typing
+  rules and new reduction rules will be introduced for working with them.
   === Exponentials
   #red_text[figure out what this means, closures??]
   === Records
