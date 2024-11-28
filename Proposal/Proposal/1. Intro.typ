@@ -35,7 +35,7 @@ alleviating the need of a garbage collector.
 
 #green_text[
   System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
-  logic. SLFL is proposed as an alternative to system-level languages, as
+  logic created by Jean-Philippe Bernardy. SLFL is proposed as an alternative to system-level languages, as
   well as being an intermediate compilation target for higher-level functional
   languages.
   The main purpose of this thesis would be to create a compiler for SLFL, as well as extending 

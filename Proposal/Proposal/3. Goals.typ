@@ -32,6 +32,15 @@
 
   === Laziness
   #red_text[lite osäker på hur vi ska justifya de]
+
+  == Evaluation
+  As this is a system-level language, performance and resource usage is key.
+  To evalute how performant the language is, simple programs will be written
+  in SLFL and other system-level languages such as C to compare how well they 
+  perform against each other. Primarily execution time and memory usage will be
+  measured, most likely using the GNU tool `time` @gnuTimeProject and the `glibc` tool `memusage` @gnuGlibc
+  to do so. The SLFL programs will also be evaluated using Valgrind @valgrind to make sure that 
+  memory leaks do not occur.  
 ]
 
 
