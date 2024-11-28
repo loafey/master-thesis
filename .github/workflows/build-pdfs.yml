@@ -27,8 +27,7 @@ jobs:
 
       - name: Build PDFs
         run: |
-          sudo apt-get update
-          sudo apt-get install typst
+          sudo snap install typst
 
           typst compile Proposal/Proposal/Proposal.typ Output/Proposal.pdf --root Proposal
           
