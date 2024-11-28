@@ -11,7 +11,7 @@
   Currently the language is somewhat simple, and the following sections cover extensions
   to the language we want to add if time allows. 
   === Exponentials
-  #todo[figure out what this means, closures??]
+  #red_text[figure out what this means, closures??]
   === Records
   While simple data types suffice in a lot of places, records provide important 
   context to data types, allowing for labeled fields.
