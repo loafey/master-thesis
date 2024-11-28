@@ -25,11 +25,8 @@
   When representing more complicated data types such as different types of trees or list
   in functional programming, they are almost always implemented using recursive data types.
   In theory this is fine, but in practice it leads to overhead such as pointer 
-  indirection, bad cache locality and more. Due to the linearity of our memory management
-  we will investigate if an automatic "flattening" can occur, #todo[spit ballar ba, men contigous minne är viktigt pga prestanda]
-  converting for example a linearly recursive type such as a linked list into a contiguously 
-  allocated list. #todo[kanske är out of scope? kanske är crazy? cooky, har inte allt tänkt på hur 
-  man ska implementera det]
+  indirection, bad cache locality and more. Due to this we will also investigate adding 
+  statically or dynamically sized linear types, such as arrays or vectors.
 
   === Laziness
   #red_text[lite osäker på hur vi ska justifya de]
