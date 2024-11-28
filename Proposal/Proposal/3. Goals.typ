@@ -15,12 +15,12 @@
   === Records
   While simple data types suffice in a lot of places, records provide important 
   context to data types, allowing for labeled fields.
-  === Recursive data types
+  === Recursive and contiguous data types 
   When representing more complicated data types such as different types of trees or list
   in functional programming, they are almost always implemented using recursive data types.
   In theory this is fine, but in practice it leads to overhead such as pointer 
   indirection, bad cache locality and more. Due to this we will also investigate adding 
-  statically or dynamically sized linear types, such as arrays or vectors.
+  statically or dynamically sized contiguous types, such as arrays or vectors.
 
   === Laziness
   #red_text[lite osäker på hur vi ska justifya de]
