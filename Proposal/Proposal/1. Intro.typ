@@ -15,13 +15,12 @@ The following are some properties of system-level programming as defined on Wiki
   language
 
 == Motivation #red_text[(why is SLFL interesting)]
-There are advantages to functional programming @hughes1989. Functional
-programming tends to emphasize _referential transparency_, _higher-order
+Functional programming tends to emphasize _referential transparency_, _higher-order
 functions_, _algebraic type systems_, and _strong type systems_.
-Although the merits of functional programming are evident, it is under
-represented in system-level programming. The reason functional languages are
+Although the merits of functional programming are evident @hughes1989, it is under
+represented for system-level programming. The reason functional languages are
 not used in system-level programming is the lack of predictable performance.
-This lack of predictable performance is frequently traced back to the use of
+Unpredictable performance can be traced back the use of
 _immutable_ data structures, as opposed to _mutable_ data structures. The
 former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
@@ -30,18 +29,15 @@ Girard's linear logic @girard1987linear is a refinement of classical and
 intuistionistic logic, where, rather than proposition being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.
 Linear logic models the problems of shared and mutable data, both of
-which are of critical importance in system-level programming, as well as 
-alleviating the need of a garbage collector.
+which are of critical importance in system-level programming.
 
-#green_text[
-  System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
-  logic created by Jean-Philippe Bernardy. SLFL is proposed as an alternative to system-level languages, as
-  well as being an intermediate compilation target for higher-level functional
-  languages.
-  The main purpose of this thesis would be to create a compiler for SLFL, as well as extending 
-  the language adding useful features, while making sure that those features work in the context
-  of linear types.
-]
+System-Level Functional Language (SLFL) is a language based on Girard's linear #todo[Should PLL be referenced here too?]
+logic created by Jean-Philippe Bernardy #todo[Is this a correct and clear message of reality?]. SLFL is proposed as an alternative to system-level languages, as
+well as being an intermediate compilation target for higher-level functional
+languages.
+The main purpose of this thesis would be to create a compiler for SLFL, as well
+as extending the language adding useful features, while making sure that those
+features work in the context of linear types. #todo[Move to "transition paragraph"]
 
 /*
     #red_text[
