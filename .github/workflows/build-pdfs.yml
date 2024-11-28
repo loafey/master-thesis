@@ -29,6 +29,7 @@ jobs:
         run: |
           sudo snap install typst
 
+          mkdir Output || true
           typst compile Proposal/Proposal/Proposal.typ Output/Proposal.pdf --root Proposal
           
           git config --global user.name 'pdf bot'
