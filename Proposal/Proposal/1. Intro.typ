@@ -65,8 +65,7 @@ languages.
 ]
 
 == Transition paragraph
-#block(width: 100%, stroke: red, inset: 10pt)[
-  //- What is in the scope for this thesis, more precisely
-  The purpose of this thesis is to create a compiler for SLFL, and also extend
-  SLFL with: exponentials, recursive data types, laziness, and records.
-]
+The scope of the thesis includes creating a compiler for SLFL that utilizes
+the linearity of the language, possibly extend SLFL with recursive data
+types, records, and laziness. Unless typing rules for the aforementioned
+extensions already exist, those will have to be formulated as well.
