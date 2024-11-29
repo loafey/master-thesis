@@ -36,7 +36,6 @@ language based on Girard's linear logic #todo[Should PLL be referenced here too?
 SLFL is proposed as an alternative to system-level languages, as well as being
 an intermediate compilation target for higher-level functional languages.
 
-
 == Pre-existing work in the literature
 #todo[Introduce the pre-existing work]
 - Lilac: a functional programming language based on linear logic @lilac1994
@@ -58,7 +57,9 @@ In the master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024 Nordmark implements a virtual
 machine for a linearly typed language. Unfortunately the virtual machine
 language is untyped, and because SLFL is linearly typed, it can not be
-utilized as an intermediate language for compiling to SLFL.
+utilized as an intermediate language for compiling to SLFL. 
+#todo[Why not have the VM as the final target?]\
+#todo[Maybe SLFL should not even be mentioned in this chapter]
 
 == Transition paragraph
 The scope of the thesis includes creating a compiler for SLFL that utilizes
