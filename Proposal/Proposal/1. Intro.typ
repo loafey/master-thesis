@@ -48,7 +48,8 @@ which are of critical importance in system-level programming.
 System-Level Functional Language (SLFL) is a
 language based on Girard's linear logic #todo[Should PLL be referenced here too?] created by Jean-Philippe Bernardy #todo[correct?].
 SLFL is proposed as an alternative to system-level languages, as well as being
-an intermediate compilation target for functional languages.
+an intermediate compilation target for functional languages. Although the
+language is not fully implemented, there are parts we can use.
 
 In the master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024 Nordmark implements a virtual
