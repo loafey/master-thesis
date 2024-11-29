@@ -1,12 +1,9 @@
 #import "Prelude.typ": *
 
 = Goals and planning
-#green_text[
-  The goal of this thesis is to extend the language of SLFL, as well as
-  building a compiler for it. For the compilation part we preliminary want to compile the language to LLVM @lattner2004llvm.
-  Time will be spent on investigating if LLVM is a good compilation target, and if not, other
-  low level targets such as x86-64 assembly will be considered.
+  This chapter will define what the goals are, why they are interesting, and give an estimate of what needs to be done.
 
+#green_text[
   == Language extensions
   Currently the language is somewhat simple, and the following sections cover extensions
   to the language we want to add if time allows. As SLFL follows a formal specification,
