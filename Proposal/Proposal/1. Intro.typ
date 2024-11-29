@@ -31,13 +31,10 @@ _resources_, meaning propositions are objects that can be modified into other ob
 Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming.
 
-System-Level Functional Language (SLFL) is a prototype #todo[is this correct?] of a language based on Girard's linear #todo[Should PLL be referenced here too?]
-logic created by Jean-Philippe Bernardy #todo[Is this a correct and clear
-message of reality?]. SLFL is proposed as an alternative to system-level
-languages, as
-well as being an intermediate compilation target for higher-level functional
-languages.
-
+System-Level Functional Language (SLFL) is a
+language based on Girard's linear logic #todo[Should PLL be referenced here too?] created by Jean-Philippe Bernardy #todo[correct?].
+SLFL is proposed as an alternative to system-level languages, as well as being
+an intermediate compilation target for higher-level functional languages.
 
 
 == Pre-existing work in the literature
