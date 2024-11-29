@@ -14,7 +14,7 @@ The following are some properties of system-level programming as defined on Wiki
 - The programmer may write parts of the program directly in assembly
   language
 
-== Motivation #red_text[(why is SLFL interesting)]
+== Motivation
 Functional programming tends to emphasize _referential transparency_, _higher-order
 functions_, _algebraic type systems_, and _strong type systems_.
 Although the merits of functional programming are evident @hughes1989, it is under

@@ -3,14 +3,14 @@
 = Goals and planning
 This chapter will define what the goals are, why they are interesting, and estimate what needs to done.
 
-#green_text[
   == Language extensions
   Currently the language is somewhat simple, and the following sections cover extensions
-  to the language we want to add if time allows. As SLFL follows a formal specification,
+  to the language we want to add. As SLFL follows a formal specification,
   all of these new rules have to do so as well. For each new feature new typing
   rules and new reduction rules will be introduced for working with them.
   === Exponentials
-  #red_text[Add text here!]
+  Add text here!
+  #todo[Explain exponentials and their relevance]
   === Records
   While simple data types suffice in a lot of places, records provide important 
   context to data types, allowing for labeled fields.
@@ -22,7 +22,8 @@ This chapter will define what the goals are, why they are interesting, and estim
   statically or dynamically sized contiguous types, such as arrays or vectors.
 
   === Laziness
-  #red_text[Add text here!]
+  Add text here!
+  #todo[Explain laziness and its relevance]
 
   == Evaluation
   As this is a system-level language, performance and resource usage is key.
@@ -32,10 +33,8 @@ This chapter will define what the goals are, why they are interesting, and estim
   measured, most likely using the GNU tool `time` @gnuTimeProject and the `glibc` tool `memusage` @gnuGlibc
   to do so. The SLFL programs will also be evaluated using Valgrind @valgrind to make sure that 
   memory leaks do not occur.  
-]
 
 
-#block(stroke: red, inset: 10pt)[#figure(caption: [An outline of our planned work schedule])[
   #timeliney.timeline(
     show-grid: true,
     {
@@ -62,16 +61,11 @@ This chapter will define what the goals are, why they are interesting, and estim
       })
     }
   )
-]]
 
-#block(width: 100%, stroke: red, inset: 10pt)[
--   how it differs from previous work (Nordmark)
-  -   Nordmark has a special purpose VM.
-  -   using Nordmark\'s VM as an intermediate language goes against
-      Principle 1.
+/*
 -   what to do?
   -   Translate each construction/typing rule into code
   -   if a construction cannot be translated this way: refine it
       (design a more low-level rule which serves in an intermediate
       compilation step.)
-]
+*/
