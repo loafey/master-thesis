@@ -8,6 +8,7 @@
 // #outline(indent: true)#todo[remove the outline]
 #include "1. Intro.typ"
 #include "2. Goals.typ"
+#include "3. Evaluation.typ"
 
 #pagebreak()
 #bibliography(title: "References","../bib.bib")
