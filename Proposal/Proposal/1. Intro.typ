@@ -41,6 +41,7 @@ languages.
 
 
 == Pre-existing work in the literature
+#todo[Introduce the pre-existing work]
 - Lilac: a functional programming language based on linear logic @lilac1994
 
 - Linear Haskell: practical linearity in a higher-order polymorphic language @linearhaskell2017
@@ -52,17 +53,15 @@ languages.
 - Efficient Functional Program ming using Linear Types: The Array Fragment @juan2015efficient
 
 == Pre-existing work in the group
-#block(width: 100%, stroke: red, inset: 10pt)[
-  SLFL is a language designed by Jean-Philippe Bernardy with contributions by Filip Nordmark.
-  Bernardy's "vision" is a strongly typed common machine-level language that can be used as an intermediate target.
-  Currently only a prototype implementation of SLFL exists.
+SLFL is a language designed by Jean-Philippe Bernardy with contributions from Filip Nordmark.
+Bernardy's "vision" is a strongly typed common machine-level language that can be used as an intermediate target.
+#todo[JP definitely needs to review this]
 
-  In the master's thesis "Towards a practical execution model for functional
-  languages with linear types" @nordmark2024. Nordmark implements an virtual
-  machine for a linearly typed language. Unfortunately the virtual machine
-  language is untyped, and hence by Principle 1, it can not be utilized in this
-  thesis.
-]
+In the master's thesis "Towards a practical execution model for functional
+languages with linear types" @nordmark2024 Nordmark implements a virtual
+machine for a linearly typed language. Unfortunately the virtual machine
+language is untyped, and because SLFL is linearly typed, it can not be
+utilized as an intermediate language for compiling to SLFL.
 
 == Transition paragraph
 The scope of the thesis includes creating a compiler for SLFL that utilizes
