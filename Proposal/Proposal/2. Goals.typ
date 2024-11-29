@@ -1,7 +1,7 @@
 #import "Prelude.typ": *
 
 = Goals and planning
-  This chapter will define what the goals are, why they are interesting, and give an estimate of what needs to be done.
+This chapter will define what the goals are, why they are interesting, and estimate what needs to done.
 
 #green_text[
   == Language extensions
