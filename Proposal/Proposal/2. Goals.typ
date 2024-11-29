@@ -1,7 +1,7 @@
 #import "Prelude.typ": *
 
 = Goals and planning
-This chapter will define what the goals are, why they are interesting, and estimate what needs to done.
+This chapter will define what the goals are in more detail, why they are interesting, and estimate what needs to done.
 
   == Language extensions
   Currently the language is somewhat simple, and the following sections cover extensions

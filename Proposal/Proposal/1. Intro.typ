@@ -31,10 +31,6 @@ _resources_, meaning propositions are objects that can be modified into other ob
 Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming.
 
-System-Level Functional Language (SLFL) is a
-language based on Girard's linear logic #todo[Should PLL be referenced here too?] created by Jean-Philippe Bernardy #todo[correct?].
-SLFL is proposed as an alternative to system-level languages, as well as being
-an intermediate compilation target for higher-level functional languages.
 
 == Pre-existing work in the literature
 #todo[Introduce the pre-existing work]
@@ -49,20 +45,27 @@ an intermediate compilation target for higher-level functional languages.
 - Efficient Functional Program ming using Linear Types: The Array Fragment @juan2015efficient
 
 == Pre-existing work in the group
-SLFL is a language designed by Jean-Philippe Bernardy with contributions from Filip Nordmark.
-Bernardy's "vision" is a strongly typed common machine-level language that can be used as an intermediate target.
-#todo[JP definitely needs to review this]
+System-Level Functional Language (SLFL) is a
+language based on Girard's linear logic #todo[Should PLL be referenced here too?] created by Jean-Philippe Bernardy #todo[correct?].
+SLFL is proposed as an alternative to system-level languages, as well as being
+an intermediate compilation target for functional languages.
 
 In the master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024 Nordmark implements a virtual
 machine for a linearly typed language. Unfortunately the virtual machine
 language is untyped, and because SLFL is linearly typed, it can not be
-utilized as an intermediate language for compiling to SLFL. 
-#todo[Why not have the VM as the final target?]\
-#todo[Maybe SLFL should not even be mentioned in this chapter]
+utilized as an intermediate language for compiling to SLFL. As the goal is to
+create efficient machine code, the virtual machine can not be a target language
+either.
 
+The goal of the thesis will be to complete the design of SLFL and create a compiler for the
+language. The language will be extended as well, and the extensions will be
+compiled.
+
+/*
 == Transition paragraph
 The scope of the thesis includes creating a compiler for SLFL that utilizes
 the linearity of the language, possibly extend SLFL with recursive data
 types, records, and laziness. Unless typing rules for the aforementioned
 extensions already exist, those will have to be formulated as well.
+*/
