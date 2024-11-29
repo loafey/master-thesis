@@ -13,7 +13,7 @@
   all of these new rules have to do so as well. For each new feature new typing
   rules and new reduction rules will be introduced for working with them.
   === Exponentials
-  #red_text[figure out what this means, closures??]
+  #red_text[Add text here!]
   === Records
   While simple data types suffice in a lot of places, records provide important 
   context to data types, allowing for labeled fields.
@@ -25,7 +25,7 @@
   statically or dynamically sized contiguous types, such as arrays or vectors.
 
   === Laziness
-  #red_text[lite osäker på hur vi ska justifya de]
+  #red_text[Add text here!]
 
   == Evaluation
   As this is a system-level language, performance and resource usage is key.
