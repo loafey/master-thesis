@@ -38,36 +38,7 @@ languages, as
 well as being an intermediate compilation target for higher-level functional
 languages.
 
-/*
-#red_text[
-One of the reason why functional languages are not frequently used in system-level
-programming is memory control. Most functional languages lack direct control and instead
-feature garbage collection#todo[source: my ass]. While garbage collectors make
-development easier by removing the need to reason about memory management,
-runtime time suffers depending on the type of garbage collector. #todo[expand]
-Manual management ala C, is not preferred either, due to it being easy to introduce
-bugs such as use after free, dangling pointers etc. A middle ground here
-would be using linear types. Linear types lets us constrain values to only being used
-once and _have_ to be used. Informally speaking, forcing all values to be used removes
-the need for garbage collection as we simply free a values memory when we use that value.
 
-
-
-#block(width: 100%, stroke: red, inset: 10pt)[
-- Principle 1: most of the compiliation steps are done within a typed
-(logic-inspired) language
-
-Compared to usual functional languages, a key advantage of such a
-language is that the programmer will be able to precisely control the
-low-level behaviour of programs.
-
-- Parts of the program (perhaps just type annotations) can be written
-in SLFL for control, while most of the program can be written in the
-higher level language
-]
-]
-
-*/
 
 == Pre-existing work in the literature
 - Lilac: a functional programming language based on linear logic @lilac1994
