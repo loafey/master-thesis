@@ -18,4 +18,4 @@ Objectively evaluating languages is hard, but some things can be done!
 
 - Binary size: \
   A system-level language should ideally produce small binaries for portability\
-  Our thesis will not focus a lot on this, but it is an interesting metric nonetheless
+  Our thesis will not focus a lot on this, but it is an interesting metric nonetheless 
