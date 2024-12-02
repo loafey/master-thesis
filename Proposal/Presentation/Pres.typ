@@ -23,7 +23,7 @@
 == Why you?
 #text(size: 200pt,[We the best])
 #pagebreak()
-== Risk assessment and proposed mitigation.
+#include "6. Risk.typ"
 #pagebreak()
 
 #bibliography("../bib.bib")
