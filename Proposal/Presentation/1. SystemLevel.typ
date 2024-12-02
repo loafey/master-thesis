@@ -39,3 +39,4 @@ But does not functional programming require some sort of garbage collector?
 #align(center + horizon, text(size: 20pt, [
   #strong[No!] We can use linear types!
 ]))
+#align(bottom + right, [_Yes, we could use linear types as well_])
