@@ -11,14 +11,5 @@
     - High-level
     - None, or few optimizations
 
-- Efficient Implementation of a Linear Logic Programming Language @efficient1998
-    - Logic language
-
-- A type system for bounded space and functional in-place update @hofmann2000
-    - Malloc-free
-    - First-order
-
-- Efficient Functional Program ming using Linear Types: The Array Fragment @juan2015efficient
-
 - Towards a practical execution model for functional languages with linear types @nordmark2024
 ]

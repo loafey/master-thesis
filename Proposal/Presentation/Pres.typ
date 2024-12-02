@@ -13,10 +13,11 @@
 #pagebreak()
 #include "1. SystemLevel.typ"
 #pagebreak()
-#include "2. Related Work.typ"
+#include "2. LinearTypes.typ"
+#pagebreak()
+#include "3. Related Work.typ"
 #pagebreak()
 
-= Using Functional programming on a system level 
 
 #pagebreak()
 
