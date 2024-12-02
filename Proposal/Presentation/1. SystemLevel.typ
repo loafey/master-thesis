@@ -9,11 +9,12 @@ In todays world we are blessed with a lot of choices for system level programmin
 - Probably a lot more . . .
 
 #pagebreak()
-What are these languages lacking?
+Although these languages are great, they are missing some things
+that developers enjoy, for example:
 
 - Referential transparency
 
-- Purity (potentially)
+- Purity
 
 - Strongly typed
 
