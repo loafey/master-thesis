@@ -23,6 +23,8 @@
 == Why you?
 #text(size: 200pt,[We the best])
 #pagebreak()
+#include "5. Why us.typ"
+#pagebreak()
 #include "6. Risk.typ"
 #pagebreak()
 
