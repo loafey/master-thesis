@@ -20,15 +20,4 @@
 #include "4. Related Work.typ"
 #pagebreak()
 
-
-#pagebreak()
-
-= What is linear types?
-
-#pagebreak()
-
-= Why not use another low level language?
-
-#pagebreak()
-
 #bibliography("../bib.bib")
