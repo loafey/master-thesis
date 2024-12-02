@@ -7,3 +7,5 @@ language development _and_ functional programming.
 - All language development courses
 
 - Made a functional programming language for our bachelor thesis
+
+- Motivated
