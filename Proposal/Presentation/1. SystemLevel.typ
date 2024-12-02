@@ -10,7 +10,7 @@ In todays world we are blessed with a lot of choices for system level programmin
 
 #pagebreak()
 Although these languages are great, they are missing some things
-that developers enjoy, for example:
+that some developers enjoy:
 
 - Referential transparency
 
