@@ -33,6 +33,6 @@ _You could of course create a FP language without these_
 
 #pagebreak()
 == Functional programming to the rescue!
-But wouldn't automatic memory management require some sort of garbage collector?
+But does not functional programming require some sort of garbage collector?
 
 No! We could use linear types!
