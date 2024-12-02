@@ -6,7 +6,7 @@ In todays world we are blessed with a lot of choices for system level programmin
 
 - Rust
 
-- Probably a lot more . . .
+- And more . . .
 
 #pagebreak()
 == System level programming today
