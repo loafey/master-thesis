@@ -36,4 +36,6 @@ _You could of course create a FP language without these_
 == Functional programming to the rescue!
 But does not functional programming require some sort of garbage collector?
 
-#strong[No!] We could use linear types!
+#align(center + horizon, text(size: 20pt, [
+  #strong[No!] We can use linear types!
+]))
