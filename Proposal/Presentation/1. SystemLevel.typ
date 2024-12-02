@@ -35,4 +35,4 @@ _You could of course create a FP language without these_
 == Functional programming to the rescue!
 But does not functional programming require some sort of garbage collector?
 
-No! We could use linear types!
+#strong[No!] We could use linear types!
