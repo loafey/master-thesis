@@ -18,6 +18,12 @@
 #include "3. SLFL.typ"
 #pagebreak()
 #include "4. Related Work.typ"
+
+#pagebreak()
+== Why you?
+#text(size: 200pt,[We the best])
+#pagebreak()
+== Risk assessment and proposed mitigation.
 #pagebreak()
 
 #bibliography("../bib.bib")

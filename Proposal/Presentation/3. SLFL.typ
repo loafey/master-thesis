@@ -7,3 +7,10 @@ several higher level concepts such as:
 - Records
 - Recursive Data Types
 - Linear Data Types
+
+== How will the language be evaluated?
+Simple programs will be written in another system-level language (C etc)
+and SLFL
+
+Performance will compared based on execution time and memory usage
+
