@@ -6,7 +6,7 @@ several higher level concepts such as:
 - Closures
 - Records
 - Recursive Data Types
-- Linear Data Types
+- Contiguous Data Types
 
 == How will the language be evaluated?
 Objectively evaluating languages is hard, but some things can be done!
