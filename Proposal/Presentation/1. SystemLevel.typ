@@ -17,8 +17,6 @@ What are these languages lacking?
 
 - Strongly typed
 
-- Automatic memory management TODO (not Rust or C++, but you can)
-
 #pagebreak()
 == Functional programming to the rescue!
 
@@ -29,8 +27,6 @@ What does FP not lack in?
 - Purity
 
 - Strongly typed
-
-- Automatic memory management
 
 _You could of course create a FP language without these_
 
