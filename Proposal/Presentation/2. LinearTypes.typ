@@ -2,8 +2,8 @@
 
 Every variable must be used *exactly once*
 
-- Linear arrow: `-o`
-- Normal arrow: `->`
+- Linear arrow: #text(size: 15pt, $multimap$)
+- Normal arrow: #text(size: 15pt, $->$)
 
 ```hs
 id :: a -o a
@@ -17,4 +17,4 @@ const :: a -o b -o c
 const a b = a -- error
 ```
 
-- Now `append` can mutate `ys` safely!
+- Now `append` can mutate `ys` in a safe manner
