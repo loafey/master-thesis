@@ -1,4 +1,4 @@
-=== Related Work
+== Related Work
 
 #text(size: 10pt)[
 - Lilac: a functional programming language based on linear logic @lilac1994
