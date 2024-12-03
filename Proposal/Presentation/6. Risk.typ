@@ -2,4 +2,8 @@
 
 - Too complex
 
-- Lack prerequisite knowledge
+- Impossible task
+
+=== Mitigation
+
+- Work hard!
