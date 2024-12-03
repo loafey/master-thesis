@@ -1,8 +1,7 @@
 == System-level Functional Language (SLFL)
 The point of our thesis will be to create a compiler for a SLFL
 
-While the language is a system-level language, we want to add 
-several higher level concepts such as:
+We want to add several higher level concepts such as:
 - Closures\
   - Allows lambas to capture variables from their environment
       ```hs
@@ -22,10 +21,10 @@ several higher level concepts such as:
 Objectively evaluating languages is hard, but some things can be done!
 
 - Performance: \
-  Simple programs will be written in another system-level language (C etc)
+  Programs will be written in another system-level language (C etc)
   and SLFL\
-  Programs will be compared based on execution time and memory usage
+  Results will be compared based on execution time and memory usage
 
 - Binary size: \
-  A system-level language should ideally produce small binaries for portability\
+  Small binaries are good for portability\
   Our thesis will not focus a lot on this, but it is an interesting metric nonetheless 
