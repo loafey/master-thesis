@@ -3,10 +3,21 @@ The point of our thesis will be to create a compiler for a SLFL
 
 While the language is a system-level language, we want to add 
 several higher level concepts such as:
-- Closures
-- Records
-- Recursive Data Types
-- Contiguous Data Types
+- Closures\
+  Allows lambads to capture variables from their environment
+  ```hs
+  fun :: Int -> (Int -> Int)
+  fun x = \y -> x + y -- x is captured here
+  ```
+
+- Records\
+  Data types with named fields. Pretty simple
+
+- Recursive Data Types\
+  Trees, linked lists etc
+
+- Contiguous Data Types\
+  Vectors & Arrays
 
 == How will the language be evaluated?
 Objectively evaluating languages is hard, but some things can be done!
