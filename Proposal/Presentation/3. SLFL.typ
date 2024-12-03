@@ -4,17 +4,17 @@ The point of our thesis will be to create a compiler for a SLFL
 While the language is a system-level language, we want to add 
 several higher level concepts such as:
 - Closures\
-  Allows lambads to capture variables from their environment
-  ```hs
-  fun :: Int -> (Int -> Int)
-  fun x = \y -> x + y -- x is captured here
-  ```
+  - Allows lambads to capture variables from their environment
+      ```hs
+      fun :: Int -> (Int -> Int)
+      fun x = \y -> x + y -- x is captured here
+      ```
 
 - Records\
-  Data types with named fields. Pretty simple
+  - Data types with named fields. Pretty simple
 
 - Recursive & Contiguous Data Types \
-  Trees, linked lists etc and Vectors/Arrays
+  - Trees, linked lists etc and Vectors/Arrays
 
 - Laziness
 
