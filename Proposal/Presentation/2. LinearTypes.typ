@@ -1,4 +1,4 @@
-== Linear types
+== Linear Types
 
 Every variable must be used *exactly once*
 
@@ -21,14 +21,60 @@ const a b = a -- error
 
 #pagebreak()
 
-== Linear types
+== Linear Types
 
 For a function `f` with arguments `x` using *exactly once* means:
+
 - Returning x unmodified.
+```hs f x = x```
+
+#pagebreak()
+== Linear Types
+
+For a function `f` with arguments `x` using *exactly once* means:
+
+- Returning x unmodified.
+```hs f x = x```
+
+- Passing x to a linear function `g` and using the result exactly once in the same fashion.
+```hs f x = g x```
+
+#pagebreak()
+== Linear Types
+
+For a function `f` with arguments `x` using *exactly once* means:
+
+- Returning x unmodified.
+```hs f x = x```
 
 - Passing x to a linear function and using the result exactly once in the same fashion.
+```hs f x = g x```
 
 - Pattern-matching on x and using each argument exactly once in the same fashion.
+```hs 
+f x = case x of
+    (a,b) -> a + b
+```
+
+#pagebreak()
+== Linear Types
+
+For a function `f` with arguments `x` using *exactly once* means:
+
+- Returning x unmodified.
+    - ```hs f x = x```
+
+- Passing x to a linear function and using the result exactly once in the same fashion.
+    - ```hs f x = g x```
+
+- Pattern-matching on x and using each argument exactly once in the same fashion.
+    - ```hs 
+    f x = case x of
+        (a,b) -> a + b
+      ```
 
 - Calling it as a function and using the result exactly once in the same fashion.
-
+    - ```hs
+        f x = x + 1
+        g = let k = f 0 in f k 
+      ```
