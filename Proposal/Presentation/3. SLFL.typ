@@ -13,11 +13,10 @@ several higher level concepts such as:
 - Records\
   Data types with named fields. Pretty simple
 
-- Recursive Data Types\
-  Trees, linked lists etc
+- Recursive & Contiguous Data Types \
+  Trees, linked lists etc and Vectors/Arrays
 
-- Contiguous Data Types\
-  Vectors & Arrays
+- Laziness
 
 == How will the language be evaluated?
 Objectively evaluating languages is hard, but some things can be done!
