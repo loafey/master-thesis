@@ -44,7 +44,7 @@ as we want control over memory!
 
 ```hs
 update :: Int -> [Int] -> [Int]
-update a (x:y:z:as) = [x, y, a= : as
+update a (x:y:z:as) = [x, y, a] : as
 ```
 
 // We want to know when memory is collected, and what gets collected
