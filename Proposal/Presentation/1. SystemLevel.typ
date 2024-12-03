@@ -32,11 +32,23 @@ What does FP not lack in?
 
 _You could of course create a FP language without these_
 
+== Functional programming to the rescue!
+What does FP lack in?
+
+Most functional languages use garbage collectors!
+
+Depending on the collector we might have performance impacts
+
+A garbage collector is not preferred for system-level programming!
+
 #pagebreak()
 == Functional programming to the rescue!
-But does not functional programming require some sort of garbage collector?
+So are we stuck with a garbage collector?
+
+#pagebreak()
+== Functional programming to the rescue!
+So are we stuck with a garbage collector?
 
 #align(center + horizon, text(size: 20pt, [
   #strong[No!] We can use linear types!
 ]))
-#align(bottom + right, [_Yes, we could use linear types as well_])
