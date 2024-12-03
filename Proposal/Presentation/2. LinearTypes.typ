@@ -18,3 +18,17 @@ const a b = a -- error
 ```
 
 - Now `append` can mutate `ys` in a safe manner
+
+#pagebreak()
+
+== Linear types
+
+For a function `f` with arguments `x` using *exactly once* means:
+- Returning x unmodified.
+
+- Passing x to a linear function and using the result exactly once in the same fashion.
+
+- Pattern-matching on x and using each argument exactly once in the same fashion.
+
+- Calling it as a function and using the result exactly once in the same fashion.
+
