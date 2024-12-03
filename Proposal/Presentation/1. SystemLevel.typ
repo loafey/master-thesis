@@ -36,16 +36,18 @@ _You could of course create a FP language without these_
 Is system-level programming we often have to care about memory,
 but most functional languages use garbage collectors!
 
-Due to how most languages are made a lot of copying is done when updating
+Most of the time a lot of copying is done when updating
 values, and the old value has to be garbage collected
 
-A garbage collector is not preferred for system-level programming\
-as we want control over memory!
 
 ```hs
 update :: Int -> [Int] -> [Int]
 update a (x:y:z:as) = [x, y, a] : as
 ```
+
+A garbage collector is not preferred for system-level programming\
+as we want control over memory!
+
 
 // We want to know when memory is collected, and what gets collected
 
