@@ -6,21 +6,30 @@ Every variable must be used *exactly once*
 - Normal arrow: #text(size: 15pt, $->$)
 
 ```hs
+const :: a -o b -o c
+const a b = a -- error
+
 append :: [a] -o [a] -o [a]
 append [] ys = ys
 append (x:xs) ys = x : append xs ys -- good
-
-const :: a -o b -o c
-const a b = a -- error
 ```
 
-- Now `append` can mutate `ys` in a safe manner
+- Some programs no longer compile
+- No need to copy the data structure, instead mutate!
 
 #pagebreak()
 
 == Linear Types
 
-For a function `f` with arguments `x` using *exactly once* means:
+What is *using exactly once*?
+For a function `f` with arguments `x`:
+
+#pagebreak()
+
+== Linear Types
+
+What is *using exactly once*?
+For a function `f` with arguments `x`:
 
 - Returning x unmodified.
     - ```hs f x = x```
@@ -28,7 +37,8 @@ For a function `f` with arguments `x` using *exactly once* means:
 #pagebreak()
 == Linear Types
 
-For a function `f` with arguments `x` using *exactly once* means:
+What is *using exactly once*?
+For a function `f` with arguments `x`:
 
 - Returning x unmodified.
     - ```hs f x = x```
@@ -39,7 +49,8 @@ For a function `f` with arguments `x` using *exactly once* means:
 #pagebreak()
 == Linear Types
 
-For a function `f` with arguments `x` using *exactly once* means:
+What is *using exactly once*?
+For a function `f` with arguments `x`:
 
 - Returning x unmodified.
     - ```hs f x = x```
@@ -56,7 +67,8 @@ For a function `f` with arguments `x` using *exactly once* means:
 #pagebreak()
 == Linear Types
 
-For a function `f` with arguments `x` using *exactly once* means:
+What is *using exactly once*?
+For a function `f` with arguments `x`:
 
 - Returning x unmodified.
     - ```hs f x = x```
