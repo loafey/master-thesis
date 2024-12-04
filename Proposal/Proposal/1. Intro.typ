@@ -13,6 +13,7 @@ We define the system-level programming as follows:
   control flow
 - The programmer may write parts of the program directly in assembly
   language
+#todo[Add text about todays options for a smoother transition]
 
 == Motivation
 Functional programming tends to emphasize _referential transparency_, _higher-order
@@ -34,10 +35,7 @@ which are of critical importance in system-level programming.
 The plan of this thesis is to compile and extend the functional system-level language System-Level Functional Language (SLFL). The 
 language is created by Jean-Philippe Bernardy, which in turn is based on Girard's linear logic.
 SLFL is proposed as an alternative to system-level languages, as well as being
-an intermediate compilation target for functional languages. The
-language is not fully implemented, so we will have to complete the
-implementation before continuing with the planned work.
-
+an intermediate compilation target for functional languages.
 == Related work
 
 The first paper to introduce is _Lilac: a functional programming language based on linear logic_ @lilac1994.
