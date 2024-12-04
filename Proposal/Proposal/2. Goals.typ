@@ -5,7 +5,11 @@ In this chapter we will go into more detail about the extensions to SLFL. We wil
 #todo[Make sure this text is accurate]
 
 == Compilation
-#todo[Add text about compilation]
+Part of the project is compiling SLFL to be runnable natively on x86 computers.
+The current plan is to compile SLFL to either LLVM @lattner2004llvm or x86 assembly.
+The compilation target is not set in stone and will be determined during the thesis work.
+While using LLVM would be preferred due to being more user friendly to work with,
+if it is not suitable for our purposes we will most likely switch to x86 assembly.
 
 == Language extensions
 Currently the language is somewhat simple, and the following sections cover extensions
