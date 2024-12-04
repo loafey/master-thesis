@@ -4,7 +4,7 @@
 == System-level programming
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
-The following are some properties of system-level programming as defined on Wikipedia:
+We define the system-level programming as follows:
 
 - Programs can operate in resource-constrained environments
 - Programs can be efficient with little runtime overhead, possibly
@@ -33,8 +33,8 @@ which are of critical importance in system-level programming.
 
 
 == Pre-existing work in the literature
-#todo[Introduce the pre-existing work]
-- Lilac: a functional programming language based on linear logic @lilac1994
+
+_Lilac: a functional programming language based on linear logic @lilac1994_ 
 
 - Linear Haskell: practical linearity in a higher-order polymorphic language @linearhaskell2017
 
@@ -45,11 +45,13 @@ which are of critical importance in system-level programming.
 - Efficient Functional Program ming using Linear Types: The Array Fragment @juan2015efficient
 
 == Pre-existing work in the group
+
 System-Level Functional Language (SLFL) is a
-language based on Girard's linear logic #todo[Should PLL be referenced here too?] created by Jean-Philippe Bernardy #todo[correct?].
+language based on Girard's linear logic created by Jean-Philippe Bernardy
 SLFL is proposed as an alternative to system-level languages, as well as being
-an intermediate compilation target for functional languages. Although the
-language is not fully implemented, there are parts we can use.
+an intermediate compilation target for functional languages. The
+language is not fully implemented, so we will have to complete the
+implementation before continuing with the planned work.
 
 In the master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024 Nordmark implements a virtual
