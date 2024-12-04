@@ -1,4 +1,7 @@
 #import "Prelude.typ": *
+= Approach
+
+#red_text[How do we attack the project?]
 == Evaluation
 As this is a system-level language, performance and resource usage is key.
 To evalute how performant the language is, simple programs will be written
