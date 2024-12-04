@@ -14,10 +14,9 @@ A common feature in modern languages are lambda functions (anonymous functions).
 Closures are an extension of this allowing lambdas to capture variables from their
 environment. 
 ```hs
-add :: Int -> (Int -> Int)
 add x = \y -> x + y 
 ``` 
-Here the Haskell function `add` captures the variable `x` and returns a lambda
+Here the function `add` captures the variable `x` and returns a lambda
 which returns the result of `x + y`.  
 
 === Records
