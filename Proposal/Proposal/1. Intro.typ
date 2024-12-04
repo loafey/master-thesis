@@ -1,7 +1,7 @@
 #import "Prelude.typ": *
 
 = Background
-== System-level programming
+
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
 We define the system-level programming as follows:
@@ -41,7 +41,7 @@ implementation before continuing with the planned work.
 == Related work
 
 The first paper to introduce is _Lilac: a functional programming language based on linear logic_ @lilac1994.
-The paper gives an implementation of a type inference algorithm, similar in style to Milner's algorithm W @milner1984complete. 
+The paper gives an implementation of a type inference algorithm, similar in style to Milner's algorithm W @milner1978theory. 
 Lilac also extends the lambda calculus with recursion and datatypes. 
 However, the focus of Lilac is not how to compile efficient machine code.
 
