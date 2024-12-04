@@ -1,7 +1,7 @@
 #import "@preview/slydst:0.1.3": *
 
 #show: slides.with(
-  title: "System-level Functional Programming with Linear Types",
+  title: "Towards a System-Level Functional Language",
   subtitle: none,
   date: none,
   authors: ("Sebastian Selander", "Samuel Hammersberg"),
