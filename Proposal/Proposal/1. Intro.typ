@@ -63,7 +63,7 @@ create efficient machine code, the virtual machine can not be a target language
 either.
 
 The goal of the thesis will be to complete the design of SLFL and create a compiler for the
-language. The language will be extended as well, and the extensions will be
+language. The language specification will be extended as well, and those extensions will be
 compiled.
 
 /*
