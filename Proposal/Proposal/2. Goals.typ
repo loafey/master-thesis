@@ -1,13 +1,17 @@
 #import "Prelude.typ": *
 
 = Goals and planning
-This chapter will define what the goals are, why they are interesting, and estimate what needs to done.
+In this chapter we will go into more detail about the extensions to SLFL. We will clarify what the extensions are and explain why they are wanted.
+#todo[Make sure this text is accurate]
+
+== Compilation
+#todo[Add text about compilation]
 
 == Language extensions
 Currently the language is somewhat simple, and the following sections cover extensions
 to the language we want to add. As SLFL follows a formal specification,
 all of these new rules have to do so as well. For each new feature new typing
-rules and new reduction rules will be introduced for working with them.
+rules and new reduction rules will need to be introduced to extend the specification.
 
 === Closures
 A common feature in modern languages are lambda functions (anonymous functions).
