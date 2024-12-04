@@ -33,13 +33,9 @@ statically or dynamically sized contiguous types, such as arrays or vectors.
 === Laziness
 #red_text[A common want for functional languages is laziness.] 
 Laziness, or commonly referred to as call-by-need, means that values
-and expressions should only be evaluated when they are used. We will explore if
+and expressions are evaluated only when they are used. We will explore if
 this is a feasible addition for a system-level language, and how we will integrate this
-with effects, as effects such as IO can be quite dependant on the order of execution.
-  
-
-#todo[Explain laziness and its relevance]
-
+with IO, where the order of execution is important.
 
 /*
 -   what to do?
