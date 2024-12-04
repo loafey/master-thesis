@@ -34,7 +34,8 @@ which are of critical importance in system-level programming.
 
 == Pre-existing work in the literature
 
-_Lilac: a functional programming language based on linear logic @lilac1994_ 
+The first paper to introduce is _Lilac: a functional programming language based on linear logic_ @lilac1994
+The author 
 
 - Linear Haskell: practical linearity in a higher-order polymorphic language @linearhaskell2017
 
