@@ -6,7 +6,7 @@
 ]
 #set text(font: "New Computer Modern", size: 12pt)
 #set par(justify: true)
-#set page(margin: 1.4in)
+#set page(margin: 1.4in, numbering: "1. ")
 #set heading(numbering: "1.")
 
 #include "0. Splash.typ"

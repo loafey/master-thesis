@@ -1,13 +1,19 @@
 #import "Prelude.typ": *
 = Approach
+#green_text[
+The work can be divided into two parts: 
+1. Creating a compiler for SLFL as it is now.
+2. Extending SLFL and the compiler with the new features.
 
-We will approach all goals with an open mind!
-#todo[How do we tackle all our goals]
+We plan on first focusing on the actual creation of the compiler. 
+Once this "base compiler" has been made, we focus on adding the new features to the language.
+]
+
 
 == Planning
-
-We will approach all the planning with an open mind!
-#todo[What is our plan]
+#green_text[
+We have made a preliminary plan of how we will schedule our time:
+]
 #timeliney.timeline(
 show-grid: true,
 {
@@ -18,8 +24,8 @@ show-grid: true,
   )
 
   taskgroup(title: [*Practical Work*], {
-    task("Extending SLFL", (2, 9), style: (stroke: 2pt + gray))
-    task("Compiler", (2, 13), style: (stroke: 2pt + gray))
+    task("Extending SLFL", (5, 13), style: (stroke: 2pt + gray))
+    task("Compiler", (2, 9), style: (stroke: 2pt + gray))
   })
 
   taskgroup(title: [*Writing*], {
@@ -43,4 +49,6 @@ in SLFL and other system-level languages such as C to compare how well they
 perform against each other. Primarily execution time and memory usage will be
 measured, most likely using the GNU tool `time` @gnuTimeProject and the `glibc` tool `memusage` @gnuGlibc
 to do so. The SLFL programs will also be evaluated using Valgrind @valgrind to make sure that 
-memory leaks do not occur.  
+memory leaks do not occur. #green_text[Important to note here is that we are not planning to focus
+too heavily on the execution time of the program. It is an interesting metric, but one
+we feel would take too much time to focus on as we prioritize memory safety and efficiency.]
