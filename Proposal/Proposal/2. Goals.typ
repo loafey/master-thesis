@@ -17,15 +17,17 @@ to the language we want to add. As SLFL follows a formal specification,
 all of these new rules have to do so as well. For each new feature new typing
 rules and new reduction rules will need to be introduced to extend the specification.
 
-=== Closures
-A common feature in modern languages are lambda functions (anonymous functions).
-Closures are an extension of this allowing lambdas to capture variables from their
-environment. 
-```hs
-add x = \y -> x + y 
-``` 
-Here the function `add` captures the variable `x` and returns a lambda
-which returns the result of `x + y`.  
+=== Exponentials
+As linear types can be quite strict, there are a few rules which allows us to 
+somewhat weaken the rules, called exponentials. Exponentials values can be 
+reused or remain unused. Our supervisor has proposed two alternative implementations to this:
+
+- Implement exponentials using reference counting. This would require recursive deallocation
+  of any other exponentials used in the value.
+
+- Limit exponentials to non-linear closures, where every value allocated in the closure
+  allocated using reference counting. #red_text[This closure would have an input type of the value
+  we are creating an exponential of.]
 
 === Records
 While simple data types suffice in a lot of places, records provide important 
