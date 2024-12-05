@@ -10,6 +10,8 @@ The current plan is to compile SLFL to either LLVM @lattner2004llvm or x86 assem
 The compilation target is not set in stone and will be determined during the thesis work.
 While using LLVM would be preferred due to being more user friendly to work with,
 if it is not suitable for our purposes we will most likely switch to x86 assembly.
+#green_text[An important part here is that every part of the compilation chain
+should be typed and the transformations they contain documented and explained.]
 
 == Language extensions
 Currently the language is somewhat simple, and the following sections cover extensions
