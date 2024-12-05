@@ -29,6 +29,9 @@ reused or remain unused. Our supervisor has proposed two alternative implementat
   allocated using reference counting. #red_text[This closure would have an input type of the value
   we are creating an exponential of.]
 
+If neither of these solutions work out, time will be spent on creating an alternative, as 
+exponentials are quite important for flexibility when writing code.
+
 === Records
 While simple data types suffice in a lot of places, records provide important 
 context to data types, allowing for labeled fields.
