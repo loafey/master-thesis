@@ -24,7 +24,7 @@ SLFL is currently incomplete, and this chapter will cover some of the
 extensions that we consider extending the language with. SLFL will consist of
 several intermedate compilation steps, each linearly typed. As such, for every
 extension we make to the language, we must also create the corresponding typing
-rules .
+rules.
 
 //Currently the language is somewhat simple, and the following sections cover extensions
 //to the language we want to add. As SLFL follows a formal specification,
@@ -32,19 +32,23 @@ rules .
 //rules and new reduction rules will need to be introduced to extend the specification.
 
 === Exponentials
-As linear types can be quite strict, there are a few rules which allows us to 
-somewhat weaken the rules, called exponentials. Exponentials values can be 
-reused or remain unused. Our supervisor has proposed two alternative implementations to this:
+As briefly mentioned in @Motivation, variables in a linearly typed programming
+language must be used exactly once. There is an exception to this rule, called exponentials.
+Exponentials can be used to duplicate or drop values.
+We currently consider two implementations:
 
-- Implement exponentials using reference counting. This would require recursive deallocation
+// As linear types can be quite strict, there are a few rules which allows us to 
+// somewhat weaken the rules, called exponentials. Exponentials values can be 
+// reused or remain unused. Our supervisor has proposed two alternative implementations to this:
+
+- Implement exponentials using reference counting. This would then require recursive deallocation
   of any other exponentials used in the value.
 
-- Limit exponentials to non-linear closures, where every value allocated in the closure
-  allocated using reference counting. #red_text[This closure would have an input type of the value
-  we are creating an exponential of.]
+- Limit exponentials to non-linear closures, where every value allocated in the closure is
+  allocated using reference counting.
 
 If neither of these solutions work out, time will be spent on creating an alternative, as 
-exponentials are quite important for flexibility when writing code.
+exponentials are important for flexibility when writing code.
 
 === Recursive and contiguous data types 
 When representing more complicated data types such as different types of trees or list
