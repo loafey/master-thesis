@@ -44,12 +44,25 @@ show-grid: true,
 
 == Evaluation
 
-As this is a system-level language, performance and resource usage is key.
-To evalute how performant the language is, simple programs will be written
-in SLFL and other system-level languages such as C to compare how well they 
-perform against each other. Primarily execution time and memory usage will be
-measured, most likely using the GNU tool `time` @gnuTimeProject and the `glibc` tool `memusage` @gnuGlibc
-to do so. The SLFL programs will also be evaluated using Valgrind @valgrind to make sure that 
-memory leaks do not occur. #green_text[Important to note here is that we are not planning to focus
-too heavily on the execution time of the program. It is an interesting metric, but one
-we feel would take too much time to focus on as we prioritize memory safety and efficiency.]
+
+Although this is a system-level language, and performance and resource usage is
+key, the language will still be in the infant stage of development after the
+thesis. Rather than compare the language to mature pre-existing system-level languages, we will focus on two key aspects:
+
+- Self-evident: Every intermediate compilation step should be typed
+
+- Correctness: Every intermediate compilation step should be correct with regards to linear logic #todo[is this phrase "with regards to" correct?]
+
+As SLFL is a system-level language, it is very important that no memory is leaked during the running time of the program.
+We will measure this using Valgrind @valgrind.
+If time allows we will also measure the memory usage of the language most likely using the `glibc` tool `memusage` @gnuGlibc.
+
+// As this is a system-level language, performance and resource usage is key.
+// To evalute how performant the language is, simple programs will be written
+// in SLFL and other system-level languages such as C to compare how well they 
+// perform against each other. Primarily execution time and memory usage will be
+// measured, most likely using the GNU tool `time` @gnuTimeProject and the `glibc` tool `memusage` @gnuGlibc
+// to do so. The SLFL programs will also be evaluated using Valgrind @valgrind to make sure that 
+// memory leaks do not occur. #green_text[Important to note here is that we are not planning to focus
+// too heavily on the execution time of the program. It is an interesting metric, but one
+// we feel would take too much time to focus on as we prioritize memory safety and efficiency.]
