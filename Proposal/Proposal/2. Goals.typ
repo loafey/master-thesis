@@ -20,10 +20,16 @@ The Rust compiler and Clang, one of the C++ compilers both compile to LLVM, and 
 //should be typed and the transformations they contain documented and explained.]
 
 == Language extensions
-Currently the language is somewhat simple, and the following sections cover extensions
-to the language we want to add. As SLFL follows a formal specification,
-all of these new rules have to do so as well. For each new feature new typing
-rules and new reduction rules will need to be introduced to extend the specification.
+SLFL is currently incomplete, and this chapter will cover some of the
+extensions that we consider extending the language with. SLFL will consist of
+several intermedate compilation steps, each linearly typed. As such, for every
+extension we make to the language, we must also create the corresponding typing
+rules .
+
+//Currently the language is somewhat simple, and the following sections cover extensions
+//to the language we want to add. As SLFL follows a formal specification,
+//all of these new rules have to do so as well. For each new feature new typing
+//rules and new reduction rules will need to be introduced to extend the specification.
 
 === Exponentials
 As linear types can be quite strict, there are a few rules which allows us to 
