@@ -13,7 +13,16 @@ We define the system-level programming as follows:
   control flow
 - The programmer may write parts of the program directly in assembly
   language
-#todo[Add text about todays options for a smoother transition]
+
+For system-level programming today developers mostly choose between procedural
+programming languages, for instance: C, C++, or Rust. In C memory is management
+is manual, and in C++ there is are options for automatic memory management, but
+the compile time guarantees are few and weak. Rust has mostly solved this issue
+with the introduction of a lifetime sytem and the borrow checker @matsakis2014rust.
+
+Although Rust offers many functional aspects, many are still missing, for
+instance; _purity_ and _referential transparency_. In this proposal we propose an alternative, a functional programming language: _System-level Functional Language_ (SLFL).
+
 
 == Motivation
 Functional programming tends to emphasize _referential transparency_, _higher-order
