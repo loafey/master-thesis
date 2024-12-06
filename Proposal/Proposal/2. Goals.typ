@@ -54,10 +54,12 @@ indirection, bad cache locality and more. Due to this we will also investigate a
 statically or dynamically sized contiguous types, such as arrays or vectors.
 
 === Laziness
-#red_text[A common want for functional languages is laziness.] 
-Laziness, or commonly referred to as call-by-need, means that values
-and expressions are evaluated only when they are used. We will explore if
-this is a feasible addition for a system-level language, and how we will integrate this
+Laziness, or commonly referred to as call-by-name, means that values
+and expressions are evaluated only when they are used. 
+This is an foundational concept in functional programming as
+it stems from its root in lambda calculus, but one rarely implemented.
+We will explore if this is a feasible addition for a linearly typed system-level language, as 
+well as investigate how this will interact
 with IO, where the order of execution is important.
 
 /*
