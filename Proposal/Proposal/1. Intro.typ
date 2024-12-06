@@ -21,12 +21,12 @@ the compile time guarantees are few and weak. Rust has mostly solved this issue
 with the introduction of an ownership model and the borrow checker @matsakis2014rust.
 
 Although Rust offers many functional aspects, many are still missing, for
-instance; _purity_ and _referential transparency_. In this proposal we propose
+instance; _purity_ and _referential transparency_. We propose
 an alternative, a functional programming language: _System-level Functional
 Language_ (SLFL).
 
 
-== Motivation
+== Motivation <Motivation>
 
 Functional programming tends to emphasize _referential transparency_, _higher-order
 functions_, _algebraic type systems_, and _strong type systems_.
@@ -42,7 +42,9 @@ Girard's linear logic @girard1987linear is a refinement of classical and
 intuistionistic logic, where, rather than proposition being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.
 Linear logic models the problems of shared and mutable data, both of
-which are of critical importance in system-level programming.
+which are of critical importance in system-level programming. 
+In linear logic uses of weakening and contraction are carefully controlled, which in
+a programming language setting means variables must be used exactly once.
 
 The plan of our thesis is to compile and extend System-Level Functional Language. The 
 language is created by Jean-Philippe Bernardy, which in turn is based on Girard's linear logic.
