@@ -18,7 +18,7 @@ For system-level programming today developers mostly choose between procedural
 programming languages, for instance: C, C++, or Rust. In C memory is management
 is manual, and in C++ there is are options for automatic memory management, but
 the compile time guarantees are few and weak. Rust has mostly solved this issue
-with the introduction of a lifetime sytem and the borrow checker @matsakis2014rust.
+with the introduction of an ownership model and the borrow checker @matsakis2014rust.
 
 Although Rust offers many functional aspects, many are still missing, for
 instance; _purity_ and _referential transparency_. In this proposal we propose an alternative, a functional programming language: _System-level Functional Language_ (SLFL).
