@@ -1,0 +1,2 @@
+watch:
+    typst watch Proposal/Proposal.typ --root=.
