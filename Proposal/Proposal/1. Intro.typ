@@ -15,16 +15,19 @@ We define the system-level programming as follows:
   language
 
 For system-level programming today developers mostly choose between procedural
-programming languages, for instance: C, C++, or Rust. In C memory is management
+programming languages, for instance: C, C++, or Rust. In C memory management
 is manual, and in C++ there is are options for automatic memory management, but
 the compile time guarantees are few and weak. Rust has mostly solved this issue
 with the introduction of an ownership model and the borrow checker @matsakis2014rust.
 
 Although Rust offers many functional aspects, many are still missing, for
-instance; _purity_ and _referential transparency_. In this proposal we propose an alternative, a functional programming language: _System-level Functional Language_ (SLFL).
+instance; _purity_ and _referential transparency_. In this proposal we propose
+an alternative, a functional programming language: _System-level Functional
+Language_ (SLFL).
 
 
 == Motivation
+
 Functional programming tends to emphasize _referential transparency_, _higher-order
 functions_, _algebraic type systems_, and _strong type systems_.
 Although the merits of functional programming are evident @hughes1989, it is under
@@ -41,16 +44,19 @@ _resources_, meaning propositions are objects that can be modified into other ob
 Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming.
 
-The plan of this thesis is to compile and extend the functional system-level language System-Level Functional Language (SLFL). The 
+The plan of our thesis is to compile and extend System-Level Functional Language. The 
 language is created by Jean-Philippe Bernardy, which in turn is based on Girard's linear logic.
 SLFL is proposed as an alternative to system-level languages, as well as being
 an intermediate compilation target for functional languages.
+
 == Related work
 
-The first paper to introduce is _Lilac: a functional programming language based on linear logic_ @lilac1994.
-The paper gives an implementation of a type inference algorithm, similar in style to Milner's algorithm W @milner1978theory. 
-Lilac also extends the lambda calculus with recursion and datatypes. 
-However, the focus of Lilac is not how to compile efficient machine code.
+The first paper to introduce is _Lilac: a functional programming language based
+on linear logic_ @lilac1994. The paper gives an implementation of a type
+inference algorithm, similar in style to Milner's algorithm
+W @milner1978theory. Lilac also extends the lambda calculus with recursion and
+datatypes. However, the focus of Lilac is not how to compile efficient machine
+code.
 
 Secondly, in _Efficient Implementation of a Linear Logic Programming Language_
 @efficient1998 the authors give an implementation of a compiler for the linear
@@ -71,7 +77,7 @@ utilized as an intermediate language for compiling to SLFL. As the goal is to
 create efficient machine code, the virtual machine can not be a target language
 either.
 
-The goal of the thesis will be to complete the design of SLFL and create a compiler for the
+The goal of our thesis will be to complete the design of SLFL and create a compiler for the
 language. The language specification will be extended as well, and those extensions will be
 compiled.
 
