@@ -5,13 +5,19 @@ In this chapter we will go into more detail about the extensions to SLFL. We wil
 #todo[Make sure this text is accurate]
 
 == Compilation
-Part of the project is compiling SLFL to be runnable natively on x86 computers.
-The current plan is to compile SLFL to either LLVM @lattner2004llvm or x86 assembly.
-The compilation target is not set in stone and will be determined during the thesis work.
-While using LLVM would be preferred due to being more user friendly to work with,
-if it is not suitable for our purposes we will most likely switch to x86 assembly.
-#green_text[An important part here is that every part of the compilation chain
-should be typed and the transformations they contain documented and explained.]
+
+The first goal of the project is to compile SLFL to native machine code.
+We plan on doing this by compiling to LLVM @lattner2004llvm, which in turn can be compiled to native machine code.
+LLVM provide a simple and efficient abstraction layer, compared to the native machine code alternatives. 
+The Rust compiler and Clang, one of the C++ compilers both compile to LLVM, and as such, LLVM is a reliable option.
+
+//Part of the project is compiling SLFL to be runnable natively on x86 computers.
+//The current plan is to compile SLFL to either LLVM @lattner2004llvm or x86 assembly.
+//The compilation target is not set in stone and will be determined during the thesis work.
+//While using LLVM would be preferred due to being more user friendly to work with,
+//if it is not suitable for our purposes we will most likely switch to x86 assembly.
+//#green_text[An important part here is that every part of the compilation chain
+//should be typed and the transformations they contain documented and explained.]
 
 == Language extensions
 Currently the language is somewhat simple, and the following sections cover extensions
