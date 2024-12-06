@@ -1,6 +1,5 @@
 #import "Prelude.typ": *
 = Approach
-#green_text[
 The work can be divided into two parts: 
 1. Creating a compiler for SLFL as it is now.
 2. Extending SLFL and the compiler with the new features.
@@ -8,13 +7,8 @@ The work can be divided into two parts:
 We plan on first focusing on the actual creation of the compiler. 
 Once this "base compiler" has been made, we will focus on adding the 
 new features to the language.
-]
 
-
-== Planning
-#green_text[
 We have made a preliminary plan of how we will schedule our time:
-]
 #timeliney.timeline(
 show-grid: true,
 {
