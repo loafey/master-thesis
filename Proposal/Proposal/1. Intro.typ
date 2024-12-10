@@ -4,7 +4,7 @@
 
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
-We define the system-level programming as follows:
+We define system-level programming as:
 
 - Programs can operate in resource-constrained environments
 - Programs can be efficient with little runtime overhead, possibly
@@ -22,7 +22,7 @@ with the introduction of an ownership model and the borrow checker @matsakis2014
 
 Although Rust offers many functional aspects, many are still missing, for
 instance; _purity_ and _referential transparency_. We propose
-an alternative, a functional programming language: _System-level Functional
+an alternative that addresses these points, the programming language: _System-level Functional
 Language_ (SLFL).
 
 
@@ -53,8 +53,8 @@ an intermediate compilation target for functional languages.
 
 == Related work
 
-The first paper to introduce is _Lilac: a functional programming language based
-on linear logic_ @lilac1994. The paper gives an implementation of a type
+_Lilac: a functional programming language based
+on linear logic_ @lilac1994, gives an implementation of a type
 inference algorithm, similar in style to Milner's algorithm
 W @milner1978theory. Lilac also extends the lambda calculus with recursion and
 datatypes. However, the focus of Lilac is not how to compile efficient machine
