@@ -40,7 +40,7 @@ former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
 
 Girard's linear logic @girard1987linear is a refinement of classical and
-intuistionistic logic, where, rather than proposition being truth statements, they represent
+intuistionistic logic, where, rather than propositions being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.
 Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming. 
@@ -69,7 +69,7 @@ language, it is inherently logic based, which SLFL is not.
 The paper _A Type System for Bounded Space and Functional In-Place Update_
 @hofmann2000 presents a way to compile a linearly typed first-order
 functional language into `malloc()`-free `C` code into `malloc()`-free `C`
-code. Again, however, does this not meet the criteria of SLFL as it is
+code. Again, however, this does not meet the criteria of SLFL as it is
 a higher-order functional language.
 
 In the master's thesis "Towards a practical execution model for functional
