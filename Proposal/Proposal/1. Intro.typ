@@ -17,9 +17,9 @@ As per Wikipedia @wiki:Systems_programming we define system-level programming as
 
 For system-level programming today developers mostly choose between procedural
 programming languages, for instance: C, C++, or Rust. In C memory management
-is manual, and in C++ there is are options for automatic memory management, but
-the compile time guarantees are few and weak. Rust has mostly solved this issue
-with the introduction of an ownership model and the borrow checker @matsakis2014rust.
+is manual, and in C++ there are options for automatic memory management, but
+the compile time guarantees are few and weak. Rust has mostly solved the issue of
+memory management with the introduction of an ownership model and a borrow checker @matsakis2014rust.
 
 Although Rust offers many functional aspects, many are still missing, for
 instance; _purity_ and _referential transparency_. We propose
