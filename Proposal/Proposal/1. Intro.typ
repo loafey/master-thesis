@@ -74,8 +74,7 @@ language, it is a logic programming language, which SLFL is not.
 
 The paper _A Type System for Bounded Space and Functional In-Place Update_
 @hofmann2000 presents a way to compile a linearly typed first-order
-functional language into `malloc()`-free `C` code into `malloc()`-free `C`
-code. Again, however, this is not satisfactory as we want SLFL to be a higher-order language.
+functional language into `malloc()`-free `C` code. Again, however, this is not satisfactory as we want SLFL to be a higher-order language.
 
 In the master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024 Nordmark implements a virtual
