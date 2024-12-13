@@ -1,7 +1,7 @@
 #import "Prelude.typ": *
 = Approach
 The work can be divided into two parts: 
-1. Creating a compiler for SLFL as it is now.
+1. Creating a compiler for SLFL as it exists currently.
 2. Extending SLFL and the compiler with the new features.
 
 We plan on first focusing on the actual creation of the compiler. 

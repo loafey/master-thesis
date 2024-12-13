@@ -2,7 +2,6 @@
 
 = Goals and planning
 In this chapter we will go into more detail about the extensions to SLFL. We will clarify what the extensions are and explain why they are wanted.
-#todo[Make sure this text is accurate]
 
 == Compilation
 
@@ -54,8 +53,7 @@ exponentials are important for flexibility when writing code.
 When representing more complicated data types such as different types of trees or list
 in functional programming, they are almost always implemented using recursive data types.
 In theory this is fine, but in practice it leads to overhead, such as pointer 
-indirection and cache locality. Due to this we will also investigate adding 
-statically or dynamically sized contiguous data structures, such as arrays or vectors.
+indirection and cache locality. As such, we will investigate adding statically or dynamically sized contiguous data structures, such as arrays or vectors.
 
 === Laziness
 Laziness, or commonly referred to as call-by-name, means that values and
@@ -63,7 +61,7 @@ expressions are evaluated only when they are used.
 Lazy evaluation is an effective tool for achieving modularisation @hughes1989. 
 
 We will explore if lazy evaluation is a feasible addition for a linearly typed system-level language, as
-well as investigate how this will interact with IO, where the order of execution is important.
+well as investigate how this will interact with I/O, where the order of execution is important.
 
 /*
 -   what to do?
