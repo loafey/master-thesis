@@ -18,7 +18,7 @@
 
   #v(1cm)
 
-  #text(size: frontPageSize, [Suggested supervisor at CSE: Jean-Philippe Bernardy])
+  #text(size: frontPageSize, [Supervisor at CSE: Jean-Philippe Bernardy])
 
   #v(0.7cm)
 
