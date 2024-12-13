@@ -53,7 +53,7 @@ exponentials are important for flexibility when writing code.
 When representing more complicated data types such as different types of trees or list
 in functional programming, they are almost always implemented using recursive data types.
 In theory this is fine, but in practice it leads to overhead, such as pointer 
-indirection and cache locality. As such, we will investigate adding statically or dynamically sized contiguous data structures, such as arrays or vectors.
+indirection and bad cache locality. As such, we will investigate adding statically or dynamically sized contiguous data structures, such as arrays or vectors.
 
 === Laziness
 Laziness, or commonly referred to as call-by-name, means that values and
