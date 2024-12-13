@@ -45,7 +45,7 @@ thesis. Rather than compare the language to mature pre-existing system-level lan
 
 - Self-evident: Every intermediate compilation step should be typed
 
-- Correctness: Every intermediate compilation step should be correct with regards to linear logic #todo[is this phrase "with regards to" correct?]
+- Correctness: Every intermediate compilation step should be type checked. 
 
 As SLFL is a system-level language, it is very important that no memory is leaked during the running time of the program.
 We will measure this using Valgrind @valgrind.

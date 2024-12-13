@@ -4,7 +4,7 @@
 
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
-The definition on Wikipedia @wiki:Systems_programming is the following:\
+We will define system-level programming as Wikipedia @wiki:Systems_programming defines it:
 #grid(
   columns: (10pt, 1fr),
   rect(height: 100pt, fill: pattern(size: (12pt, 10pt), [
@@ -20,8 +20,6 @@ The definition on Wikipedia @wiki:Systems_programming is the following:\
 - The programmer may write parts of the program directly in assembly
   language 
 ], inset: (left: 16pt))
-For our proposes this is a fine definition. 
-
 
 For system-level programming today developers mostly choose between procedural
 programming languages, for instance: C, C++, or Rust. In C memory management
@@ -72,13 +70,12 @@ code.
 Secondly, in _Efficient Implementation of a Linear Logic Programming Language_
 @efficient1998 the authors give an implementation of a compiler for the linear
 logic language Lolli. Although they provide a efficient compilation for the
-language, it is inherently logic based, which SLFL is not.
+language, it is a logic programming language, which SLFL is not.
 
 The paper _A Type System for Bounded Space and Functional In-Place Update_
 @hofmann2000 presents a way to compile a linearly typed first-order
 functional language into `malloc()`-free `C` code into `malloc()`-free `C`
-code. Again, however, this does not meet the criteria of SLFL as it is
-a higher-order functional language.
+code. Again, however, this is not satisfactory as we want SLFL to be a higher-order language.
 
 In the master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024 Nordmark implements a virtual
