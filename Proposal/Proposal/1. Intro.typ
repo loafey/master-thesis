@@ -46,11 +46,11 @@ former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
 
 Girard's linear logic @girard1987linear is a refinement of classical and
-intuistionistic logic, where, rather than propositions being truth statements, they represent
+intuitionistic logic, where, rather than propositions being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.
 Linear logic models the problems of shared and mutable data, both of
 which are of critical importance in system-level programming. 
-In linear logic uses of weakening and contraction are carefully controlled, which in
+In linear logic, the uses of weakening and contraction are carefully controlled, which in
 a programming language setting means variables must be used exactly once.
 
 The plan of our thesis is to compile and extend System-Level Functional Language. The 
