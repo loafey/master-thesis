@@ -5,15 +5,22 @@
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
 As per Wikipedia @wiki:Systems_programming we define system-level programming as:\
-"
+#grid(
+  columns: (10pt, 1fr),
+  rect(height: 100pt, fill: pattern(size: (12pt, 10pt), [
+    #place(line(stroke: rgb(0,0,0,65),start: (0%, 0%), end: (100%, 100%)))
+    #place(line(stroke: rgb(0,0,0,65),start: (0%, 100%), end: (100%, 0%)))
+  ])),
+[
 - Programs can operate in resource-constrained environments
 - Programs can be efficient with little runtime overhead, possibly
   having either a small runtime library or none at all
 - Programs may use direct and \"raw\" control over memory access and
   control flow
 - The programmer may write parts of the program directly in assembly
-  language
-"
+  language 
+], inset: (left: 16pt))
+
 
 For system-level programming today developers mostly choose between procedural
 programming languages, for instance: C, C++, or Rust. In C memory management
