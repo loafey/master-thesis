@@ -5,7 +5,7 @@ The work can be divided into two parts:
 2. Extending SLFL and the compiler with the new features.
 
 We plan on first focusing on the actual creation of the compiler. 
-Once this "base compiler" has been made, we will focus on adding the 
+Once the base compiler has been made, we will focus on adding the 
 new features to the language.
 
 We have made a preliminary plan of how we will schedule our time:
