@@ -61,7 +61,7 @@ expressions are evaluated only when they are used.
 Lazy evaluation is an effective tool for achieving modularisation @hughes1989. 
 
 We will explore if lazy evaluation is a feasible addition for a linearly typed system-level language, as
-well as investigate how this will interact with I/O, where the order of execution is important.
+well as investigate how this will interact with\ I/O, where the order of execution is important.
 
 /*
 -   what to do?
