@@ -46,11 +46,3 @@ Lazy evaluation is an effective tool for achieving modularisation @hughes1989.
 We will explore if lazy evaluation is a feasible addition for a linearly typed system-level language, as
 well as investigate how this will interact with \
 I/O, where the order of execution is important.
-
-/*
--   what to do?
-  -   Translate each construction/typing rule into code
-  -   if a construction cannot be translated this way: refine it
-      (design a more low-level rule which serves in an intermediate
-      compilation step.)
-*/
