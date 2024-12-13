@@ -4,7 +4,7 @@
 
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
-As per Wikipedia @wiki:Systems_programming we define system-level programming as:\
+The definition on Wikipedia @wiki:Systems_programming is the following:\
 #grid(
   columns: (10pt, 1fr),
   rect(height: 100pt, fill: pattern(size: (12pt, 10pt), [
@@ -20,6 +20,7 @@ As per Wikipedia @wiki:Systems_programming we define system-level programming as
 - The programmer may write parts of the program directly in assembly
   language 
 ], inset: (left: 16pt))
+For our proposes this is a fine definition. 
 
 
 For system-level programming today developers mostly choose between procedural
