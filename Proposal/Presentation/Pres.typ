@@ -1,7 +1,7 @@
 #import "@preview/slydst:0.1.3": *
 
 #show: slides.with(
-  title: "System-level Functional Programming with Linear Types",
+  title: "Towards a System-Level Functional Language",
   subtitle: none,
   date: none,
   authors: ("Sebastian Selander", "Samuel Hammersberg"),
@@ -13,19 +13,16 @@
 #pagebreak()
 #include "1. SystemLevel.typ"
 #pagebreak()
-#include "2. Related Work.typ"
+#include "2. LinearTypes.typ"
 #pagebreak()
-
-= Using Functional programming on a system level 
-
+#include "3. SLFL.typ"
 #pagebreak()
-
-= What is linear types?
+#include "4. Related Work.typ"
 
 #pagebreak()
-
-= Why not use another low level language?
-
+#include "5. Why us.typ"
 #pagebreak()
-
+#include "6. Risk.typ"
+#pagebreak()
+== References
 #bibliography("../bib.bib")
