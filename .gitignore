@@ -2,3 +2,4 @@
 *.html
 Output
 submit
+.direnv/
