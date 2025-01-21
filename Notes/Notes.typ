@@ -63,4 +63,5 @@ $omega$: stack-like
 )
 
 === Terminonogy
-$not A := A multimap bot$ : function that consumes $A$ and terminates
+- $A^bot = not A$
+- $not A := A multimap bot$ : function that consumes $A$ and terminates
