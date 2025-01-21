@@ -61,3 +61,6 @@ $omega$: stack-like
 [$(x : A tack.r c) / (tack.r lambda^* x . c: ast.basic A)$],
 [$(Gamma tack.r t:A) / {Gamma,z:ast.basic A tack.r "call"^* z (t)}$]
 )
+
+=== Terminonogy
+$not A := A multimap bot$ : function that consumes $A$ and terminates
