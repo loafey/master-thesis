@@ -65,3 +65,6 @@ $omega$: stack-like
 === Terminonogy
 - $A^bot = not A$
 - $not A := A multimap bot$ : function that consumes $A$ and terminates
+- $A \& B = not (not A xor not B)$
+- $A amp.inv B = not (not A times.circle not B)$
+- $A multimap B = not (A times.circle not B)$
