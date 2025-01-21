@@ -14,9 +14,9 @@
 #include "0. Splash.typ"
 #pagebreak()
 #pagebreak()
-fancy splash
+#include "0.1 Fancy Splash.typ"
 #pagebreak()
-licence
+#include "0.2 Licence.typ"
 #pagebreak()
 #set page(
   numbering: (n, _) => [
