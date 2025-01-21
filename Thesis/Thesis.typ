@@ -9,6 +9,7 @@
 #set page(margin: 1.4in, numbering: "1. ")
 #set heading(numbering: "1.")
 
+#include "0. Splash.typ"
 
 #pagebreak()
 #bibliography(title: "References","bib.bib")
