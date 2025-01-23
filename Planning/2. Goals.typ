@@ -37,12 +37,3 @@ When representing more complicated data types such as different types of trees o
 in functional programming, they are almost always implemented using recursive data types.
 In theory this is fine, but in practice it leads to overhead, such as pointer 
 indirection and poor cache locality. As such, we will investigate adding statically or dynamically sized contiguous data structures, such as arrays or vectors.
-
-=== Laziness
-Laziness, or commonly referred to as call-by-name, means that values and
-expressions are evaluated only when they are used. 
-Lazy evaluation is an effective tool for achieving modularisation @hughes1989. 
-
-We will explore if lazy evaluation is a feasible addition for a linearly typed system-level language, as
-well as investigate how this will interact with \
-I/O, where the order of execution is important.
