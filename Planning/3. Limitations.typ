@@ -28,4 +28,5 @@ The following are some topics that we will not focus on:
   _ergonomic_. That is, it has to provide good error messages when the
   programmer writes incorrect code, the tooling has to be user friendly,
   and the language and its tools have to be well documented. Unfortunately,
-  this requires a lot of work, most of which is repeated from other compilers. 
+  this requires a lot of work, most of which would be re-implementations of
+  tools from other programming languages.
