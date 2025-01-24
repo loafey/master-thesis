@@ -7,8 +7,13 @@ In this chapter we will go into more detail about the extensions to SLFL. We wil
 
 The first goal of the project is to compile SLFL to native machine code.
 We plan on doing this by compiling to LLVM @lattner2004llvm, which in turn can be compiled to native machine code.
-LLVM provides a simple and efficient abstraction layer, compared to the native machine code alternatives. 
-The Rust compiler and Clang, one of the C++ compilers, both compile to LLVM, demonstrating that LLVM is a reliable option.
+LLVM provides a simple and efficient abstraction layer, as opposed to most other 
+assembly alternatives. 
+The Rust compiler and Clang, one of the C++ compilers, both compile to LLVM, demonstrating that  
+LLVM is a reliable option. 
+If LLVM turns out to be an unfit choice
+we will instead work towards using x86 assembly. This would let us 
+be more flexible if need be, at the cost of being more complicated to work with.
 
 == Language extensions
 SLFL is currently incomplete, and this chapter will cover some of the
