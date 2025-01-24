@@ -47,9 +47,13 @@ thesis. Rather than compare the language to mature pre-existing system-level lan
 
 - Correctness: Every intermediate compilation step should be type checked. 
 
-As SLFL is a system-level language, it is very important that no memory is leaked during the running time of the program.
-We will measure this using Valgrind @valgrind.
-If time allows we will also measure the memory usage of the language most likely using the `glibc` tool `memusage` @gnuGlibc.
+As for any programming language, it is very important that the generated code
+is correct. Although we will not formally prove the code correct, we will
+implement the language according to the formal rules of the logics. If time allows we will test the code, both for memory usage and correctness.
+
+// As SLFL is a system-level language, it is very important that no memory is leaked during the running time of the program.
+// We will measure this using Valgrind @valgrind.
+// If time allows we will also measure the memory usage of the language most likely using the `glibc` tool `memusage` @gnuGlibc.
 
 // As this is a system-level language, performance and resource usage is key.
 // To evalute how performant the language is, simple programs will be written
