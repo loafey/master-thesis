@@ -58,7 +58,7 @@ $omega$: stack-like
 align(center)[$(A : omega) / (ast.basic A : 1)$],
 align(center)[$(x : A tack.r c) / (tack.r lambda^* x . c: ast.basic A)$],
 align(center)[$(Gamma tack.r t:A) / {Gamma,z:ast.basic A tack.r "call"^* z (t)}$],
-[Value $A$ here is !Sized. A pointer to $A$ is Sized.],
+[Type $A$ here is !Sized. A pointer to a value of type $A$ is Sized.],
 []
 )
 
