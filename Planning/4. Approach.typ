@@ -10,6 +10,12 @@ We plan on first focusing on the creation of the compiler.
 Once the base compiler has been made, we will focus on adding the 
 new features to the language.
 
+Before we can start compiling SLFL we need to:
+
+- Get an intuitive understanding of linear logic, and the logic of SLFL.
+- Understand and adapt the existing code base.
+- Decide on an appropriate backend (`x86_64`, `LLVM`, or another)
+
 We have made a preliminary plan of how we will schedule our time:
 #timeliney.timeline(
 show-grid: true,
