@@ -70,3 +70,8 @@ align(center)[$(Gamma tack.r t:A) / {Gamma,z:ast.basic A tack.r "call"^* z (t)}$
 - $A multimap B = not (A times.circle not B)$
 - $*A$ pointer to a value
 - $square.stroked A$ is a pointer to a stack
+
+=== Questions
+
+How do we specify the type of the variable in a lambda?
+Is PTPair unimplemented?
