@@ -59,7 +59,7 @@ align(center)[$(A : omega) / (ast.basic A : 1)$],
 align(center)[$(x : A tack.r c) / (tack.r lambda^* x . c: ast.basic A)$],
 align(center)[$(Gamma tack.r t:A) / {Gamma,z:ast.basic A tack.r "call"^* z (t)}$],
 [Type $A$ here is !Sized. A pointer to a value of type $A$ is Sized.],
-[]
+[Value $x$ is of type $A$, and $c$ is a continuation.]
 )
 
 === Terminonogy
