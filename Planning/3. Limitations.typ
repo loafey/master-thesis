@@ -18,15 +18,13 @@ The following are some topics that we will not focus on:
   expressions are evaluated only when they are used. Lazy evaluation is an
   effective tool for achieving modularisation @hughes1989.
 
-  While laziness does occur in other functional programming
-  languages @2010haskell, we will not implement it for SLFL. Although laziness
-  does provide several benefits @hughes1989, the work to implement it is
-  non-trivial.
+  Although laziness does provide several benefits @hughes1989, the work to
+  implement it is not trivial. Perhaps this could be a topic for the future as well.
 
 - *Ergonomics*\
   For a language and a compiler to gain traction among the masses it has to be
   _ergonomic_. That is, it has to provide good error messages when the
   programmer writes incorrect code, the tooling has to be user friendly,
   and the language and its tools have to be well documented. Unfortunately,
-  this requires a lot of work, most of which would be re-implementations of
+  this requires a lot of work, most of which would be reimplementations of
   tools from other programming languages.
