@@ -14,7 +14,7 @@ Before we can start compiling SLFL we need to:
 
 - Get an intuitive understanding of linear logic, and the logic of SLFL.
 - Understand and adapt the existing code base.
-- Decide on an appropriate backend (`x86_64`, `LLVM`, or another)
+- Decide on an appropriate compilation target (`x86_64`, `LLVM`, or another)
 
 We have made a preliminary plan of how we will schedule our time:
 #timeliney.timeline(
