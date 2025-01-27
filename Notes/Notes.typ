@@ -50,7 +50,7 @@ $omega$: stack-like
 #grid(
   columns: (1fr, 1fr, 1fr), 
   row-gutter: 16pt,
-  [$() / (circle.stroked : omega)$], [$() / ("newstack" : omega)$],
+  [$() / (circle.stroked : omega)$], [$() / ("newstack" : circle.stroked)$],
   [$(Gamma tack.r c) / (Gamma, z : circle.stroked tack.r "freestack" z; c)$],
 )
 
