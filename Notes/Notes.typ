@@ -68,3 +68,5 @@ align(center)[$(Gamma tack.r t:A) / {Gamma,z:ast.basic A tack.r "call"^* z (t)}$
 - $A \& B = not (not A xor not B)$
 - $A amp.inv B = not (not A times.circle not B)$
 - $A multimap B = not (A times.circle not B)$
+- $*A$ pointer to a value
+- $square.stroked A$ is a pointer to a stack
