@@ -2,7 +2,7 @@
 #grid(
   columns: (1fr, 1fr),
   row-gutter: 16pt,
-  [Negative], [Positive],
+  [Positive], [Negative],
   align(center)[$(Gamma tack.r t : A space space Delta tack.r u : B) / (Gamma, Delta tack.r (t,u): A times.circle B)$],
   align(center)[$(Gamma, x : A, y : B tack.r c) / (Gamma, z : A xor B tack.r text("let")(x,y) = z; c)$],
   align(center)[$(Gamma tack.r t: A_1) / (Gamma tack.r text("inj")_1t : A_1 xor A_2)$],
@@ -48,7 +48,7 @@ $omega$: stack-like
   columns: (1fr, 1fr, 1fr), 
   row-gutter: 16pt,
   align(center)[$() / (circle.stroked : omega)$], 
-  align(center)[$() / ("newstack" : circle.stroked)$],
+  align(center)[$() / (tack.r "newstack" : circle.stroked)$],
   align(center)[$(Gamma tack.r c) / (Gamma, z : circle.stroked tack.r "freestack" z; c)$],
 )
 
@@ -58,8 +58,12 @@ $omega$: stack-like
 align(center)[$(A : omega) / (ast.basic A : 1)$],
 align(center)[$(x : A tack.r c) / (tack.r lambda^* x . c: ast.basic A)$],
 align(center)[$(Gamma tack.r t:A) / {Gamma,z:ast.basic A tack.r "call"^* z (t)}$],
-[Type $A$ here is !Sized. A pointer to a value of type $A$ is Sized. $A: omega$ because otherwise it does not need to be heap allocated?],
-[Value $x$ is of type $A$, and $c$ is a continuation. Roughly: place the variable on the stack, set the program counter to $c$.]
+[
+`(void*)(A)` In `C`
+
+Type $A$ here is !Sized. A pointer to a value of type $A$ is Sized. $A: omega$ because otherwise it does not need to be heap allocated?],
+[Compile $c$. Push pointer for $c$ on SP],
+[$t$ is a program that can prepare a memory area of type $A$ ]//[Value $x$ is of type $A$, and $c$ is a continuation. Roughly: place the variable on the stack, set the program counter to $c$.]
 )
 
 === Terminonogy
@@ -70,8 +74,3 @@ align(center)[$(Gamma tack.r t:A) / {Gamma,z:ast.basic A tack.r "call"^* z (t)}$
 - $A multimap B = not (A times.circle not B)$
 - $*A$ pointer to a value
 - $square.stroked A$ is a pointer to a stack
-
-=== Questions
-
-How do we specify the type of the variable in a lambda?
-Is PTPair unimplemented?
