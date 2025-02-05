@@ -1,3 +1,15 @@
+= Types and kinds
+
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  row-gutter: 16pt,
+  [Type], [Rule], [Env],
+  [$not A$], [$(A : n)/(not A : 1)$], [$n$],
+  [$~A$], [$(A : n)/(~A : omega)$], [$n ~> omega$],
+  [$*A$],[$(A : omega)/(*A : 1)$], [$0$]
+
+)
+
 = PLL:
 #grid(
   columns: (1fr, 1fr),
