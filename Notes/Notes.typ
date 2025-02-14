@@ -10,6 +10,61 @@
 
 )
 
+#let stack(..args) = {
+  let ags = ();
+  let count = 0;
+
+  for (i,value) in args.pos().enumerate() {
+    if count == 1 {
+      ags.push([])
+      ags.push([])
+      ags.push([])
+    }
+
+    let container = if count == 1 {
+      let a(b) = align(center, b); a
+    } else if count == 0 {
+      let a(b) = align(right, box(inset: (right: 4pt),b)); a
+    } else {
+      let a(b) = box(inset: (left: 4pt), b); a
+    }
+    ags.push(container(value))
+    if count == 2 {
+      ags.push([])
+      ags.push([])
+      ags.push([])
+    }
+    count = calc.rem-euclid(count + 1, 3);
+  }
+
+  let frame(stroke) = (x, y) => (
+    left: if x == 1 { stroke } else { 0pt },
+    right: if x == 1 { stroke } else { 0pt },
+    top: if x == 1 and calc.rem-euclid(y, 3) == 0 { stroke } else { 0pt },
+    bottom: if (x == 1 and calc.rem-euclid(y, 3) == 2) { 
+      if y + 1 == args.pos().len() {
+        (paint: stroke, thickness: 1pt, dash: "dashed") 
+      } else {
+        stroke 
+      }
+    } else { 
+      0pt 
+    },
+  )
+  let rows = ()
+  for i in args.pos() {
+    rows.push(0.7em)
+  }
+  table(
+    stroke: frame(rgb("000")),
+    columns: (1fr,1fr,1fr),
+    rows: rows,
+    inset: (),
+    gutter: 0pt,
+    ..ags
+  )
+}
+
 = PLL:
 #grid(
   columns: (1fr, 1fr),
@@ -17,6 +72,11 @@
   [Positive], [Negative],
   align(center)[$(Gamma tack.r t : A space space Delta tack.r u : B) / (Gamma, Delta tack.r (t,u): A times.circle B)$],
   align(center)[$(Gamma, x : A, y : B tack.r c) / (Gamma, z : A xor B tack.r text("let")(x,y) = z; c)$],
+  [],
+  stack(
+    [$rho(z) ->$], [$A : n$], [$rho(x)$],
+    [$rho(y) ->$], [$B : omega $], [$$],
+  ),
 
   align(center)[$(Gamma tack.r t: A_1) / (Gamma tack.r text("inj")_1t : A_1 xor A_2)$],
   align(center)[$(Gamma, x : A_1 tack.r c_1) / (Gamma, z : A_1 xor A_2 tack.r text("case") z text("of")
