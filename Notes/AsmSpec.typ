@@ -119,7 +119,7 @@ The following document will use these abbreviations for readability.
   
   #grid(
     columns: (1fr,1fr),
-    gutter: -10pt,
+    gutter: -40pt,
     [
       #align(center)[==== Stack before `call b`:]
       #stack(
@@ -130,7 +130,7 @@ The following document will use these abbreviations for readability.
         [                ], [`a`         ], [$-$08],
         [                ], [`b`         ], [$-$10],
         [                ], [`RV(result)`], [$-$18],
-        [`SP` is here$->$]
+        [`SP` is here$->$], [], []
       )
     ],
     [
@@ -149,7 +149,7 @@ The following document will use these abbreviations for readability.
         [                ], [`RSP`       ], [$+$ 10],
         [                ], [`SSP`       ], [$+$ 08],
         [`FX + 1`    $->$], [`RP`        ], [$+$ 00],
-        [`SP` is here$->$],
+        [`SP` is here$->$],[], []
       )
     ],
     [
@@ -162,7 +162,7 @@ The following document will use these abbreviations for readability.
         [                ], [`a`         ], [$-$ 08],
         [                ], [`b`         ], [$-$ 10],
         [                ], [`RV(result)`], [$-$ 18, `b` result is now here],
-        [`SP` is here$->$  ],
+        [`SP` is here$->$  ],[], []
       )
     ]
   )
@@ -201,7 +201,7 @@ The following document will use these abbreviations for readability.
         [`FX` $->$      ],[`RP`         ],[$+$00],
         [               ],[`a`          ],[$-$08],
         [               ],[`b`          ],[$-$10],
-        [`SP` is here $->$]
+        [`SP` is here $->$],[], []
       )
     ],
     [
@@ -214,7 +214,7 @@ The following document will use these abbreviations for readability.
         [               ],[`a`      ],[$-$08],
         [               ],[`b`      ],[$-$10],
         [               ],[`SEP(fp)`],[$-$18],
-        [`SP` is here $->$]
+        [`SP` is here $->$],[], []
       )
     ],
   )
