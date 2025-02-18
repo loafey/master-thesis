@@ -1,6 +1,13 @@
 #import "Prelude.typ": *
 
 #set heading(numbering: "1.1.")
+#set heading(numbering: (first, ..other) => {
+  let res = str(first);
+  for o in other.pos() {
+    res += "." + str(o);
+  }
+  if other.pos().len() < 3 { return res + "." }
+})
 
 #set text(font: "New Computer Modern")
 
@@ -79,6 +86,11 @@ The following document will use these abbreviations for readability.
     stack start pointer; this is a pointer that points to the start of this stacks allocation.
     As a stack and the heap grows in different interactions, newly created stacks 
     have their pointers offset by their size. See @future for more details.
+  ],
+  abbrName[`FX`], [
+    stack frame `X`; this just that this region some arbitrary stack frame.
+    `FX + N` is used to indicate that we are adding stack frames above `FX`. 
+    If multiple stacks are used in an example they will be enumarated as `FY`, `FZ`...
   ]
 )
 
@@ -104,12 +116,12 @@ The following document will use these abbreviations for readability.
     columns: (1fr,1fr),
     gutter: 10pt,
     [
-      === Stack before `call b`:
+      #align(center)[==== Stack before `call b`:]
       #stack(
         [                ], [`RVP`       ], [$+$18],
         [                ], [`RSP`       ], [$+$10],
         [                ], [`SSP`       ], [$+$08],
-        [Frame X $->$    ], [`RP`        ], [$+$00],
+        [`FX` $->$        ], [`RP`        ], [$+$00],
         [                ], [`a`         ], [$-$08],
         [                ], [`b`         ], [$-$10],
         [                ], [`RV(result)`], [$-$18],
@@ -117,12 +129,12 @@ The following document will use these abbreviations for readability.
       )
     ],
     [
-      === Stack during `call b` start:
+      #align(center)[==== Stack during `call b` start:]
       #stack(
         [                ], [`RVP`       ], [$+$ 60],
         [                ], [`RSP`       ], [$+$ 58],
         [                ], [`SSP`       ], [$+$ 50],
-        [Frame X $->$    ], [`RP`        ], [$+$ 48],
+        [`FX` $->$       ], [`RP`        ], [$+$ 48],
         [                ], [`a`         ], [$+$ 40],
         [                ], [`b`         ], [$+$ 38],
         [                ], [`RV(result)`], [$+$ 30],
@@ -131,17 +143,17 @@ The following document will use these abbreviations for readability.
         [                ], [`RVP`       ], [$+$ 18, $*$result],
         [                ], [`RSP`       ], [$+$ 10],
         [                ], [`SSP`       ], [$+$ 08],
-        [Frame X + 1 $->$], [`RP`        ], [$+$ 00],
+        [`FX + 1`    $->$], [`RP`        ], [$+$ 00],
         [`SP` is here$->$],
       )
     ],
     [
-      === Stack after `call b`:
+      #align(center)[==== Stack after `call b`:]
       #stack(
         [                ], [`RVP`       ], [$+$ 18],
         [                ], [`RSP`       ], [$+$ 10],
         [                ], [`SSP`       ], [$+$ 08],
-        [Frame X $->$    ], [`RP`        ], [$+$ 00],
+        [`FX`    $->$    ], [`RP`        ], [$+$ 00],
         [                ], [`a`         ], [$-$ 08],
         [                ], [`b`         ], [$-$ 10],
         [                ], [`RV(result)`], [$-$ 18, `b` result is now here],
@@ -176,24 +188,24 @@ The following document will use these abbreviations for readability.
   #grid(
     columns: (1fr,1fr),
     [
-      #align(center)[=== The stack before preparing `fp`:]
+      #align(center)[==== The stack before preparing `fp`:]
       #stack(
         [               ],[`RVP`        ],[$+$18],
         [               ],[`RSP`        ],[$+$10],
         [               ],[`SSP`        ],[$+$08],
-        [Frame X $->$   ],[`RP`         ],[$+$00],
+        [`FX` $->$      ],[`RP`         ],[$+$00],
         [               ],[`a`          ],[$-$08],
         [               ],[`b`          ],[$-$10],
         [`SP` is here $->$]
       )
     ],
     [
-      #align(center)[=== The stack after preparing `fp`:]
+      #align(center)[==== The stack after preparing `fp`:]
       #stack(
         [               ],[`RVP`    ],[$+$18],
         [               ],[`RSP`    ],[$+$10],
         [               ],[`SSP`    ],[$+$08],
-        [Frame X $->$   ],[`RP`     ],[$+$00],
+        [`FX` $->$      ],[`RP`     ],[$+$00],
         [               ],[`a`      ],[$-$08],
         [               ],[`b`      ],[$-$10],
         [               ],[`SEP(fp)`],[$-$18],
@@ -204,7 +216,7 @@ The following document will use these abbreviations for readability.
   #grid(
     columns: (1fr,1fr),
     [
-      #align(center)[=== The stack that was created for `fp`:]
+      #align(center)[==== The stack that was created for `fp`:]
       #stack(
         [],[`b`],[],
         [],[`a`],[],
