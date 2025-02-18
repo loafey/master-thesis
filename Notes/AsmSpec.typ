@@ -80,7 +80,7 @@ The following document will use these abbreviations for readability.
     return value called `x`; this is where the result of a function call will be stored.
   ],
   abbrName[`SEP(x)`], [
-    stack execution pointer; where the stack pointer should be moved when executing a closure.
+    stack execution pointer; where the stack pointer should be moved when executing a future.
   ],
   abbrName[`SSP`], [
     stack start pointer; this is a pointer that points to the start of this stacks allocation.
@@ -104,7 +104,7 @@ The following document will use these abbreviations for readability.
   #align(center)[== Calling functions using: `call`]
   This is a standard function call, which is somewhat similar to the C ABI.
   The biggest difference here is that return values are always passed using pointers.
-  This is to avoid discrepancies between normal and closure based function calls.
+  This is to avoid discrepancies between normal and future based function calls.
   Arguments are also never passed using registers for simplicities sake.
 
   === Example:
@@ -237,7 +237,7 @@ The following document will use these abbreviations for readability.
   (using `await` or `flush`), `RSP` is set to an appropiate location
   so when a function returns, the stack pointer can be set to that location.
   `SSP` points to the start of this stack *in memory*. This allows for easy
-  garbage collection, if we are for example flushing a closure.
+  garbage collection, if we are for example flushing a future.
   The reason we need `SSP` is because the stack on X86-64 grows backwards, 
   while the heap grows forward. This also means `SEP(fp)` points to somewhere
   along the end of the new stack allocation, and not the start, meaning that
@@ -249,12 +249,12 @@ The following document will use these abbreviations for readability.
 ]
 
 #let await = [
-  #align(center)[== Executing closures using `await`]
+  #align(center)[== Executing futures using `await`]
   #todo[Add content here]
 ]
 
 #let flush = [
-  #align(center)[== Executing closures using `flush`]
+  #align(center)[== Executing futures using `flush`]
   #todo[Add content here]
 ]
 
