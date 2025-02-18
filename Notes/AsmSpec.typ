@@ -37,10 +37,10 @@ If, for example, the compiler needs to deallocate the false main stack, it is fr
 without a special case, which would not be possible with a normal stack. 
 
 #align(center)[= Calling Convention]
-The language has at this point not stable ABI, nor does it promise that it will have one in
-the future. This is to allow innovation and redesign if need be. A small shim is 
-added when calling functions using the C ABI @wiki:X86_calling_conventions_cdecl, 
-as to allow for FFI.
+As stated before the language does not have a stable ABI, nor does it promise that
+it will have one in the future. This is to allow innovation and redesign if need be. 
+A small shim is added when calling functions using the C ABI @wiki:X86_calling_conventions_cdecl, 
+as to allow for FFI. See @cCalls for more details about this.
 
 
 #align(center)[== About registers]
@@ -119,7 +119,7 @@ The following document will use these abbreviations for readability.
   
   #grid(
     columns: (1fr,1fr),
-    gutter: 10pt,
+    gutter: -10pt,
     [
       #align(center)[==== Stack before `call b`:]
       #stack(
@@ -259,7 +259,7 @@ The following document will use these abbreviations for readability.
 ]
 
 #let cCalls = [
-  #align(center)[== C Calls]
+  #align(center)[== C Calls<cCalls>]
   #todo[Add content here]
 ]
 
