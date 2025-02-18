@@ -88,9 +88,13 @@ The following document will use these abbreviations for readability.
     have their pointers offset by their size. See @future for more details.
   ],
   abbrName[`FX`], [
-    stack frame `X`; this just that this region some arbitrary stack frame.
+    stack frame `X`; indicates the base pointer of some arbitrary stack frame.
     `FX + N` is used to indicate that we are adding stack frames above `FX`. 
     If multiple stacks are used in an example they will be enumarated as `FY`, `FZ`...
+  ],
+  abbrName[`FXM`], [
+    stack frame `X` metadata; the region of memory before a stackframe containing necessary
+    runtime information. Follows the same enumeration rules as `FX`. Also contains any potential arguments to functions.
   ]
 )
 
@@ -118,10 +122,10 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== Stack before `call b`:]
       #stack(
-        [                ], [`RVP`       ], [$+$18],
+        [`FXM` $->$      ], [`RVP`       ], [$+$18],
         [                ], [`RSP`       ], [$+$10],
         [                ], [`SSP`       ], [$+$08],
-        [`FX` $->$        ], [`RP`        ], [$+$00],
+        [`FX` $->$       ], [`RP`        ], [$+$00],
         [                ], [`a`         ], [$-$08],
         [                ], [`b`         ], [$-$10],
         [                ], [`RV(result)`], [$-$18],
@@ -131,14 +135,14 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== Stack during `call b` start:]
       #stack(
-        [                ], [`RVP`       ], [$+$ 60],
+        [`FXM` $->$      ], [`RVP`       ], [$+$ 60],
         [                ], [`RSP`       ], [$+$ 58],
         [                ], [`SSP`       ], [$+$ 50],
         [`FX` $->$       ], [`RP`        ], [$+$ 48],
         [                ], [`a`         ], [$+$ 40],
         [                ], [`b`         ], [$+$ 38],
         [                ], [`RV(result)`], [$+$ 30],
-        [                ], [`b`         ], [$+$ 28],
+        [`FXM + 1` $->$  ], [`b`         ], [$+$ 28],
         [                ], [`a`         ], [$+$ 20],
         [                ], [`RVP`       ], [$+$ 18, $*$result],
         [                ], [`RSP`       ], [$+$ 10],
@@ -150,7 +154,7 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== Stack after `call b`:]
       #stack(
-        [                ], [`RVP`       ], [$+$ 18],
+        [`FXM` $->$      ], [`RVP`       ], [$+$ 18],
         [                ], [`RSP`       ], [$+$ 10],
         [                ], [`SSP`       ], [$+$ 08],
         [`FX`    $->$    ], [`RP`        ], [$+$ 00],
@@ -190,7 +194,7 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== The stack before preparing `fp`:]
       #stack(
-        [               ],[`RVP`        ],[$+$18],
+        [`FXM` $->$     ],[`RVP`        ],[$+$18],
         [               ],[`RSP`        ],[$+$10],
         [               ],[`SSP`        ],[$+$08],
         [`FX` $->$      ],[`RP`         ],[$+$00],
@@ -202,7 +206,7 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== The stack after preparing `fp`:]
       #stack(
-        [               ],[`RVP`    ],[$+$18],
+        [`FXM` $->$     ],[`RVP`    ],[$+$18],
         [               ],[`RSP`    ],[$+$10],
         [               ],[`SSP`    ],[$+$08],
         [`FX` $->$      ],[`RP`     ],[$+$00],
@@ -218,12 +222,12 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== The stack that was created for `fp`:]
       #stack(
-        [],[`b`],[],
-        [],[`a`],[],
-        [],[`RVP`],[],
-        [],[`RSP`], [],
-        [],[`SSP`], [],
-        [`fp` $->$],
+        [`FYM` $->$],[`b`  ],[],
+        [          ],[`a`  ],[],
+        [          ],[`RVP`],[],
+        [          ],[`RSP`],[],
+        [          ],[`SSP`],[],
+        [`FY` $->$ ],[],     [`fp` points here]
       )
     ]
   )
