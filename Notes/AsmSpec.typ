@@ -102,9 +102,9 @@ The following document will use these abbreviations for readability.
 #let call = [
   #align(center)[== Calling functions using: `call`]
   This is a standard function call, which is somewhat similar to the C ABI.
-  The difference here is that return values are passed by pointers.
-  This is to avoid discrepancies between normal
-  and closure based function calls.
+  The biggest difference here is that return values are always passed using pointers.
+  This is to avoid discrepancies between normal and closure based function calls.
+  Arguments are also never passed using registers for simplicities sake.
 
   === Example:
   Consider this simple example program created using our Haskell DSL:
