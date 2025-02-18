@@ -249,17 +249,17 @@ The following document will use these abbreviations for readability.
 ]
 
 #let await = [
-  #align(center)[== Await]
+  #align(center)[== Executing closures using `await`]
   #todo[Add content here]
 ]
 
 #let flush = [
-  #align(center)[== Flush]
+  #align(center)[== Executing closures using `flush`]
   #todo[Add content here]
 ]
 
 #let cCalls = [
-  #align(center)[== C Calls<cCalls>]
+  #align(center)[== Executing C functions<cCalls>]
   #todo[Add content here]
 ]
 
@@ -269,13 +269,13 @@ The following document will use these abbreviations for readability.
 #tailCall
 #pagebreak()
 #future
-
 #pagebreak()
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 10pt, 
-  await, flush, cCalls
-)
+#await 
+#pagebreak()
+#flush 
+#pagebreak()
+#cCalls
+
 
 #pagebreak()
 #bibliography("Refs.bib")
