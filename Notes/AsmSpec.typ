@@ -94,7 +94,8 @@ The following document will use these abbreviations for readability.
   ],
   abbrName[`FXM`], [
     stack frame `X` metadata; the region of memory before a stackframe containing necessary
-    runtime information. Follows the same enumeration rules as `FX`. Also contains any potential arguments to functions.
+    runtime information. Follows the same enumeration rules as `FX`. Also contains any potential 
+    arguments passed to functions.
   ]
 )
 
