@@ -6,7 +6,7 @@
   for o in other.pos() {
     res += "." + str(o);
   }
-  if other.pos().len() < 3 { return res + "." }
+  if other.pos().len() < 2 { return res + "." }
 })
 
 #set text(font: "New Computer Modern")
@@ -171,7 +171,53 @@ The following document will use these abbreviations for readability.
 
 #let tailCall = [
   #align(center)[== Calling functions using `tailcall`]
-  #todo[Add content here]
+  This is used to implement tail call elimination. Compared to the normal `call`
+  construct, this replace the current stack frame. #text(fill: red)[Keep in mind that], 
+  when you use this, the function calling `tailcall` will never be returned to!
+  `tailcalls` can also be done optionally, as branching, normal function `call`s, 
+  etc are allowed when `tailcall`ing.
+
+  === Example
+  Consider this simple example program created using our Haskell DSL:
+  ```haskell
+  function "tailrec" 1 \[val] -> do
+    res <- add (Int 1) (StackVar B64 val)
+    tailcall "tailrec" [val]
+  ```
+  
+  #grid(
+    columns: (1fr, 1fr),
+    [
+      #align(center)[==== Stack before `tailcall`:]
+      #stack(
+        [`FXM` $->$], [`val`], [$+$ 20],
+        [          ], [`RVP`], [$+$ 18],
+        [          ], [`RSP`], [$+$ 10],
+        [          ], [`SSP`], [$+$ 08],
+        [`FX`  $->$], [`RP` ], [$+$ 00],
+        [          ], [`res`], [$-$ 08],
+        [`SP`  $->$], [``   ], [$-$ 10],
+      )
+    ],
+    [
+      #align(center)[==== Stack before second `tailcall`:]
+      #stack(
+        [`FXM` $->$], [`val + 1`], [$+$ 20],
+        [          ], [`RVP`], [$+$ 18],
+        [          ], [`RSP`], [$+$ 10],
+        [          ], [`SSP`], [$+$ 08],
+        [`FX`  $->$], [`RP` ], [$+$ 00],
+        [          ], [`res`], [$-$ 08],
+        [`SP`  $->$], [``   ], [$-$ 10],
+      )
+    ]
+  )
+  As can be seen here, the stack is the exact same as it was before. 
+  The only difference here is the argument, which for this example has
+  been incremented by one.
+
+  When tailcalling `RVP`, `RSP`, `SSP` and `RP` are copied kept in place, as
+  `tailcall`s should always return to the original caller, no matter the amount of tail calls that has been done.
 ]
 
 #let future = [
@@ -275,6 +321,8 @@ The following document will use these abbreviations for readability.
 #flush 
 #pagebreak()
 #cCalls
+
+#align(center)[== Returning from a `call`]
 
 
 #pagebreak()
