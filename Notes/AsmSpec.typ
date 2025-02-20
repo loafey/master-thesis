@@ -354,7 +354,7 @@ The following document will use these abbreviations for readability.
     is set to the code pointer back to the caller.
 
     When this stack is done executing, the return value will be written to RVP, and 
-    the stack will be deallocated.
+    the stack will be deallocated using `SSP`.
   ],[
     #align(center)[==== The new stack during await]
     #stack(
