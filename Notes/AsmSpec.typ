@@ -371,7 +371,10 @@ The following document will use these abbreviations for readability.
 
 #let flush = [
   #align(center)[== Executing futures using `flush`]
-  #todo[Add content here]
+  This is the second option when executing `future`s, as 
+  if `await` is like the normal `call`, `flush` is conceptually like `tailcall`.
+
+  #todo[write more :)]
 ]
 
 #let cCalls = [
