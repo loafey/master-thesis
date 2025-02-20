@@ -56,9 +56,10 @@ interact with.
 The following document will use these abbreviations for readability.
 #let abbrName(nm) = [#h(10pt) #sym.bullet #h(4pt) #nm:];
 #grid(
-  columns: (5.6em, 1fr),
-  gutter: 1em,
-  abbrName[`RP`], [return pointer; the pointer which points back to the location that called us.],
+  columns: (8em, 1fr),
+  row-gutter: 1em,
+  column-gutter: -0.1em,
+  abbrName[`RP`], [return pointer; the pointer which points back to the caller.],
   abbrName(`RSP`), [
     return stack pointer; where the stack pointer should be placed when returning.
     See @future for more details.
@@ -96,6 +97,11 @@ The following document will use these abbreviations for readability.
     stack frame `X` metadata; the region of memory before a stackframe containing necessary
     runtime information. Follows the same enumeration rules as `FX`. Also contains any potential 
     arguments passed to functions.
+  ],
+  abbrName[`UNINIT(r)`], [
+    uninitialized stack value; this stack value will be used in the future to insert
+    a value of type `r`. For instance, a stack value with `UNINIT(RP)` designates a value
+    where a return pointer will be written in the future.
   ]
 )
 
@@ -269,12 +275,12 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== The stack that was created for `fp`:]
       #stack(
-        [`FYM` $->$],[`b`  ],[],
-        [          ],[`a`  ],[],
-        [          ],[`RVP`],[],
-        [          ],[`RSP`],[],
-        [          ],[`SSP`],[],
-        [`FY` $->$ ],[],     [`fp` points here]
+        [`FYM` $->$],[`b`          ],[],
+        [          ],[`a`          ],[],
+        [          ],[`UNINIT(RVP)`],[],
+        [          ],[`UNINIT(RSP)`],[],
+        [          ],[`SSP`        ],[],
+        [`FY` $->$ ],[`UNINIT(RP)` ],[`fp` points here]
       )
     ]
   )
@@ -283,7 +289,7 @@ The following document will use these abbreviations for readability.
   (using `await` or `flush`), `RSP` is set to an appropiate location
   so when a function returns, the stack pointer can be set to that location.
   `SSP` points to the start of this stack *in memory*. This allows for easy
-  garbage collection, if we are for example flushing a future.
+  deallocation, if we are for example flushing a future.
   The reason we need `SSP` is because the stack on X86-64 grows backwards, 
   while the heap grows forward. This also means `SEP(fp)` points to somewhere
   along the end of the new stack allocation, and not the start, meaning that
@@ -296,7 +302,71 @@ The following document will use these abbreviations for readability.
 
 #let await = [
   #align(center)[== Executing futures using `await`]
-  #todo[Add content here]
+  If a future has been created using the `future` construct, there are two ways to execute it,
+  and this chapter covers `await`. 
+
+  ==== Example
+  Let us take a look at this simple example written in our Haskell DSL:
+  ```haskell
+  function "execfuture" 0 \[] -> do
+    a <- push . Int $ 0
+    b <- push . Int $ 1
+    fp <- future "someFuture" [a, b]
+    res <- await fp
+    pure ()
+  ```
+  This is what our two stacks will look like before the actual `await` is called:
+  #grid(
+    columns: (1fr,1fr),
+    [
+      #align(center)[==== The stack containing `fp`:]
+      #stack(
+        [`FXM` $->$       ],[`RVP`    ],[$+$18],
+        [                 ],[`RSP`    ],[$+$10],
+        [                 ],[`SSP`    ],[$+$08],
+        [`FX` $->$        ],[`RP`     ],[$+$00],
+        [                 ],[`a`      ],[$-$08],
+        [                 ],[`b`      ],[$-$10],
+        [                 ],[`SEP(fp)`],[$-$18],
+        [                 ],[`RV(res)`    ],[$-$20],
+        [`SP` is here $->$],[         ],[$-$28]
+      )
+    ],
+    [
+      #align(center)[==== The new stack pointed to by `fp`:]
+      #stack(
+        [`FYM` $->$],[`b`          ],[],
+        [          ],[`a`          ],[],
+        [          ],[`UNINIT(RVP)`],[],
+        [          ],[`UNINIT(RSP)`],[],
+        [          ],[`SSP`        ],[],
+        [`FY` $->$ ],[`UNINIT(RP)` ],[`fp` points here]
+      )
+    ]
+  ) 
+  #grid(columns: (1fr,1fr), [
+    After the `await` construct is called the newly modified stack will be modified 
+    to look like the one on the right here.
+    Observe that `RVP`, `RSP`, and `RP` have all been set. 
+    `RVP` is set to to the address of `res` in the original stack, 
+    `RSP` is set to where the stack pointer was before the `await`
+    (-28 in the original stack), and finally `RP`
+    is set to the code pointer back to the caller.
+
+    When this stack is done executing, the return value will be written to RVP, and 
+    the stack will be deallocated.
+  ],[
+    #align(center)[==== The new stack during await]
+    #stack(
+      [`FYM` $->$       ],[`b`  ],[],
+      [                 ],[`a`  ],[],
+      [                 ],[`RVP`],[points to `res`],
+      [                 ],[`RSP`],[],
+      [                 ],[`SSP`],[],
+      [`FY` $->$        ],[`RP` ],[`fp` points here],
+      [`SP` is here $->$],[     ],[]
+      )
+  ]);
 ]
 
 #let flush = [
