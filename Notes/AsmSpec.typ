@@ -123,6 +123,10 @@ The following document will use these abbreviations for readability.
   abbrName(`VAR(x)`), [
     variable stored on the stack; the relative location of the variable from the current `BP`
     is the index on the right.
+  ],
+  abbrName(`CP`), [
+    code pointer; used to store whichever function will be executed when executing a 
+    `future`.
   ]
 )
 
@@ -301,16 +305,16 @@ The following document will use these abbreviations for readability.
         [          ],[`UNINIT(RVP)`],[],
         [          ],[`UNINIT(RSP)`],[],
         [          ],[`SSP`        ],[],
-        [`FY` $->$ ],[`UNINIT(RP)` ],[$<-$ `fp`]
+        [`FY` $->$ ],[`CP`         ],[$<-$ `fp`]
       )
     ]
   )
   The stack that was created is now prepared to be exucted whenever. Notice 
-  the registers values `RSP` and `SSP` here. When a future is called 
-  (using `await` or `flush`), `RSP` is set to an appropiate location
-  so when a function returns, the stack pointer can be set to that location.
-  `SSP` points to the start of this stack *in memory*. This allows for easy
-  deallocation, if we are for example flushing a future.
+  the values `RSP` and `SSP` here. When a `future` is executed, 
+  `RSP` is set to an appropiate location
+  so that when a function returns, the stack pointer can be set to that location.
+  `SSP` points to the start of this stack in memory. This allows for easy
+  deallocation.
   The reason we need `SSP` is because the stack on X86-64 grows backwards, 
   while the heap grows forward. This also means `SEP(fp)` points to somewhere
   along the end of the new stack allocation, and not the start, meaning that
@@ -318,7 +322,8 @@ The following document will use these abbreviations for readability.
   We could potentially avoid copying `SSP` and `RSP` to every stack frame, and only
   store them at the once at the start of a stack, but this would complicate
   compliation as we would need to keep track of the current stack depth to find them
-  when returning/`flush`ing. 
+  when returning/`flush`ing. Also notice `CP` here, this is the function that will be 
+  executed when running a future and will be replaced by a `RP` when that is done.
 ]
 
 #let await = [
@@ -361,7 +366,7 @@ The following document will use these abbreviations for readability.
         [          ],[`UNINIT(RVP)`],[],
         [          ],[`UNINIT(RSP)`],[],
         [          ],[`SSP`        ],[],
-        [`FY` $->$ ],[`UNINIT(RP)` ],[$<-$ `fp`]
+        [`FY` $->$ ],[`CP`         ],[$<-$ `fp`]
       )
     ]
   ) 
@@ -371,8 +376,9 @@ The following document will use these abbreviations for readability.
     Observe that `RVP`, `RSP`, and `RP` have all been set. 
     `RVP` is set to to the address of `res` in the original stack, 
     `RSP` is set to where the stack pointer was before the `await`
-    (-28 in the original stack), and finally `RP`
-    is set to the code pointer back to the caller.
+    (-28 in the original stack), and finally 
+    `CP` is moved to another location and `RP`
+    is written there so we have a pointer back to the caller.
 
     When this stack is done executing, the return value will be written to RVP, and 
     the stack will be deallocated using `SSP`.
@@ -435,7 +441,7 @@ The following document will use these abbreviations for readability.
         [          ],[`UNINIT(RVP)`],[],
         [          ],[`UNINIT(RSP)`],[],
         [          ],[`SSP`        ],[],
-        [`FY` $->$ ],[`UNINIT(RP)` ],[$<-$ `fp`]
+        [`FY` $->$ ],[`CP`         ],[$<-$ `fp`]
       )
     ]
   ) 
@@ -444,7 +450,9 @@ The following document will use these abbreviations for readability.
     [
       When `flush` is called multiple things will happen.
       `RP`, `RSP` and `RVP` will all be copied over from stack `X`
-      to stack `Y`. Unlike `tailcall`, `SSP` should _not_ be copied over,
+      to stack `Y`. When `RP` is copied over, the preexisting CP is
+      safely stored before.       
+      Unlike `tailcall`, `SSP` should _not_ be copied over,
       as that will destroy any chance of deallocation of frame `Y`.
       This means that the normal `call` instruction in Assembly 
       can not be used to set the code pointer, as that will write
