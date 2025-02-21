@@ -243,7 +243,7 @@ The following document will use these abbreviations for readability.
   The only difference here is the argument, which for this example has
   been incremented by one.
 
-  When tailcalling `RVP`, `RSP`, `SSP` and `RP` are copied kept in place, as
+  When tailcalling `RVP`, `RSP`, `SSP` and `RP` are copied to the new frame, as
   `tailcall`s should always return to the original caller, no matter the amount of tail calls that has been done.
 ]
 
@@ -444,7 +444,8 @@ The following document will use these abbreviations for readability.
     [
       When `flush` is called multiple things will happen.
       `RP`, `RSP` and `RVP` will all be copied over from stack `X`
-      to stack `Y`.
+      to stack `Y`. Unlike `tailcall`, `SSP` should _not_ be copied over,
+      as that will destroy any chance of deallocation of frame `Y`.
       This means that the normal `call` instruction in Assembly 
       can not be used to set the code pointer, as that will write
       an innacurate `RP` to stack `Y`, and instead a long jump
