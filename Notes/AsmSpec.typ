@@ -102,6 +102,10 @@ The following document will use these abbreviations for readability.
     uninitialized stack value; this stack value will be used in the future to insert
     a value of type `r`. For instance, a stack value with `UNINIT(RP)` designates a value
     where a return pointer will be written in the future.
+  ],
+  abbrName(`VAR(x)`), [
+    variable stored on the stack; the relative location of the variable from the current `BP`
+    is the index on the right.
   ]
 )
 
@@ -133,8 +137,8 @@ The following document will use these abbreviations for readability.
         [                ], [`RSP`       ], [$+$10],
         [                ], [`SSP`       ], [$+$08],
         [`FX` $->$       ], [`RP`        ], [$+$00],
-        [                ], [`a`         ], [$-$08],
-        [                ], [`b`         ], [$-$10],
+        [                ], [`RES(a)`    ], [$-$08],
+        [                ], [`RES(b)`    ], [$-$10],
         [                ], [`RV(result)`], [$-$18],
         [`SP` is here$->$], [], []
       )
@@ -146,11 +150,11 @@ The following document will use these abbreviations for readability.
         [                ], [`RSP`       ], [$+$ 58],
         [                ], [`SSP`       ], [$+$ 50],
         [`FX` $->$       ], [`RP`        ], [$+$ 48],
-        [                ], [`a`         ], [$+$ 40],
-        [                ], [`b`         ], [$+$ 38],
+        [                ], [`res(a)`    ], [$+$ 40],
+        [                ], [`res(b)`    ], [$+$ 38],
         [                ], [`RV(result)`], [$+$ 30],
-        [`FXM + 1` $->$  ], [`b`         ], [$+$ 28],
-        [                ], [`a`         ], [$+$ 20],
+        [`FXM + 1` $->$  ], [`res(b)`    ], [$+$ 28],
+        [                ], [`res(a)`    ], [$+$ 20],
         [                ], [`RVP`       ], [$+$ 18, $*$result],
         [                ], [`RSP`       ], [$+$ 10],
         [                ], [`SSP`       ], [$+$ 08],
@@ -165,8 +169,8 @@ The following document will use these abbreviations for readability.
         [                ], [`RSP`       ], [$+$ 10],
         [                ], [`SSP`       ], [$+$ 08],
         [`FX`    $->$    ], [`RP`        ], [$+$ 00],
-        [                ], [`a`         ], [$-$ 08],
-        [                ], [`b`         ], [$-$ 10],
+        [                ], [`var(a)`    ], [$-$ 08],
+        [                ], [`var(b)`    ], [$-$ 10],
         [                ], [`RV(result)`], [$-$ 18, `b` result is now here],
         [`SP` is here$->$  ],[], []
       )
@@ -196,25 +200,25 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== Stack before `tailcall`:]
       #stack(
-        [`FXM` $->$], [`val`], [$+$ 20],
-        [          ], [`RVP`], [$+$ 18],
-        [          ], [`RSP`], [$+$ 10],
-        [          ], [`SSP`], [$+$ 08],
-        [`FX`  $->$], [`RP` ], [$+$ 00],
-        [          ], [`res`], [$-$ 08],
-        [`SP`  $->$], [``   ], [$-$ 10],
+        [`FXM` $->$], [`val`     ], [$+$ 20],
+        [          ], [`RVP`     ], [$+$ 18],
+        [          ], [`RSP`     ], [$+$ 10],
+        [          ], [`SSP`     ], [$+$ 08],
+        [`FX`  $->$], [`RP`      ], [$+$ 00],
+        [          ], [`VAR(res)`], [$-$ 08],
+        [`SP`  $->$], [``        ], [$-$ 10],
       )
     ],
     [
       #align(center)[==== Stack before second `tailcall`:]
       #stack(
-        [`FXM` $->$], [`val + 1`], [$+$ 20],
-        [          ], [`RVP`], [$+$ 18],
-        [          ], [`RSP`], [$+$ 10],
-        [          ], [`SSP`], [$+$ 08],
-        [`FX`  $->$], [`RP` ], [$+$ 00],
-        [          ], [`res`], [$-$ 08],
-        [`SP`  $->$], [``   ], [$-$ 10],
+        [`FXM` $->$], [`val + 1` ], [$+$ 20],
+        [          ], [`RVP`     ], [$+$ 18],
+        [          ], [`RSP`     ], [$+$ 10],
+        [          ], [`SSP`     ], [$+$ 08],
+        [`FX`  $->$], [`RP`      ], [$+$ 00],
+        [          ], [`VAR(res)`], [$-$ 08],
+        [`SP`  $->$], [``        ], [$-$ 10],
       )
     ]
   )
@@ -247,12 +251,12 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== The stack before preparing `fp`:]
       #stack(
-        [`FXM` $->$     ],[`RVP`        ],[$+$18],
-        [               ],[`RSP`        ],[$+$10],
-        [               ],[`SSP`        ],[$+$08],
-        [`FX` $->$      ],[`RP`         ],[$+$00],
-        [               ],[`a`          ],[$-$08],
-        [               ],[`b`          ],[$-$10],
+        [`FXM` $->$     ],[`RVP`   ],[$+$18],
+        [               ],[`RSP`   ],[$+$10],
+        [               ],[`SSP`   ],[$+$08],
+        [`FX` $->$      ],[`RP`    ],[$+$00],
+        [               ],[`VAR(a)`],[$-$08],
+        [               ],[`VAR(b)`],[$-$10],
         [`SP` is here $->$],[], []
       )
     ],
@@ -263,8 +267,8 @@ The following document will use these abbreviations for readability.
         [               ],[`RSP`    ],[$+$10],
         [               ],[`SSP`    ],[$+$08],
         [`FX` $->$      ],[`RP`     ],[$+$00],
-        [               ],[`a`      ],[$-$08],
-        [               ],[`b`      ],[$-$10],
+        [               ],[`VAR(a)` ],[$-$08],
+        [               ],[`VAR(b)` ],[$-$10],
         [               ],[`SEP(fp)`],[$-$18],
         [`SP` is here $->$],[], []
       )
@@ -275,8 +279,8 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== The stack that was created for `fp`:]
       #stack(
-        [`FYM` $->$],[`b`          ],[],
-        [          ],[`a`          ],[],
+        [`FYM` $->$],[`VAR(b)`     ],[],
+        [          ],[`VAR(a)`     ],[],
         [          ],[`UNINIT(RVP)`],[],
         [          ],[`UNINIT(RSP)`],[],
         [          ],[`SSP`        ],[],
@@ -325,8 +329,8 @@ The following document will use these abbreviations for readability.
         [                 ],[`RSP`    ],[$+$10],
         [                 ],[`SSP`    ],[$+$08],
         [`FX` $->$        ],[`RP`     ],[$+$00],
-        [                 ],[`a`      ],[$-$08],
-        [                 ],[`b`      ],[$-$10],
+        [                 ],[`VAR(a)` ],[$-$08],
+        [                 ],[`VAR(b)` ],[$-$10],
         [                 ],[`SEP(fp)`],[$-$18],
         [                 ],[`RV(res)`    ],[$-$20],
         [`SP` is here $->$],[         ],[$-$28]
@@ -335,8 +339,8 @@ The following document will use these abbreviations for readability.
     [
       #align(center)[==== The new stack pointed to by `fp`:]
       #stack(
-        [`FYM` $->$],[`b`          ],[],
-        [          ],[`a`          ],[],
+        [`FYM` $->$],[`VAR(b)`     ],[],
+        [          ],[`VAR(a)`     ],[],
         [          ],[`UNINIT(RVP)`],[],
         [          ],[`UNINIT(RSP)`],[],
         [          ],[`SSP`        ],[],
@@ -358,13 +362,13 @@ The following document will use these abbreviations for readability.
   ],[
     #align(center)[==== The new stack during await]
     #stack(
-      [`FYM` $->$       ],[`b`  ],[],
-      [                 ],[`a`  ],[],
-      [                 ],[`RVP`],[points to `res`],
-      [                 ],[`RSP`],[],
-      [                 ],[`SSP`],[],
-      [`FY` $->$        ],[`RP` ],[`fp` points here],
-      [`SP` is here $->$],[     ],[]
+      [`FYM` $->$       ],[`VAR(b)`],[],
+      [                 ],[`VAR(a)`],[],
+      [                 ],[`RVP`   ],[points to `res`],
+      [                 ],[`RSP`   ],[],
+      [                 ],[`SSP`   ],[],
+      [`FY` $->$        ],[`RP`    ],[`fp` points here],
+      [`SP` is here $->$],[        ],[]
       )
   ]);
 ]
