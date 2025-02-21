@@ -51,6 +51,23 @@ If registers need to be kept inbetween function calls, temporarily push and pop 
 from the stack! The ABI make no promises about which registers functions may or may not
 interact with. 
 
+#align(center)[== Efficiency]
+As will be made clear by this spec, the focus of this specification is not necessarily
+efficiency memory wise. Each stack frame needs to use at least 4 bytes, which
+is double than what C uses by default, but compared to other system level languages
+this is not too bad. Worth to not that the minimum stack frame size is very 
+platform and compiler dependant, so these are a rough estimate for X86-64 Linux.
+#table(
+  columns: (1fr,1fr,1fr),
+  [Language], [Minimum stack frame size in bytes], [Considered system-level],
+  [SLFL],     [4],                                 [#sym.checkmark],
+  [C],        [2],                                 [#sym.checkmark],
+  [C++],      [??],                                [#sym.checkmark],
+  [Rust],     [??],                                [#sym.checkmark],
+)
+(extremely hard to find resources for this :( )
+
+
 #pagebreak()
 #align(center)[== Abbreviations]
 The following document will use these abbreviations for readability.
@@ -284,7 +301,7 @@ The following document will use these abbreviations for readability.
         [          ],[`UNINIT(RVP)`],[],
         [          ],[`UNINIT(RSP)`],[],
         [          ],[`SSP`        ],[],
-        [`FY` $->$ ],[`UNINIT(RP)` ],[`fp` points here]
+        [`FY` $->$ ],[`UNINIT(RP)` ],[$<-$ `fp`]
       )
     ]
   )
@@ -344,7 +361,7 @@ The following document will use these abbreviations for readability.
         [          ],[`UNINIT(RVP)`],[],
         [          ],[`UNINIT(RSP)`],[],
         [          ],[`SSP`        ],[],
-        [`FY` $->$ ],[`UNINIT(RP)` ],[`fp` points here]
+        [`FY` $->$ ],[`UNINIT(RP)` ],[$<-$ `fp`]
       )
     ]
   ) 
@@ -362,13 +379,13 @@ The following document will use these abbreviations for readability.
   ],[
     #align(center)[==== The new stack during await]
     #stack(
-      [`FYM` $->$       ],[`VAR(b)`],[],
-      [                 ],[`VAR(a)`],[],
-      [                 ],[`RVP`   ],[points to `res`],
-      [                 ],[`RSP`   ],[],
-      [                 ],[`SSP`   ],[],
-      [`FY` $->$        ],[`RP`    ],[`fp` points here],
-      [`SP` is here $->$],[        ],[]
+      [`FYM` $->$       ],[`VAR(b)`],[$+$ 30],
+      [                 ],[`VAR(a)`],[$+$ 28],
+      [                 ],[`RVP`   ],[$+$ 20, \*`res`],
+      [                 ],[`RSP`   ],[$+$ 18],
+      [                 ],[`SSP`   ],[$+$ 10],
+      [`FY` $->$        ],[`RP`    ],[$+$ 08 $<-$ `fp`],
+      [`SP` is here $->$],[        ],[$+$ 00]
       )
   ]);
 ]
@@ -378,7 +395,22 @@ The following document will use these abbreviations for readability.
   This is the second option when executing `future`s.
   Conceptually speaking, if `await` is like the normal `call`, `flush` is like `tailcall`.
 
-  #todo[write more :)]
+  Unlike `await`, when `flush` executes a `future`, it effectively "replaces" the current
+  stack.
+  This is done by replacing copying any relevant pointers (like `RVP` etc) in the current
+  stack frame, to this `future`, moving `SP` to a fitting solution, writing
+  a suitable return pointer, and jumping to the correct code location. 
+
+  ==== Example
+  Let us take a look at this simple example written in our Haskell DSL:
+  ```haskell
+  function "flushFuture" 0 \[] -> do
+    a <- push . Int $ 0
+    b <- push . Int $ 1
+    fp <- future "someFuture" [a, b]
+    flush fp
+  ```
+
 ]
 
 #let cCalls = [
