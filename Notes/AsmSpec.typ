@@ -8,7 +8,7 @@
   }
   if other.pos().len() < 2 { return res + "." }
 })
-
+#set par(justify: true)
 #set text(font: "New Computer Modern")
 
 #align(center,text(size: 4em,font: "DejaVu Sans Mono", [SLFL ABI Specification]))
@@ -410,7 +410,58 @@ The following document will use these abbreviations for readability.
     fp <- future "someFuture" [a, b]
     flush fp
   ```
-
+  This is what our two stacks will look like before the `flush`:
+  #grid(
+    columns: (1fr,1fr),
+    [
+      #align(center)[==== The stack containing `fp`:]
+      #stack(
+        [`FXM` $->$       ],[`RVP`    ],[$+$18],
+        [                 ],[`RSP`    ],[$+$10],
+        [                 ],[`SSP`    ],[$+$08],
+        [`FX` $->$        ],[`RP`     ],[$+$00],
+        [                 ],[`VAR(a)` ],[$-$08],
+        [                 ],[`VAR(b)` ],[$-$10],
+        [                 ],[`SEP(fp)`],[$-$18],
+        [                 ],[`RV(res)`    ],[$-$20],
+        [`SP` is here $->$],[         ],[$-$28]
+      )
+    ],
+    [
+      #align(center)[==== The new stack pointed to by `fp`:]
+      #stack(
+        [`FYM` $->$],[`VAR(b)`     ],[],
+        [          ],[`VAR(a)`     ],[],
+        [          ],[`UNINIT(RVP)`],[],
+        [          ],[`UNINIT(RSP)`],[],
+        [          ],[`SSP`        ],[],
+        [`FY` $->$ ],[`UNINIT(RP)` ],[$<-$ `fp`]
+      )
+    ]
+  ) 
+  #grid(
+    columns: (1fr,1fr),
+    [
+      When `flush` is called multiple things will happen.
+      `RP`, `RSP` and `RVP` will all be copied over from stack `X`
+      to stack `Y`.
+      This means that the normal `call` instruction in Assembly 
+      can not be used to set the code pointer, as that will write
+      an innacurate `RP` to stack `Y`, and instead a long jump
+      needs to be used (`jmp *FP` in GNU AT&AT). After that
+      `SSP` in stack `X` will need to be used to deallocate 
+      stack `X`. 
+    ],
+    stack(
+      [`FYM` $->$],[`VAR(b)`],[],
+      [          ],[`VAR(a)`],[],
+      [          ],[`RVP`   ],[],
+      [          ],[`RSP`   ],[],
+      [          ],[`SSP`   ],[],
+      [`FY` $->$ ],[`RP`    ],[$<-$ `fp`],
+      [`SP` $->$ ], [] ,[]
+    )
+  )
 ]
 
 #let cCalls = [
