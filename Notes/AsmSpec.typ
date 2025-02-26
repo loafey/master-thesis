@@ -473,10 +473,6 @@ The following document will use these abbreviations for readability.
   )
 ]
 
-#let cCalls = [
-  #align(center)[== Executing C functions<cCalls>]
-  #todo[Add content here]
-]
 
 #pagebreak()
 #call
@@ -488,10 +484,90 @@ The following document will use these abbreviations for readability.
 #await 
 #pagebreak()
 #flush 
-#pagebreak()
-#cCalls
 
+#pagebreak()
+#align(center)[== Allocating values on the stack]
+Writing values of different sizes to the stack can be quite the chore, and this chapter will 
+cover how this should be handled by an implementor for a 64bit Linux system:
+#let alignBase = 16
+#let align4 = alignBase - 4;
+#let align2 = alignBase - 2;
+#let align1 = alignBase - 1;
+#box(
+  stroke: black,
+  table(
+    // fill: (x, y) => if x == 0 or y == 0 { rgb("#ffdfdf") },
+    inset: (right: 1.5em),
+    align: center,
+    stroke: (x, y) => if y == 0 and x != 0 { 
+      (bottom: black)
+    } else if x == 0 and y != 0 {
+      (right: black)
+    } else {
+      none
+    },
+    columns: (6em,1fr, 1fr),
+    [Byte size], [Stack pointer `diff`], [Writing instruction:],
+    [$8$],[$-0$],[Push using `pushq`],
+    [$4$],[$-#align4$],[Push using `pushl`, then $#[`SP`] - #align4$],
+    [$2$],[$-#align2$],[Push using `pushl`, then $#[`SP`] - #align2$],
+    [$1$],[$-#align1$],[Push using `pushl`, then $#[`SP`] - #align1$],
+    [$0$],[N/A ],[Pushing a value of size 0 is a `NO-OP`],
+    [`x`],[$-((floor((#alignBase + x) / #alignBase) dot #alignBase) - x)$], [$#[`SP`] - #[`diff`]$, then manually write the data to the memory],
+  )
+)
+
+As can be seen here, any and all modifications to the stack must result in stack pointer being aligned by a 
+factor of #alignBase. This is done to keep the language compatible with the C ABI, as that requires that the stack pointer
+is aligned by a factor of #alignBase on Linux systems @gcc:stackAlignment. 
+If our language were to forbid any and all interactions using the C ABI this could
+be avoided, but that would in term, require reinventing the wheel for any and all interactions
+with an operating system.
+
+
+#let alignment(x) = calc.floor((alignBase + x) / alignBase) * alignBase
+#let diff(x) = alignment(x) - x
+#figure(
+  numbering: none,
+  caption: [
+    Graph 1. represents the memory needed to be allocated for 
+    data of size $x$,
+    while graph 2. represents how much the stack pointer should be subtracted to keep it aligned.
+  ],
+  cetz.canvas({
+    import cetz.draw: *
+
+    // Set-up a thin axis style
+    set-style(axes: (stroke: .5pt, tick: (stroke: .5pt)),
+              legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 80%))
+
+    plot.plot(size: (14, 8),
+      x-tick-step: alignBase / 2,
+      y-tick-step: alignBase, 
+      y-min: 0, y-max: alignBase * 8,
+      legend: "inner-north",
+      {
+        let domain = (0,alignBase * 8)
+        plot.add(alignment, domain: domain, label: [1. Allocation size: $floor((#alignBase + x) / #alignBase) dot #alignBase$],
+          samples: 200,
+          style: (stroke: black)
+        )
+
+        plot.add(diff, domain: domain, label: [2. Diff: $((floor((#alignBase + x) / #alignBase) dot #alignBase) - x$],
+          samples: 200,
+          style: (stroke: red)
+        )
+      })
+  }
+))
+
+#pagebreak()
+#align(center)[== Executing C functions<cCalls>]
+#todo[Add content here]
+
+#pagebreak()
 #align(center)[== Returning from a `call`]
+#todo[Add content here]
 
 
 #pagebreak()
