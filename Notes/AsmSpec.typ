@@ -649,5 +649,10 @@ This comes at the cost of pointer indirection, but makes the compilation easier 
 The alignment of any child data types is not handled in the parent, outside of their pointers of course, 
 and there is no discrepancy between recursive, mutually-recursive, and non-recursive data types.
 
+When allocating for data types that contain multiple constructors (`data Cooler = C1 I8 | C2 I64` for example),
+all allocations will be of the size of the largest constructor. The smaller constructors will simply 
+increase their end padding to make up for the required space.
+
+
 #pagebreak()
 #bibliography("Refs.bib")
