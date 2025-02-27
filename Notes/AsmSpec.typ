@@ -1,5 +1,5 @@
 #import "Prelude.typ": *
-
+#set page(numbering: "1")
 #set heading(numbering: "1.1.")
 #set heading(numbering: (first, ..other) => {
   let res = str(first);
