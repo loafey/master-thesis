@@ -594,28 +594,60 @@ the individual field's byte size. This means that 2 byte field must be stored on
 an address divisible by 2 for example. 
 To account for this, padding between fields will be added if needed as to keep them aligned.
 Padding will also be added to the end of the allocation to keep it aligned with #alignBase bytes.
-Along with this, an #alignBase byte tag will be added to designate which constructor has been used 
+Along with this, a 1 byte tag will be added to designate which constructor has been used 
 to create the value.#pagebreak()
 
-Consider a data type such as this:  `data Cool = Cons I8 I16 I8 I8 I32` (`IX` = integer of X bits),
+Consider a data type such as this:  `data Cool = Cons I16 I8 I8 I8 I32` (`IX` = integer of X bits),
 and a value allocated created with `Cons 1 2 3 4 5`
 
 #{
-  let f(size, body) = table.cell(colspan: size, body)
-  [When allocating this using a packed strategy (with additional #alignBase byte aligned end padding), it would look something like this:]
+  let f(type: "normal", size, body) = table.cell(
+    fill: if type == "pad" {
+      rgb("#edf064")
+    } else if type == "tag" {
+      lime
+    } else {
+      none
+    },
+    colspan: size, 
+    body
+  )
+  [When allocating this using a packed strategy (with additional #alignBase byte aligned end padding), it would look like this:]
   table(
-    columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
+    columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
     align: center,
-    f(25)[A total size of 24 bytes],
-    [Value],  f(alignBase)[0],         f(1)[1],  f(2)[2],   f(1)[3],  f(1)[4],  f(4)[5],   f(7)[...],
-    [Type],   f(alignBase)[Tag],       f(1)[I8], f(2)[I16], f(1)[I8], f(1)[I8], f(4)[I32], f(7)[Padding],
-    [Bytes],  f(alignBase)[#alignBase],f(1)[1],  f(2)[2],   f(1)[1],  f(1)[1],  f(4)[4],   f(7)[7],
-    [Offset], f(alignBase)[0],         f(1)[8],  f(2)[9],   f(1)[11], f(1)[12], f(4)[13],  f(7)[17],
+    f(18)[A total size of 16 bytes],
+    [Value],  f(type: "tag", 1)[0],   f(2)[1], f(1)[2],    f(1)[3],  f(1)[4],  f(4)[5],   f(type: "pad", 7)[...],
+    [Type],   f(type: "tag", 1)[Tag], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(4)[I32], f(type: "pad", 7)[Pad],
+    [Bytes],  f(type: "tag", 1)[1],   f(2)[2], f(1)[1],    f(1)[1],  f(1)[1],  f(4)[4],   f(type: "pad", 7)[6],
+    [Offset], f(type: "tag", 1)[0],   f(2)[1], f(1)[3],    f(1)[4],  f(1)[5],  f(4)[6],   f(type: "pad", 7)[10],
+    // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
   )
 
-  [Instead when allocating a data type using C style aligning it will look something like this:]
+  [And instead, if we allocate the data type using C style allocation it will look like this:]
+  
+  table(
+    columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
+    align: center,
+    f(20)[A total size of 16 bytes],
+    [Value],  f(type: "tag", 1)[0],   f(type: "pad", 1)[...], f(2)[1],   f(1)[2],  f(1)[3],  f(1)[4],  f(type: "pad", 1)[...], f(4)[5],   f(type: "pad", 7)[...],
+    [Type],   f(type: "tag", 1)[Tag], f(type: "pad", 1)[Pad], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(type: "pad", 1)[Pad], f(4)[I32], f(type: "pad", 7)[Pad],
+    [Bytes],  f(type: "tag", 1)[1],   f(type: "pad", 1)[1],   f(2)[2],   f(1)[1],  f(1)[1],  f(1)[1],  f(type: "pad", 1)[1],   f(4)[4],   f(type: "pad", 7)[4],
+    [Offset], f(type: "tag", 1)[0],   f(type: "pad", 1)[1],   f(2)[2],   f(1)[4],  f(1)[5],  f(1)[6],  f(type: "pad", 1)[7],   f(4)[8],   f(type: "pad", 7)[12],
+    // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
+  )
 }
 
+In this case we can see that the C style allocation is equally memory efficient, but this is not 
+always the case. For larger structs it is smart to organize fields in an memory efficient order as to 
+remove the need for padding. When in doubt; putting fields in an increasing or decreasing order based
+on their size is a valid strategy.
+
+When using other data types inside your data type, all the children data types will be allocated on the heap,
+and be reachable through pointer dereferencing.
+This comes at the cost of pointer indirection, but makes the compilation easier to manage.
+The alignment of any child data types is not handled in the parent, outside of their pointers of course, 
+and there is no discrepancy between recursive, mutually-recursive, and non-recursive data types.
 
 #pagebreak()
 #bibliography("Refs.bib")

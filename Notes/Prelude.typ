@@ -56,3 +56,16 @@
     ..ags
   )
 }
+
+#let select(..args) = {
+  linebreak()
+  text(weight: "bold", fill:red, size: 1.5em)[-!- TODO: Select one of these -!-]
+  for (key, value) in args.pos().enumerate() {
+    linebreak()
+    text(weight: "bold",fill: red,size: 1.2em, "Alternative " + str(key + 1))
+    linebreak()
+    value
+
+    v(1em)
+  }
+}
