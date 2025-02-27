@@ -6,15 +6,15 @@
   for o in other.pos() {
     res += "." + str(o);
   }
-  if other.pos().len() < 2 { return res + "." }
+  if other.pos().len() < 3 { return res + "." }
 })
 #set par(justify: true)
 #set text(font: "New Computer Modern")
 
-#align(center,text(size: 4em,font: "DejaVu Sans Mono", [SLFL ABI Specification]))
+#align(center,text(size: 4em,font: "DejaVu Sans Mono", [SLFL ABI\ Specification]))
 This is a rough specification, nothing is set in stone, and changes are to be expected.
 
-#outline(indent: true, depth: 2)
+#outline(indent: true, depth: 3)
 
 #pagebreak()
 
@@ -35,6 +35,7 @@ The reason for this decision is so that the there is no hidden discrepancy betwe
 the users main function and any function the user writes or calls.
 If, for example, the compiler needs to deallocate the false main stack, it is free to do so 
 without a special case, which would not be possible with a normal stack. 
+#pagebreak()
 
 #align(center)[= Calling Convention]
 As stated before the language does not have a stable ABI, nor does it promise that
@@ -42,33 +43,6 @@ it will have one in the future. This is to allow innovation and redesign if need
 A small shim is added when calling functions using the C ABI @wiki:X86_calling_conventions_cdecl, 
 as to allow for FFI. See @cCalls for more details about this.
 
-
-#align(center)[== About registers]
-The X86-64 registers are only to be used as temporary storage for variables.
-Outside of using C ABI functions, variables should always be stored on the stack,
-and variables passed to other functions are done by copying them to the suitable stack.
-If registers need to be kept inbetween function calls, temporarily push and pop them  
-from the stack! The ABI make no promises about which registers functions may or may not
-interact with. 
-
-#align(center)[== Efficiency]
-As will be made clear by this spec, the focus of this specification is not necessarily
-efficiency memory wise. Each stack frame needs to use at least 4 bytes, which
-is double than what C uses by default, but compared to other system level languages
-this is not too bad. Worth to not that the minimum stack frame size is very 
-platform and compiler dependant, so these are a rough estimate for X86-64 Linux.
-#table(
-  columns: (1fr,1fr,1fr),
-  [Language], [Minimum stack frame size in bytes], [Considered system-level],
-  [SLFL],     [4],                                 [#sym.checkmark],
-  [C],        [2],                                 [#sym.checkmark],
-  [C++],      [??],                                [#sym.checkmark],
-  [Rust],     [??],                                [#sym.checkmark],
-)
-(extremely hard to find resources for this :( )
-
-
-#pagebreak()
 #align(center)[== Abbreviations]
 The following document will use these abbreviations for readability.
 #let abbrName(nm) = [#h(10pt) #sym.bullet #h(4pt) #nm:];
@@ -138,7 +112,6 @@ The following document will use these abbreviations for readability.
   This is to avoid discrepancies between normal and future based function calls.
   Arguments are also never passed using registers for simplicities sake.
 
-  === Example:
   Consider this simple example program created using our Haskell DSL:
   ```haskell
   function "a" 0 \[] -> do
@@ -208,7 +181,6 @@ The following document will use these abbreviations for readability.
   `tailcalls` can also be done optionally, as branching, normal function `call`s, 
   etc are allowed when `tailcall`ing.
 
-  === Example
   Consider this simple example program created using our Haskell DSL:
   ```haskell
   function "tailrec" 1 \[val] -> do
@@ -485,11 +457,50 @@ The following document will use these abbreviations for readability.
 #pagebreak()
 #flush 
 
+
 #pagebreak()
-#align(center)[== Allocating values on the stack]
+#align(center)[== Executing C functions<cCalls>]
+#todo[Add content here]
+
+#pagebreak()
+#align(center)[== Returning from a `call`]
+#todo[Add content here]
+
+#pagebreak()
+#align(center)[= Memory Conventions]
+
+#align(center)[== About registers]
+The X86-64 registers are only to be used as temporary storage for variables.
+Outside of using C ABI functions, variables should always be stored on the stack,
+and variables passed to other functions are done by copying them to the suitable stack.
+If registers need to be kept inbetween function calls, temporarily push and pop them  
+from the stack! The ABI make no promises about which registers functions may or may not
+interact with. 
+
+#align(center)[== Minimum stack frame size]
+As will be made clear by this spec, the focus of this specification is not necessarily
+efficiency memory wise. Each stack frame needs to use at least 4 bytes, which
+is double than what C uses by default, but compared to other system level languages
+this is not too bad. Worth to not that the minimum stack frame size is very 
+platform and compiler dependant, so these are a rough estimate for X86-64 Linux.
+#table(
+  columns: (1fr,1fr,1fr),
+  [Language], [Minimum stack frame size in bytes], [Considered system-level],
+  [SLFL],     [4],                                 [#sym.checkmark],
+  [C],        [2],                                 [#sym.checkmark],
+  [C++],      [??],                                [#sym.checkmark],
+  [Rust],     [??],                                [#sym.checkmark],
+)
+(extremely hard to find resources for this :( )
+
+
+
+#align(center)[== Allocating values]
+=== Allocating values on the stack
+#todo[information here could be optimized, see @dataTypes for details]
 Writing values of different sizes to the stack can be quite the chore, and this chapter will 
-cover how this should be handled by an implementor for a 64bit Linux system:
-#let alignBase = 16
+cover how this should be handled by an implementor for a x86-64 system:
+#let alignBase = 8
 #let align4 = alignBase - 4;
 #let align2 = alignBase - 2;
 #let align1 = alignBase - 1;
@@ -507,23 +518,29 @@ cover how this should be handled by an implementor for a 64bit Linux system:
       none
     },
     columns: (6em,1fr, 1fr),
-    [Byte size], [Stack pointer `diff`], [Writing instruction:],
+    [Byte size], [Stack pointer `diff`], [Writing instruction(s):],
     [$8$],[$-0$],[Push using `pushq`],
     [$4$],[$-#align4$],[Push using `pushl`, then $#[`SP`] - #align4$],
     [$2$],[$-#align2$],[Push using `pushl`, then $#[`SP`] - #align2$],
     [$1$],[$-#align1$],[Push using `pushl`, then $#[`SP`] - #align1$],
     [$0$],[N/A ],[Pushing a value of size 0 is a `NO-OP`],
-    [`x`],[$-((floor((#alignBase + x) / #alignBase) dot #alignBase) - x)$], [$#[`SP`] - #[`diff`]$, then manually write the data to the memory],
+    [`x`],[$-((floor((#alignBase + x) / #alignBase) dot #alignBase) - x)$], [$#[`SP`] - #[`diff`]$, then manually write the data to the memory.\ See @dataTypes for details.],
   )
 )
 
-As can be seen here, any and all modifications to the stack must result in stack pointer being aligned by a 
-factor of #alignBase. This is done to keep the language compatible with the C ABI, as that requires that the stack pointer
-is aligned by a factor of #alignBase on Linux systems @gcc:stackAlignment. 
-If our language were to forbid any and all interactions using the C ABI this could
-be avoided, but that would in term, require reinventing the wheel for any and all interactions
-with an operating system.
+As can be seen here, any and all modifications to the stack must result 
+in stack pointer being aligned by a factor of #alignBase. 
+This stack alignment is not necessarily needed on x86-64, but it is a good practice as 
+accessing aligned addresses is faster, and is sometimes expected when utilizing FFI.
+While this project won't focus on non x86-64 Linux systems, stack alignment is still 
+a good idea for future proofing as some CPUs forbid non-aligned memory access.
 
+All of this also comes at the cost of wasting more stack memory, but seeing as any
+realistically written program will most likely not allocate, say, 50000 single byte values on the 
+stack at once (which would need #(50000 * 8) bytes with alignment), this is negligible.
+If, for whatever reason, that is needed, consider bit fields and similar solutions. 
+
+Calculating the needed stack pointer difference when allocating stack values can be done using the following formula: $diff(x) = (floor((#alignBase + x) / #alignBase) dot #alignBase) - x$.
 
 #let alignment(x) = calc.floor((alignBase + x) / alignBase) * alignBase
 #let diff(x) = alignment(x) - x
@@ -541,7 +558,7 @@ with an operating system.
     set-style(axes: (stroke: .5pt, tick: (stroke: .5pt)),
               legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 80%))
 
-    plot.plot(size: (14, 8),
+    plot.plot(size: (14, 7),
       x-tick-step: alignBase / 2,
       y-tick-step: alignBase, 
       y-min: 0, y-max: alignBase * 8,
@@ -553,7 +570,7 @@ with an operating system.
           style: (stroke: black)
         )
 
-        plot.add(diff, domain: domain, label: [2. Diff: $((floor((#alignBase + x) / #alignBase) dot #alignBase) - x$],
+        plot.add(diff, domain: domain, label: [2. $#sym.diff (x) = ((floor((#alignBase + x) / #alignBase) dot #alignBase) - x$],
           samples: 200,
           style: (stroke: red)
         )
@@ -561,13 +578,43 @@ with an operating system.
   }
 ))
 
-#pagebreak()
-#align(center)[== Executing C functions<cCalls>]
-#todo[Add content here]
+These numbers and this formula is based on a stack alignment of 8 bytes, and if 
+one were to compile this to a 32bit system etc, the stack alignment should 
+be modified to reflect that ($"bit units" / 8$).
 
-#pagebreak()
-#align(center)[== Returning from a `call`]
-#todo[Add content here]
+=== Allocating data types<dataTypes>
+For data types, allocation is done using a strategy that mimics the way C allocates
+structs. This means that, the language does not use packed structures nor 
+any other more optimized strategy, instead opting 
+for an allocation strategy which is C compatible, as to make FFI easier. 
+Much of what is written here is based on a blog post by Andreas Heck @c:structures.
+
+The fields of a data type must be stored on an address which is a multiple of
+the individual field's byte size. This means that 2 byte field must be stored on
+an address divisible by 2 for example. 
+To account for this, padding between fields will be added if needed as to keep them aligned.
+Padding will also be added to the end of the allocation to keep it aligned with #alignBase bytes.
+Along with this, an #alignBase byte tag will be added to designate which constructor has been used 
+to create the value.#pagebreak()
+
+Consider a data type such as this:  `data Cool = Cons I8 I16 I8 I8 I32` (`IX` = integer of X bits),
+and a value allocated created with `Cons 1 2 3 4 5`
+
+#{
+  let f(size, body) = table.cell(colspan: size, body)
+  [When allocating this using a packed strategy (with additional #alignBase byte aligned end padding), it would look something like this:]
+  table(
+    columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
+    align: center,
+    f(25)[A total size of 24 bytes],
+    [Value],  f(alignBase)[0],         f(1)[1],  f(2)[2],   f(1)[3],  f(1)[4],  f(4)[5],   f(7)[...],
+    [Type],   f(alignBase)[Tag],       f(1)[I8], f(2)[I16], f(1)[I8], f(1)[I8], f(4)[I32], f(7)[Padding],
+    [Bytes],  f(alignBase)[#alignBase],f(1)[1],  f(2)[2],   f(1)[1],  f(1)[1],  f(4)[4],   f(7)[7],
+    [Offset], f(alignBase)[0],         f(1)[8],  f(2)[9],   f(1)[11], f(1)[12], f(4)[13],  f(7)[17],
+  )
+
+  [Instead when allocating a data type using C style aligning it will look something like this:]
+}
 
 
 #pagebreak()
