@@ -496,91 +496,87 @@ platform and compiler dependant, so these are a rough estimate for X86-64 Linux.
 
 
 #align(center)[== Allocating values]
-=== Allocating values on the stack
-#todo[information here could be optimized, see @dataTypes for details]
-Writing values of different sizes to the stack can be quite the chore, and this chapter will 
-cover how this should be handled by an implementor for a x86-64 system:
 #let alignBase = 8
-#let align4 = alignBase - 4;
-#let align2 = alignBase - 2;
-#let align1 = alignBase - 1;
-#box(
-  stroke: black,
-  table(
-    // fill: (x, y) => if x == 0 or y == 0 { rgb("#ffdfdf") },
-    inset: (right: 1.5em),
-    align: center,
-    stroke: (x, y) => if y == 0 and x != 0 { 
-      (bottom: black)
-    } else if x == 0 and y != 0 {
-      (right: black)
-    } else {
-      none
-    },
-    columns: (6em,1fr, 1fr),
-    [Byte size], [Stack pointer `diff`], [Writing instruction(s):],
-    [$8$],[$-0$],[Push using `pushq`],
-    [$4$],[$-#align4$],[Push using `pushl`, then $#[`SP`] - #align4$],
-    [$2$],[$-#align2$],[Push using `pushl`, then $#[`SP`] - #align2$],
-    [$1$],[$-#align1$],[Push using `pushl`, then $#[`SP`] - #align1$],
-    [$0$],[N/A ],[Pushing a value of size 0 is a `NO-OP`],
-    [`x`],[$-((floor((#alignBase + x) / #alignBase) dot #alignBase) - x)$], [$#[`SP`] - #[`diff`]$, then manually write the data to the memory.\ See @dataTypes for details.],
-  )
-)
+// #let align4 = alignBase - 4;
+// #let align2 = alignBase - 2;
+// #let align1 = alignBase - 1;
+// #box(
+//   stroke: black,
+//   table(
+//     // fill: (x, y) => if x == 0 or y == 0 { rgb("#ffdfdf") },
+//     inset: (right: 1.5em),
+//     align: center,
+//     stroke: (x, y) => if y == 0 and x != 0 { 
+//       (bottom: black)
+//     } else if x == 0 and y != 0 {
+//       (right: black)
+//     } else {
+//       none
+//     },
+//     columns: (6em,1fr, 1fr),
+//     [Byte size], [Stack pointer `diff`], [Writing instruction(s):],
+//     [$8$],[$-0$],[Push using `pushq`],
+//     [$4$],[$-#align4$],[Push using `pushl`, then $#[`SP`] - #align4$],
+//     [$2$],[$-#align2$],[Push using `pushl`, then $#[`SP`] - #align2$],
+//     [$1$],[$-#align1$],[Push using `pushl`, then $#[`SP`] - #align1$],
+//     [$0$],[N/A ],[Pushing a value of size 0 is a `NO-OP`],
+//     [`x`],[$-((floor((#alignBase + x) / #alignBase) dot #alignBase) - x)$], [$#[`SP`] - #[`diff`]$, then manually write the data to the memory.\ See @dataTypes for details.],
+//   )
+// )
 
-As can be seen here, any and all modifications to the stack must result 
-in stack pointer being aligned by a factor of #alignBase. 
-This stack alignment is not necessarily needed on x86-64, but it is a good practice as 
-accessing aligned addresses is faster, and is sometimes expected when utilizing FFI.
-While this project won't focus on non x86-64 Linux systems, stack alignment is still 
-a good idea for future proofing as some CPUs forbid non-aligned memory access.
+// As can be seen here, any and all modifications to the stack must result 
+// in stack pointer being aligned by a factor of #alignBase. 
+// This stack alignment is not necessarily needed on x86-64, but it is a good practice as 
+// accessing aligned addresses is faster, and is sometimes expected when utilizing FFI.
+// While this project won't focus on non x86-64 Linux systems, stack alignment is still 
+// a good idea for future proofing as some CPUs forbid non-aligned memory access.
 
-All of this also comes at the cost of wasting more stack memory, but seeing as any
-realistically written program will most likely not allocate, say, 50000 single byte values on the 
-stack at once (which would need #(50000 * 8) bytes with alignment), this is negligible.
-If, for whatever reason, that is needed, consider bit fields and similar solutions. 
+// All of this also comes at the cost of wasting more stack memory, but seeing as any
+// realistically written program will most likely not allocate, say, 50000 single byte values on the 
+// stack at once (which would need #(50000 * 8) bytes with alignment), this is negligible.
+// If, for whatever reason, that is needed, consider bit fields and similar solutions. 
 
-Calculating the needed stack pointer difference when allocating stack values can be done using the following formula: $diff(x) = (floor((#alignBase + x) / #alignBase) dot #alignBase) - x$.
+// Calculating the needed stack pointer difference when allocating stack values can be done using the following formula: $diff(x) = (floor((#alignBase + x) / #alignBase) dot #alignBase) - x$.
 
-#let alignment(x) = calc.floor((alignBase + x) / alignBase) * alignBase
-#let diff(x) = alignment(x) - x
-#figure(
-  numbering: none,
-  caption: [
-    Graph 1. represents the memory needed to be allocated for 
-    data of size $x$,
-    while graph 2. represents how much the stack pointer should be subtracted to keep it aligned.
-  ],
-  cetz.canvas({
-    import cetz.draw: *
+// #let alignment(x) = calc.floor((alignBase + x) / alignBase) * alignBase
+// #let diff(x) = alignment(x) - x
+// #figure(
+//   numbering: none,
+//   caption: [
+//     Graph 1. represents the memory needed to be allocated for 
+//     data of size $x$,
+//     while graph 2. represents how much the stack pointer should be subtracted to keep it aligned.
+//   ],
+//   cetz.canvas({
+//     import cetz.draw: *
 
-    // Set-up a thin axis style
-    set-style(axes: (stroke: .5pt, tick: (stroke: .5pt)),
-              legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 80%))
+//     // Set-up a thin axis style
+//     set-style(axes: (stroke: .5pt, tick: (stroke: .5pt)),
+//               legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 80%))
 
-    plot.plot(size: (14, 7),
-      x-tick-step: alignBase / 2,
-      y-tick-step: alignBase, 
-      y-min: 0, y-max: alignBase * 8,
-      legend: "inner-north",
-      {
-        let domain = (0,alignBase * 8)
-        plot.add(alignment, domain: domain, label: [1. Allocation size: $floor((#alignBase + x) / #alignBase) dot #alignBase$],
-          samples: 200,
-          style: (stroke: black)
-        )
+//     plot.plot(size: (14, 7),
+//       x-tick-step: alignBase / 2,
+//       y-tick-step: alignBase, 
+//       y-min: 0, y-max: alignBase * 8,
+//       legend: "inner-north",
+//       {
+//         let domain = (0,alignBase * 8)
+//         plot.add(alignment, domain: domain, label: [1. Allocation size: $floor((#alignBase + x) / #alignBase) dot #alignBase$],
+//           samples: 200,
+//           style: (stroke: black)
+//         )
 
-        plot.add(diff, domain: domain, label: [2. $#sym.diff (x) = ((floor((#alignBase + x) / #alignBase) dot #alignBase) - x$],
-          samples: 200,
-          style: (stroke: red)
-        )
-      })
-  }
-))
+//         plot.add(diff, domain: domain, label: [2. $#sym.diff (x) = ((floor((#alignBase + x) / #alignBase) dot #alignBase) - x$],
+//           samples: 200,
+//           style: (stroke: red)
+//         )
+//       })
+//   }
+// ))
 
-These numbers and this formula is based on a stack alignment of 8 bytes, and if 
-one were to compile this to a 32bit system etc, the stack alignment should 
-be modified to reflect that ($"bit units" / 8$).
+// These numbers and this formula is based on a stack alignment of 8 bytes, and if 
+// one were to compile this to a 32bit system etc, the stack alignment should 
+// be modified to reflect that ($"bit units" / 8$).
 
 === Allocating data types<dataTypes>
 For data types, allocation is done using a strategy that mimics the way C allocates
@@ -703,6 +699,15 @@ increase their end padding to make up for the required space.
 For structs (i.e data types without multiple constructors), the allocation
 works the exact same way, but the first byte is not used for a tag and that space
 can be freely used for fields.
+
+
+=== Allocating values on the stack
+Similary to data types, all variables  are allocated in the same way.
+Non-data type variables i.e intetegers and booleans etc, are allocated
+and alligned to addresses based on their size.
+If a 4 byte integer is allocated on the stack, padding might have to be added to align it to an
+address which is a multiple of 4. After all variables are allocated, padding will be added
+to align the stack pointer to a multiple of 8.
 
 #pagebreak()
 #bibliography("Refs.bib")
