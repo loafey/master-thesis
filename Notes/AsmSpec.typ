@@ -700,6 +700,9 @@ When allocating for data types that contain multiple constructors (`data Cooler 
 all allocations will be of the size of the largest constructor. The smaller constructors will simply 
 increase their end padding to make up for the required space.
 
+For structs (i.e data types without multiple constructors), the allocation
+works the exact same way, but the first byte is not used for a tag and that space
+can be freely used for fields.
 
 #pagebreak()
 #bibliography("Refs.bib")
