@@ -600,25 +600,26 @@ to create the value.#pagebreak()
 Consider a data type such as this:  `data Cool = Cons I16 I8 I8 I8 I32` (`IX` = integer of X bits),
 and a value allocated created with `Cons 1 2 3 4 5`
 
+#let f(type: "normal", size, body) = table.cell(
+  fill: if type == "pad" {
+    rgb("#edf064")
+  } else if type == "tag" {
+    lime
+  } else {
+    none
+  },
+  colspan: size, 
+  body
+)
+
 #{
-  let f(type: "normal", size, body) = table.cell(
-    fill: if type == "pad" {
-      rgb("#edf064")
-    } else if type == "tag" {
-      lime
-    } else {
-      none
-    },
-    colspan: size, 
-    body
-  )
   [When allocating this using a packed strategy (with additional #alignBase byte aligned end padding), it would look like this:]
   table(
     columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
     align: center,
     f(18)[A total size of 16 bytes],
     [Value],  f(type: "tag", 1)[0],   f(2)[1], f(1)[2],    f(1)[3],  f(1)[4],  f(4)[5],   f(type: "pad", 7)[...],
-    [Type],   f(type: "tag", 1)[Tag], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(4)[I32], f(type: "pad", 7)[Pad],
+    [Type],   f(type: "tag", 1)[Tag], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(4)[I32], f(type: "pad", 7)[End pad],
     [Bytes],  f(type: "tag", 1)[1],   f(2)[2], f(1)[1],    f(1)[1],  f(1)[1],  f(4)[4],   f(type: "pad", 7)[6],
     [Offset], f(type: "tag", 1)[0],   f(2)[1], f(1)[3],    f(1)[4],  f(1)[5],  f(4)[6],   f(type: "pad", 7)[10],
     // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
@@ -631,7 +632,7 @@ and a value allocated created with `Cons 1 2 3 4 5`
     align: center,
     f(20)[A total size of 16 bytes],
     [Value],  f(type: "tag", 1)[0],   f(type: "pad", 1)[...], f(2)[1],   f(1)[2],  f(1)[3],  f(1)[4],  f(type: "pad", 1)[...], f(4)[5],   f(type: "pad", 7)[...],
-    [Type],   f(type: "tag", 1)[Tag], f(type: "pad", 1)[Pad], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(type: "pad", 1)[Pad], f(4)[I32], f(type: "pad", 7)[Pad],
+    [Type],   f(type: "tag", 1)[Tag], f(type: "pad", 1)[Pad], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(type: "pad", 1)[Pad], f(4)[I32], f(type: "pad", 7)[End pad],
     [Bytes],  f(type: "tag", 1)[1],   f(type: "pad", 1)[1],   f(2)[2],   f(1)[1],  f(1)[1],  f(1)[1],  f(type: "pad", 1)[1],   f(4)[4],   f(type: "pad", 7)[4],
     [Offset], f(type: "tag", 1)[0],   f(type: "pad", 1)[1],   f(2)[2],   f(1)[4],  f(1)[5],  f(1)[6],  f(type: "pad", 1)[7],   f(4)[8],   f(type: "pad", 7)[12],
     // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
@@ -640,14 +641,60 @@ and a value allocated created with `Cons 1 2 3 4 5`
 
 In this case we can see that the C style allocation is equally memory efficient, but this is not 
 always the case. For larger structs it is smart to organize fields in an memory efficient order as to 
-remove the need for padding. When in doubt; putting fields in an increasing or decreasing order based
+remove the need for padding. When in doubt; putting fields in an increasing order based
 on their size is a valid strategy.
 
-When using other data types inside your data type, all the children data types will be allocated on the heap,
-and be reachable through pointer dereferencing.
-This comes at the cost of pointer indirection, but makes the compilation easier to manage.
-The alignment of any child data types is not handled in the parent, outside of their pointers of course, 
-and there is no discrepancy between recursive, mutually-recursive, and non-recursive data types.
+When using other data types inside your data type, say, data type B is a field inside 
+data type A, B has to be allocated either directly or on the heap using pointer indirection. 
+For any recrusive or mutually recursive data types, heap allocation is a must.
+If field B is declared using pointers,
+it is represented using a #alignBase byte pointer which points to the instance of B.
+If one instead opts to directly the field has to be aligned to an #alignBase multiple address.
+As data types are always end-aligned to 8 bytes on their own, no end padding for this field is needed here.
+
+Take these data types as en example: `data B = B I64; data A = A B I8`
+and the instances\ `b = B 32; a = A b 16`
+On it's own `b` looks like this:
+
+#table(
+  columns: (5em,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
+  align: center,
+  f(17)[A total size of 16 bytes],
+  [Value],  f(type: "tag",1)[0],   f(type: "pad",7)[...], f(8)[16],
+  [Type],   f(type: "tag",1)[Tag], f(type: "pad",7)[Pad], f(8)[I64],
+  [Bytes],  f(type: "tag",1)[1],   f(type: "pad",7)[...], f(8)[8],
+  [Offset], f(type: "tag",1)[1],   f(type: "pad",7)[0],   f(8)[8],
+)
+And `A` will look like this if pointer indirection is used:
+
+#table(
+  columns: (4em,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
+  align: center,
+  f(25)[A total size of 24 bytes],
+  [Value],  f(type: "tag",1)[0],   f(type:"pad",7)[...], f(8)[`b`],  f(1)[16], f(type: "pad",7)[...],
+  [Type],   f(type: "tag",1)[Tag], f(type:"pad",7)[Pad], f(8)[`*B`], f(1)[I8], f(type: "pad",7)[End pad],
+  [Bytes],  f(type: "tag",1)[1],   f(type:"pad",7)[7],   f(8)[8],    f(1)[1],  f(type: "pad",7)[7],
+  [Offset], f(type: "tag",1)[0],   f(type:"pad",7)[1],   f(8)[8],    f(1)[9],  f(type: "pad",7)[10],
+)
+
+And here is what `A` will look like if we do not use pointer indirection:
+#table(
+  columns: (4em,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
+  align: center,
+  f(33)[A total size of 32 bytes],
+  [Value], f(type: "tag",1)[0],f(type:"pad",7)[...],f(1, type: "tag")[`0`],f(7,type: "pad")[...],f(8)[32], f(1)[16],f(type: "pad",7)[...],
+  [Type],  f(type: "tag",1)[T],f(type:"pad",7)[Pad],f(1, type: "tag")[`T`],f(7,type: "pad")[Pad],f(8)[I64],f(1)[I8],f(type: "pad",7)[End pad],
+  [Bytes], f(type: "tag",1)[1],f(type:"pad",7)[7],  f(1, type: "tag")[1],  f(7,type: "pad")[7],    f(8)[8],    f(1)[1], f(type: "pad",7)[7],
+  [Offset],f(type: "tag",1)[0],f(type:"pad",7)[1],  f(1, type: "tag")[8],  f(7,type: "pad")[9],    f(8)[16],   f(1)[24], f(type: "pad",7)[25],
+)
+As can be seen here, no optimization is done in regards to the inner `b`.
+Theoretically, the second padding could be removed, the second tag moved to the second byte,
+and the first padding modified to be 6 bytes, starting at offset 2. 
+This would reduce the overall size 
+by 8 bytes. This is not done however, as `b` needs to be allocated in the same
+way as any other instance of `B`. Special treatment can not be done, as a function which recieves a 
+`B` should assume that `B` is always allocated the same way. If this type of memory 
+optimization is needed, manual inlining should be done. 
 
 When allocating for data types that contain multiple constructors (`data Cooler = C1 I8 | C2 I64` for example),
 all allocations will be of the size of the largest constructor. The smaller constructors will simply 
