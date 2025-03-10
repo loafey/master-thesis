@@ -150,3 +150,11 @@ Let $Xi$ be the subset ${ (y : square.stroked (A : omega)) | y : square.stroked 
   [$lambda x. c$],
   [$square.stroked(lambda^tilde.basic x. c)$]
 )
+
+== Stack selection (New pass)
+
+Make sure that every closure has 1 or 0 stacks.
+
+LinCloConv -> StackSelection -> PtrCloConv
+
+- Option 1: Make NewStack a constant
