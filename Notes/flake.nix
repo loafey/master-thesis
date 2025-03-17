@@ -23,6 +23,7 @@
                   typst
                   typstfmt
                   tinymist
+                  ghostscript
                 ];
               };
           });
