@@ -3,16 +3,13 @@
 = Types and kinds
 
 #grid(
-  columns: (1fr, 1fr, 1fr),
+  columns: (1fr, 1fr, 1fr, 1fr),
   row-gutter: 16pt,
-  [Type], [Rule], [Env],
-  [$not A$], [$(A : n)/(not A : 1)$], [$n$],
-  [$~A$], [$(A : n)/(~A : omega)$], [$n ~> omega$],
-  [$*A$],[$(A : omega)/(*A : 1)$], [$0$]
-
+  [Type], [Rule], [Env], [Style],
+  [$*A$], [$(A : omega) / (*A : 1)$], [$0$], [Goto],
+  [$~A$], [$(A : n) / (~A : omega)$], [$n ~> omega$], [Procedural],
+  [$not A$], [$(A : n) / (not A : 1)$], [$n$], [Higher-order],
 )
-
-
 
 = PLL:
 #grid(
@@ -20,11 +17,16 @@
   row-gutter: 16pt,
   [Positive], [Negative],
   align(center)[$(Gamma tack.r t : A space space Delta tack.r u : B) / (Gamma, Delta tack.r (t,u): A times.circle B)$],
-  align(center)[$(Gamma, x : A, y : B tack.r c) / (Gamma, z : A xor B tack.r text("let")(x,y) = z; c)$],
+  align(center)[$(Gamma, x : A, y : B tack.r c) / (Gamma, z : A times.circle B tack.r text("let")(x,y) = z; c)$],
+
   [],
   stack(
-    [$rho(z) ->$], [$A : n$], [$rho(x)$],
-    [$rho(y) ->$], [$B : omega $], [$$],
+    [$rho(z) ->$],
+    [$A : n$],
+    [$rho(x)$],
+    [$rho(y) ->$],
+    [$B : omega$],
+    [$$],
   ),
 
   align(center)[$(Gamma tack.r t: A_1) / (Gamma tack.r text("inj")_1t : A_1 xor A_2)$],
@@ -134,7 +136,7 @@ Let $Xi$ be the subset ${ (y : square.stroked (A : omega)) | y : square.stroked 
   numbering: "A.",
   [$"len"(Xi) = 1 => square.stroked z = y; lambda^tilde.basic x. c [y |-> square.stroked z]$],
   [$"len"(Xi) > 1 => "Repeat A on the \"first\" element of" Xi$],
-  [$"len"(Xi) = 0 => "let"  z = "newstack"; lambda^tilde.basic. "freestack" z; c$]
+  [$"len"(Xi) = 0 => "let" z = "newstack"; lambda^tilde.basic. "freestack" z; c$],
 )
 
 == Linear closure conversion
@@ -145,10 +147,8 @@ Let $Xi$ be the subset ${ (y : square.stroked (A : omega)) | y : square.stroked 
   column-gutter: 16pt,
   [*Before*], [*After*],
   [$not A$], [$square.stroked tilde.basic A$],
-  [_call f a_],
-  [$"let" square.stroked f = z; "call f a"$],
-  [$lambda x. c$],
-  [$square.stroked(lambda^tilde.basic x. c)$]
+  [_call f a_], [$"let" square.stroked f = z; "call f a"$],
+  [$lambda x. c$], [$square.stroked(lambda^tilde.basic x. c)$],
 )
 
 == Stack selection (New pass)
@@ -158,3 +158,29 @@ Make sure that every closure has 1 or 0 stacks.
 LinCloConv -> StackSelection -> PtrCloConv
 
 - Option 1: Make NewStack a constant
+
+== Compilation Assumption
+
+1. If we have $A: n$ then $S p$ points to a valid stack.
+2. If we have $A : omega$ then $[| A |]$
+
+
+== Compilation Scheme
+
+=== Case: $omega$
+
+#let sem(t) = {
+  $bracket.l.double #t bracket.r.double$
+}
+#let judge(above, below) = {
+  $#above / #below$
+}
+
+$S p $ is free to use after #sem[.]. $S p$ points to the stack.
+
+#judge($Gamma tack.r t: A quad Delta tack.r u: B: omega$
+       ,$Gamma, Delta tack.r A times.circle B$) = $#sem[(t,u)] = #sem[u]^omega; #sem[t]^n$
+
+#judge($Gamma tack.r t: A$, $Gamma tack.r "inl" t: A plus.circle B$) = $#sem[t]; "push" 0$
+
+=== Case: $n$
