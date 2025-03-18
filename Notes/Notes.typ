@@ -167,7 +167,9 @@ LinCloConv -> StackSelection -> PtrCloConv
 
 == Compilation Scheme
 
-=== Case: $omega$
+=== Positive fragment
+
+==== Case: $omega$
 
 #let sem(t) = {
   $bracket.l.double #t bracket.r.double$
@@ -176,11 +178,40 @@ LinCloConv -> StackSelection -> PtrCloConv
   $#above / #below$
 }
 
-$S p $ is free to use after #sem[.]. $S p$ points to the stack.
+Post-condition: $S P$ is free to use after #sem[.]. $S p$ points to the stack.
 
 #judge($Gamma tack.r t: A quad Delta tack.r u: B: omega$
        ,$Gamma, Delta tack.r A times.circle B$) = $#sem[(t,u)] = #sem[u]^omega; #sem[t]^n$
 
-#judge($Gamma tack.r t: A$, $Gamma tack.r "inl" t: A plus.circle B$) = $#sem[t]; "push" 0$
+#judge($Gamma tack.r t: A$, $Gamma tack.r "inl" t: A plus.circle B$) = $#sem[t] ; "push" 0$
 
-=== Case: $n$
+#judge($Gamma tack.r t: B$, $Gamma tack.r "inr" t: A plus.circle B$) = $#sem[t] ; "push" 1$
+
+#judge("", $x: A tack.r x: A$) = $s p = rho(x)$
+
+==== Case: $n$
+
+Post-condition: $S P$ points to a valid stack. #sem[.] pushes the result there.
+
+#judge($Gamma tack.r t: A quad Delta tack.r u: B$, $Gamma, Delta tack.r (t,u): A times.circle B$) = $#sem[u]^n; #sem[t]^n$
+
+#judge("", $tack.r "newstack": circle$) = $A x = "newstack"; "push" A x$
+
+#judge($tack.r t: A: omega$, $tack.r square A: n$) = 
+    #box(baseline: 100%, stroke: black, inset: 5pt)[
+        push SSP on SP \
+        SSP = SP \
+        #sem[t] \
+        SSP[1] = SP \
+        SP = SSP + 1 \
+        SSP = [SSP]
+    ]
+
+=== Negative fragment
+
+#sem[$"let" z, rho = rho_o; c$] = $"pop"; #sem[c]^(quad (A times.circle tilde R): omega)$
+
+#sem[$"call" z$] = $"jmp" rho(z)$
+
+Not a stack: #sem[$"case" z "of" c_1; c_2$] = $rho(z); "jnz"; $
+Stack:
