@@ -26,11 +26,11 @@
 #include "0. Splash.typ"
 #pagebreak()
 #pagebreak()
-#include "0.1 Fancy Splash.typ"
+#include "0.1. Fancy Splash.typ"
 #pagebreak()
-#include "0.2 Licence.typ"
+#include "0.2. Licence.typ"
 #pagebreak()
-#include "1. Abstract.typ"
+#include "0.3. Abstract.typ"
 #pagebreak()
 
 #counter(page).update(1)
@@ -38,8 +38,26 @@
 #in-outline.update(true)
 #pagebreak()
 
-= hello
-yo
+#include "1.0. Introduction.typ"
+#pagebreak()
+
+#include "2.0. Theory.typ"
+#pagebreak()
+
+#include "3.0. Language.typ"
+#pagebreak()
+
+#include "4.0. Implementation.typ"
+#pagebreak()
+
+#include "5.0. Demonstration.typ"
+#pagebreak()
+
+#include "6.0. Discussion.typ"
+#pagebreak()
+
+#include "7.0. Conclusion.typ"
+#pagebreak()
 
 #pagebreak()
 <end>
