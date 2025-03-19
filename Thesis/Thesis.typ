@@ -18,6 +18,8 @@
 #pagebreak()
 #include "0.2 Licence.typ"
 #pagebreak()
+#include "1. Abstract.typ"
+#pagebreak()
 #set page(
   numbering: (n, _) => [
     // #n of #context numbering("1", ..counter(page).at(<end>))
@@ -25,10 +27,11 @@
   ]
 )
 #counter(page).update(1)
+// #outline()
 
-abstract
+= hello
+yo
 
-#pagebreak()
 
 <end>
 #bibliography(title: "References","bib.bib")
