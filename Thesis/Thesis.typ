@@ -44,7 +44,7 @@
 #include "2.0. Theory.typ"
 #pagebreak()
 
-#include "3.0. Language.typ"
+#include "3.0. Language Specificaiton.typ"
 #pagebreak()
 
 #include "4.0. Implementation.typ"
