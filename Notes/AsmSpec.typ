@@ -14,7 +14,7 @@
 #align(center,text(size: 4em,font: "DejaVu Sans Mono", [SLFL ABI\ Specification]))
 This is a rough specification, nothing is set in stone, and changes are to be expected.
 
-#outline(indent: true, depth: 3)
+#outline(indent: auto, depth: 3)
 
 #pagebreak()
 
@@ -614,10 +614,10 @@ and a value allocated created with `Cons 1 2 3 4 5`
     columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
     align: center,
     f(18)[A total size of 16 bytes],
-    [Value],  f(type: "tag", 1)[0],   f(2)[1], f(1)[2],    f(1)[3],  f(1)[4],  f(4)[5],   f(type: "pad", 7)[...],
-    [Type],   f(type: "tag", 1)[Tag], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(4)[I32], f(type: "pad", 7)[End pad],
-    [Bytes],  f(type: "tag", 1)[1],   f(2)[2], f(1)[1],    f(1)[1],  f(1)[1],  f(4)[4],   f(type: "pad", 7)[6],
-    [Offset], f(type: "tag", 1)[0],   f(2)[1], f(1)[3],    f(1)[4],  f(1)[5],  f(4)[6],   f(type: "pad", 7)[10],
+    [`Value`], f(type: "tag", 1)[`0`],  f(2)[1], f(1)[2],    f(1)[3],  f(1)[4],  f(4)[5],   f(type: "pad", 7)[...],
+    [`Type`],  f(type: "tag", 1)[`Tag`],f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(4)[I32], f(type: "pad", 7)[End pad],
+    [`Bytes`], f(type: "tag", 1)[`1`],  f(2)[2], f(1)[1],    f(1)[1],  f(1)[1],  f(4)[4],   f(type: "pad", 7)[6],
+    [`Offset`],f(type: "tag", 1)[`0`],  f(2)[1], f(1)[3],    f(1)[4],  f(1)[5],  f(4)[6],   f(type: "pad", 7)[10],
     // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
   )
 
@@ -627,10 +627,10 @@ and a value allocated created with `Cons 1 2 3 4 5`
     columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
     align: center,
     f(20)[A total size of 16 bytes],
-    [Value],  f(type: "tag", 1)[0],   f(type: "pad", 1)[...], f(2)[1],   f(1)[2],  f(1)[3],  f(1)[4],  f(type: "pad", 1)[...], f(4)[5],   f(type: "pad", 7)[...],
-    [Type],   f(type: "tag", 1)[Tag], f(type: "pad", 1)[Pad], f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(type: "pad", 1)[Pad], f(4)[I32], f(type: "pad", 7)[End pad],
-    [Bytes],  f(type: "tag", 1)[1],   f(type: "pad", 1)[1],   f(2)[2],   f(1)[1],  f(1)[1],  f(1)[1],  f(type: "pad", 1)[1],   f(4)[4],   f(type: "pad", 7)[4],
-    [Offset], f(type: "tag", 1)[0],   f(type: "pad", 1)[1],   f(2)[2],   f(1)[4],  f(1)[5],  f(1)[6],  f(type: "pad", 1)[7],   f(4)[8],   f(type: "pad", 7)[12],
+    [`Value`], f(type: "tag", 1)[`0`],  f(type: "pad", 1)[`...`],f(2)[`1`],  f(1)[`2`], f(1)[`3`], f(1)[`4`], f(type: "pad", 1)[`...`],f(4)[5],  f(type: "pad", 7)[`...`],
+    [`Type`],  f(type: "tag", 1)[`Tag`],f(type: "pad", 1)[`Pad`],f(2)[`I16`],f(1)[`I8`],f(1)[`I8`],f(1)[`I8`],f(type: "pad", 1)[`Pad`],f(4)[I32],f(type: "pad", 7)[`End pad`],
+    [`Bytes`], f(type: "tag", 1)[`1`],  f(type: "pad", 1)[`1`],  f(2)[`2`],  f(1)[`1`], f(1)[`1`], f(1)[`1`], f(type: "pad", 1)[`1`],  f(4)[4],  f(type: "pad", 7)[`4`],
+    [`Offset`],f(type: "tag", 1)[`0`],  f(type: "pad", 1)[`1`],  f(2)[`2`],  f(1)[`4`], f(1)[`5`], f(1)[`6`], f(type: "pad", 1)[`7`],  f(4)[8],  f(type: "pad", 7)[`12`],
     // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
   )
 }
@@ -656,10 +656,10 @@ On it's own `b` looks like this:
   columns: (5em,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
   align: center,
   f(17)[A total size of 16 bytes],
-  [Value],  f(type: "tag",1)[0],   f(type: "pad",7)[...], f(8)[16],
-  [Type],   f(type: "tag",1)[Tag], f(type: "pad",7)[Pad], f(8)[I64],
-  [Bytes],  f(type: "tag",1)[1],   f(type: "pad",7)[...], f(8)[8],
-  [Offset], f(type: "tag",1)[1],   f(type: "pad",7)[0],   f(8)[8],
+  [`Value`], f(type: "tag",1)[`0`],  f(type: "pad",7)[`...`],f(8)[`16`],
+  [`Type`],  f(type: "tag",1)[`Tag`],f(type: "pad",7)[`Pad`],f(8)[`I64`],
+  [`Bytes`], f(type: "tag",1)[`1`],  f(type: "pad",7)[`...`],f(8)[`8`],
+  [`Offset`],f(type: "tag",1)[`1`],  f(type: "pad",7)[`0`],  f(8)[`8`],
 )
 And `A` will look like this if pointer indirection is used:
 
@@ -667,10 +667,10 @@ And `A` will look like this if pointer indirection is used:
   columns: (4em,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
   align: center,
   f(25)[A total size of 24 bytes],
-  [Value],  f(type: "tag",1)[0],   f(type:"pad",7)[...], f(8)[`b`],  f(1)[16], f(type: "pad",7)[...],
-  [Type],   f(type: "tag",1)[Tag], f(type:"pad",7)[Pad], f(8)[`*B`], f(1)[I8], f(type: "pad",7)[End pad],
-  [Bytes],  f(type: "tag",1)[1],   f(type:"pad",7)[7],   f(8)[8],    f(1)[1],  f(type: "pad",7)[7],
-  [Offset], f(type: "tag",1)[0],   f(type:"pad",7)[1],   f(8)[8],    f(1)[9],  f(type: "pad",7)[10],
+  [`Value`], f(type: "tag",1)[`0`],  f(type:"pad",7)[`...`],f(8)[`b`], f(1)[`16`],f(type: "pad",7)[`...`],
+  [`Type`],  f(type: "tag",1)[`Tag`],f(type:"pad",7)[`Pad`],f(8)[`*B`],f(1)[`I8`],f(type: "pad",7)[`End pad`],
+  [`Bytes`], f(type: "tag",1)[`1`],  f(type:"pad",7)[`7`],  f(8)[`8`], f(1)[`1`], f(type: "pad",7)[`7`],
+  [`Offset`],f(type: "tag",1)[`0`],  f(type:"pad",7)[`1`],  f(8)[`8`], f(1)[`9`], f(type: "pad",7)[`10`],
 )
 
 And here is what `A` will look like if we do not use pointer indirection:
@@ -678,10 +678,10 @@ And here is what `A` will look like if we do not use pointer indirection:
   columns: (4em,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
   align: center,
   f(33)[A total size of 32 bytes],
-  [Value], f(type: "tag",1)[0],f(type:"pad",7)[...],f(1, type: "tag")[`0`],f(7,type: "pad")[...],f(8)[32], f(1)[16],f(type: "pad",7)[...],
-  [Type],  f(type: "tag",1)[T],f(type:"pad",7)[Pad],f(1, type: "tag")[`T`],f(7,type: "pad")[Pad],f(8)[I64],f(1)[I8],f(type: "pad",7)[End pad],
-  [Bytes], f(type: "tag",1)[1],f(type:"pad",7)[7],  f(1, type: "tag")[1],  f(7,type: "pad")[7],    f(8)[8],    f(1)[1], f(type: "pad",7)[7],
-  [Offset],f(type: "tag",1)[0],f(type:"pad",7)[1],  f(1, type: "tag")[8],  f(7,type: "pad")[9],    f(8)[16],   f(1)[24], f(type: "pad",7)[25],
+  [`Value`], f(type: "tag",1)[`0`],f(type:"pad",7)[`...`],f(1, type: "tag")[`0`],f(7,type: "pad")[`...`],f(8)[`32`], f(1)[`16`],f(type: "pad",7)[`...`],
+  [`Type`],  f(type: "tag",1)[`T`],f(type:"pad",7)[`Pad`],f(1, type: "tag")[`T`],f(7,type: "pad")[`Pad`],f(8)[`I64`],f(1)[`I8`],f(type: "pad",7)[`End pad`],
+  [`Bytes`], f(type: "tag",1)[`1`],f(type:"pad",7)[`7`],  f(1, type: "tag")[`1`],f(7,type: "pad")[`7`],  f(8)[`8`],  f(1)[`1`], f(type: "pad",7)[`7`],
+  [`Offset`],f(type: "tag",1)[`0`],f(type:"pad",7)[`1`],  f(1, type: "tag")[`8`],f(7,type: "pad")[`9`],  f(8)[`16`], f(1)[`24`],f(type: "pad",7)[`25`],
 )
 As can be seen here, no optimization is done in regards to the inner `b`.
 Theoretically, the second padding could be removed, the second tag moved to the second byte,
