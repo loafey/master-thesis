@@ -614,10 +614,10 @@ and a value allocated created with `Cons 1 2 3 4 5`
     columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
     align: center,
     f(18)[A total size of 16 bytes],
-    [`Value`], f(type: "tag", 1)[`0`],  f(2)[1], f(1)[2],    f(1)[3],  f(1)[4],  f(4)[5],   f(type: "pad", 7)[...],
-    [`Type`],  f(type: "tag", 1)[`Tag`],f(2)[I16], f(1)[I8], f(1)[I8], f(1)[I8], f(4)[I32], f(type: "pad", 7)[End pad],
-    [`Bytes`], f(type: "tag", 1)[`1`],  f(2)[2], f(1)[1],    f(1)[1],  f(1)[1],  f(4)[4],   f(type: "pad", 7)[6],
-    [`Offset`],f(type: "tag", 1)[`0`],  f(2)[1], f(1)[3],    f(1)[4],  f(1)[5],  f(4)[6],   f(type: "pad", 7)[10],
+    [`Value`], f(type: "tag", 1)[`0`],  f(2)[`1`],  f(1)[`2`], f(1)[`3`], f(1)[`4`], f(4)[`5`],  f(type: "pad", 7)[`...`],
+    [`Type`],  f(type: "tag", 1)[`Tag`],f(2)[`I16`],f(1)[`I8`],f(1)[`I8`],f(1)[`I8`],f(4)[`I32`],f(type: "pad", 7)[`End pad`],
+    [`Bytes`], f(type: "tag", 1)[`1`],  f(2)[`2`],  f(1)[`1`], f(1)[`1`], f(1)[`1`], f(4)[`4`],  f(type: "pad", 7)[`6`],
+    [`Offset`],f(type: "tag", 1)[`0`],  f(2)[`1`],  f(1)[`3`], f(1)[`4`], f(1)[`5`], f(4)[`6`],  f(type: "pad", 7)[`10`],
     // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
   )
 
@@ -627,10 +627,10 @@ and a value allocated created with `Cons 1 2 3 4 5`
     columns: (5em, 1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr),
     align: center,
     f(20)[A total size of 16 bytes],
-    [`Value`], f(type: "tag", 1)[`0`],  f(type: "pad", 1)[`...`],f(2)[`1`],  f(1)[`2`], f(1)[`3`], f(1)[`4`], f(type: "pad", 1)[`...`],f(4)[5],  f(type: "pad", 7)[`...`],
-    [`Type`],  f(type: "tag", 1)[`Tag`],f(type: "pad", 1)[`Pad`],f(2)[`I16`],f(1)[`I8`],f(1)[`I8`],f(1)[`I8`],f(type: "pad", 1)[`Pad`],f(4)[I32],f(type: "pad", 7)[`End pad`],
-    [`Bytes`], f(type: "tag", 1)[`1`],  f(type: "pad", 1)[`1`],  f(2)[`2`],  f(1)[`1`], f(1)[`1`], f(1)[`1`], f(type: "pad", 1)[`1`],  f(4)[4],  f(type: "pad", 7)[`4`],
-    [`Offset`],f(type: "tag", 1)[`0`],  f(type: "pad", 1)[`1`],  f(2)[`2`],  f(1)[`4`], f(1)[`5`], f(1)[`6`], f(type: "pad", 1)[`7`],  f(4)[8],  f(type: "pad", 7)[`12`],
+    [`Value`], f(type: "tag", 1)[`0`],  f(type: "pad", 1)[`...`],f(2)[`1`],  f(1)[`2`], f(1)[`3`], f(1)[`4`], f(type: "pad", 1)[`...`],f(4)[`5`],  f(type: "pad", 7)[`...`],
+    [`Type`],  f(type: "tag", 1)[`Tag`],f(type: "pad", 1)[`Pad`],f(2)[`I16`],f(1)[`I8`],f(1)[`I8`],f(1)[`I8`],f(type: "pad", 1)[`Pad`],f(4)[`I32`],f(type: "pad", 7)[`End pad`],
+    [`Bytes`], f(type: "tag", 1)[`1`],  f(type: "pad", 1)[`1`],  f(2)[`2`],  f(1)[`1`], f(1)[`1`], f(1)[`1`], f(type: "pad", 1)[`1`],  f(4)[`4`],  f(type: "pad", 7)[`4`],
+    [`Offset`],f(type: "tag", 1)[`0`],  f(type: "pad", 1)[`1`],  f(2)[`2`],  f(1)[`4`], f(1)[`5`], f(1)[`6`], f(type: "pad", 1)[`7`],  f(4)[`8`],  f(type: "pad", 7)[`12`],
     // [Total],  f(1)[1],   f(1)[2],  f(2)[4],   f(1)[5],  f(1)[6],  f(4)[10],  f(7)[16],
   )
 }
