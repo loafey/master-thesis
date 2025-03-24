@@ -1,5 +1,13 @@
 #import "Prelude.typ": *
 
+#let sem(t) = {
+  $bracket.l.double #t bracket.r.double$
+}
+#let judge(above, below) = {
+  $#above / #below$
+}
+
+
 = Types and kinds
 
 #grid(
@@ -50,6 +58,13 @@ $omega$: stack-like
   align(center)[$(A:n quad B:m) / (A times.circle B : n+m)$],
 )
 
+
+#grid(
+  columns: (1fr, 1fr),
+  row-gutter: 16pt,
+  align(center)[$(A:omega quad B:omega) / (A plus.circle B : omega)$],
+  align(center)[$(A:n quad B:m) / (A plus.circle B : max (n, m))$],
+)
 = Defunctionalization, part 1: Explicit pointers
 
 === Stacks expect a non-stack argument:
@@ -120,12 +135,12 @@ Prepare $Psi$ from $Gamma$ follow $m$. Call $f$, compile $c$.
   row-gutter: 16pt,
   column-gutter: 16pt,
   [*Before*], [*After*],
-  [$~A$],
-  [$exists (gamma : omega) ast.basic (A times.circle gamma) times.circle gamma$],
+  [$not A$],
+  [$exists (gamma : omega). *(A times.circle gamma) times.circle gamma$],
 
-  [_call f a_], [$<Gamma, (y, rho)> = f; "call" y(a, rho)$],
+  [_call f a_], [$angle.l Gamma, (g, rho) angle.r = f; "call" g(a, rho)$],
   [$lambda^tilde.basic x. c$],
-  [$<times.circle.big Gamma, (lambda^ast.basic (x,rho). "split" rho . c), "pair" x>$],
+  [$angle.l times.circle.big Gamma, (lambda^ast.basic (x,rho). "split" rho . c), "pair" x angle.r$],
 )
 
 == How to convert from $Gamma : n$ to $Delta : omega$?
@@ -161,22 +176,14 @@ LinCloConv -> StackSelection -> PtrCloConv
 
 == Compilation Assumption
 
-1. If we have $A: n$ then $S p$ points to a valid stack.
-2. If we have $A : omega$ then $[| A |]$
-
+1. If we have $A: n$ then SP points to a valid stack.
+2. If we have $A : omega$ then after $#sem[A]$ SP points to a valid stack
 
 == Compilation Scheme
 
 === Positive fragment
 
 ==== Case: $omega$
-
-#let sem(t) = {
-  $bracket.l.double #t bracket.r.double$
-}
-#let judge(above, below) = {
-  $#above / #below$
-}
 
 Post-condition: $S P$ is free to use after #sem[.]. $S p$ points to the stack.
 
@@ -209,9 +216,20 @@ Post-condition: $S P$ points to a valid stack. #sem[.] pushes the result there.
 
 === Negative fragment
 
-#sem[$"let" z, rho = rho_o; c$] = $"pop"; #sem[c]^(quad (A times.circle tilde R): omega)$
+#sem[$"let" z, rho = rho_o; c$] = $"pop" ; #sem[c]^(quad (A times.circle tilde R): omega)$
 
-#sem[$"call" z$] = $"jmp" rho(z)$
+#sem[$"call" z(x)$] = $"push" x; "jmp" rho(z)$
 
-Not a stack: #sem[$"case" z "of" c_1; c_2$] = $rho(z); "jnz"; $
-Stack:
+Not a stack: #sem[$"case" z "of" {c_1; c_2}$] = $rho(z); "jnz" l_2; l_1: #sem[$c_1$] ; l_2: #sem[$c_2$]$
+
+Stack: #sem[$"case" z "of" {c_1; c_2}$] = 
+$ & "pop" rho(z) \ & "mov" r=[rho(z)] \ & "jnz" l_2 \ & "mov" rho(x) = rho(z) + 1 \ &#sem[$c_1$] \ &"mov" rho(y) = rho(z) + 1 \ &#sem[$c_2$] $
+
+
+== What is a (stack: $omega$)
+
+- Type variable
+- $(A + B) "if" (A: omega) "and" (B: omega)$
+- $(A ⊗ B) "if" (B: omega)$
+- $~A$
+- EmptyStack
