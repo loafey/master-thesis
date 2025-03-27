@@ -181,9 +181,15 @@ LinCloConv -> StackSelection -> PtrCloConv
 
 == Compilation Scheme
 
+For some $x,u$: $"push" x; #sem[u]$ might change to $#sem[u] ; "push" x$
+
 === Positive fragment
 
 ==== Case: $omega$
+
+#let compile_box(t) = {
+    box(baseline: 100%, stroke: black, inset: 5pt, t)
+}
 
 Post-condition: $S P$ is free to use after #sem[.]. $S p$ points to the stack.
 
@@ -220,15 +226,36 @@ Post-condition: $S P$ points to a valid stack. #sem[.] pushes the result there.
 
 #sem[$"call" z(x)$] = $"push" x; "jmp" rho(z)$
 
-Not a stack: #sem[$"case" z "of" {c_1; c_2}$] = $rho(z); "jnz" l_2; l_1: #sem[$c_1$] ; l_2: #sem[$c_2$]$
+Not a stack:\
+#sem[$"case" z "of" {c_1; c_2}$] = 
+    #compile_box[
+        pop $rho(z)$ \
+        mov r = $[rho(z)]$\
+        jnz $l_1$ \
+        #sem[$c_1$] \
+        jmp $l_2$ \
+        $l_1$: \
+        #sem[$c_2$] \
+        $l_2$:
+    ]
 
-Stack: #sem[$"case" z "of" {c_1; c_2}$] = 
-$ & "pop" rho(z) \ & "mov" r=[rho(z)] \ & "jnz" l_2 \ & "mov" rho(x) = rho(z) + 1 \ &#sem[$c_1$] \ &"mov" rho(y) = rho(z) + 1 \ &#sem[$c_2$] $
+Stack: 
+#sem[$"case" z "of" {c_1; c_2}$] = 
+#compile_box[
+        pop $rho(z)$ \ 
+        mov $r=[rho(z)]$ \
+        jnz $l_2$ \
+        mov $rho(x)$ = $rho(z)$ + 1 \
+        #sem[$c_1$] \
+        $l_2$: \
+        mov $rho(y)$ = $rho(z)$ + 1 \
+        #sem[$c_2$]
+    ]
 
 
 == What is a (stack: $omega$)
 
-- Type variable
+- Type variable (?)
 - $(A + B) "if" (A: omega) "and" (B: omega)$
 - $(A ⊗ B) "if" (B: omega)$
 - $~A$
