@@ -225,10 +225,9 @@ And the type is now: $square ~(square ~ int times.circle square~square~int)$
 In the final closure conversion step we make environments explicit and make
 sure that each closure contains a stack to execute on. However, because of how
 the linear closure conversion step works closures will never contain a stack.
-Since all closures are boxed there are no stacks, remember #judge($A:omega$,
-$square A: 1$). This can be observed in the example where we see that $f$ is
-unboxed inside the closure.
-The solution is to move the unboxing of $f$ outside the inner closure:
+Since all closures are boxed there are no stacks, remember #judge($A:omega$, $square A: 1$).
+This can be observed in the example where we see that $f$ is unboxed inside the
+closure. The solution is to move the unboxing of $f$ outside the inner closure:
 $
   square lambda a. & "let" f,k = a; \
   &"let" square k' = k; \
@@ -249,30 +248,99 @@ a stack closure by an explicit pair of static function pointer and environment.
 
 == Compilation Scheme
 
+$rho : Gamma -> "List"("Reg")$ \
+$rho$ is a mapping from variables to a list of memory addresses.
+
+$#sem($dot$)^A_rho$ reads as; the semantics of $dot$ in context $rho$, with kind $A$
+
 === Positive fragment
+
+$#compilation_scheme($omega$,$(v_1,v_2)$)_rho =
+  #code_box[$
+    & r_2 <- #sem[$v_2$]^omega_rho \
+    & r_1 <- #sem[$v_1$]^n_rho \
+    & "push"(r_1)
+    $
+  ]$
+
+$#compilation_scheme($n$,$(v_1,v_2)$) =
+  #code_box[$
+      r_2 <- #sem[$v_2$]^n_rho \
+      r_1 <- #sem[$v_1$]^n_rho$]$
+
+$#compilation_scheme("",$(@t, v_1)$)_rho = #code_box($#sem[$v_1$]_rho$)$
+
+$#compilation_scheme($1$,$square v_1$)_rho = #code_box($#sem[$v_1$]^omega_rho$)$ // FIXME: should this be omega?
+
+$#compilation_scheme($n$,$"inl" v_1$)_rho =
+  #code_box($r_2 <- #sem[$v_1$]_rho$,
+            $r_1 <- 0$
+          )$
+
+$#compilation_scheme($omega$,$"inl" v_1$)_rho =
+  #code_box($& r_1 <- #sem[$v_1$]^omega_rho$,
+            $&"push"(0)$
+          )$
+
+$#compilation_scheme($n$,$"inr" v_1$)_rho =
+  #code_box($& r_2 <- #sem[$v_1$]^n_rho$,
+            $&r_1 <- 1 $
+          )$
+
+$#compilation_scheme($omega$,$"inr" v_1$)_rho =
+  #code_box($&r_0 <- #sem[$v_1$]^omega_rho$,
+            $&"push"(1)$
+          )$
+
+$#compilation_scheme($omega$,$x$)_(rho, x |-> {r_0}) =
+  #code_box($&r_0$)$
+
+$#compilation_scheme($n$,$x$)_(rho, x |-> {r_0}) =
+  #code_box($&r_0$)$
+
+$#compilation_scheme($n$,$()$)_rho =
+  #code_box($&"let" r_0 = "next"(rho,int)$,
+            $&r_0 <- 0$
+          )$
+
+$#compilation_scheme($omega$,$lambda x. c$)_rho =
+  #code_box($#sem[c]^omega_(rho, x |-> r_arg)$)$
+
+$#compilation_scheme($omega$,math.italic("newstack"))_rho =
+  #code_box($r_1 <- #math.italic("newstack")$, $"push" r_1$)$
 
 === Negative fragment
 
-$#compilation_scheme[$-$][$omega$][$"let" x,y = z : A times.circle B; c$]_(rho, z |-> {r_0})
-    = #code_box[$
-        & "let" r_1 = "next"(rho, A) \
-        & "pop" r_1 \
-        & #sem[c]^omega_(rho, x |-> r_1, y |-> {r_0}) \
-        $]$
+$#compilation_scheme($omega$,$"let" x,y = z : A times.circle B; c$)_(rho, z |-> {r_0})
+    = #code_box($
+        "let" r_1 = "next"(rho, A)$,
+        $"pop"(r_1)$,
+        $#sem[c]^omega_(rho, x |-> {r_1}, y |-> {r_0})$,
+        )$
 
-$#compilation_scheme[-][$n$][$"let" x,y = z : A times.circle B; c$]_(rho, z |-> {r_0, r_1})
-    = #code_box[$#sem[c]^n_(rho, x |-> r_0, y |-> r_1)$]$
+$#compilation_scheme($n$,$"let" x,y = z : A times.circle B; c$)_(rho, z |-> {r_0, r_1})
+    = #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$
 
-$#compilation_scheme[$-$][n][$"let" () = z; c$]_(rho,z |-> {r_0}) = #code_box[$#sem[c]_rho$]$
+$#compilation_scheme($n$,$"let" () = z; c$)_(rho,z |-> {r_0})
+  = #code_box($#sem[c]_rho$)$
 
-$#compilation_scheme[$-$][][$"let" @t, x = z; c$]_(rho, z |-> {r_0}) = #code_box[$#sem[c]_(rho, x |-> {r_0})$]$
+$#compilation_scheme("",$"let" @t, x = z; c$)_(rho, z |-> {r_0})
+  = #code_box($#sem[c]_(rho, x |-> {r_0})$)$
 
-$#compilation_scheme[$-$][n][$"let" square x = z; c$]_(rho, z |-> {r_0}) = #code_box[$#sem[c]^omega_(rho, x |-> {r_0})$]$
+$#compilation_scheme($n$,$"let" square x = z; c$)_(rho, z |-> {r_0})
+  = #todo("Implement")$ //#code_box[$#sem[c]_(rho, x |-> {r_0})$]$
 
-$#compilation_scheme[$-$][][$"let" \_ = "FreeStack" z; c$]_(rho, z |-> r_0) = #code_box[$"libc::free"(r_0)\ #sem[c]_rho$]$
+$#compilation_scheme("",$"let" \_ = "FreeStack" z; c$)_(rho, z |-> {r_0})
+  = #code_box($"libc::free"(r_0)$, $#sem[c]_rho$)$
 
-$#compilation_scheme[$-$][$omega$][$"case" z "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$]_(rho, z |-> {r_0, r_1}) = #code_box[$"let" r_1 = "next"(rho, "int")\ "pop" r_1\ "if" "iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> {r_0}) "else" #sem[$c_2$]_(rho, y |-> {r_0})$]$
+$#compilation_scheme($omega$,$"case" z "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
+  = #code_box($& "let" r_1 = "next"(rho, "int")$,
+              $& "pop"(r_1)$,
+              $& "if" "iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> {r_0}) "else" #sem[$c_2$]_(rho, y |-> {r_0})$
+            )$
 
-$#compilation_scheme[$-$][$n$][$"case" z "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$]_(rho, z |-> {r_0}) = #code_box[$"if" "iszero"(r_0) "then" #sem[$c_1$]_(rho, x |-> {r_1}) "else" #sem[$c_2$]_(rho, y |-> {r_2})$]$
+$#compilation_scheme($n$,$"case" z "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0, r_1})
+  = #code_box($"if" "iszero"(r_0) "then" #sem[$c_1$]_(rho, x |-> {r_1}) "else" #sem[$c_2$]_(rho, y |-> {r_2})$)$
 
-$#compilation_scheme[$-$][$omega$][$"call" z(x)$]_(rho, z |-> r_0) = #code_box[$"jmp" r_0 \ #sem[$x$]^omega_(rho)$]$
+$#compilation_scheme($omega$,$"call" z(x)$)_(rho, z |-> {r_0}) =
+  #code_box($&r_arg <- #sem[$x$]^omega_(rho)$, $&"jmp" r_0$)$

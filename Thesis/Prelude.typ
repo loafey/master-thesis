@@ -5,7 +5,10 @@
   linebreak()
   let i = 1
   for option in options_list {
-    text(fill: green, str(i) + ". ") + par(first-line-indent: 1em, hanging-indent: 1em)[#option]
+    (
+      text(fill: green, str(i) + ". ")
+        + par(first-line-indent: 1em, hanging-indent: 1em)[#option]
+    )
     linebreak()
     linebreak()
     i += 1
@@ -17,9 +20,13 @@
 #let green_text(txt) = text(fill: rgb(0, 125, 0, 255))[#txt]
 
 #let judge(above, below, note: "") = {
-  $#above / #below$
-  $quad$
-  note
+  if note == "" {
+    $#above / #below$
+  } else {
+    $#above / #below$
+    $quad$
+    note
+  }
 }
 
 #let tack = { $space tack$ }
@@ -32,8 +39,9 @@
   $bracket.l.double #t bracket.r.double$
 }
 
-#let compilation_scheme(fragment, kind, t) = $""^fragment #sem[#t]^kind$
+#let compilation_scheme(kind, t) = $#sem[$#t$]^kind$
 
-#let code_box(t) = {
-    box(baseline: 100%, stroke: black, inset: 8pt, t)
+#let code_box(..t) = {
+  let txt = t.pos().join($\ $)
+  box(baseline: 100%, stroke: black, inset: 8pt, $txt$)
 }

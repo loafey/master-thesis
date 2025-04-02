@@ -7,7 +7,7 @@ hardware, or providing foundational services to other software.
 We will define system-level programming as Wikipedia @wiki:Systems_programming defines it:
 #grid(
   columns: (10pt, 1fr),
-  rect(height: 100pt, fill: pattern(size: (12pt, 10pt), [
+  rect(height: 100pt, fill: tiling(size: (12pt, 10pt), [
     #place(line(stroke: rgb(0,0,0,65),start: (0%, 0%), end: (100%, 100%)))
     #place(line(stroke: rgb(0,0,0,65),start: (0%, 100%), end: (100%, 0%)))
   ])),
