@@ -255,59 +255,43 @@ $#sem($dot$)^A_rho$ reads as; the semantics of $dot$ in context $rho$, with kind
 
 === Positive fragment
 
-$#compilation_scheme($omega$,$(v_1,v_2)$)_rho =
+$#compilation_scheme($omega$,$(v_1,v_2)$)_(rho,sigma) =
   #code_box[$
-    & r_2 <- #sem[$v_2$]^omega_rho \
-    & r_1 <- #sem[$v_1$]^n_rho \
-    & "push"(r_1)
-    $
+    & #sem[$v_2$]^omega_rho \
+    & #sem[$v_1$]^n_sigma$
   ]$
 
-$#compilation_scheme($n$,$(v_1,v_2)$) =
+$#compilation_scheme($n$,$(v_1,v_2)$)_(rho,sigma) =
   #code_box[$
-      r_2 <- #sem[$v_2$]^n_rho \
-      r_1 <- #sem[$v_1$]^n_rho$]$
+    & #sem[$v_2$]^n_rho \
+    & #sem[$v_1$]^n_sigma$
+  ]$
 
 $#compilation_scheme("",$(@t, v_1)$)_rho = #code_box($#sem[$v_1$]_rho$)$
 
-$#compilation_scheme($1$,$square v_1$)_rho = #code_box($#sem[$v_1$]^omega_rho$)$ // FIXME: should this be omega?
+$#compilation_scheme($1$,$square v_1$)_rho = 
+  #code_box($"push placeholder on SP"$, $"push" "SSP" "on" "SP"$, $"SSP" = "SP"$, $#sem[$v_1$]^omega_rho$, $"SSP"[1] = "SP"$, $"SP" = "SSP" + 1$, $"SSP" = ["SSP"]$)$
 
-$#compilation_scheme($n$,$"inl" v_1$)_rho =
-  #code_box($r_2 <- #sem[$v_1$]_rho$,
-            $r_1 <- 0$
+$#compilation_scheme($alpha$,$"inl" v_1$)_rho =
+  #code_box($#sem[$v_1$]_rho$,
+            $"push"_(s p)(0)$
           )$
 
-$#compilation_scheme($omega$,$"inl" v_1$)_rho =
-  #code_box($& r_1 <- #sem[$v_1$]^omega_rho$,
-            $&"push"(0)$
-          )$
 
-$#compilation_scheme($n$,$"inr" v_1$)_rho =
-  #code_box($& r_2 <- #sem[$v_1$]^n_rho$,
-            $&r_1 <- 1 $
-          )$
+$#compilation_scheme($omega$,$x$)_(x |-> {r_0}) =
+  #code_box($&s p = r_0$)$
 
-$#compilation_scheme($omega$,$"inr" v_1$)_rho =
-  #code_box($&r_0 <- #sem[$v_1$]^omega_rho$,
-            $&"push"(1)$
-          )$
+$#compilation_scheme($n$,$x$)_(x |-> r_0) =
+  #code_box($"push"_(s p)(r_0)$)$
 
-$#compilation_scheme($omega$,$x$)_(rho, x |-> {r_0}) =
-  #code_box($&r_0$)$
+$#compilation_scheme($n$,$()$)_{} =
+  #code_box()$
 
-$#compilation_scheme($n$,$x$)_(rho, x |-> {r_0}) =
-  #code_box($&r_0$)$
+$#compilation_scheme($1$,$lambda x. c$)_{} =
+  l_0: &#code_box($"let" r_1 = "next"()$, $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \ & #code_box($"push"_(s p)(l_0)$)$
 
-$#compilation_scheme($n$,$()$)_rho =
-  #code_box($&"let" r_0 = "next"(rho,int)$,
-            $&r_0 <- 0$
-          )$
-
-$#compilation_scheme($omega$,$lambda x. c$)_rho =
-  #code_box($#sem[c]^omega_(rho, x |-> r_arg)$)$
-
-$#compilation_scheme($omega$,math.italic("newstack"))_rho =
-  #code_box($r_1 <- #math.italic("newstack")$, $"push" r_1$)$
+$#compilation_scheme($omega$,math.italic("newstack"))_{} =
+  #code_box($r_1 <- #math.italic("newstack")$, $s p = r_1$)$
 
 === Negative fragment
 
@@ -315,20 +299,20 @@ $#compilation_scheme($omega$,$"let" x,y = z : A times.circle B; c$)_(rho, z |-> 
     = #code_box($
         "let" r_1 = "next"(rho, A)$,
         $"pop"(r_1)$,
-        $#sem[c]^omega_(rho, x |-> {r_1}, y |-> {r_0})$,
+        $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$,
         )$
 
 $#compilation_scheme($n$,$"let" x,y = z : A times.circle B; c$)_(rho, z |-> {r_0, r_1})
     = #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$
 
-$#compilation_scheme($n$,$"let" () = z; c$)_(rho,z |-> {r_0})
+$#compilation_scheme($n$,$"let" () = z; c$)_(rho,z |-> {})
   = #code_box($#sem[c]_rho$)$
 
-$#compilation_scheme("",$"let" @t, x = z; c$)_(rho, z |-> {r_0})
-  = #code_box($#sem[c]_(rho, x |-> {r_0})$)$
+$#compilation_scheme("",$"let" @t, x = z; c$)_(rho, z |-> r_0)
+  = #code_box($#sem[c]_(rho, x |-> r_0)$)$
 
 $#compilation_scheme($n$,$"let" square x = z; c$)_(rho, z |-> {r_0})
-  = #todo("Implement")$ //#code_box[$#sem[c]_(rho, x |-> {r_0})$]$
+  = #code_box($#sem[c]_(rho, x |-> {r_0})$)$
 
 $#compilation_scheme("",$"let" \_ = "FreeStack" z; c$)_(rho, z |-> {r_0})
   = #code_box($"libc::free"(r_0)$, $#sem[c]_rho$)$
@@ -339,8 +323,10 @@ $#compilation_scheme($omega$,$"case" z "of" { "inl" x |-> c_1; "inr" y |-> c_2;}
               $& "if" "iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> {r_0}) "else" #sem[$c_2$]_(rho, y |-> {r_0})$
             )$
 
-$#compilation_scheme($n$,$"case" z "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0, r_1})
-  = #code_box($"if" "iszero"(r_0) "then" #sem[$c_1$]_(rho, x |-> {r_1}) "else" #sem[$c_2$]_(rho, y |-> {r_2})$)$
+$#compilation_scheme($n$,$"case" z "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
+  = #code_box($"if" "iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> r_s) "else" #sem[$c_2$]_(rho, y |-> r_s)$)$
 
-$#compilation_scheme($omega$,$"call" z(x)$)_(rho, z |-> {r_0}) =
-  #code_box($&r_arg <- #sem[$x$]^omega_(rho)$, $&"jmp" r_0$)$
+$#compilation_scheme($$,$"call" z(v)$)_(rho, z |-> {r_0}) =
+  #code_box($&#sem[$v$]^omega_(rho)$, $&"jmp" r_0$)$
+
+// TODO: move kind description to the variable z
