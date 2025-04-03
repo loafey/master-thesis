@@ -191,7 +191,9 @@ For some $x,u$: $"push" x; #sem[u]$ might change to $#sem[u] ; "push" x$
     box(baseline: 100%, stroke: black, inset: 5pt, t)
 }
 
-Post-condition: $S P$ is free to use after #sem[.]. $S p$ points to the stack.
+Pre-condition: $S p$ is free to use.
+
+Post-condition: $S p$ points to the stack which is being built.
 
 #judge($Gamma tack.r t: A quad Delta tack.r u: B: omega$
        ,$Gamma, Delta tack.r A times.circle B$) = $#sem[(t,u)] = #sem[u]^omega; #sem[t]^n$
@@ -204,7 +206,9 @@ Post-condition: $S P$ is free to use after #sem[.]. $S p$ points to the stack.
 
 ==== Case: $n$
 
-Post-condition: $S P$ points to a valid stack. #sem[.] pushes the result there.
+Pre-condition: $S p$ points to a valid stack. 
+
+Post-condition: #sem[$dot$] pushes the result there.
 
 #judge($Gamma tack.r t: A quad Delta tack.r u: B$, $Gamma, Delta tack.r (t,u): A times.circle B$) = $#sem[u]^n; #sem[t]^n$
 
