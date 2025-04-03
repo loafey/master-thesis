@@ -35,13 +35,23 @@
 
 #let int = { math.italic("int") }
 
+#let sp = {math.italic("sp")}
+#let ssp = {math.italic("ssp")}
+
 #let sem(t) = {
   $bracket.l.double #t bracket.r.double$
 }
 
-#let compilation_scheme(kind, t) = $#sem[$#t$]^kind$
+#let compilation_scheme(t) = $#sem[$#t$]$
 
 #let code_box(..t) = {
   let txt = t.pos().join($\ $)
-  box(baseline: 100%, stroke: black, inset: 8pt, $txt$)
+  box(baseline: 50%, fill: rgb("EEEEEE"), stroke: none, inset: 8pt, $txt$)
 }
+
+#let code_block(lbl,..t) = {
+  let txt = t.pos().join($\ $)
+  $lbl$
+  ": "
+  box(baseline: 80%, fill: rgb("EEEEEE"), stroke: black, inset: 8pt, $txt$)
+} 
