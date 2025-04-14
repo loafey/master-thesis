@@ -7,7 +7,12 @@
   it
   in-outline.update(false)
 }
-
+#set heading(
+  numbering: (..lvl) => {
+    let xs = lvl.pos()
+    if xs.len() == 1 { "1" } else { "1." }
+  },
+)
 
 #set page(
   margin: 1.4in,
@@ -19,22 +24,22 @@
       order = left
     }
     align(order, hydra(1))
-    if hydra(1) != none{ line(length: 100%) }
+    if hydra(1) != none { line(length: 100%) }
   },
   numbering: (..n) => context {
     if in-outline.get() {
       numbering("1 / 1", ..n)
     } else {
-      numbering((_,_) => {} , ..n)
+      numbering((_, _) => { }, ..n)
     }
-  }
+  },
 )
 #set heading(numbering: "1.")
 
-#show heading: it => [
-  #it
-  #v(0.3cm)
-]
+#show heading: it => {
+  it
+  v(0.3cm)
+}
 #set text(font: "New Computer Modern", size: 12pt)
 #set par(justify: true)
 
@@ -76,4 +81,4 @@
 
 #pagebreak()
 <end>
-#bibliography(title: "References","bib.bib")
+#bibliography(title: "References", "bib.bib")
