@@ -1,18 +1,37 @@
 #import "Prelude.typ": *
+
 = Theory
 
-- SLFL consists of two fragments; positive and negative. The positive fragment
-  consists of ways to create terms, while the negative fragment consists of ways
-  to destruct terms.
+This chapter introduces the underlying theory for SLFL.
 
-- Two kinds, known size ($n,m$) and stack size $omega$.
-- Continuation-passing style.
-  - Order of evaluation specified
+== Logic
+This section will introduce the reader to logic and its connection to computation in the form of functional programming through the Curry-Howard correspondence.
+
+Logic is a formal system that uses reason to deduce truths. There are several proof systems where logic can be expressed. We will introduce the system of natural deduction.
+To prove $A$ and $B$, one has to prove $A$ and independently prove $B$. In natural deduction, this can be expressed using either the turnstyle or as a proof tree. #grid(columns: (1fr, 1fr), column-gutter: -8cm)[$ A, B tack A and B $][$ (A quad B)/(A and B) $]
+
+This reads as: given a proof of $A$ and a proof of $B$, we can prove $A$ and $B$.
+In other words, the deductions to the left of the turnstyle or above the line lead to the conclusion to the right of the turnstyle or below the line.
+
+The relation between logic and computation stems from the Curry-Howard correspondence, also descriptively called the "Proofs as programs and types as propositions".
+The proof from above can be interpreted as the following Haskell program
+#align(center,```hs
+proof :: a -> b -> (a,b)
+proof a b = (a,b)
+```)
+
+=== Linear logic
+
+=== SLFL
+
+SLFL consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
+Two kinds, known size ($n,m$) and stack size $omega$.
+Continuation-passing style.
 
 === Term-level judgements
 
 #let positive = {
-  [=== Positive fragment]
+  [*Positive fragment*]
   grid(
     columns: (1fr, 1fr),
     row-gutter: 16pt,
@@ -74,7 +93,7 @@
 }
 
 #let negative = {
-  [=== Negative fragment]
+  [*Negative fragment*]
   grid(
     columns: (1fr, 1fr),
     row-gutter: 16pt,
@@ -195,14 +214,14 @@
   ],
 )
 
-== Transformations
+=== Transformations
 
 - Source language $->$ Linear closure conversion $->$ Stack selection $->$ Pointer closure conversion
 
 We will consider the following program to explain each step: $lambda a. "let" f,k = a; k(lambda y. space f(y))$
 with type $not (not int times.circle not not int)$. We use $int$ to avoid considering existential types for now.
 
-=== Linear closure converison
+==== Linear closure converison
 
 $(lambda^not x. c): not A => square (lambda^~ x. c): square (~A)$
 
@@ -220,7 +239,7 @@ And the type is now: $square ~(square ~ int times.circle square~square~int)$
 //The astute reader will now realize that $not$ is a source language construct only. There is no compilation scheme that corresponds to it.
 
 
-=== Stack Selection
+==== Stack Selection
 
 In the final closure conversion step we make environments explicit and make
 sure that each closure contains a stack to execute on. However, because of how
@@ -241,19 +260,30 @@ Now the inner closure contains a stack.
 //closure conversion step. If it contains zero stacks, then the environment of
 //the closure will create one using the _newstack_ primitive.
 
-=== Pointer Closure Conversion
+==== Pointer Closure Conversion
 
 The goal of this phase is to make the structure of stacks explicit, replacing
 a stack closure by an explicit pair of static function pointer and environment.
 
-== Compilation Scheme
+=== Compilation Scheme
 
 $rho : Gamma -> "List"("Reg")$ \
 $rho$ is a mapping from variables to a list of memory addresses.
 
-// $#sem($dot$)^A_rho$ reads as; the semantics of $dot$ in context $rho$, with kind $A$
+The reason the range of $rho$ is a list of memory addresses is because some values
+require more space than one memory address can fit.
 
-=== Positive fragment
+$#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
+for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
+to represent either $n$ or $omega$.
+
+The scheme uses a mix of meta syntax, i.e, instructions that does not generate
+any code, and instructions that generate code. We differentiate meta syntax
+with instructions using double quotes.
+
+$"newstack"$
+
+==== Positive fragment
 
 $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
   #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$
@@ -263,44 +293,53 @@ $#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
 
 $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$
 
-#todo("Fix the second one and make sure it is correct")
 $#compilation_scheme($square v_1$)^n_rho =
-
-  #code_box($"push placeholder on SP"$, $"push" "SSP" "on" "SP"$, $"SSP" = "SP"$, $#sem[$v_1$]^omega_rho$, $"SSP"[1] = "SP"$, $"SP" = "SSP" + 1$, $"SSP" = ["SSP"]$)$
-
-  $#code_box($sp = sp + 1$, $"push"_(sp)(ssp)$, $ssp = sp$, $#sem[$v_1$]^omega_rho$, $ssp[1] = sp$, $sp = ssp + 1$, $ssp = [ssp]$)$
+  #code_box(
+    $sp = sp + 1$,
+    $push_(sp)(ssp)$,
+    $ssp = sp$,
+    $#sem[$v_1$]^omega_rho$,
+    $[ssp - 1] = sp$,
+    $sp = ssp - 1$,
+    $ssp = [ssp]$,
+  )$
 
 $#compilation_scheme($"inl" v_1$)^alpha_rho =
-  #code_box($#sem[$v_1$]^alpha_rho$, $"push"_(s p)(0)$)$
+  #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$
 
 $#compilation_scheme($"inr" v_1$)^alpha_rho =
-  #code_box($#sem[$v_1$]^alpha_rho$, $"push"_(s p)(1)$)$
+  #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$
 
 $#compilation_scheme($x$)^omega_(x |-> {r_0}) =
   #code_box($&s p = r_0$)$
 
 $#compilation_scheme($x$)^n_(x |-> r_0) =
-  #code_box($"push"_(s p)(r_0)$)$
+  #code_box($push_(s p)(r_0)$)$
 
 $#compilation_scheme($()$)^n_{} = #code_box("")$
 
 $#compilation_scheme($lambda x. c$)^1_{} =
-  &#code_block($l_1$, $"let" r_1 = "next"({}, #math.italic("ptr"))$, $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \ & #code_box($"push"_(s p)(l_0)$)$
+  &#code_block(
+    $l_1$,
+    meta($"let" r_1 = "next"({}, #math.italic("ptr"))$),
+    $r_1 = s p$,
+    $#sem[c]_(x |-> {r_1})$,
+  ) \ & #code_box($push_(s p)(l_1)$)$
 
-$#compilation_scheme(math.italic("newstack"))^omega_{} =
-  #code_box($r_1 <- #math.italic("newstack")$, $s p = r_1$)$
+$#compilation_scheme(newstack)^omega_{} =
+  #code_box($r_1 <- newstack$, $s p = r_1$)$
 
-=== Negative fragment
+==== Negative fragment
 
 $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
-    = #code_box($
-        "let" r_1 = "next"(rho, A)$,
-        $"pop"(r_1)$,
-        $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$,
-        )$
+  = #code_box(
+    meta($"let" r_1 = "next"(rho, A)$),
+    $pop(r_1)$,
+    $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$,
+  )$
 
 $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> {r_0, r_1})
-    = #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$
+  = #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$
 
 $#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
   = #code_box($#sem[c]_rho$)$
@@ -312,18 +351,19 @@ $#compilation_scheme($"let" square x = z^1; c$)_(rho, z |-> {r_0})
   = #code_box($#sem[c]_(rho, x |-> {r_0})$)$
 
 $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
-  = #code_box($"libc::free"(r_0)$, $#sem[c]_rho$)$
+  = #code_box($"free"(r_0)$, $#sem[c]_rho$)$
 
 $#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
-  = #code_box($"let" r_1 = "next"(rho, "int")$,
-              $"pop"(r_1)$,
-              $"if" "iszero"(r_1)$,
-              $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
-              $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$
-            )$
+  = #code_box(
+    meta($"let" r_1 = "next"(rho, "int")$),
+    $pop(r_1)$,
+    $"if" "iszero"(r_1)$,
+    $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
+    $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
+  )$
 
 $#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
-  = #code_box($"if" "iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> r_s) "else" #sem[$c_2$]_(rho, y |-> r_s)$)$
+  = #code_box($"if iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> r_s) "else" #sem[$c_2$]_(rho, y |-> r_s)$)$
 
 $#compilation_scheme($"call" z^n (v)$)_(rho, z |-> {r_0}) =
-  #code_box($&#sem[$v$]^omega_(rho)$, $&"jmp" r_0$)$
+  #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$
