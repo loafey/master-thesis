@@ -1,4 +1,5 @@
 #import "Prelude.typ": *
+#import "@preview/hydra:0.6.1": hydra
 
 #let in-outline = state("in-outline", false)
 #show outline: it => {
@@ -6,15 +7,29 @@
   it
   in-outline.update(false)
 }
-#set heading(numbering: "1.")
 
-#set page(margin: 1.4in, numbering: (..n) => context {
-  if in-outline.get() {
-    numbering("1 / 1", ..n)
-  } else {
-    numbering((_,_) => {} , ..n)
+
+#set page(
+  margin: 1.4in,
+  header: context {
+    let order
+    if calc.odd(here().page()) {
+      order = right
+    } else {
+      order = left
+    }
+    align(order, hydra(1))
+    if hydra(1) != none{ line(length: 100%) }
+  },
+  numbering: (..n) => context {
+    if in-outline.get() {
+      numbering("1 / 1", ..n)
+    } else {
+      numbering((_,_) => {} , ..n)
+    }
   }
-})
+)
+#set heading(numbering: "1.")
 
 #show heading: it => [
   #it
