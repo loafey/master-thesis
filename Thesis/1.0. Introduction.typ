@@ -1,6 +1,5 @@
 = Introduction
 
-#text(red)[
 == Background
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
@@ -51,8 +50,5 @@ which are of critical importance in system-level programming.
 In linear logic, the uses of weakening and contraction are carefully controlled, which in
 a programming language setting means variables must be used exactly once.
 
-The plan of our thesis is to compile and extend System-Level Functional Language. The 
-language is created by Jean-Philippe Bernardy, which in turn is based on Girard's linear logic.
-SLFL is proposed as an alternative to system-level languages, as well as being
-an intermediate compilation target for functional languages.
-]
+This thesis describes System-level functional language, the compilation scheme
+for SLFL, and the implementation of the compiler.
