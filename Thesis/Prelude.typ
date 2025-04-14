@@ -92,6 +92,14 @@
 
 #let sp = {math.italic("sp")}
 #let ssp = {math.italic("ssp")}
+#let push = {math.italic("push")}
+#let pop = {math.italic("pop")}
+#let jmp = {math.italic("jmp")}
+#let newstack = {math.italic("newstack")}
+
+#let meta(t) = {
+  $\"#t\"$
+}
 
 #let sem(t) = {
   $bracket.l.double #t bracket.r.double$
