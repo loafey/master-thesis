@@ -2,6 +2,14 @@
 
 = System-level Functional Language
 
+This chapter will go into details about System-Level Functional Language. Before going into details we will talk about the goals and what the vision for the language is.
+
+System-Level Functional Language (SLFL) is meant to be an intermediate
+compilation target for linearly typed functional programming languages. Popular
+compilation targets today are LLVM, Cranelift, C, and compiling to assembly
+languages directly. 
+// Although the aforementioned alternatives are all viable, for a functional programming language several transformations have to be made. For instance, most functional programming languages have closures. 
+
 SLFL consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
 Two kinds, known size ($n,m$) and stack size $omega$.
 Continuation-passing style.
@@ -214,7 +222,7 @@ $
   & k'(square lambda y. "let" square f' = f; f'(y))
 $
 
-And the type is now: $square ~(square ~ int times.circle square~square~int)$
+After converting the type we end up with: $square ~(square ~ int times.circle square~square~int)$
 
 //The astute reader will now realize that $not$ is a source language construct only. There is no compilation scheme that corresponds to it.
 
