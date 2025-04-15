@@ -20,3 +20,12 @@ The relation with computation comes from the Curry-Howard correspondence where C
 
 === Linear logic
 
+== Continuations
+
+== Memory
+=== RC
+=== GC
+
+== Compilation Targets
+=== Higher-Level Assembly Languages
+=== x86-64
