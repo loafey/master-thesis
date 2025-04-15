@@ -21,6 +21,14 @@ The relation with computation comes from the Curry-Howard correspondence where C
 === Linear logic
 
 == Continuations
+A design pattern in functional programming is Continuation Passing Style.
+In this design pattern, instead of functions returning, they take an extra argument which
+is a function which will operate on the resulting value. 
+SLFL makes heavy use of this pattern, in fact, it requires it for all functions.
+This might sound like a problem, but in fact functional programs can be easily converted
+into this design pattern #todo("source here"), and in addition, this comes with benefits, such
+as allowing for easy tail call optimization as we never need to return to a previous 
+stack frame #todo("source here").
 
 == Memory
 === RC
