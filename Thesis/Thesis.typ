@@ -73,12 +73,7 @@
 #include "5.0. Demonstration.typ"
 #pagebreak()
 
-#include "6.0. Discussion.typ"
-#pagebreak()
-
-#include "7.0. Conclusion.typ"
-#pagebreak()
-
+#include "6.0. Conclusion.typ"
 #pagebreak()
 <end>
 #bibliography(title: "References", "bib.bib")
