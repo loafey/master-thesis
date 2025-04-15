@@ -1,2 +1,2 @@
 #heading(numbering: none, outlined: false, [Abstract])
-#lorem(400)
+#lorem(100)

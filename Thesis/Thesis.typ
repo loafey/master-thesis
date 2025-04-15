@@ -24,22 +24,22 @@
       order = left
     }
     align(order, hydra(1))
-    if hydra(1) != none { line(length: 100%) }
+    if hydra(1) != none{ line(length: 100%) }
   },
   numbering: (..n) => context {
     if in-outline.get() {
       numbering("1 / 1", ..n)
     } else {
-      numbering((_, _) => { }, ..n)
+      numbering((_,_) => {} , ..n)
     }
   },
 )
 #set heading(numbering: "1.")
 
 #show heading: it => {
-  it
-  v(0.3cm)
-}
+      it
+      v(0.3cm)
+  }
 #set text(font: "New Computer Modern", size: 12pt)
 #set par(justify: true)
 
@@ -61,16 +61,16 @@
 #include "1.0. Introduction.typ"
 #pagebreak()
 
-#include "2.0. Theory.typ"
+#include "2.0. Background.typ"
 #pagebreak()
 
-#include "3.0. Language Specificaiton.typ"
+#include "3.0. System-level functional language.typ"
 #pagebreak()
 
-#include "4.0. Implementation.typ"
+#include "4.0. Compiling System-level functional language.typ"
 #pagebreak()
 
-#include "5.0. Demonstration.typ"
+#include "5.0. Usage.typ"
 #pagebreak()
 
 #include "6.0. Conclusion.typ"

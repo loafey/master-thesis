@@ -1,24 +1,22 @@
 #import "Prelude.typ": *
 
-= Theory
+= Background
 
-This chapter introduces the underlying theory for SLFL.
+This chapter introduces the background needed to understand SLFL.
 
 == Logic
 This section will introduce the reader to logic and its connection to computation in the form of functional programming through the Curry-Howard correspondence.
 
-Logic is a formal system that uses reason to deduce truths. There are several proof systems where logic can be expressed. We will introduce the system of natural deduction.
-To prove $A$ and $B$, one has to prove $A$ and independently prove $B$. In natural deduction, this can be expressed using either the turnstyle or as a proof tree. #grid(columns: (1fr, 1fr), column-gutter: -8cm)[$ A, B tack A and B $][$ (A quad B)/(A and B) $]
+Logic is a formal system that uses reason to deduce truths. There are several proof systems where logic can be expressed. To prove $A$ and $B$, one has to prove $A$ and independently prove $B$. In natural deduction, this can be expressed with the following proof tree. 
+$ (A quad B)/(A and B) $
 
 This reads as: given a proof of $A$ and a proof of $B$, we can prove $A$ and $B$.
-In other words, the deductions to the left of the turnstyle or above the line lead to the conclusion to the right of the turnstyle or below the line.
+The deductions above the line lead to the conclusion below the line.
+The relation with computation comes from the Curry-Howard correspondence where Curry observed that the types of combinators could be seen as axiom-schemes in intuitionistic logic @curry1934functionality. Many years later Howard made the observation that intuitionistic logic in natural deduction could be interpreted as a typed variant of the lambda calculus. The Curry-Howard correspondence is also aptly known as the proofs-as-programs and propositions-as-types interpretation.
 
-The relation between logic and computation stems from the Curry-Howard correspondence, also descriptively called the "Proofs as programs and types as propositions".
-The proof from above can be interpreted as the following Haskell program
-#align(center,```hs
-proof :: a -> b -> (a,b)
-proof a b = (a,b)
-```)
+=== Natural deduction
+
+=== Sequent calculus
 
 === Linear logic
 
@@ -215,6 +213,8 @@ Continuation-passing style.
 )
 
 === Transformations
+
+SLFL consists of three intermediate languages.
 
 - Source language $->$ Linear closure conversion $->$ Stack selection $->$ Pointer closure conversion
 
