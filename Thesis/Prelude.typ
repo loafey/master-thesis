@@ -1,4 +1,7 @@
-#import "@preview/dashy-todo:0.0.1": todo
+#import "@preview/dashy-todo:0.0.1"
+
+#let debug = true
+#let todo = if debug {dashy-todo.todo} else {(..) => {}}
 
 #let stack(..args) = {
   let ags = ();
