@@ -31,8 +31,6 @@ as allowing for easy tail call optimization as we never need to return to a prev
 stack frame #todo("source here").
 
 == Memory
-=== RC
-=== GC
 
 == Compilation Targets
 === Higher-Level Assembly Languages
