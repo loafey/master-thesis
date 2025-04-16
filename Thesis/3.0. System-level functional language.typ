@@ -14,7 +14,7 @@ SLFL consists of two fragments; positive and negative. The positive fragment des
 Two kinds, known size ($n,m$) and stack size $omega$.
 Continuation-passing style.
 
-=== Term-level judgements
+== Term-level judgements
 
 #let positive = {
   [*Positive fragment*]
@@ -137,7 +137,7 @@ Continuation-passing style.
   positive, negative,
 )
 
-=== Type-level judgements
+== Type-level judgements
 
 #grid(
   columns: (1fr, 1fr, 1fr),
@@ -200,7 +200,7 @@ Continuation-passing style.
   ],
 )
 
-=== Transformations
+== Transformations
 
 SLFL consists of three intermediate languages.
 
@@ -209,7 +209,7 @@ SLFL consists of three intermediate languages.
 We will consider the following program to explain each step: $lambda a. "let" f,k = a; k(lambda y. space f(y))$
 with type $not (not int times.circle not not int)$. We use $int$ to avoid considering existential types for now.
 
-==== Linear closure converison
+=== Linear closure converison
 
 $(lambda^not x. c): not A => square (lambda^~ x. c): square (~A)$
 
@@ -227,7 +227,7 @@ After converting the type we end up with: $square ~(square ~ int times.circle sq
 //The astute reader will now realize that $not$ is a source language construct only. There is no compilation scheme that corresponds to it.
 
 
-==== Stack Selection
+=== Stack Selection
 
 In the final closure conversion step we make environments explicit and make
 sure that each closure contains a stack to execute on. However, because of how
@@ -248,12 +248,12 @@ Now the inner closure contains a stack.
 //closure conversion step. If it contains zero stacks, then the environment of
 //the closure will create one using the _newstack_ primitive.
 
-==== Pointer Closure Conversion
+=== Pointer Closure Conversion
 
 The goal of this phase is to make the structure of stacks explicit, replacing
 a stack closure by an explicit pair of static function pointer and environment.
 
-=== Compilation Scheme
+== Compilation Scheme
 
 $rho : Gamma -> "List"("Reg")$ \
 $rho$ is a mapping from variables to a list of memory addresses.
@@ -271,7 +271,7 @@ with instructions using double quotes.
 
 $"newstack"$
 
-==== Positive fragment
+=== Positive fragment
 
 $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
   #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$
@@ -317,7 +317,7 @@ $#compilation_scheme($lambda x. c$)^1_{} =
 $#compilation_scheme(newstack)^omega_{} =
   #code_box($r_1 <- newstack$, $s p = r_1$)$
 
-==== Negative fragment
+=== Negative fragment
 
 $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
   = #code_box(
