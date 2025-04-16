@@ -1,18 +1,20 @@
 - Introduction
+    - Systems programming
 - Background
-    - Logic
-        - Natural deduction
-        - Sequent calculus
-        - Linear logic
-        - Polarised linear logic
-    - Continuations
+    - Programming lanugages with linear types
+        - Polymorphic lambda calculus (System F)
+        - Linear types (substructural)
+        - Polarised linear logic and continuations
     - Memory
-        - RC
-        - GC
     - Compilation target
         - LLVM
         - x86
 - System-level functional language
+    - Overview (types, kinds, cps)
+    - Grammar
+    - Linear closure conversion
+    - Stack selection
+    - Pointer closure conversion
 - Compiling SLFL
     - Compilation Scheme
     - ABI
@@ -25,3 +27,6 @@
         - Extensions
         - Exponentials
     - Conclusion
+
+== New
+- Background
