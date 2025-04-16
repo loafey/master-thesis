@@ -33,5 +33,11 @@ stack frame #todo("source here").
 == Memory
 
 == Compilation Targets
+Unless you are directly targeting binary machine code, most of the time
+you want a more higher level compilation target to compile your language to.
+
+There are a lot of different fitting choices for this task #lorem(10) 
+
 === Higher-Level Assembly Languages
+
 === x86-64
