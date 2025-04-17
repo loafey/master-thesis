@@ -46,9 +46,22 @@ Most of the time these IRs are also cross platform, automatically giving compile
 portability if need be. 
 As these languages are higher level compared to an assembly language,
 it of course comes with the cost of removing some control. 
-A lot of these are howerer modelled for imperative language, and expect
+A lot of these are however modelled for imperative language, and expect
 the source language to follow the traditional stack frame approach which
 might not be convenient for a continuation based language.
+For these case, it might be nicer to target an assembly language directly instead.
+
+When you #todo[you] directly target an assembly language portability suffers as is to 
+be expected. You not only have to target different assembly languages
+for different CPU architectures, you will also have to cater to the operating system
+you are targeting. For instance, on a \*nix operating system, you can almost
+always rely upon some implemention of LIBC, be it GLIBC or musl, 
+or system calls if more power is needed, while on Windows you have to instead
+depend on the provided libraries to interact with the rest of the system.
+A simple act such as printing might look wildly different 
+depending on the operating system because even though they might use the same
+assembly language, they can involve extremely different calls to the operating system.
+#todo[detta gäller även många IR språk. LLVM IR har tex samma problem]
 
 === Higher-Level Assembly Languages
 
