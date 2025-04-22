@@ -62,7 +62,3 @@ A simple act such as printing might look wildly different
 depending on the operating system because even though they might use the same
 assembly language, they can involve extremely different calls to the operating system.
 #todo[detta gäller även många IR språk. LLVM IR har tex samma problem]
-
-=== Higher-Level Assembly Languages
-
-=== x86-64
