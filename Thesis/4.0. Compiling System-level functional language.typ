@@ -18,7 +18,7 @@ The language operates in a similar manner to stack-machine based languages,
 where stacks are used for capturing variables, passing variables between 
 functions and calculations.  
 Only one stack is in use at a time, and a stack should only be pushed to and popped from
-if it is the currently used one.
+if it is the currently used one. Mutating or reading other stacks is undefined behavior.
 
 As the language strictly uses continuation passing style (CPS) for function calls,
 and that all arguments to functions are passed along with stacks, the language
