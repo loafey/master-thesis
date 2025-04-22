@@ -8,18 +8,25 @@ Application Binary Interface (ABI) #todo("Alltid viktigt med en ABI?").
 The ABI specifies how functions and data types
 are accessed and the calling conventions of said functions.
 
-As opposed to most languages, SLFL has a intricate setup when it comes to the 
-stack setup. As said before, the language uses multiple stacks, 
-similiarly to a stack machine, and for clarity the normal stack given by the operating system
-will be refered to as the system stack.
+As opposed to most languages, SLFL has quite a special setup when it comes to 
+its stacks. As said before, the language operates using multiple stacks, 
+outside of the normal stack given the operating system.
+For clarity's sake the normal stack given
+by the operating system will be refered to as the system stack.
 
-The language strictly uses continuation passing style (CPS) for function calls,
-and all arguments to functions are passed along with stacks. 
-This comes with the benefit of the language only needing one normal stack frame
-on the system stack during normal execution flow.
+The language operates in a similar manner to stack-machine based languages,
+where stacks are used for capturing variables, passing variables between 
+functions and calculations.  
+Only one stack is in use at a time, and a stack should only be pushed to and popped from
+if it is the currently used one.
+
+As the language strictly uses continuation passing style (CPS) for function calls,
+and that all arguments to functions are passed along with stacks, the language
+makes heavy use of tail call optimization.
+Every call simply resets the stack frame, and during normal executing flow only one stack frame is ever used.
 
 #grid(columns: (1fr,0.8fr), gutter: 0.5cm, [
-    The single stack frame is used for variable storage and register spilling,
+    This single stack frame is used for variable storage and register spilling,
     and its base size is determined at compile time and varies between functions. 
     This size is based on the amount of variables used by the function,
     and does not account for register spilling as pushing and popping handles
@@ -27,7 +34,7 @@ on the system stack during normal execution flow.
 ], figure(kind: image, stack(
     [],             [`a`    ],[`0x40`],
     [],             [`b`    ],[`0x38`],
-    [spilling $->$],[ ..... ],[`0x30`],
+    [spilling $->$],[ . . . ],[`0x30`],
 ), caption: [
     A system stack containing the variables `a` and `b`,
     and any spilling will occur in address space `0x30` and below.
