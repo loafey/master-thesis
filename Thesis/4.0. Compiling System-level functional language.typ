@@ -8,8 +8,8 @@ Application Binary Interface (ABI) #todo("Alltid viktigt med en ABI?").
 The ABI specifies how functions and data types
 are accessed and the calling conventions of said functions.
 
-As opposed to most languages, SLFL has quite a special setup when it comes to 
-its stacks. As said before, the language operates using multiple stacks, 
+#text(fill: blue)[As opposed to most languages, SLFL has quite a special setup when it comes to 
+its stacks.] As said before, the language operates using multiple stacks, 
 outside of the normal stack given the operating system.
 For clarity's sake the normal stack given
 by the operating system will be refered to as the system stack.
