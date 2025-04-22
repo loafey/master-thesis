@@ -2,19 +2,70 @@
 
 = System-level Functional Language
 
-This chapter will go into details about System-Level Functional Language. Before going into details we will talk about the goals and what the vision for the language is.
-
 System-Level Functional Language (SLFL) is meant to be an intermediate
 compilation target for linearly typed functional programming languages. Popular
 compilation targets today are LLVM, Cranelift, C, and compiling to assembly
-languages directly. 
-// Although the aforementioned alternatives are all viable, for a functional programming language several transformations have to be made. For instance, most functional programming languages have closures. 
+languages directly.
+// Although the aforementioned alternatives are all viable, for a functional programming language several transformations have to be made. For instance, most functional programming languages have closures.
 
 SLFL consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
 Two kinds, known size ($n,m$) and stack size $omega$.
 Continuation-passing style.
 
-== Term-level judgements
+== System-Level Functional Language
+
+At the core of SLFL is the kind system which describes the size of types. There
+are two kinds in SLFL:
+- $omega$. _dynamic size_
+- $n$: _constant size_.
+
+An informal description is that a type $A: omega$ /* (type $A$ with kind
+                                                  $omega$) */ can be understood as being a stack, whereas a type $A: n$ is a type
+with known size.
+
+SLFL consists of two fragments:
+- _Positive fragment_ describes how values are created. When we talk about
+  values we refer to the positive fragment.
+- _Negative fragment_: describes how values are destructed. We will refer to the negative fragment as _commands_
+
+#let grammar(section, named, ..rules) = {
+  let arr = rules.pos()
+  section
+  linebreak()
+  named
+  $space := space$
+  [#arr.join(" | ")]
+}
+
+#let values = grammar(
+  [_Values_],
+  $v,v'$,
+  $x$,
+  $()$,
+  $lambda p. space c$,
+  $#math.italic("inl") v$,
+  $#math.italic("inr") v$,
+  $square v$,
+  $(v, v')$,
+  $(@t, v)$,
+)
+#let commands = grammar(
+  [_Commands_],
+  [$c, c'$],
+  $z(v)$,
+  $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
+  $"let" p = v; c$,
+)
+
+#let pat = grammar([_Patterns_], $x$, $()$, $p, p'$, $@x, y$, $p, p'$, $square p$)
+
+#box(
+  inset: 7pt,
+  stroke: black,
+  [#values #linebreak() #linebreak() #commands #linebreak() #linebreak() #pat],
+)
+
+=== Type judgements
 
 #let positive = {
   [*Positive fragment*]
@@ -27,18 +78,18 @@ Continuation-passing style.
         $Gamma, Delta tack (t,u): A times.circle B$,
       )],
     [#judge(
-        $Gamma, x: A tack c$,
-        $Gamma tack lambda x. c : not A$,
+        $dot, x: A tack c$,
+        $dot tack lambda x. c : not A$,
       )
     ],
 
     [#judge(
-        $Gamma, x: A tack c$,
-        $Gamma tack lambda x. c : *A$,
+        $dot, x: A tack c$,
+        $dot tack lambda x. c : *A$,
       )
     ],
     [#judge(
-        $Gamma, x: A tack c$,
+        $dot, x: A tack c$,
         $Gamma tack lambda^~x. c: ~A$,
       )],
 
@@ -71,9 +122,13 @@ Continuation-passing style.
     ],
     [
       #judge(
-        $Gamma tack x: A$,
-        $Gamma tack x: A$,
+        $Gamma, alpha tack t: A$,
+        $Gamma tack angled(A, t): exists alpha. A$,
       )
+    ],
+
+    [
+      #judge("", $dot tack () : top$)
     ],
   )
 }
@@ -137,15 +192,15 @@ Continuation-passing style.
   positive, negative,
 )
 
-== Type-level judgements
+=== Kind judgements
 
 #grid(
   columns: (1fr, 1fr, 1fr),
   row-gutter: 16pt,
   [
     #judge(
-      $A: n quad B:n$,
-      $A times.circle B: n$,
+      $A: n quad B:m$,
+      $A times.circle B: n + m$,
     )
   ],
   [
@@ -156,8 +211,8 @@ Continuation-passing style.
   ],
   [
     #judge(
-      $A:n quad B: n$,
-      $A plus.circle B: n$,
+      $A:n quad B: m$,
+      $A plus.circle B: max(n, m)$,
     )
   ],
 
@@ -170,7 +225,7 @@ Continuation-passing style.
   [
     #judge(
       $A: omega$,
-      $*A: 1$,
+      $*A: n$,
     )
   ],
   [
@@ -183,13 +238,13 @@ Continuation-passing style.
   [
     #judge(
       $A:n$,
-      $not A: 1$,
+      $not A: n$,
     )
   ],
   [
     #judge(
       $A: omega$,
-      $square A: 1$,
+      $square A: n$,
     )
   ],
   [
@@ -274,84 +329,84 @@ $"newstack"$
 === Positive fragment
 
 $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
-  #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$
+#code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$
 
 $#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
-  #code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$
+#code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$
 
 $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$
 
 $#compilation_scheme($square v_1$)^n_rho =
-  #code_box(
-    $sp = sp + 1$,
-    $push_(sp)(ssp)$,
-    $ssp = sp$,
-    $#sem[$v_1$]^omega_rho$,
-    $[ssp - 1] = sp$,
-    $sp = ssp - 1$,
-    $ssp = [ssp]$,
-  )$
+#code_box(
+  $sp = sp + 1$,
+  $push_(sp)(ssp)$,
+  $ssp = sp$,
+  $#sem[$v_1$]^omega_rho$,
+  $[ssp - 1] = sp$,
+  $sp = ssp - 1$,
+  $ssp = [ssp]$,
+)$
 
 $#compilation_scheme($"inl" v_1$)^alpha_rho =
-  #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$
+#code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$
 
 $#compilation_scheme($"inr" v_1$)^alpha_rho =
-  #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$
+#code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$
 
 $#compilation_scheme($x$)^omega_(x |-> {r_0}) =
-  #code_box($&s p = r_0$)$
+#code_box($&s p = r_0$)$
 
 $#compilation_scheme($x$)^n_(x |-> r_0) =
-  #code_box($push_(s p)(r_0)$)$
+#code_box($push_(s p)(r_0)$)$
 
 $#compilation_scheme($()$)^n_{} = #code_box("")$
 
 $#compilation_scheme($lambda x. c$)^1_{} =
-  &#code_block(
-    $l_1$,
-    meta($"let" r_1 = "next"({}, #math.italic("ptr"))$),
-    $r_1 = s p$,
-    $#sem[c]_(x |-> {r_1})$,
-  ) \ & #code_box($push_(s p)(l_1)$)$
+&#code_block(
+  $l_1$,
+  meta($"let" r_1 = "next"({}, #math.italic("ptr"))$),
+  $r_1 = s p$,
+  $#sem[c]_(x |-> {r_1})$,
+) \ & #code_box($push_(s p)(l_1)$)$
 
 $#compilation_scheme(newstack)^omega_{} =
-  #code_box($r_1 <- newstack$, $s p = r_1$)$
+#code_box($r_1 <- newstack$, $s p = r_1$)$
 
 === Negative fragment
 
 $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
-  = #code_box(
-    meta($"let" r_1 = "next"(rho, A)$),
-    $pop(r_1)$,
-    $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$,
-  )$
+= #code_box(
+  meta($"let" r_1 = "next"(rho, A)$),
+  $pop(r_1)$,
+  $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$,
+)$
 
 $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> {r_0, r_1})
-  = #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$
+= #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$
 
 $#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
-  = #code_box($#sem[c]_rho$)$
+= #code_box($#sem[c]_rho$)$
 
 $#compilation_scheme($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
-  = #code_box($#sem[c]_(rho, x |-> r_0)$)$
+= #code_box($#sem[c]_(rho, x |-> r_0)$)$
 
 $#compilation_scheme($"let" square x = z^1; c$)_(rho, z |-> {r_0})
-  = #code_box($#sem[c]_(rho, x |-> {r_0})$)$
+= #code_box($#sem[c]_(rho, x |-> {r_0})$)$
 
 $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
-  = #code_box($"free"(r_0)$, $#sem[c]_rho$)$
+= #code_box($"free"(r_0)$, $#sem[c]_rho$)$
 
 $#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
-  = #code_box(
-    meta($"let" r_1 = "next"(rho, "int")$),
-    $pop(r_1)$,
-    $"if" "iszero"(r_1)$,
-    $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
-    $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
-  )$
+= #code_box(
+  meta($"let" r_1 = "next"(rho, "int")$),
+  $pop(r_1)$,
+  $"if" "iszero"(r_1)$,
+  $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
+  $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
+)$
 
 $#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
-  = #code_box($"if iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> r_s) "else" #sem[$c_2$]_(rho, y |-> r_s)$)$
+= #code_box($"if iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> r_s) "else" #sem[$c_2$]_(rho, y |-> r_s)$)$
 
 $#compilation_scheme($"call" z^n (v)$)_(rho, z |-> {r_0}) =
-  #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$
+#code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$
