@@ -1,4 +1,4 @@
-#import "Prelude.typ": todo, stack
+#import "../Prelude.typ": todo, stack
 = Compiling System-level functional language
 
 == Language ABI 

@@ -1,4 +1,4 @@
-#import "Prelude.typ": *
+#import "../Prelude.typ": *
 
 = System-level Functional Language
 
@@ -36,7 +36,6 @@ SLFL consists of two fragments:
   $space := space$
   [#arr.join(" | ")]
 }
-
 #let values = grammar(
   [_Values_],
   $v,v'$,
@@ -56,14 +55,43 @@ SLFL consists of two fragments:
   $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
   $"let" p = v; c$,
 )
+#let pat = grammar(
+  [_Patterns_],
+  $p$,
+  $()$,
+  $p, p'$,
+  $@t, y$,
+  $p, p'$,
+  $square p$,
+)
+#let type = grammar([_Types_], $t, t'$, $top$, $bot$, $x$, $not t$, $* t$, $~ t$, $\# t$, $t times.circle t'$, $t plus.circle t'$, $exists x. t$)
+#let def = grammar([_Definition_], $d$, $x : t = v$)
+#let module = grammar([_Module_], $m$, $epsilon$, $d ; m$)
 
-#let pat = grammar([_Patterns_], $x$, $()$, $p, p'$, $@x, y$, $p, p'$, $square p$)
-
-#box(
+#let complete_grammar = box(
   inset: 7pt,
   stroke: black,
-  [#values #linebreak() #linebreak() #commands #linebreak() #linebreak() #pat],
+  [
+    #values 
+    #linebreak() 
+    #linebreak() 
+    #commands 
+    #linebreak() 
+    #linebreak() 
+    #pat
+    #linebreak() 
+    #linebreak() 
+    #type
+    #linebreak() 
+    #linebreak() 
+    #def
+    #linebreak() 
+    #linebreak() 
+    #module
+  ],
 )
+
+#complete_grammar
 
 === Type judgements
 

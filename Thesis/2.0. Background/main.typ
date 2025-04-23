@@ -1,4 +1,4 @@
-#import "Prelude.typ": *
+#import "../Prelude.typ": *
 
 = Background
 

@@ -43,37 +43,29 @@
 #set text(font: "New Computer Modern", size: 12pt)
 #set par(justify: true)
 
-#include "0. Splash.typ"
-#pagebreak()
-#pagebreak()
-#include "0.1. Fancy Splash.typ"
-#pagebreak()
-#include "0.2. Licence.typ"
-#pagebreak()
-#include "0.3. Abstract.typ"
-#pagebreak()
+#include "0. Splash/main.typ"
 
 #counter(page).update(1)
 #outline()
 #in-outline.update(true)
 #pagebreak()
 
-#include "1.0. Introduction.typ"
+#include "1.0. Introduction/main.typ"
 #pagebreak()
 
-#include "2.0. Background.typ"
+#include "2.0. Background/main.typ"
 #pagebreak()
 
-#include "3.0. System-level functional language.typ"
+#include "3.0. System-level functional language/main.typ"
 #pagebreak()
 
-#include "4.0. Compiling System-level functional language.typ"
+#include "4.0. Compiling System-level functional language/main.typ"
 #pagebreak()
 
-#include "5.0. Usage.typ"
+#include "5.0. Usage/main.typ"
 #pagebreak()
 
-#include "6.0. Conclusion.typ"
+#include "6.0. Conclusion/main.typ"
 #pagebreak()
 <end>
 #bibliography(title: "References", "bib.bib")

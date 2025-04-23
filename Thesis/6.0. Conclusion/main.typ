@@ -1,4 +1,4 @@
-#import "Prelude.typ": todo
+#import "../Prelude.typ": todo
 
 = Conclusion
 == Future Work

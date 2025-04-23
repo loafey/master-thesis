@@ -24,3 +24,12 @@
     ])
   ]
 )
+
+#pagebreak()
+#pagebreak()
+#include "0.1. Fancy Splash.typ"
+#pagebreak()
+#include "0.2. Licence.typ"
+#pagebreak()
+#include "0.3. Abstract.typ"
+#pagebreak()
