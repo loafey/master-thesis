@@ -1,296 +1,111 @@
 #import "../Prelude.typ": *
+#import "figures.typ": *
 
-= System-level Functional Language
+= System-Level Functional Language
 
-System-Level Functional Language (SLFL) is meant to be an intermediate
-compilation target for linearly typed functional programming languages. Popular
-compilation targets today are LLVM, Cranelift, C, and compiling to assembly
-languages directly.
+In this section we will introduce the reader to SLFL. We will explain how the language works and argue why the choices are made.
+
+// System-Level Functional Language (SLFL) is meant to be an intermediate compilation target for linearly typed functional programming languages. Popular compilation targets today are LLVM, Cranelift, C, and compiling to assembly languages directly.
 // Although the aforementioned alternatives are all viable, for a functional programming language several transformations have to be made. For instance, most functional programming languages have closures.
 
-SLFL consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
-Two kinds, known size ($n,m$) and stack size $omega$.
-Continuation-passing style.
+// SLFL consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
+// Two kinds, known size ($n,m$) and stack size $omega$.
+// Continuation-passing style.
 
-== System-Level Functional Language
+== Overview
 
+=== Continuation-passing Style
+An immediate notable difference between SLFL and other functional programming
+languages is the programming style. SLFL is written in _continuation-passing
+style_ (CPS), a programming style where control is passed explicitly via
+continuation functions rather than returning values. We will provide a simple example of CPS using the identity function. In normal style it would be:
+
+#align(
+  center,
+  $
+    & id : forall a. a -> a\
+    & id = lambda x. space x
+  $,
+)
+
+contrast it to the CPS version:
+
+#align(
+  center,
+  $
+    & id : forall a, r. space a -> (a -> r) -> r \
+    & id = lambda x. lambda k. space k(n)
+  $,
+)
+
+A natural question that comes to mind now is why we want continuation-passing style? An immediate benefit of CPS is that every function call is a tail call, which enables tail call optimization for every function call. Another benefit is that the order of evaluation is made explicit. If we consider the following program written in normal style:
+
+#align(
+  center,
+  $"foo" = lambda x. & "let" y = "bar"(x) \ & "in" "let" z = "baz"(x) \ & "in" y + z$,
+)
+
+Is $y$ evaluted first or is $z$ evaluted first? The choice would be up to the
+compiler developer. If we look at the same function in CPS we will see that the
+evaluation order is determined by the order of the function calls.
+
+#align(
+  left,
+  [
+    1. bar($x$) is evaluted first
+    $quad quad "foo" = lambda x. lambda k. & "bar"(x, lambda y. "baz"(x, lambda z. k(y+z)))$
+
+    2. baz($x$) is evaluted first
+    $quad quad "foo" = lambda x. lambda k. & "baz"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
+  ],
+)
+
+=== Kinds & types
 At the core of SLFL is the kind system which describes the size of types. There
 are two kinds in SLFL:
 - $omega$. _dynamic size_
-- $n$: _constant size_.
+- $n,m$: _constant size_
 
-An informal description is that a type $A: omega$ /* (type $A$ with kind
-                                                  $omega$) */ can be understood as being a stack, whereas a type $A: n$ is a type
-with known size.
+An informal description is that a type $A: omega$ can be understood as being
+a stack, whereas a type $A: n$ is a type with known size. If we start by
+looking at the kind rules for producing a type $A: omega$
+
+#grid(columns: (1fr,1fr,1fr,1fr),
+emptystack,
+dynamic_closure,
+product_dynamic,
+sum_dynamic,
+)
+
+// TODO: REWRITE
+- The first judgement says that the empty stack is a stack. 
+- The second judgement says the a stack-continuation is a stack.
+- The third judgement says that given a type $A$ with known size and a stack $B$ we can push $A$ on $B$.
 
 SLFL consists of two fragments:
 - _Positive fragment_ describes how values are created. When we talk about
   values we refer to the positive fragment.
 - _Negative fragment_: describes how values are destructed. We will refer to the negative fragment as _commands_
 
-#let grammar(section, named, ..rules) = {
-  let arr = rules.pos()
-  section
-  linebreak()
-  named
-  $space := space$
-  [#arr.join(" | ")]
-}
-#let values = grammar(
-  [_Values_],
-  $v,v'$,
-  $x$,
-  $()$,
-  $lambda p. space c$,
-  $#math.italic("inl") v$,
-  $#math.italic("inr") v$,
-  $square v$,
-  $(v, v')$,
-  $(@t, v)$,
-)
-#let commands = grammar(
-  [_Commands_],
-  [$c, c'$],
-  $z(v)$,
-  $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
-  $"let" p = v; c$,
-)
-#let pat = grammar(
-  [_Patterns_],
-  $p$,
-  $()$,
-  $p, p'$,
-  $@t, y$,
-  $p, p'$,
-  $square p$,
-)
-#let type = grammar([_Types_], $t, t'$, $top$, $bot$, $x$, $not t$, $* t$, $~ t$, $\# t$, $t times.circle t'$, $t plus.circle t'$, $exists x. t$)
-#let def = grammar([_Definition_], $d$, $x : t = v$)
-#let module = grammar([_Module_], $m$, $epsilon$, $d ; m$)
-
-#let complete_grammar = box(
-  inset: 7pt,
-  stroke: black,
-  [
-    #values 
-    #linebreak() 
-    #linebreak() 
-    #commands 
-    #linebreak() 
-    #linebreak() 
-    #pat
-    #linebreak() 
-    #linebreak() 
-    #type
-    #linebreak() 
-    #linebreak() 
-    #def
-    #linebreak() 
-    #linebreak() 
-    #module
-  ],
-)
-
-#complete_grammar
 
 === Type judgements
 
-#let positive = {
-  [*Positive fragment*]
-  grid(
-    columns: (1fr, 1fr),
-    row-gutter: 16pt,
-    [
-      #judge(
-        $Gamma tack t: A quad Delta tack u: B$,
-        $Gamma, Delta tack (t,u): A times.circle B$,
-      )],
-    [#judge(
-        $dot, x: A tack c$,
-        $dot tack lambda x. c : not A$,
-      )
-    ],
+#type_judgements
 
-    [#judge(
-        $dot, x: A tack c$,
-        $dot tack lambda x. c : *A$,
-      )
-    ],
-    [#judge(
-        $dot, x: A tack c$,
-        $Gamma tack lambda^~x. c: ~A$,
-      )],
-
-    [#judge(
-        $Gamma tack t: A$,
-        $Gamma tack square t: square A$,
-      )
-    ],
-    [#judge(
-        $Gamma tack x: A$,
-        $Gamma tack x: A$,
-      )
-    ],
-
-    [
-      #judge($$, $tack "newstack": circle$)
-    ],
-    [
-      #judge(
-        $Gamma tack t: A$,
-        $Gamma tack "inl" t: A plus.circle B$,
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma tack t: B$,
-        $Gamma tack "inr" t: A plus.circle B$,
-      )
-    ],
-    [
-      #judge(
-        $Gamma, alpha tack t: A$,
-        $Gamma tack angled(A, t): exists alpha. A$,
-      )
-    ],
-
-    [
-      #judge("", $dot tack () : top$)
-    ],
-  )
-}
-
-#let negative = {
-  [*Negative fragment*]
-  grid(
-    columns: (1fr, 1fr),
-    row-gutter: 16pt,
-    [
-      #judge(
-        $Gamma tack t: A$,
-        $Gamma, z: ~A tack "call"^~ z(t)$,
-      )
-    ],
-    [
-      #judge(
-        $Gamma tack t: A$,
-        $Gamma, z: *A tack "call"^* z(t)$,
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma tack c$,
-        $Gamma, z: circle tack "freestack" z; c$,
-      )
-    ],
-    [
-      #judge(
-        $Gamma, a: A, b: B tack c$,
-        $Gamma, z: A times.circle B tack "let" a,b = z; c$,
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma, alpha, x: A tack c$,
-        $Gamma, z: exists alpha. A tack "let" angled(alpha, x) = z; c$,
-      )
-    ],
-    [
-      #judge(
-        $Gamma, x: A tack c$,
-        $Gamma, z: square A tack "let" square x = z; c$,
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma tack c$,
-        $Gamma, z: top tack "let" () = z; c$,
-      )
-    ],
-  )
-}
-
-#grid(
-  columns: (1fr, 1fr),
-  row-gutter: 16pt,
-  positive, negative,
-)
-
-=== Kind judgements
-
-#grid(
-  columns: (1fr, 1fr, 1fr),
-  row-gutter: 16pt,
-  [
-    #judge(
-      $A: n quad B:m$,
-      $A times.circle B: n + m$,
-    )
-  ],
-  [
-    #judge(
-      $A: n quad B: omega$,
-      $A times.circle B: omega$,
-    )
-  ],
-  [
-    #judge(
-      $A:n quad B: m$,
-      $A plus.circle B: max(n, m)$,
-    )
-  ],
-
-  [
-    #judge(
-      $A: omega quad B: omega$,
-      $A plus.circle B: omega$,
-    )
-  ],
-  [
-    #judge(
-      $A: omega$,
-      $*A: n$,
-    )
-  ],
-  [
-    #judge(
-      $A: n$,
-      $~A: omega$,
-    )
-  ],
-
-  [
-    #judge(
-      $A:n$,
-      $not A: n$,
-    )
-  ],
-  [
-    #judge(
-      $A: omega$,
-      $square A: n$,
-    )
-  ],
-  [
-    #judge(
-      $$,
-      $circle: omega$,
-    )
-  ],
-)
 
 == Transformations
 
-SLFL consists of three intermediate languages.
-
-- Source language $->$ Linear closure conversion $->$ Stack selection $->$ Pointer closure conversion
+SLFL consists of three intermediate languages:
+- Linear closure converted
+- Stack selected
+- Pointer closure converted
 
 We will consider the following program to explain each step: $lambda a. "let" f,k = a; k(lambda y. space f(y))$
 with type $not (not int times.circle not not int)$. We use $int$ to avoid considering existential types for now.
+
+== Grammar
+
+#complete_grammar
 
 === Linear closure converison
 
@@ -352,89 +167,11 @@ The scheme uses a mix of meta syntax, i.e, instructions that does not generate
 any code, and instructions that generate code. We differentiate meta syntax
 with instructions using double quotes.
 
-$"newstack"$
-
 === Positive fragment
 
-$#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
-#code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$
-
-$#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
-#code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$
-
-$#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$
-
-$#compilation_scheme($square v_1$)^n_rho =
-#code_box(
-  $sp = sp + 1$,
-  $push_(sp)(ssp)$,
-  $ssp = sp$,
-  $#sem[$v_1$]^omega_rho$,
-  $[ssp - 1] = sp$,
-  $sp = ssp - 1$,
-  $ssp = [ssp]$,
-)$
-
-$#compilation_scheme($"inl" v_1$)^alpha_rho =
-#code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$
-
-$#compilation_scheme($"inr" v_1$)^alpha_rho =
-#code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$
-
-$#compilation_scheme($x$)^omega_(x |-> {r_0}) =
-#code_box($&s p = r_0$)$
-
-$#compilation_scheme($x$)^n_(x |-> r_0) =
-#code_box($push_(s p)(r_0)$)$
-
-$#compilation_scheme($()$)^n_{} = #code_box("")$
-
-$#compilation_scheme($lambda x. c$)^1_{} =
-&#code_block(
-  $l_1$,
-  meta($"let" r_1 = "next"({}, #math.italic("ptr"))$),
-  $r_1 = s p$,
-  $#sem[c]_(x |-> {r_1})$,
-) \ & #code_box($push_(s p)(l_1)$)$
-
-$#compilation_scheme(newstack)^omega_{} =
-#code_box($r_1 <- newstack$, $s p = r_1$)$
+#positive_compilation_scheme
 
 === Negative fragment
 
-$#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
-= #code_box(
-  meta($"let" r_1 = "next"(rho, A)$),
-  $pop(r_1)$,
-  $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$,
-)$
+#negative_compilation_scheme
 
-$#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> {r_0, r_1})
-= #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$
-
-$#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
-= #code_box($#sem[c]_rho$)$
-
-$#compilation_scheme($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
-= #code_box($#sem[c]_(rho, x |-> r_0)$)$
-
-$#compilation_scheme($"let" square x = z^1; c$)_(rho, z |-> {r_0})
-= #code_box($#sem[c]_(rho, x |-> {r_0})$)$
-
-$#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
-= #code_box($"free"(r_0)$, $#sem[c]_rho$)$
-
-$#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
-= #code_box(
-  meta($"let" r_1 = "next"(rho, "int")$),
-  $pop(r_1)$,
-  $"if" "iszero"(r_1)$,
-  $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
-  $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
-)$
-
-$#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
-= #code_box($"if iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> r_s) "else" #sem[$c_2$]_(rho, y |-> r_s)$)$
-
-$#compilation_scheme($"call" z^n (v)$)_(rho, z |-> {r_0}) =
-#code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$
