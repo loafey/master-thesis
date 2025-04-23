@@ -1,3 +1,5 @@
+#import "../Prelude.typ": todo
+
 == Compilation Targets
 Unless you are directly targeting binary machine code, most of the time
 you want a more higher level compilation target to compile your language to.
