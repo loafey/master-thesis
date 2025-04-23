@@ -2,8 +2,6 @@
   inputs.nixpkgs.url = "github:NixOS/nixpkgs";
   outputs = { self, nixpkgs }:
     let
-      lastModifiedDate = self.lastModifiedDate or self.lastModified or "19700101";
-      version = builtins.substring 0 8 lastModifiedDate;
       supportedSystems = [
         "x86_64-linux"
         "x86_64-darwin"
@@ -26,6 +24,5 @@
                 ];
               };
           });
-      defaultPackage = forAllSystems (system: self.packages.${system}.dit313);
     };
 }
