@@ -15,8 +15,8 @@ portability if need be.
 As these languages are higher level compared to an assembly language,
 it of course comes with the cost of removing some control. 
 A lot of these are however modelled for imperative language, and expect
-the source language to follow the traditional stack frame based calling convention
-, which, depending on the source language, might not always be the most fitting choice.
+the source language to follow the traditional stack frame based calling convention, 
+which, depending on the source language, might not always be the most fitting choice.
 For these case, it might be nicer to target an assembly language directly instead.
 
 When you #todo[you] directly target an assembly language portability suffers as is to 

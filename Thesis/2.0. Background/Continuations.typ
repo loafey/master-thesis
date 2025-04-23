@@ -15,8 +15,8 @@ and simply act on the result, functions are instead used to describe computation
       a <- fib (x - 1)
       b <- fib (x - 2)
       a + b
-    False -> x
-    ```,
+      False -> x
+      ```,
     ```hs
   fib :: (Int -> a) -> Int -> Int
   fib k x = case x > 2 of
@@ -28,7 +28,10 @@ and simply act on the result, functions are instead used to describe computation
     False -> k x
     ```,
   )
-)
+)<fibbonaci>
+
+As can be seen in @fibbonaci 
+
 // 
 // SLFL makes heavy use of this pattern, in fact, it requires it for all functions.
 // This might sound like a problem, but in fact functional programs can be easily converted
