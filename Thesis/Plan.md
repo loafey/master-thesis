@@ -7,8 +7,6 @@
         - Polarised linear logic and continuations
     - Memory
     - Compilation target
-        - LLVM
-        - x86
 - System-level functional language
     - Overview (types, kinds, cps)
     - Grammar
