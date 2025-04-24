@@ -18,24 +18,22 @@ passed to these functions. For this explicit need of control x86-64 was a fittin
 
 Utilizing the flexibity given by x86-64, SLFL gains a lot of control over how the calling 
 convention is implemented and how the stack, registers and memory in general is used.
+In other words, it gives us the ability to have complete control over
+the languages Application Binary Interface (ABI). See @languageAbiChapter
+for details about that.
 
-In combination with this control, and the fact that SLFL strictly uses CPS,
-every single function call is  tail call optimized, and this is can be done because
-the last thing _every_ function does is call another function. 
-Similarily to other languages
-SLFL uses stack frames for function calls, but unlike other languages, SLFL only 
-ever uses _one_, due to its heavy use of tail call optimization and the flexibilty given by
-x86-64.
+Similarily to other languages SLFL uses stack frames for function calls, 
+but unlike other languages, SLFL only ever uses _one_.
+This is possible due to the finegrained control x86-64 gives a developer 
+and the fact that SLFL strictly uses CPS, 
+thus every single function call is tail call optimized as they always end 
+with calling the next function.
 
-#v(1cm)
-
+#v(0.5cm)
 #x86withoutTailCall<x86withoutTailCall>
-
-#v(1cm)
+#v(0.5cm)
 #x86withTailCall<x86withTailCall>
-
-#v(1cm)
-
+#v(0.5cm)
 As can be seen in @x86withoutTailCall and @x86withTailCall, when using tail call optimization
 we simply replace the previous stack frame. This optimizations is however not guaranteed when calling functions using 
 Foreign Function Interfaces (FFI) calls. While FFI
