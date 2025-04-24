@@ -3,6 +3,16 @@
 #let debug = true
 #let todo = if debug {dashy-todo.todo} else {(..) => {}}
 
+#let indent(content) = grid(
+  columns: (10pt, 1fr),
+  rect(height: 100pt, fill: tiling(size: (12pt, 10pt), [
+    #place(line(stroke: rgb(0,0,0,65),start: (0%, 0%), end: (100%, 100%)))
+    #place(line(stroke: rgb(0,0,0,65),start: (0%, 100%), end: (100%, 0%)))
+  ])),
+  content,
+  inset: (left: 16pt)
+)
+
 #let stack(..args) = {
   let ags = ();
   let count = 0;
