@@ -13,6 +13,7 @@
   $v,v'$,
   $x$,
   $()$,
+  "newstack",
   $lambda p. space c$,
   $#math.italic("inl") v$,
   $#math.italic("inr") v$,
@@ -41,11 +42,12 @@
   $t, t'$,
   $top$,
   $bot$,
+  $circle$,
   $x$,
   $not t$,
   $* t$,
   $~ t$,
-  $\# t$,
+  $square t$,
   $t times.circle t'$,
   $t plus.circle t'$,
   $exists x. t$,
@@ -53,25 +55,22 @@
 #let def = grammar([_Definition_], $d$, $x : t = v$)
 #let module = grammar([_Module_], $m$, $epsilon$, $d ; m$)
 
+#let dbl_linkbreak() = { linebreak(); linebreak()}
+
 #let complete_grammar = box(
   inset: 7pt,
   stroke: black,
   [
     #values
-    #linebreak()
-    #linebreak()
+    #dbl_linkbreak()
     #commands
-    #linebreak()
-    #linebreak()
+    #dbl_linkbreak()
     #pat
-    #linebreak()
-    #linebreak()
+    #dbl_linkbreak()
     #type
-    #linebreak()
-    #linebreak()
+    #dbl_linkbreak()
     #def
-    #linebreak()
-    #linebreak()
+    #dbl_linkbreak()
     #module
   ],
 )

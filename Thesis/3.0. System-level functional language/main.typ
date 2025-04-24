@@ -1,6 +1,6 @@
 #import "../Prelude.typ": *
 #import "figures.typ": *
-
+#import "@preview/curryst:0.5.1": rule, prooftree
 = System-Level Functional Language
 
 In this section we will introduce the reader to SLFL. We will explain how the language works and argue why the choices are made.
@@ -52,43 +52,75 @@ evaluation order is determined by the order of the function calls.
 #align(
   left,
   [
-    1. bar($x$) is evaluted first
-    $quad quad "foo" = lambda x. lambda k. & "bar"(x, lambda y. "baz"(x, lambda z. k(y+z)))$
 
-    2. baz($x$) is evaluted first
-    $quad quad "foo" = lambda x. lambda k. & "baz"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
+    $> lambda x. lambda k. & "bar"(x, lambda y. "baz"(x, lambda z. k(y+z)))$
+
+    Here $"bar"(x)$ has to be evaluated first
+
+
+    $> lambda x. lambda k. & "baz"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
+
+    And in this one $"baz"(x)$ has to be evaluted first
   ],
 )
 
 === Kinds & types
+
 At the core of SLFL is the kind system which describes the size of types. There
 are two kinds in SLFL:
 - $omega$. _dynamic size_
-- $n,m$: _constant size_
+- $n,m,k$: _constant size_
 
 An informal description is that a type $A: omega$ can be understood as being
 a stack, whereas a type $A: n$ is a type with known size. If we start by
 looking at the kind rules for producing a type $A: omega$
+The following are all the kind judgements in the language.
 
-#grid(columns: (1fr,1fr,1fr,1fr),
-emptystack,
-dynamic_closure,
-product_dynamic,
-sum_dynamic,
+#text(size: 1.3em, align(center, kind_judgements))
+
+We can now derive more larger types following the kind rules. For instance, let us derive the types $A times.circle B times.circle ~C$ and $A times.circle (B plus.circle C) times.circle circle$
+
+#let tree = rule(
+  ($A times.circle B times.circle ~C: omega$),
+  prooftree(rule($A:n$, "")),
+  prooftree(
+    rule(
+      $B times.circle ~C: omega$,
+      rule($B: m$),
+      prooftree(rule($~C: omega$, prooftree(rule($C: k$)))),
+    ),
+  ),
+)
+#let tree2 = rule(
+  ($A times.circle (B plus.circle C) times.circle circle: omega$),
+  prooftree(rule($A:n$, "")),
+  prooftree(
+    rule(
+      $(B plus.circle C) times.circle circle: omega$,
+      prooftree(rule($B plus.circle C: max(m, k)$, $B: m$, $C: k$)),
+      prooftree(rule($circle: omega$)),
+    ),
+  ),
+)
+#grid(
+  columns: (1fr, 1fr),
+  inset: (top: 0.3cm, bottom: 0.3cm, right: -3pt, left: -3pt),
+  prooftree(tree), prooftree(tree2),
 )
 
-// TODO: REWRITE
-- The first judgement says that the empty stack is a stack. 
-- The second judgement says the a stack-continuation is a stack.
-- The third judgement says that given a type $A$ with known size and a stack $B$ we can push $A$ on $B$.
+The $omega$ case of the product type ($times.circle$) can be interpreted as pushing its left operand on the right operand stack. The circle ($circle$) can be interpreted as being the empty stack, while $~A$ is a closure type that represents "the rest of the stack". $*A$ and $not A$ are also closure types.
+ This part will become clear when we give meaning to the types in their memory representation. #todo[Refer to section]
+
+=== Type judgements
 
 SLFL consists of two fragments:
-- _Positive fragment_ describes how values are created. When we talk about
+
+- _Positive fragment_ describes how things are created. When we talk about
   values we refer to the positive fragment.
+
 - _Negative fragment_: describes how values are destructed. We will refer to the negative fragment as _commands_
 
 
-=== Type judgements
 
 #type_judgements
 
@@ -105,7 +137,7 @@ with type $not (not int times.circle not not int)$. We use $int$ to avoid consid
 
 == Grammar
 
-#complete_grammar
+#figure(caption: [Grammar of SLFL], align(left,complete_grammar))
 
 === Linear closure converison
 
