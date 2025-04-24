@@ -1,7 +1,7 @@
-#import "../Prelude.typ": todo
+#import "../Prelude.typ": todo,drawStack
 
 == Language ABI 
-As SLFL is a systems level language, there is importance in specifying an
+#text(fill: red)[As SLFL is a systems level language, there is importance in specifying an
 #todo("very rough cut!! kinda garbonzo")
 Application Binary Interface (ABI) #todo("Alltid viktigt med en ABI?"). 
 The ABI specifies how functions and data types
@@ -24,21 +24,6 @@ and that all arguments to functions are passed along with stacks, the language
 makes heavy use of tail call optimization.
 Every call simply resets the stack frame, and during normal executing flow only one stack frame is ever used.
 
-#grid(columns: (1fr,0.8fr), gutter: 0.5cm, [
-    This single stack frame is used for variable storage and register spilling,
-    and its base size is determined at compile time and varies between functions. 
-    This size is based on the amount of variables used by the function,
-    and does not account for register spilling as pushing and popping handles
-    stack frame size dynamically, as it updates the stack pointer accordingly. Variables are reached using the stack base pointer as the offset.
-], figure(kind: image, stack(
-    [],             [`a`    ],[`0x40`],
-    [],             [`b`    ],[`0x38`],
-    [spilling $->$],[ . . . ],[`0x30`],
-), caption: [
-    A system stack containing the variables `a` and `b`,
-    and any spilling will occur in address space `0x30` and below.
-]))
-
 When FFI calls #todo([introduce]) occur, such as calling a LIBC function like `printf`,
 this function will allocate a stack frame on top of the singular frame, and execute like
 it would normally do. The result will then be written into a fitting register 
@@ -53,3 +38,4 @@ A caller simply calls the top level function to get a reference to it,
 and then executes when the time is right.
 This means that there is a two-step process to calling top-level functions, 
 but allows for functions to be handled like any other value.
+]

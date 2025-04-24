@@ -1,4 +1,3 @@
-#import "../Prelude.typ": todo, stack
 = Compiling System-level functional language
 
 #include "x86-64.typ"

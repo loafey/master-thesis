@@ -13,7 +13,7 @@
   inset: (left: 16pt)
 )
 
-#let stack(..args) = {
+#let drawStack(..args) = {
   let ags = ();
   let count = 0;
 
