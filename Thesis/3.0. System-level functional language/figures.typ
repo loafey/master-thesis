@@ -55,7 +55,10 @@
 #let def = grammar([_Definition_], $d$, $x : t = v$)
 #let module = grammar([_Module_], $m$, $epsilon$, $d ; m$)
 
-#let dbl_linkbreak() = { linebreak(); linebreak()}
+#let dbl_linkbreak() = {
+  linebreak()
+  linebreak()
+}
 
 #let complete_grammar = box(
   inset: 7pt,
@@ -75,7 +78,7 @@
   ],
 )
 
-#let positive = {
+#let positive = block(breakable: false, {
   [*Positive fragment*]
   grid(
     columns: (1fr, 1fr),
@@ -139,9 +142,9 @@
       #judge("", $dot tack () : top$)
     ],
   )
-}
+})
 
-#let negative = {
+#let negative = block(breakable: false, {
   [*Negative fragment*]
   grid(
     columns: (1fr, 1fr),
@@ -191,14 +194,20 @@
         $Gamma, z: top tack "let" () = z; c$,
       )
     ],
+    [
+      #judge(
+        $Gamma, x: A_i tack c_i$,
+        $Gamma, z: A_1 plus.circle A_2 tack "case" z "of" "inj"_i x_i |-> c_i$,
+      )
+    ],
   )
-}
+})
 
-#let type_judgements = grid(
-  columns: (1fr, 1fr),
-  row-gutter: 16pt,
-  positive, negative,
-)
+#let type_judgements = {
+  positive 
+  linebreak()
+  negative
+}
 
 #let product_dynamic = {
   judge(
