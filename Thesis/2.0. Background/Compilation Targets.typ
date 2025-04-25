@@ -30,3 +30,10 @@ A simple act such as printing might look wildly different
 depending on the operating system because even though they might use the same
 assembly language, they can involve extremely different calls to the operating system.
 #todo[detta gäller även många IR språk. LLVM IR har tex samma problem]
+
+#text(fill: blue)[
+x86-64 is currently the most used instruction set in CPUs for 
+personal computers and server architectures. 
+It is an extension that was created in 2000 based on the already popular 
+instruction set x86.
+]
