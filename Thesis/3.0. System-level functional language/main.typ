@@ -13,9 +13,8 @@ In this section we will introduce the reader to SLFL. We will explain how the la
 // Two kinds, known size ($n,m$) and stack size $omega$.
 // Continuation-passing style.
 
-== Overview
 
-=== Continuation-passing Style
+== Continuation-passing Style
 An immediate notable difference between SLFL and other functional programming
 languages is the programming style. SLFL is written in _continuation-passing
 style_ (CPS), a programming style where control is passed explicitly via
@@ -65,21 +64,19 @@ evaluation order is determined by the order of the function calls.
   ],
 )
 
-=== Kinds & types
+== Kinds & types
 
 At the core of SLFL is the kind system which describes the size of types. There
 are two kinds in SLFL:
 - $omega$. _dynamic size_
 - $n,m,k$: _constant size_
 
-An informal description is that a type $A: omega$ can be understood as being
-a stack, whereas a type $A: n$ is a type with known size. If we start by
-looking at the kind rules for producing a type $A: omega$ The following are all
-the kind judgements in the language.
+The following are all the kind judgements in the language. They describe how
+types can be combined in a kind-correct fashion.
 
 #text(size: 1.3em, align(center, kind_judgements))
 
-We can now derive more larger types following the kind rules. For instance, let
+We can now derive types following the kind rules. For instance, let
 us derive the types 
 $A times.circle B times.circle ~C$ and $A times.circle (B plus.circle C) times.circle circle$
 
@@ -120,7 +117,7 @@ The $omega$ case of the product type ($times.circle$) can be interpreted as
  This part will become clear when we give meaning to the types in their memory
  representation. #todo[Refer to section]
 
-=== Type judgements
+== Types & values
 
 SLFL consists of two fragments:
 
@@ -130,7 +127,16 @@ SLFL consists of two fragments:
 - _Negative fragment_: describes how values are destructed. We will refer to
   the negative fragment as _commands_
 
-#type_judgements
+@positive_fragment contains the typing rules for the positive fragment of SLFL.
+
+#figure(caption: [The positive fragment], positive(true)) <positive_fragment>
+
+#figure(caption: [The negative fragment], negative(true)) <negative_fragment>
+
+The juxtaposition of the negative and positive fragments create an elegant
+picture. For every value $v$, a corresponding command exists for how to consume
+$v$. Variables have no explicit rule for consumption, rather they are consumed
+on use, following the rules of linear types.
 
 == Grammar
 

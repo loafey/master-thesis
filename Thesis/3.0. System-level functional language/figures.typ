@@ -78,50 +78,69 @@
   ],
 )
 
-#let positive = block(breakable: false, {
-  [*Positive fragment*]
+#let positive(toggle) = {
   grid(
+    align: left,
     columns: (1fr, 1fr),
     row-gutter: 16pt,
     [
       #judge(
         $Gamma tack t: A quad Delta tack u: B$,
         $Gamma, Delta tack (t,u): A times.circle B$,
+        display_note: toggle,
+        note: "pair",
       )],
     [#judge(
         $dot, x: A tack c$,
         $dot tack lambda x. c : not A$,
+        display_note: toggle,
+        note: "linear closure",
       )
     ],
 
     [#judge(
         $dot, x: A tack c$,
         $dot tack lambda x. c : *A$,
+        display_note: toggle,
+        note: "static closure",
       )
     ],
     [#judge(
         $dot, x: A tack c$,
-        $Gamma tack lambda^~x. c: ~A$,
+        $dot tack lambda^~x. c: ~A$,
+        display_note: toggle,
+        note: "stack closure",
       )],
 
     [#judge(
         $Gamma tack t: A$,
         $Gamma tack square t: square A$,
+        display_note: toggle,
+        note: "linear pointer",
       )
     ],
     [#judge(
+        $x: A in Gamma$,
         $Gamma tack x: A$,
-        $Gamma tack x: A$,
+        display_note: toggle,
+        note: "var",
       )
     ],
 
     [
-      #judge($$, $tack "newstack": circle$)
+      #judge(
+        $$,
+        $tack "newstack": circle$,
+        display_note: toggle,
+        note: "newstack",
+      )
     ],
     [
       #judge(
         $Gamma tack t: A$,
         $Gamma tack "inl" t: A plus.circle B$,
+        display_note: toggle,
+        note: "inj",
       )
     ],
 
@@ -129,84 +148,118 @@
       #judge(
         $Gamma tack t: B$,
         $Gamma tack "inr" t: A plus.circle B$,
+        display_note: toggle,
+        note: "inj",
       )
     ],
     [
       #judge(
         $Gamma, alpha tack t: A$,
         $Gamma tack angled(A, t): exists alpha. A$,
+        display_note: toggle,
+        note: $exists #math.italic[intro]$,
       )
     ],
 
     [
-      #judge("", $dot tack () : top$)
+      #judge(
+        "",
+        $dot tack () : top$,
+        display_note: toggle,
+        note: "unit",
+      )
     ],
   )
-})
+}
 
-#let negative = block(breakable: false, {
-  [*Negative fragment*]
+#let negative(toggle) = {
   grid(
+    align: left,
     columns: (1fr, 1fr),
     row-gutter: 16pt,
     [
       #judge(
         $Gamma tack t: A$,
         $Gamma, z: ~A tack "call"^~ z(t)$,
+        note: $#math.italic[call]^~$,
+        display_note: toggle,
       )
     ],
     [
       #judge(
         $Gamma tack t: A$,
         $Gamma, z: *A tack "call"^* z(t)$,
+        note: $#math.italic[call]^*$,
+        display_note: toggle,
       )
     ],
 
+    [
+      #judge(
+        $Gamma tack t: A$,
+        $Gamma, z: not A tack "call"^not z(t)$,
+        note: $#math.italic[call]^not$,
+        display_note: toggle,
+      )
+    ],
     [
       #judge(
         $Gamma tack c$,
         $Gamma, z: circle tack "freestack" z; c$,
+        note: "freestack",
+        display_note: toggle,
       )
     ],
+
     [
       #judge(
         $Gamma, a: A, b: B tack c$,
         $Gamma, z: A times.circle B tack "let" a,b = z; c$,
+        note: "pair",
+        display_note: toggle,
       )
     ],
-
     [
       #judge(
         $Gamma, alpha, x: A tack c$,
         $Gamma, z: exists alpha. A tack "let" angled(alpha, x) = z; c$,
+        note: $exists #math.italic[elim]$,
+        display_note: toggle,
       )
     ],
+
     [
       #judge(
         $Gamma, x: A tack c$,
         $Gamma, z: square A tack "let" square x = z; c$,
+        note: "follow",
+        display_note: toggle,
       )
     ],
-
     [
       #judge(
         $Gamma tack c$,
         $Gamma, z: top tack "let" () = z; c$,
+        note: "discard",
+        display_note: toggle,
       )
     ],
+
     [
       #judge(
         $Gamma, x: A_i tack c_i$,
         $Gamma, z: A_1 plus.circle A_2 tack "case" z "of" "inj"_i x_i |-> c_i$,
+        note: "case",
+        display_note: toggle,
       )
     ],
   )
-})
+}
 
-#let type_judgements = {
-  positive 
+#let type_judgements(show_note) = {
+  positive(show_note)
   linebreak()
-  negative
+  negative(show_note)
 }
 
 #let product_dynamic = {

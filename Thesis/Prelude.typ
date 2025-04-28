@@ -97,13 +97,13 @@
 
 #let green_text(txt) = text(fill: rgb(0, 125, 0, 255))[#txt]
 
-#let judge(above, below, note: "") = {
-  if note == "" {
+#let judge(above, below, note: "", display_note: false) = {
+  if note == "" or not display_note {
     $#above / #below$
   } else {
     $#above / #below$
-    $quad$
-    note
+    $space$
+    text(size: 10pt, emph(note))
   }
 }
 
