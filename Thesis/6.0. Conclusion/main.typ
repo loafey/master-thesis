@@ -86,6 +86,11 @@ or garbage collection to clean them up when they are no longer needed.
 
 #bigTodo("insert logic rules here plz :)")
 
-=== Extensions
-==== Data Types
+=== Data Types
+While the language currently contains sum and product types
+($a plus.circle b$ and $a times.circle b$ respectively), having
+types with named fields or constructors would be 
+beneficial for more complex types. 
+
+
 == Discussion
