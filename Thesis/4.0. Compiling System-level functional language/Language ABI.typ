@@ -1,6 +1,11 @@
 #import "../Prelude.typ": todo,drawStack
 
 == Language ABI <languageAbiChapter>
+As with any language, one should define a Application Binary Interface (ABI).
+SLFL defines it's own data type allocation strategy and calling convention.
+As said before in @CompilingCompilationTarget, SLFL only uses one stack frame during 
+normal execution, as functions are called in a continuation. 
+
 #text(fill: red)[As SLFL is a systems level language, there is importance in specifying an
 #todo("very rough cut!! kinda garbonzo")
 Application Binary Interface (ABI) #todo("Alltid viktigt med en ABI?"). 

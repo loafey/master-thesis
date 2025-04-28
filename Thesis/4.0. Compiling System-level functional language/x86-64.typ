@@ -1,7 +1,7 @@
 #import "../Prelude.typ": drawStack
 #import "figures.typ": *
 
-== Compilation Target
+== Compilation Target<CompilingCompilationTarget>
 When picking a compilation target there are always a lot of options, and for SLFL,
 x86-64 was picked. While choices like LLVM IR provide a lot of benefits to the developer
 in terms of development speed and convience, one 

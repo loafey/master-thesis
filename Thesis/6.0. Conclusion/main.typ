@@ -1,4 +1,4 @@
-#import "../Prelude.typ": todo
+#import "../Prelude.typ": todo, bigTodo
 
 = Conclusion
 == Future Work
@@ -40,6 +40,52 @@ used under the hood for printing and the likes using LIBC, but this is not
 exposed to a user of the language.  
 
 === Exponentionals
+While linearity in a programming language is useful for managing resources 
+such as memory, sometimes one needs to use values more than once.
+Consider a function for fibbonacci written in SLFL:
+
+```hs
+fib : *(int ⊗ ~int)
+  = \(n,k) -> case n == 0 of {
+      inl unit -> let () = unit; k(0);
+      inr unit -> let () = unit; 
+        case n == 1 of {
+          inl unit -> let () = unit; k(1);
+          inr unit -> let () = unit; fib((n - 1 + n - 2, k))
+        }
+    }
+-- The equality operator `==` returns `inl ()` or `inr ()`, 
+-- depending on if the values were equal or not. 
+```
+
+This function does sadly not compile, as the variable `n` is used 4 times,
+and due to linearity one may only use it once!
+To combat this issue we would want to introduce exponentials.
+
+Exponentionals would let a user reuse a value multiple times opening up
+for some much needed expressiveness. Take fibbionacci again with some imagitive
+syntax introducing a `!` function:
+
+```hs
+fib : *(int ⊗ ~int)
+  = \(n,k) -> !(n, \n -> case n == 0 of {
+      inl unit -> let () = unit; k(0);
+      inr unit -> let () = unit; 
+        case n == 1 of {
+          inl unit -> let () = unit; k(1);
+          inr unit -> let () = unit; fib((n - 1 + n - 2, k))
+        }
+    }) 
+```
+This `!` function would simply take a value, place it behind a reference
+so that it can be passed around freely, and take a continuation function
+which would then work with this value.
+
+To avoid leaking memory, exponentials would use reference counting
+or garbage collection to clean them up when they are no longer needed.
+
+#bigTodo("insert logic rules here plz :)")
+
 === Extensions
 ==== Data Types
 == Discussion

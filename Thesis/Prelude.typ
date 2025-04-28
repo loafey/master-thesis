@@ -3,6 +3,16 @@
 #let debug = true
 #let todo = if debug {dashy-todo.todo} else {(..) => {}}
 
+#let bigTodo(content) = box(
+  fill: red, 
+  inset: 30pt,
+  width: 100%,
+  align(
+    center,
+    text(fill: white, size: 30pt, [TODO: #content])
+  )
+)
+
 #let indent(content) = grid(
   columns: (10pt, 1fr),
   rect(height: 100pt, fill: tiling(size: (12pt, 10pt), [
