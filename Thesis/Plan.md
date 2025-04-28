@@ -4,7 +4,7 @@
     - Programming lanugages with linear types
         - Polymorphic lambda calculus (System F)
         - Linear types (substructural)
-        - Polarised linear logic and continuations
+        - Polarised linear logic
     - Memory
     - Compilation target
 - System-level functional language
