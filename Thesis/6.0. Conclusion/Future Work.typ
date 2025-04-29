@@ -18,8 +18,8 @@ To combat this, an efficient compiler should move variables back onto the stack
 Doing this efficently can prove difficult as the compiler should try to minimize
 the amount of spilling needed, and this has in fact been proven to be 
 NP-complete #todo("source"). This was not implemented for SLFL as it was
-deemed an optimization, that while interesting, not something we had the time to
-implement.
+deemed an optimization, that while interesting, not something we would have the time to
+implement properly.
 
 === System Calls
 As SLFL is a system-level language, it might be useful to have the ability
@@ -63,27 +63,56 @@ and due to linearity one may only use it once!
 To combat this issue we would want to introduce exponentials.
 
 Exponentionals would let a user reuse a value multiple times opening up
-for some much needed expressiveness. Take fibbionacci again with some imagitive
-syntax introducing a `!` function:
+for some much needed expressiveness. Take fibbonacci again with some imagitive
+syntax introducing a `!` kind:
 
 ```hs
-fib : *(int ⊗ ~int)
-  = \(n,k) -> !(n, \n -> case n == 0 of {
+fib : *(!int ⊗ ~int)
+  = \(n,k) -> 
+    let !n1 = n; 
+    case n1 == 0 of {
       inl unit -> let () = unit; k(0);
-      inr unit -> let () = unit; 
-        case n == 1 of {
+      inr unit -> let () = unit;
+        let !n2 = n;  
+        case n2 == 1 of {
           inl unit -> let () = unit; k(1);
-          inr unit -> let () = unit; fib((n - 1 + n - 2, k))
+          inr unit -> let () = unit; 
+            let !n3 = n;
+            let !n4 = n;
+            fib((n3 - 1, \r1 -> 
+            fib((n4 - 2, \r2 -> 
+            k(r1 + r2)))))
         }
-    }) 
+    }
 ```
-This `!` function would simply take a value, place it behind a reference
-so that it can be passed around freely, and take a continuation function
-which would then work with this value. In this case the continuation function
-can read `n` however many times is needed.
+As can be seen here, we can now re-use `n`, allowing us to actually write
+fibbonacci.
 
-To avoid leaking memory, exponentials would use reference counting
-or garbage collection to clean them up when they are no longer needed.
+By imagining some more syntax, we could simplify this even further!
+If we were to introduce some sugar, for example a `?` operator,
+which could simplify a term such as `let !n1 = n; let !n2 = n; k(n1 + n2)` 
+into: `k(n? + n?)`.
+Rewriting fibbonacci with this operator could result in something like this instead:
+```hs
+fib : *(!int ⊗ ~int)
+  = \(n,k) -> 
+    case n? == 0 of {
+      inl unit -> let () = unit; k(0);
+      inr unit -> let () = unit;
+        case n? == 1 of {
+          inl unit -> let () = unit; k(1);
+          inr unit -> let () = unit; 
+            fib((n? - 1, \r1 -> 
+            fib((n? - 2, \r2 -> 
+            k(r1 + r2)))))
+        }
+    }
+```
+
+
+To avoid leaking memory, exponentials would need automatic de-allocation.
+We would suggest using reference counting for this, but other methods such as 
+garbage collection could suffice.
 
 #bigTodo("insert logic rules here plz :)")
 
