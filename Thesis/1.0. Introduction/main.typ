@@ -6,14 +6,14 @@
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware, or providing foundational services to other software.
 We will define system-level programming as Wikipedia @wiki:Systems_programming defines it:
-#indent[
-- Programs can operate in resource-constrained environments
-- Programs can be efficient with little runtime overhead, possibly
-  having either a small runtime library or none at all
-- Programs may use direct and \"raw\" control over memory access and
-  control flow
-- The programmer may write parts of the program directly in assembly
-  language 
+#indent(10)[
+  - Programs can operate in resource-constrained environments
+  - Programs can be efficient with little runtime overhead, possibly
+    having either a small runtime library or none at all
+  - Programs may use direct and \"raw\" control over memory access and
+    control flow
+  - The programmer may write parts of the program directly in assembly
+    language
 ]
 
 For system-level programming today developers mostly choose between procedural
@@ -42,7 +42,7 @@ Girard's linear logic @girard1987linear is a refinement of classical and
 intuitionistic logic, where, rather than propositions being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.
 Linear logic models the problems of shared and mutable data, both of
-which are of critical importance in system-level programming. 
+which are of critical importance in system-level programming.
 In linear logic, the uses of weakening and contraction are carefully controlled, which in
 a programming language setting means variables must be used exactly once.
 
