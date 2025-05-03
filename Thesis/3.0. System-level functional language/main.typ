@@ -2,7 +2,7 @@
 #import "figures.typ": *
 #import "@preview/curryst:0.5.1": rule, prooftree
 
-= System-Level Functional Language
+= System-Level Functional Language<slflChapter>
 
 In this section we will introduce the reader to SLFL. We will explain how the language works and argue why the choices are made.
 
