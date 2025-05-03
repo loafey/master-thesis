@@ -1,6 +1,15 @@
-#import "../Prelude.typ": indent
+#import "../Prelude.typ": indent, todo
 
 = Introduction
+The concept of linearity in programming languages is not a newly discoverd one.
+A language with linearity allows a developer to write software without the
+worries of mismanaging things such as memory and files. 
+While there are benefits to linearity not many languages have opted to implement it.
+This concept is most commonly found in functional programming, but one thing
+functional languages are commonly not is system level languages.
+
+This thesis introduces a new language, SLFL, which tries to fill this void.
+
 
 == Background
 System-level programming is the act of developing software that interacts directly with a computer's
