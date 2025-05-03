@@ -26,7 +26,7 @@ then be translated into x86-64.
   )
 
   figure(
-    caption: [Translations between pseudo and x86-64 instructions.],
+    caption: [Translations between pseudo and x86-64 values and instructions.],
     grid(
       row-gutter: 10pt,
       table(
@@ -44,13 +44,12 @@ then be translated into x86-64.
       table(
         columns: (1fr, 1fr),
         [*VAL*], [*x86-64 val*],
-        `[0-9]+`,       [],
-        $#sym.rho\(x)$, [],
-        `SP`,           [], 
-        `SSP`,          [],
-        `VAL_1[VAL_2]`,     [],
-        `VAL_1 + VAL_2`,    [],
-        `[VAL]`,        [],
+        `[0-9]+`,        [`$[0-9]+`],
+        $#sym.rho\(x)$,  [],
+        `SP`,            [`%R15`], 
+        `SSP`,           [`%R14`],
+        `VAL_1[VAL_2]`,  [`VAL_2(%VAL_1)`],
+        `[VAL]`,         [`0(%VAL_1)`],
       )
     )
   )
