@@ -4,54 +4,49 @@
 As with any language, one should define a Application Binary Interface (ABI).
 SLFL defines it's own data type allocation strategy and calling convention.
 As said before in @CompilingCompilationTarget, SLFL only uses one stack frame during
-normal execution, as functions are always tail call optimized.
+normal execution which is used for variable storage and register spilling.
+This stack frame is located on the stack given by the operating system, which will be refered
+to as the system stack henceforth, and outside of this system stack,
+SLFL makes heavy use of other stacks.
+These stacks are used for passing variables and all calculations.
+This stack usage is similar in nature to the JVM#todo[source] or
+WebAssembly #todo[source :)], which also makes heavy use of stacks
+and virtual registers stored on the system stack.
 
-When functions are called there are requirements that must be fulfilled:
-#indent(9)[
+=== Function calls
+When functions are called there are requirements regarding these stacks that must be fulfilled:
+#indent(12)[
   - Register `R15` is set to an address which points to a valid stack.
   - The address in `R15` must be a multiple of 8 (4 on a 32 bit system).
   - The stack size should be big enough for all variables in the function.
-  - The current stack frame can be reset.
+  - When the stack is empty, the origin pointer for the stack should be equal to
+    the address subtracted with the stack's size.
+  - Only one stack is in use at a given moment.
   - All expected arguments exist on the stack.
   - All arguments are properly aligned.
 ]
 
+At any given moment only one stack is in use, which means that while
+other stacks can be allocated and freed, and variables can only be pushed on the
+current one. Mutating or reading other stacks is undefined behavior.
 
-#text(fill: red)[As SLFL is a systems level language, there is importance in specifying an
-  #todo("very rough cut!! kinda garbonzo")
-  Application Binary Interface (ABI) #todo("Alltid viktigt med en ABI?").
-  The ABI specifies how functions and data types
-  are accessed and the calling conventions of said functions.
+All functions in SLFL are called through jumps(with some discrepancies
+for top-level functions and FFI). This is implemented by passing around all
+functions as values on the stack.
+Top-level functions however work differently, and works in a somewhat similar manner
+to how functions work in most other languages. There is one major difference however.
+A top-level function does not actually execute the function,
+and it instead pushes a code pointer onto the current stack#todo[skulle vi ändra detta?]
+and returns. This code pointer points to the actual function which can then be popped
+and called when need be.
+In this manner top-level functions act much more like constants.
 
-  #text(fill: blue)[As opposed to most languages, SLFL has quite a special setup when it comes to
-    its stacks.] As said before, the language operates using multiple stacks,
-  outside of the normal stack given the operating system.
-  For clarity's sake the normal stack given
-  by the operating system will be refered to as the system stack.
+When FFI calls #todo([introduce]) occur, such as calling a LIBC function like `printf`,
+this function will allocate a stack frame on top of the single stack frame, and execute like
+it would normally do. The result will then be written into a fitting register
+or variable on the system stack, or it will be pushed onto the current stack.
+This and along with with top-level functions,
+are the only time SLFL strays from the strict continuation based style.
 
-  The language operates in a similar manner to stack-machine based languages,
-  where stacks are used for capturing variables, passing variables between
-  functions and calculations.
-  Only one stack is in use at a time, and a stack should only be pushed to and popped from
-  if it is the currently used one. Mutating or reading other stacks is undefined behavior.
-
-  As the language strictly uses continuation passing style (CPS) for function calls,
-  and that all arguments to functions are passed along with stacks, the language
-  makes heavy use of tail call optimization.
-  Every call simply resets the stack frame, and during normal executing flow only one stack frame is ever used.
-
-  When FFI calls #todo([introduce]) occur, such as calling a LIBC function like `printf`,
-  this function will allocate a stack frame on top of the singular frame, and execute like
-  it would normally do. The result will then be written into a fitting register
-  or variable on the system stack, or it will be pushed onto the current stack.
-
-  Top level functions work somewhat differently compared to how they work in other languages.
-  Instead of executing the function, calling a top level function pushes
-  a code pointer to the actual function onto the current stack.
-  In this sense, they are more like constants as opposed to traditional functions,
-  and this is amplified by the fact that these functions are not written using CPS.
-  A caller simply calls the top level function to get a reference to it,
-  and then executes when the time is right.
-  This means that there is a two-step process to calling top-level functions,
-  but allows for functions to be handled like any other value.
-]
+=== Data types
+yo schmo

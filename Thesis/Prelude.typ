@@ -128,6 +128,25 @@
 #let jmp = { math.italic("jmp") }
 #let newstack = { math.italic("newstack") }
 
+#let fancyTable(columns: 1fr, ..content) = {
+  let frame(stroke) = (x, y) => (
+    left: stroke,
+    right: stroke,
+    top: if (calc.rem(y, 2) == 0) { stroke } else { rgb("00000040") },
+    bottom: stroke,
+  )
+  set table(
+    fill: (x, y) => if (calc.rem(y, 2) == 0) { rgb("#00000010") } else { white },
+    stroke: frame(rgb("21222C")),
+    align: (x, y) => if (calc.rem(y, 2) == 0) { center } else { left },
+  )
+  table(
+    columns: columns,
+    inset: (top: 6pt, bottom: 6pt),
+    ..content
+  )
+}
+
 #let meta(t) = {
   $\"#t\"$
 }
