@@ -1,4 +1,4 @@
-#import "../Prelude.typ": todo, drawStack, indent
+#import "../Prelude.typ": todo, drawStack, indent, bigTodo
 
 == Language ABI <languageAbiChapter>
 As with any language, one should define a Application Binary Interface (ABI).
@@ -48,5 +48,21 @@ or variable on the system stack, or it will be pushed onto the current stack.
 This and along with with top-level functions,
 are the only time SLFL strays from the strict continuation based style.
 
-=== Data types
-yo schmo
+=== Memory layout
+As the time of writing, SLFL does not contain that many different types,
+and currently it is limited to integers, function pointers, stack pointers,
+and product- and sum-types.
+
+Memory wise, the simplest here are function pointers and stack pointers.
+Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
+they can always fit in a register and thus never need to be split up accross multiple
+registers when working with them.
+
+Integers are currently also very simple, as they are also the size of a word.
+This might however change in the future as it is useful to have access to
+integers of different sizes, especially so when working with a systems-level language.
+When these are introduced, memory alignment is something
+that needs to be taken into consideration.
+
+
+#bigTodo[Yoinka lite fina tabeller från mina notes #emoji.bread]
