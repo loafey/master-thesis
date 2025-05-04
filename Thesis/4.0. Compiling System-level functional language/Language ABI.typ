@@ -6,12 +6,14 @@ SLFL defines it's own data type allocation strategy and calling convention.
 As said before in @CompilingCompilationTarget, SLFL only uses one stack frame during
 normal execution, as functions are always tail call optimized.
 
-When functions are called there are some requirements that must be fulfilled:
-#indent(6)[
+When functions are called there are requirements that must be fulfilled:
+#indent(9)[
   - Register `R15` is set to an address which points to a valid stack.
   - The address in `R15` must be a multiple of 8 (4 on a 32 bit system).
   - The stack size should be big enough for all variables in the function.
   - The current stack frame can be reset.
+  - All expected arguments exist on the stack.
+  - All arguments are properly aligned.
 ]
 
 

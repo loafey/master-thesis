@@ -117,7 +117,7 @@ representation.
 This part will become clear when we give meaning to the types in their memory
 representation. #todo[Refer to section]
 
-== Types & values
+== Types & values<TypesAndValues>
 
 SLFL consists of two fragments:
 

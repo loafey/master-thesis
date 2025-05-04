@@ -5,9 +5,25 @@ As can be seen in the @slflChapter chapter every aspect of SLFL
 is based upon a set of judgements, split into positive and negative fragments.
 
 These judgements can thankfully be translated to x86-64 assembly in a
-straightforward manner. They are first translated into pseudo instructions which can
+straightforward manner. They are first translated into "pseudo" instructions which can
 then be translated into x86-64.
 
+=== Syntax
+To help understanding the compilation scheme the reader should keep the following operators in mind:
+
+- $rho : Gamma -> "List"("Reg")$ \
+  $rho$ is a mapping from variables to a list of memory addresses.
+
+  The reason the range of $rho$ is a list of memory addresses is because some values
+  consist of multiple values, leading to more than one memory address.
+
+- $#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
+  for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
+  to represent either $n$ or $omega$.
+
+- The scheme uses a mix of meta syntax, i.e, instructions that does not generate
+  any code, and instructions that generate code. We differentiate meta syntax
+  with instructions using double quotes.
 
 // #{
 //   let frame(stroke) = (x, y) => (
@@ -50,30 +66,12 @@ then be translated into x86-64.
 //   )
 // }
 
-
-=== Rename me
-
-$rho : Gamma -> "List"("Reg")$ \
-$rho$ is a mapping from variables to a list of memory addresses.
-
-The reason the range of $rho$ is a list of memory addresses is because some values
-require more space than one memory address can fit.
-
-$#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
-for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
-to represent either $n$ or $omega$.
-
-The scheme uses a mix of meta syntax, i.e, instructions that does not generate
-any code, and instructions that generate code. We differentiate meta syntax
-with instructions using double quotes.
-
-
 === Positive fragment
-
+As specified in @TypesAndValues these fragments are used to create values.
 #positive_compilation_scheme
 
 === Negative fragment
-
+Once again as specified in @TypesAndValues these fragments are used to destroy values.
 #negative_compilation_scheme
 
 
