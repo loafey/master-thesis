@@ -1,44 +1,13 @@
 #import "figures.typ": *
 
 == Compilation Scheme
+As can be seen in the @slflChapter chapter every aspect of SLFL
+is based upon a set of judgements, split into positive and negative fragments.
 
-$rho : Gamma -> "List"("Reg")$ \
-$rho$ is a mapping from variables to a list of memory addresses.
+These judgements can thankfully be translated to x86-64 assembly in a
+straightforward manner. They are first translated into pseudo instructions which can
+then be translated into x86-64.
 
-The reason the range of $rho$ is a list of memory addresses is because some values
-require more space than one memory address can fit.
-
-$#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
-for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
-to represent either $n$ or $omega$.
-
-The scheme uses a mix of meta syntax, i.e, instructions that does not generate
-any code, and instructions that generate code. We differentiate meta syntax
-with instructions using double quotes.
-
-=== Positive fragment
-
-#positive_compilation_scheme
-
-=== Negative fragment
-
-#negative_compilation_scheme
-
-// Forgot that compilation scheme exists above :)
-// #let sem(t) = {
-//   $bracket.l.double #t bracket.r.double$
-// }
-// #let judge(above, below) = {
-//   $#above / #below$
-// }
-
-// == Compilation Scheme
-// As can be seen in the @slflChapter chapter every aspect of SLFL
-// is based upon a set of judgements, split into positive and negative fragments.
-
-// These judgements can thankfully be translated to x86-64 assembly in a somewhat
-// straightforward manner. They are first translated into pseudo instructions which can
-// then be translated into x86-64.
 
 // #{
 //   let frame(stroke) = (x, y) => (
@@ -51,7 +20,6 @@ with instructions using double quotes.
 //     fill: (rgb("#f3f7f8"), none),
 //     stroke: frame(rgb("21222C")),
 //   )
-
 //   figure(
 //     caption: [Translations between pseudo and x86-64 values and instructions.],
 //     grid(
@@ -82,89 +50,30 @@ with instructions using double quotes.
 //   )
 // }
 
-// === Stankyboi
-// For some $x,u$: $"push" x; #sem[u]$ might change to $#sem[u] ; "push" x$
 
-// === Positive fragment
+=== Rename me
 
-// ==== Case: $omega$
+$rho : Gamma -> "List"("Reg")$ \
+$rho$ is a mapping from variables to a list of memory addresses.
 
-// #let compile_box(t) = {
-//   box(baseline: 100%, stroke: black, inset: 5pt, t)
-// }
+The reason the range of $rho$ is a list of memory addresses is because some values
+require more space than one memory address can fit.
 
-// Pre-condition: $S p$ is free to use.
+$#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
+for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
+to represent either $n$ or $omega$.
 
-// Post-condition: $S p$ points to the stack which is being built.
-
-// #judge(
-//   $Gamma tack.r t: A quad Delta tack.r u: B: omega$,
-//   $Gamma, Delta tack.r A times.circle B$,
-// ) = $#sem[(t,u)] = #sem[u]^omega; #sem[t]^n$
-
-// #judge($Gamma tack.r t: A$, $Gamma tack.r "inl" t: A plus.circle B$) = $#sem[t] ; "push" 0$
-
-// #judge($Gamma tack.r t: B$, $Gamma tack.r "inr" t: A plus.circle B$) = $#sem[t] ; "push" 1$
-
-// #judge("", $x: A tack.r x: A$) = $s p = rho(x)$
-
-// ==== Case: $n$
-
-// Pre-condition: $S p$ points to a valid stack.
-
-// Post-condition: #sem[$dot$] pushes the result there.
-
-// #judge($Gamma tack.r t: A quad Delta tack.r u: B$, $Gamma, Delta tack.r (t,u): A times.circle B$) = $#sem[u]^n; #sem[t]^n$
-
-// #judge("", $tack.r "newstack": circle$) = $A x = "newstack"; "push" A x$
-
-// #judge($tack.r t: A: omega$, $tack.r square A: n$) =
-// #box(baseline: 100%, stroke: black, inset: 5pt)[
-//   push SSP on SP \
-//   SSP = SP \
-//   #sem[t] \
-//   SSP[1] = SP \
-//   SP = SSP + 1 \
-//   SSP = [SSP]
-// ]
-
-// === Negative fragment
-
-// #sem[$"let" z, rho = rho_o; c$] = $"pop" ; #sem[c]^(quad (A times.circle tilde R): omega)$
-
-// #sem[$"call" z(x)$] = $"push" x; "jmp" rho(z)$
-
-// Not a stack:\
-// #sem[$"case" z "of" {c_1; c_2}$] =
-// #compile_box[
-//   pop $rho(z)$ \
-//   mov r = $[rho(z)]$\
-//   jnz $l_1$ \
-//   #sem[$c_1$] \
-//   jmp $l_2$ \
-//   $l_1$: \
-//   #sem[$c_2$] \
-//   $l_2$:
-// ]
-
-// Stack:
-// #sem[$"case" z "of" {c_1; c_2}$] =
-// #compile_box[
-//   pop $rho(z)$ \
-//   mov $r=[rho(z)]$ \
-//   jnz $l_2$ \
-//   mov $rho(x)$ = $rho(z)$ + 1 \
-//   #sem[$c_1$] \
-//   $l_2$: \
-//   mov $rho(y)$ = $rho(z)$ + 1 \
-//   #sem[$c_2$]
-// ]
+The scheme uses a mix of meta syntax, i.e, instructions that does not generate
+any code, and instructions that generate code. We differentiate meta syntax
+with instructions using double quotes.
 
 
-// === What is a (stack: $omega$)
+=== Positive fragment
 
-// - Type variable (?)
-// - $(A + B) "if" (A: omega) "and" (B: omega)$
-// - $(A ⊗ B) "if" (B: omega)$
-// - $~A$
-// - EmptyStack
+#positive_compilation_scheme
+
+=== Negative fragment
+
+#negative_compilation_scheme
+
+
