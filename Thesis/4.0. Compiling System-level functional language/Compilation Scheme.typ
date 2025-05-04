@@ -1,3 +1,29 @@
+#import "figures.typ": *
+
+== Compilation Scheme
+
+$rho : Gamma -> "List"("Reg")$ \
+$rho$ is a mapping from variables to a list of memory addresses.
+
+The reason the range of $rho$ is a list of memory addresses is because some values
+require more space than one memory address can fit.
+
+$#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
+for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
+to represent either $n$ or $omega$.
+
+The scheme uses a mix of meta syntax, i.e, instructions that does not generate
+any code, and instructions that generate code. We differentiate meta syntax
+with instructions using double quotes.
+
+=== Positive fragment
+
+#positive_compilation_scheme
+
+=== Negative fragment
+
+#negative_compilation_scheme
+
 // Forgot that compilation scheme exists above :)
 // #let sem(t) = {
 //   $bracket.l.double #t bracket.r.double$

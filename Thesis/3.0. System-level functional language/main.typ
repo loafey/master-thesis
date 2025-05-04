@@ -77,7 +77,7 @@ types can be combined in a kind-correct fashion.
 #text(size: 1.3em, align(center, kind_judgements))
 
 We can now derive types following the kind rules. For instance, let
-us derive the types 
+us derive the types
 $A times.circle B times.circle ~C$ and $A times.circle (B plus.circle C) times.circle circle$
 
 #let tree = rule(
@@ -109,13 +109,13 @@ $A times.circle B times.circle ~C$ and $A times.circle (B plus.circle C) times.c
 )
 
 The $omega$ case of the product type ($times.circle$) can be interpreted as
- pushing its left operand on the right operand stack. The circle ($circle$) can
- be interpreted as being the empty stack, while $~A$ is a closure type that
- represents "the rest of the stack". $*A$ and $not A$ are also closure types,
- but since they construct type with kind $n$, they have no stack-like
- representation.
- This part will become clear when we give meaning to the types in their memory
- representation. #todo[Refer to section]
+pushing its left operand on the right operand stack. The circle ($circle$) can
+be interpreted as being the empty stack, while $~A$ is a closure type that
+represents "the rest of the stack". $*A$ and $not A$ are also closure types,
+but since they construct type with kind $n$, they have no stack-like
+representation.
+This part will become clear when we give meaning to the types in their memory
+representation. #todo[Refer to section]
 
 == Types & values
 
@@ -140,7 +140,7 @@ on use, following the rules of linear types.
 
 == Grammar
 
-#figure(caption: [Grammar of SLFL], align(left,complete_grammar))
+#figure(caption: [Grammar of SLFL], align(left, complete_grammar))
 
 == Transformations
 
@@ -151,7 +151,7 @@ SLFL consists of three intermediate languages:
 
 We will consider the following program to explain each step: $lambda a. "let"
 f,k = a; k(lambda y. space f(y))$ with type $not (not int times.circle not not
-int)$. We use $int$ to avoid considering existential types for now.
+  int)$. We use $int$ to avoid considering existential types for now.
 
 === Linear closure converison
 
@@ -197,27 +197,5 @@ Now the inner closure contains a stack.
 The goal of this phase is to make the structure of stacks explicit, replacing
 a stack closure by an explicit pair of static function pointer and environment.
 
-== Compilation Scheme
 
-$rho : Gamma -> "List"("Reg")$ \
-$rho$ is a mapping from variables to a list of memory addresses.
-
-The reason the range of $rho$ is a list of memory addresses is because some values
-require more space than one memory address can fit.
-
-$#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
-for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
-to represent either $n$ or $omega$.
-
-The scheme uses a mix of meta syntax, i.e, instructions that does not generate
-any code, and instructions that generate code. We differentiate meta syntax
-with instructions using double quotes.
-
-=== Positive fragment
-
-#positive_compilation_scheme
-
-=== Negative fragment
-
-#negative_compilation_scheme
 
