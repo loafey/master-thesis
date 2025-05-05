@@ -4,7 +4,6 @@
 
 = System-Level Functional Language<slflChapter>
 
-In this section we will introduce the reader to SLFL. We will explain how the language works and argue why the choices are made.
 
 // System-Level Functional Language (SLFL) is meant to be an intermediate compilation target for linearly typed functional programming languages. Popular compilation targets today are LLVM, Cranelift, C, and compiling to assembly languages directly.
 // Although the aforementioned alternatives are all viable, for a functional programming language several transformations have to be made. For instance, most functional programming languages have closures.
@@ -13,12 +12,21 @@ In this section we will introduce the reader to SLFL. We will explain how the la
 // Two kinds, known size ($n,m$) and stack size $omega$.
 // Continuation-passing style.
 
+The intended use of SLFL is as a compiler intermediate representation for
+functional languages, similar to that of GHC Core #todo[CITE GHC CORE]. 
+SLFL diverges from most functional language intermediate representations in
+that it prioritizes finer control over resources. This is achieved by departing
+from the lambda calculus and its natural deduction root, rather taking
+inspiration from linear types, which is based on Girard's linear logic.
+
+In this section we will introduce the reader to SLFL.
 
 == Continuation-passing Style
-An immediate notable difference between SLFL and other functional programming
+The first notable difference between SLFL and most functional programming
 languages is the programming style. SLFL is written in _continuation-passing
-style_ (CPS), a programming style where control is passed explicitly via
-continuation functions rather than returning values. We will provide a simple example of CPS using the identity function. In normal style it would be:
+style_ (CPS), a style where control is passed explicitly via continuation
+functions rather than returning values. We will provide a simple example of CPS
+using the identity function. In normal style it would be:
 
 #align(
   center,
@@ -38,7 +46,11 @@ contrast it to the CPS version:
   $,
 )
 
-A natural question that comes to mind now is why we want continuation-passing style? An immediate benefit of CPS is that every function call is a tail call, which enables tail call optimization for every function call. Another benefit is that the order of evaluation is made explicit. If we consider the following program written in normal style:
+A natural question that comes to mind now is why we want continuation-passing
+style? An immediate benefit of CPS is that every function call is a tail call,
+which enables tail call optimization for every function call. Another benefit
+is that the order of evaluation is made explicit. If we consider the following
+program written in normal style:
 
 #align(
   center,
@@ -46,7 +58,7 @@ A natural question that comes to mind now is why we want continuation-passing st
 )
 
 Is $y$ evaluted first or is $z$ evaluted first? The choice would be up to the
-compiler developer. If we look at the same function in CPS we will see that the
+compiler. If we look at the same function in CPS we will see that the
 evaluation order is determined by the order of the function calls.
 
 #align(
@@ -124,18 +136,19 @@ SLFL consists of two fragments:
 - _Positive fragment_ describes how things are created. When we talk about
   values we refer to the positive fragment.
 
-- _Negative fragment_: describes how values are destructed. We will refer to
+- _Negative fragment_: describes how to deconstruct environments. We will refer to
   the negative fragment as _commands_
 
 @positive_fragment contains the typing rules for the positive fragment of SLFL.
+The positive fragment of SLFL is depicted in @positive_fragment
 
 #figure(caption: [The positive fragment], positive(true)) <positive_fragment>
 
 #figure(caption: [The negative fragment], negative(true)) <negative_fragment>
 
 The juxtaposition of the negative and positive fragments create an elegant
-picture. For every value $v$, a corresponding command exists for how to consume
-$v$. Variables have no explicit rule for consumption, rather they are consumed
+picture. For every value $v$, a corresponding command exists for how to destruct
+an environment that has $v$ #todo[is this even correct]. Variables can not be destructed, rather they are consumed
 on use, following the rules of linear types.
 
 == Grammar
