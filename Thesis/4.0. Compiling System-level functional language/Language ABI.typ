@@ -64,5 +64,59 @@ integers of different sizes, especially so when working with a systems-level lan
 When these are introduced, memory alignment is something
 that needs to be taken into consideration.
 
+When pushing values of different sizes alignment needs to be considered.
+Take this stack that just contains a 16 bit integer with the value `42`.
 
-#bigTodo[Yoinka lite fina tabeller från mina notes #emoji.bread]
+#{
+  let f(type: "normal", size, body) = table.cell(
+    fill: if type == "pad" {
+      rgb("#edf064")
+    } else if type == "tag" {
+      lime
+    } else {
+      none
+    },
+    colspan: size,
+    body,
+  )
+
+  let rep(int, val) = {
+    let res = ()
+    for value in range(0, int) {
+      (val,) + res
+    }
+    res
+  }
+  let b(content) = box(stroke: black, width: 100%, inset: 6pt, content)
+  set table.cell(align: center)
+  let len = 16
+  let start = 45
+
+  table(
+    columns: rep(len, 1fr),
+    ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+    f(type: "tag", 2, `$42`), f(14, [...]),
+  )
+  text(
+    fill: blue,
+    {
+      [
+        Now if we want to push another value, say a 32 bit integer with the value `777`,
+        we need to pad it so the value is placed on an address which is divisible by its size,
+        4 in this case.
+      ]
+      table(
+        columns: rep(len, 1fr),
+        ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+        f(type: "tag", 2, `$42`), f(type: "pad", 2, `padding`),
+        f(type: "tag", 4, `$777`), f(8, "...")
+      )
+      [
+        As long as the bookkeeping needed for this alignment is done at compile-time,
+        this should have no impact on runtime performance.
+      ]
+    },
+  )
+  todo[behövs ändras om vi bestämmer oss för word-alignment]
+}
+
