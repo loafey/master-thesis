@@ -52,27 +52,32 @@ are the only time SLFL strays from the strict continuation based style.
 As the time of writing, SLFL does not contain that many different types,
 and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
+Important to note that both the system stack, and any stacks which are created
+dynamically grow downwards.
 
 Memory wise, the simplest here are function pointers and stack pointers.
 Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
 they can always fit in a register and thus never need to be split up accross multiple
 registers when working with them.
 
-Integers are currently also very simple, as they are also the size of a word.
+Integers are currently also simple, as they are also the size of a word.
 This might however change in the future as it is useful to have access to
 integers of different sizes, especially so when working with a systems-level language.
 When these are introduced, memory alignment is something
-that needs to be taken into consideration.
+that needs to be taken into consideration. Function pointers and stack pointers
+are the stored the exact same way as word sized integers.
 
 When pushing values of different sizes alignment needs to be considered.
 Take this stack that just contains a 16 bit integer with the value `42`.
 
-#{
-  let f(type: "normal", size, body) = table.cell(
+#[
+  #let f(type: "normal", size, body) = table.cell(
     fill: if type == "pad" {
       rgb("#edf064")
     } else if type == "tag" {
       lime
+    } else if type == "cons" {
+      aqua
     } else {
       none
     },
@@ -80,24 +85,24 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     body,
   )
 
-  let rep(int, val) = {
+  #let rep(int, val) = {
     let res = ()
     for value in range(0, int) {
       (val,) + res
     }
     res
   }
-  let b(content) = box(stroke: black, width: 100%, inset: 6pt, content)
-  set table.cell(align: center)
-  let len = 16
-  let start = 45
+  #let b(content) = box(stroke: black, width: 100%, inset: 6pt, content)
+  #set table.cell(align: center)
+  #let len = 16
+  #let start = 45
 
-  table(
+  #table(
     columns: rep(len, 1fr),
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
     f(type: "tag", 2, `$42`), f(14, [...]),
   )
-  text(
+  #text(
     fill: blue,
     {
       [
@@ -117,6 +122,44 @@ Take this stack that just contains a 16 bit integer with the value `42`.
       ]
     },
   )
-  todo[behövs ändras om vi bestämmer oss för word-alignment]
-}
+  #todo[behövs ändras om vi bestämmer oss för word-based alignment]
+  #pagebreak()
+
+  The memory layout for product- and sum-types is also relatively simple.
+  When we put a sum-type value such as `inl 42` on the stack it looks like this:
+  #table(
+    columns: rep(len, 1fr),
+    ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+    f(type: "tag", 8, `$42`), f(type: "cons", 8, `0`),
+  )
+  and similarily if we put the value `inr 777` on the stack, it will look like this:
+  #table(
+    columns: rep(len, 1fr),
+    ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+    f(type: "tag", 8, `$777`), f(type: "cons", 8, `1`),
+  )
+  Observe here that the tag is put on the right most position, i.e at the top of the stack,
+  and that the tag is 8 bytes.
+
+  Almost the same goes for product-types, so for a value such as `(1, 2)` we simply put them after one another:
+  #table(
+    columns: rep(len, 1fr),
+    ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+    f(type: "tag", 8, `$1`), f(type: "tag", 8, `$2`),
+  )
+
+  For a more comples value such as `(1,(2,3))` it would look like this:
+  #table(
+    columns: rep(len, 1fr),
+    ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+    f(type: "tag", 8, `$1`), f(type: "tag", 8, `$2`),
+    ..range(0x1d, 0x2d).rev().map(a => raw(str(a, base: 16))),
+    f(type: "tag", 8, `$3`), f(8, [...]),
+  )
+  As can be seen no information outside of the actual values is stored.
+
+  Similar alignment should be done when storing variables on the system stack,
+  but this is not enforced by this ABI, as the system stack is
+  not used when passing variables.
+]
 
