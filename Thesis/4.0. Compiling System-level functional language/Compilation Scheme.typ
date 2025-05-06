@@ -9,7 +9,8 @@ straightforward manner. They are first translated into "pseudo" instructions whi
 then be translated into x86-64.
 
 === Syntax
-To help understanding the compilation scheme the reader should keep the following operators in mind:
+To help understanding the compilation scheme the reader should keep the
+following operators and syntax in mind:
 
 - $rho : Gamma -> "List"("Reg")$ \
   $rho$ is a mapping from variables to a list of memory addresses.
