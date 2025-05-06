@@ -75,59 +75,83 @@ evaluation order is determined by the order of the function calls.
     And in this one $"baz"(x)$ has to be evaluted first
   ],
 )
+== Types & kinds
 
-== Kinds & types
+The types in SLFL roughly correspond to those of polarised linear logic. In
+particular it corresponds to the positive fragment of polarised linear logic, see @PolarisedLinearLogic.
+In addition to the positive fragment of polarised linear logic, SLFL also contain some other types and type constructors.
 
-At the core of SLFL is the kind system which describes the size of types. There
-are two kinds in SLFL:
-- $omega$. _dynamic size_
-- $n,m,k$: _constant size_
+#let pll_types = {
+  $A, B : : = & top | bot | x | not A | A times.circle B | A plus.circle B | exists x. A | \ 
+  & circle | square A | *A | ~A
+  $
+}
 
-The following are all the kind judgements in the language. They describe how
-types can be combined in a kind-correct fashion.
+#align(center,pll_types)
 
-#text(size: 1.3em, align(center, kind_judgements))
+The first row are the types that correspond to the positive fragment of
+polarised linear logic. In the second row are the types that are added on top
+of polarised linear logic. The circle ($circle$), called _empty stack_ is
+a primitive type added to SLFL. The box type constructor ($square$) represents
+a pointer to a type. The last two are versions of negation ($not$). The meaning
+of each type and why they are added over polarised linear logic will make sense
+when we introduce kinds.
 
-We can now derive types following the kind rules. For instance, let
-us derive the types
-$A times.circle B times.circle ~C$ and $A times.circle (B plus.circle C) times.circle circle$
+At the core of SLFL is the kind system. Where values have types, types have
+kinds. The two kinds in SLFL are _stack-like_ ($omega$) and _known length_
+($n,m$), and we use $alpha$ to denote a variables for kinds. The kinding rules in SLFL are given in @KindRules.
 
-#let tree = rule(
-  ($A times.circle B times.circle ~C: omega$),
-  prooftree(rule($A:n$, "")),
-  prooftree(
-    rule(
-      $B times.circle ~C: omega$,
-      rule($B: m$),
-      prooftree(rule($~C: omega$, prooftree(rule($C: k$)))),
-    ),
-  ),
-)
-#let tree2 = rule(
-  ($A times.circle (B plus.circle C) times.circle circle: omega$),
-  prooftree(rule($A:n$, "")),
-  prooftree(
-    rule(
-      $(B plus.circle C) times.circle circle: omega$,
-      prooftree(rule($B plus.circle C: max(m, k)$, $B: m$, $C: k$)),
-      prooftree(rule($circle: omega$)),
-    ),
-  ),
-)
-#grid(
-  columns: (1fr, 1fr),
-  inset: (top: 0.3cm, bottom: 0.3cm, right: -3pt, left: -3pt),
-  prooftree(tree), prooftree(tree2),
-)
+#figure(caption: [Kind rules in SLFL], align(center, kind_judgements(true)))<KindRules>
 
-The $omega$ case of the product type ($times.circle$) can be interpreted as
-pushing its left operand on the right operand stack. The circle ($circle$) can
-be interpreted as being the empty stack, while $~A$ is a closure type that
-represents "the rest of the stack". $*A$ and $not A$ are also closure types,
-but since they construct type with kind $n$, they have no stack-like
-representation.
-This part will become clear when we give meaning to the types in their memory
-representation. #todo[Refer to section]
+As for the others, they are more interesting. Starting off we can see that,
+unsurprisingly, empty stack ($circle$) is stack-like. Stack-like product is akin to cons on lists.
+
+For now, the three closure types ($not, ~, *$) can be considered as pieces of a puzzle to construct valid types. 
+In @Transformations we will explain how they all relate to each other and why we need all three.
+
+There is no subkinding in the language, meaning, if a type that is stack-like
+is expected then a type with known length is not allowed and vice versa.
+
+// We can now derive types following the kind rules. For instance, let
+// us derive the types
+// $A times.circle B times.circle ~C$ and $A times.circle (B plus.circle C) times.circle circle$
+//
+// #let tree = rule(
+//   ($A times.circle B times.circle ~C: omega$),
+//   prooftree(rule($A:n$, "")),
+//   prooftree(
+//     rule(
+//       $B times.circle ~C: omega$,
+//       rule($B: m$),
+//       prooftree(rule($~C: omega$, prooftree(rule($C: k$)))),
+//     ),
+//   ),
+// )
+// #let tree2 = rule(
+//   ($A times.circle (B plus.circle C) times.circle circle: omega$),
+//   prooftree(rule($A:n$, "")),
+//   prooftree(
+//     rule(
+//       $(B plus.circle C) times.circle circle: omega$,
+//       prooftree(rule($B plus.circle C: max(m, k)$, $B: m$, $C: k$)),
+//       prooftree(rule($circle: omega$)),
+//     ),
+//   ),
+// )
+// #grid(
+//   columns: (1fr, 1fr),
+//   inset: (top: 0.3cm, bottom: 0.3cm, right: -3pt, left: -3pt),
+//   prooftree(tree), prooftree(tree2),
+// )
+
+// The $omega$ case of the product type ($times.circle$) can be interpreted as
+// pushing its left operand on the right operand stack. The circle ($circle$) can
+// be interpreted as being the empty stack, while $~A$ is a closure type that
+// represents "the rest of the stack". $*A$ and $not A$ are also closure types,
+// but since they construct type with kind $n$, they have no stack-like
+// representation.
+// This part will become clear when we give meaning to the types in their memory
+// representation. #todo[Refer to section]
 
 == Types & values<TypesAndValues>
 
@@ -155,16 +179,16 @@ on use, following the rules of linear types.
 
 #figure(caption: [Grammar of SLFL], align(left, complete_grammar))
 
-== Transformations
+== Transformations<Transformations>
 
-SLFL consists of three intermediate languages:
-- Linear closure converted
-- Stack selected
-- Pointer closure converted
+What we have seen so far SLFL is still a logic language, where a computer
+executes machine code. This chapter will explain how SLFL can be lowered to
+a language that can be compiled to machine code.
+SLFL contains three transformations.
 
-We will consider the following program to explain each step: $lambda a. "let"
-f,k = a; k(lambda y. space f(y))$ with type $not (not int times.circle not not
-  int)$. We use $int$ to avoid considering existential types for now.
+- Linear closure conversion
+- Stack selection
+- Pointer closure conversion
 
 === Linear closure converison
 

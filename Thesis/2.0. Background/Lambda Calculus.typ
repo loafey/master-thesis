@@ -105,6 +105,6 @@ where $alpha$ is a type variable and $x$ is a term variable.
   prooftree(app), prooftree(abs),
 )
 
-=== Linear types (Substructural)
+=== Linear types (Substructural) <LinearTypes>
 
-=== Polarised linear logic
+=== Polarised linear logic <PolarisedLinearLogic>

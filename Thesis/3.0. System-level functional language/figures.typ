@@ -1,15 +1,13 @@
 #import "../Prelude.typ": *
 
-#let grammar(section, named, ..rules) = {
+#let grammar(named, ..rules) = {
   let arr = rules.pos()
-  section
   linebreak()
   named
   $space := space$
   [#arr.join(" | ")]
 }
 #let values = grammar(
-  [_Values_],
   $v,v'$,
   $x$,
   $()$,
@@ -22,23 +20,13 @@
   $(@t, v)$,
 )
 #let commands = grammar(
-  [_Commands_],
   [$c, c'$],
   $z(v)$,
   $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
   $"let" p = v; c$,
 )
-#let pat = grammar(
-  [_Patterns_],
-  $p$,
-  $()$,
-  $p, p'$,
-  $@t, y$,
-  $p, p'$,
-  $square p$,
-)
+#let pat = grammar($p$, $()$, $p, p'$, $@t, y$, $p, p'$, $square p$)
 #let type = grammar(
-  [_Types_],
   $t, t'$,
   $top$,
   $bot$,
@@ -52,31 +40,33 @@
   $t plus.circle t'$,
   $exists x. t$,
 )
-#let def = grammar([_Definition_], $d$, $x : t = v$)
-#let module = grammar([_Module_], $m$, $epsilon$, $d ; m$)
+#let def = grammar($d$, $x : t = v$)
+#let module = grammar($m$, $epsilon$, $d ; m$)
 
 #let dbl_linkbreak() = {
   linebreak()
   linebreak()
 }
 
-#let complete_grammar = box(
-  inset: 7pt,
-  stroke: black,
-  [
-    #values
-    #dbl_linkbreak()
-    #commands
-    #dbl_linkbreak()
-    #pat
-    #dbl_linkbreak()
-    #type
-    #dbl_linkbreak()
-    #def
-    #dbl_linkbreak()
-    #module
-  ],
-)
+#let complete_grammar = box(inset: 7pt, stroke: black, [
+  _Value_
+  #values
+  #dbl_linkbreak()
+  _Command_
+  #commands
+  #dbl_linkbreak()
+  _Pattern_
+  #pat
+  #dbl_linkbreak()
+  _Type_
+  #type
+  #dbl_linkbreak()
+  _Definition_
+  #def
+  #dbl_linkbreak()
+  _Module_
+  #module
+])
 
 #let positive(toggle) = {
   grid(
@@ -162,12 +152,7 @@
     ],
 
     [
-      #judge(
-        "",
-        $dot tack () : top$,
-        display_note: toggle,
-        note: "unit",
-      )
+      #judge("", $dot tack () : top$, display_note: toggle, note: "unit")
     ],
   )
 }
@@ -263,70 +248,63 @@
 }
 
 #let product_dynamic = {
-  judge(
-    $A: n quad B: omega$,
-    $A times.circle B: omega$,
-  )
+  judge($A: n quad B: omega$, $A times.circle B: omega$)
 }
 
 #let product_constant = {
-  judge(
-    $A: n quad B:m$,
-    $A times.circle B: n + m$,
-  )
+  judge($A: n quad B:m$, $A times.circle B: n + m$)
 }
 
 #let sum_dynamic = {
-  judge(
-    $A: omega quad B: omega$,
-    $A plus.circle B: omega$,
-  )
+  judge($A: omega quad B: omega$, $A plus.circle B: omega$)
 }
 
 #let sum_constant = {
-  judge(
-    $A:n quad B: m$,
-    $A plus.circle B: max(n, m)$,
-  )
+  judge($A:n quad B: m$, $A plus.circle B: 1 + max(n, m)$)
 }
+
 #let static_closure = {
-  judge(
-    $A: omega$,
-    $*A: n$,
-  )
+  judge($A: omega$, $*A: n$)
 }
 #let linear_closure = {
-  judge(
-    $A:n$,
-    $not A: n$,
-  )
+  judge($A:n$, $not A: n$)
 }
 
 #let dynamic_closure = {
-  judge(
-    $A: n$,
-    $~A: omega$,
-  )
+  judge($A: n$, $~A: omega$)
 }
 
 #let linear_ptr = {
-  judge(
-    $A: omega$,
-    $square A: n$,
-  )
+  judge($A: omega$, $square A: n$)
 }
 
 #let emptystack = {
-  judge(
-    $$,
-    $circle: omega$,
-  )
+  judge($$, $circle: omega$)
 }
 
-#let kind_judgements = grid(
-  columns: (1fr, 1fr, 1fr),
-  row-gutter: 16pt,
-  product_dynamic, sum_dynamic, static_closure,
-  product_constant, sum_constant, dynamic_closure,
-  emptystack, linear_ptr, linear_closure,
-)
+#let unit = {
+  judge($$, $top: n$)
+}
+
+#let existential = {
+  judge($A : alpha$, $exists x. A : alpha$)
+}
+
+#let variable = {
+  judge($$, $x : omega$)
+}
+
+#let bottom = { judge($$, $bot : n$)}
+
+#let kind_judgements(include_text) = {
+  grid(
+    columns: (1fr, 1fr, 1fr),
+    row-gutter: 16pt,
+    emptystack, unit, bottom,
+    product_dynamic, product_constant, sum_dynamic,
+    sum_constant, dynamic_closure, static_closure,
+    linear_closure, linear_ptr, existential,
+    variable,
+  )
+  todo[Make them not-small]
+}
