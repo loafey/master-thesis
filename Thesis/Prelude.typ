@@ -1,7 +1,7 @@
 #import "@preview/dashy-todo:0.0.1"
 
 #let debug = true
-#let todo = if debug { dashy-todo.todo } else { (..) => { } }
+#let todo = if debug { c => dashy-todo.todo(text(size: 0.8em, c)) } else { (..) => { } }
 
 #let bigTodo(content) = box(
   fill: red,
