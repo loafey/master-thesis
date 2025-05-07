@@ -26,53 +26,111 @@ following operators and syntax in mind:
   any code, and instructions that generate code. We differentiate meta syntax
   with instructions using double quotes.
 
-// #{
-//   let frame(stroke) = (x, y) => (
-//     left: stroke,
-//     right: stroke,
-//     top: if y < 2 { stroke } else { rgb("00000040") },
-//     bottom: stroke,
-//   )
-//   set table(
-//     fill: (rgb("#f3f7f8"), none),
-//     stroke: frame(rgb("21222C")),
-//   )
-//   figure(
-//     caption: [Translations between pseudo and x86-64 values and instructions.],
-//     grid(
-//       row-gutter: 10pt,
-//       table(
-//         columns: (1fr, 1fr),
-//         [*Pseudo instruction*], [*x86-64 instructions*],
-//         `push VAL`, [],
-//         `push VAL_1 on VAL_2`, [],
-//         `VAL_1 = VAL_2`, [],
-//         `pop VAL`, [],
-//         `jnz L`, [],
-//         `jmp L`, [],
-//         `L:`, [],
-//         `mov VAL_1 = VAL_2`, [],
-//       ),
-//       table(
-//         columns: (1fr, 1fr),
-//         [*VAL*], [*x86-64 val*],
-//         `[0-9]+`, [`$[0-9]+`],
-//         $#sym.rho\(x)$, [Fitting register or location on the system stack (`x(%RBP)`)],
-//         `SP`, [`%R15`],
-//         `SSP`, [`%R14`],
-//         `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
-//         `[VAL]`, [`0(%VAL_1)`],
-//       )
-//     ),
-//   )
-// }
+The instructions that do generate code, such as $push x$, work
+very similary to their assembly counterparts.
+
+#{
+  let frame(stroke) = (x, y) => (
+    left: stroke,
+    right: stroke,
+    top: if (y == 0) { stroke } else { rgb("00000040") },
+    bottom: stroke,
+  )
+  set table(
+    fill: (x, y) => if (y == 0) { rgb("#00000010") } else { white },
+    stroke: frame(rgb("21222C")),
+    align: (x, y) => if (y == 0) { center } else { left },
+  )
+  figure(
+    caption: [
+      Translations between pseudo and x86-64 instructions and values.
+      Observe that the x86-64 instructions might differ in the compiler due to
+      optimizations or the memory size of a variable.
+    ],
+    grid(
+      // row-gutter: 10pt,
+      table(
+        columns: (1fr, 1fr),
+        [*Pseudo instruction*], [*x86-64 instructions*],
+        $push "VAL"$,
+        ```asm
+        subq $sizeof(VAL), %R15
+        mov  VAL,          0(%R15)
+        ```,
+
+        $"VAL_1" = "VAL_2"$,
+        ```asm
+        mov VAL_2, VAL_1
+        ```,
+
+        $pop "VAL"$,
+        ```asm
+        mov 0(%R15),      VAL
+        addq sizeof(VAL), %R15
+        ```,
+
+        ```
+        if izero(VAL)
+          then C1
+          else C2
+        ```,
+        ```asm
+        mov VAL, %R10
+        cmp $0,  %R10
+        jnz lbl
+        C1 # codeblock
+        lbl:
+        C2 # codeblock
+        ```,
+
+        $jmp L$,
+        ```asm
+        jmp L
+        ```,
+
+        $L:$,
+        ```asm
+        L: # a label
+        ```,
+
+        $newstack$,
+        ```asm
+        mov STACKSIZE, %RDI
+        call malloc
+
+        # push to the stack
+        subq $8,  %R15
+        movq %RAX, 0(%R15)
+        ```,
+
+        $"free"("VAL")$,
+        ```asm
+        mov $0,  %RAX
+        mov VAL, %RDI
+        call free
+        ```,
+      ),
+      table(
+        columns: (1fr, 1fr),
+        [*VAL*], [*x86-64 value*],
+        `[0-9]+`, [`$[0-9]+`],
+        $#sym.rho\(x)$, [Fitting register or location on the system stack (`x(%RBP)`)],
+        `SP`, [`%R15`],
+        `SSP`, [`%R14`],
+        `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
+        `[VAL]`, [`0(%VAL)`],
+      )
+    ),
+  )
+}
 
 === Positive fragment
 As specified in @TypesAndValues these fragments are used to create values.
 #positive_compilation_scheme
 
+
 === Negative fragment
 Once again as specified in @TypesAndValues these fragments are used to destroy values.
 #negative_compilation_scheme
 
-
+=== Lambda Compilation <lambdaLifting>
