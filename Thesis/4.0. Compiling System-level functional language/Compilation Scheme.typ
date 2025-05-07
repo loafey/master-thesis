@@ -27,7 +27,7 @@ following operators and syntax in mind:
   with instructions using double quotes.
 
 The instructions that do generate code, such as $push x$, work
-very similary to their assembly counterparts.
+similary to their assembly counterparts.
 
 #{
   let frame(stroke) = (x, y) => (
@@ -128,9 +128,14 @@ very similary to their assembly counterparts.
 As specified in @TypesAndValues these fragments are used to create values.
 #positive_compilation_scheme
 
-
+#pagebreak()
 === Negative fragment
 Once again as specified in @TypesAndValues these fragments are used to destroy values.
 #negative_compilation_scheme
 
 === Lambda Compilation <lambdaLifting>
+As can be seen in the compilation scheme for positive fragmets, lambdas are
+still in the language even in the the last step before compilation.
+
+A common tactic when compiling lambdas is to use a process such as
+lambda lifting #todo[source] or closure conversion
