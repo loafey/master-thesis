@@ -252,6 +252,13 @@
 }
 
 #let product_dynamic = {
+  // prooftree(
+  //   rule(
+  //     $A times.circle B: omega$,
+  //     $A: n$,
+  //     $B: omega$,
+  //   ),
+  // )
   judge($A: n quad B: omega$, $A times.circle B: omega$)
 }
 

@@ -1,4 +1,5 @@
 #import "@preview/dashy-todo:0.0.1"
+#import "@preview/curryst:0.5.1": rule, prooftree
 
 #let debug = true
 #let todo = if debug { c => dashy-todo.todo(text(size: 0.8em, c)) } else { (..) => { } }
@@ -106,12 +107,23 @@
 #let green_text(txt) = text(fill: rgb(0, 125, 0, 255))[#txt]
 
 #let judge(above, below, note: "", display_note: false) = {
-  if note == "" or not display_note {
-    $#above / #below$
+  let old = false
+  if old {
+    if note == "" or not display_note {
+      $#above / #below$
+    } else {
+      $#above / #below$
+      $space$
+      text(size: 10pt, emph(note))
+    }
   } else {
-    $#above / #below$
-    $space$
-    text(size: 10pt, emph(note))
+    let tree = rule(
+      name: if note != "" and display_note { [#space #note] } else { none },
+      below,
+      above,
+    )
+    set text(size: 0.9em)
+    prooftree(tree)
   }
 }
 
