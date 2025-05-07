@@ -1,11 +1,12 @@
 #import "../Prelude.typ": *
 #import "@preview/curryst:0.5.1": rule, prooftree
+#import "@preview/biceps:0.0.1": flexwrap
 
 #let stlc = [simply typed lambda calculus]
 
-#let lc = grid(
-  columns: (1fr, 1fr),
-  inset: 10pt,
+#let lc = flexwrap(
+  main-spacing: 15pt,
+  cross-spacing: 15pt,
   prooftree(
     rule(
       $Gamma tack x: sigma$,
@@ -17,7 +18,7 @@
 
   prooftree(
     rule(
-      $Gamma tack lambda x:sigma. e : sigma -> tau$,
+      $Gamma tack (lambda x:sigma. space e) : sigma -> tau$,
       $Gamma, x:sigma tack e: tau$,
       name: "Abs",
     ),
@@ -50,9 +51,10 @@ variants. We will assume the reader has encountered lambda calculus previously.
 === Simply Typed Lambda Calculus
 
 Simply typed lambda calculus was first introduced by Church to avoid the
-paradoxical use of the untyped lambda calculus @church1940formulation.
-It consists of two worlds; the type world and the term world. The two worlds
-correspond to logic and computation, respectively. The syntax for #stlc is shown in @stlc_syntax.
+paradoxical use of the untyped lambda calculus @church1940formulation. It
+consists of two worlds; the type world and the term world. The two worlds
+correspond to logic and computation, respectively. The syntax for #stlc is
+shown in @stlc_syntax.
 
 #figure(
   caption: [Syntax for #stlc],
@@ -65,17 +67,23 @@ correspond to logic and computation, respectively. The syntax for #stlc is shown
 To ensure that terms in #stlc are well-typed we define a relation between terms
 and types. The typing relation uses the syntax $Gamma tack e: sigma$, which
 says that in context $Gamma$, term $e$ has type $sigma$. The context $Gamma$ is
-a mapping from variables to types, usually written as: $Gamma = x_1 : A_1, x_2
-: A_2, ..., x_n : A_n$. The typing rules for #stlc are shown in @stlc_typing.
+a mapping from free variables to types. $Gamma, (x : A)$ is the context that
+extends $Gamma$ by associating the variable $x$ with $A$. The typing rules for
+#stlc are shown in @stlc_typing.
 
 #figure(
   caption: [Typing rules for #stlc],
   lc,
 )<stlc_typing>
 
-For instance, the identity function for the monomorphic type $A$ would be
-$ lambda x. space x : A -> A $ and the typing derivation for it would be:
-$ #prooftree(rule($Gamma tack lambda x: A. space x : A -> A$, $x: A tack x: A$)) $
+// The first rule reads: in context $Gamma$, the variable $x : sigma$ is a term if $x : sigma$ is in $Gamma$.
+The first rule, Var, reads: if $x : sigma$ is in $Gamma$ then $x : sigma$ is
+a term in context $Gamma$. The rule Abs, short for abstraction, also commonly
+called lambda says that if, with context $Gamma$, extended with $x : sigma$ the
+term $e : tau$ can be deduced, then in the context $Gamma$ without $x$,
+$(lambda x : sigma. space e) : sigma -> tau$. The last rule, App, short for
+application says that if in the context $Gamma$ we have $e_1 : sigma -> tau$
+and $e_2 : tau$ then in the context $Gamma$ the term $e_1 e_2$ has type $tau$. 
 
 === Polymorphic Lambda Calculus (System F)
 
@@ -91,13 +99,7 @@ $
 
 Where in #stlc variables range over terms and lambdas have
 binders for terms, System F additionally introduces variables ranging over
-types as well as binders for types. The identity function in System F would now
-be:
-
-$
-  Lambda alpha. lambda x^alpha. x : forall a. alpha -> a
-$
-where $alpha$ is a type variable and $x$ is a term variable.
+types as well as binders for types.
 
 #grid(
   columns: (1fr, 1fr),

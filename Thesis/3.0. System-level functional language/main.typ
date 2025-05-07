@@ -21,12 +21,35 @@ inspiration from linear types, which is based on Girard's linear logic.
 
 In this section we will introduce the reader to SLFL.
 
+== Grammar
+
+Before going into details on SLFL it can be helpful to get an overview of how
+the language looks. The grammar of SLFL is depicted in @slfl_grammar.
+
+#figure(caption: [Grammar of SLFL], align(left, complete_grammar))<slfl_grammar>
+
+We will start by showing an example, and then explain the grammar. 
+The example will assume $A$ and $B$ are concrete types which are inhabited by the values $a$ and $b$ respectively.
+
+$
+& "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
+& quad = lambda((x,y), k) -> k((y,x));\
+\
+& "main" : *~(A times.circle B) \
+& quad = lambda k -> "swap"((b,a), k); $
+
+A module consists of a list of definitions, where a definition is a top-level
+function, akin to Haskell. A definition consists of a name, a type, and
+a value. The distinction between values and commands is the most interesting
+piece. Commands come into play in the bodies of lambdas, and commands are only
+terminated by a function call ($z(v)$), which ensures that SLFL is written in
+continuation-passing style.
+
+
 == Continuation-passing Style
-The first notable difference between SLFL and most functional programming
-languages is the programming style. SLFL is written in _continuation-passing
-style_ (CPS), a style where control is passed explicitly via continuation
-functions rather than returning values. We will provide a simple example of CPS
-using the identity function. In normal style it would be:
+_Continuation-passing style_ (CPS) is a style where control is passed
+explicitly via continuation functions rather than returning values. The
+identity function written in normal style would be:
 
 #align(
   center,
@@ -36,12 +59,12 @@ using the identity function. In normal style it would be:
   $,
 )
 
-contrast it to the CPS version:
+contrast it to the CPS version, where we use $bot$ to denote a function that terminates with no value.
 
 #align(
   center,
   $
-    & id : forall a, r. space a -> (a -> r) -> r \
+    & id : forall a. space a -> (a -> bot) -> bot \
     & id = lambda x. lambda k. space k(n)
   $,
 )
@@ -68,7 +91,6 @@ evaluation order is determined by the order of the function calls.
     $> lambda x. lambda k. & "bar"(x, lambda y. "baz"(x, lambda z. k(y+z)))$
 
     Here $"bar"(x)$ has to be evaluated first
-
 
     $> lambda x. lambda k. & "baz"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
 
@@ -175,16 +197,12 @@ picture. For every value $v$, a corresponding command exists for how to destruct
 an environment that has $v$ #todo[is this even correct]. Variables can not be destructed, rather they are consumed
 on use, following the rules of linear types.
 
-== Grammar
-
-#figure(caption: [Grammar of SLFL], align(left, complete_grammar))
 
 == Transformations<Transformations>
 
-What we have seen so far SLFL is still a logic language, where a computer
-executes machine code. This chapter will explain how SLFL can be lowered to
-a language that can be compiled to machine code.
-SLFL contains three transformations.
+At this stage SLFL is still a logic language. How do we bridge the gap between logic and machine?
+This section goes into the necessary transformations to turn SLFL into machine code.
+
 
 - Linear closure conversion
 - Stack selection

@@ -27,5 +27,4 @@
         - Exponentials
     - Conclusion
 
-== New
-- Background
+@Linear Abstract Machine

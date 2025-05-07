@@ -25,7 +25,7 @@
   $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
   $"let" p = v; c$,
 )
-#let pat = grammar($p$, $()$, $p, p'$, $@t, y$, $p, p'$, $square p$)
+#let pat = grammar($p$, $()$, $x$, $@t, y$, $p, p'$, $square p$)
 #let type = grammar(
   $t, t'$,
   $top$,
