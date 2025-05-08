@@ -5,6 +5,9 @@
 As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
+// === Utilizing linearity fully
+// While #ln is a linear language it currently does
+
 === Register allocation
 When optimizing the generated code, one important technique is
 utilizing the physical registers for variable allocation. #todo("source")
