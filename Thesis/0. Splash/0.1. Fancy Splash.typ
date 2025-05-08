@@ -1,4 +1,4 @@
-#import "../Prelude.typ": languageName
+#import "../Prelude.typ": ln
 
 #page(
   margin: (top: 86pt, left: 0pt, right: 0pt, bottom: 82pt),
@@ -11,7 +11,7 @@
 
     #text(weight: "bold", size: 16pt, font: "New Computer Modern", top-edge: 8pt)[
       Towards a System Level Functional
-      Langauge: #languageName
+      Langauge: #ln
     ]
 
     #v(2cm)

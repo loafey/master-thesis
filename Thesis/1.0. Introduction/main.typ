@@ -1,5 +1,5 @@
 #import "../Prelude.typ": indent, todo
-#import "../Prelude.typ": languageName
+#import "../Prelude.typ": ln
 
 = Introduction
 The concept of linearity in programming languages is not a newly discoverd one.
@@ -7,9 +7,10 @@ A language with linearity allows a developer to write software without the
 worries of mismanaging things such as memory and files.
 While there are benefits to linearity not many languages have opted to implement it.
 This concept is most commonly found in functional programming, but one thing
-functional languages are commonly not is system level languages.
+functional languages commonly do not contain is system-level programming.
 
-This thesis introduces a new language, #languageName, which tries to fill this void.
+This thesis introduces a new language, #ln, which tries to fill this void,
+by introducing a system-level functional programming language.
 
 
 == Background
@@ -34,8 +35,7 @@ memory management with the introduction of an ownership model and a borrow check
 
 Although Rust offers many functional aspects, many are still missing, for
 instance; _purity_ and _referential transparency_. We propose
-an alternative that addresses these points, the programming language: _System-level Functional
-Language_ (#languageName).
+an alternative that addresses these points, the programming language: #ln.
 
 == Motivation
 Functional programming tends to emphasize _referential transparency_, _higher-order
@@ -57,4 +57,4 @@ In linear logic, the uses of weakening and contraction are carefully controlled,
 a programming language setting means variables must be used exactly once.
 
 This thesis describes System-level functional language, the compilation scheme
-for #languageName, and the implementation of the compiler.
+for #ln, and the implementation of the compiler.

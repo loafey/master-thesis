@@ -1,7 +1,7 @@
 #import "figures.typ": *
 
 == Compilation Scheme
-As can be seen in the @SlflChapter chapter every aspect of #languageName
+As can be seen in the @SlflChapter chapter every aspect of #ln
 is based upon a set of judgements, split into positive and negative fragments.
 
 These judgements can thankfully be translated to x86-64 assembly in a
@@ -141,7 +141,7 @@ A common tactic when compiling lambdas is to use a process such as
 lambda lifting #todo[source] or closure conversion#todo[source].
 As can be seen in the tables above lambdas are still
 part of the language in the compilation scheme at this late stage.
-Commonly lambdas are removed entierly somewhat early in a language, but in #languageName
+Commonly lambdas are removed entierly somewhat early in a language, but in #ln
 we remove them when compiling to x86-64. The method used is very close in principle in
 lambda lifting, in that lambdas are lifted to the top,
 but unlike lambda lifting or closure conversion, the function are never modified.

@@ -1,6 +1,6 @@
-#import "../Prelude.typ": languageName
+#import "../Prelude.typ": ln, todo
 
-= Compiling #languageName
+= Compiling #ln
 Compiling a language is not always a straightforward path, especially so when
 compiling a functional language to an inherently imperative architecture.
 Even more so when the language is in question is system-level,

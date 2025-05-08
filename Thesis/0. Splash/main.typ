@@ -1,4 +1,4 @@
-#import "../Prelude.typ": languageName
+#import "../Prelude.typ": ln
 
 #page(
   background: image("assets/gu-chalmers-logo.svg"),
@@ -6,7 +6,7 @@
   [
     #text(weight: "bold", size: 23pt, font: "FreeSans", top-edge: 8pt)[
       Towards a System Level Functional\
-      Langauge: #languageName
+      Langauge: #ln
     ]
 
     #v(2cm)

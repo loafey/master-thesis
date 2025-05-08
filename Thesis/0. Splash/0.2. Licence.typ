@@ -1,7 +1,7 @@
-#import "../Prelude.typ": languageName
+#import "../Prelude.typ": ln
 #v(5cm)
 
-Towards a System Level Functional Langauge: #languageName
+Towards a System Level Functional Langauge: #ln
 #v(0.2cm)
 Sebastian Selander\
 Samuel Hammersberg

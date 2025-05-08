@@ -17,12 +17,12 @@ To combat this, an efficient compiler should move variables back onto the stack
 (a process often called spilling) when they are not used, and back into registers when they are.
 Doing this efficently can prove difficult as the compiler should try to minimize
 the amount of spilling needed, and this has in fact been proven to be
-NP-complete #todo("source"). This was not implemented for #languageName as it was
+NP-complete #todo("source"). This was not implemented for #ln as it was
 deemed an optimization, that while interesting, not something we would have the time to
 implement properly.
 
 === System Calls
-As #languageName is a system-level language, it might be useful to have the ability
+As #ln is a system-level language, it might be useful to have the ability
 to directly make system calls to interact with the operating system.
 This allow for the possibility of not relying on, for example, LIBC,
 as the behaviour one would need from LIBC could be re-implemented
@@ -35,14 +35,14 @@ that is exposed to a user of the language.
 Similarly to system calls, proper support for Foreign Function Interfaces (FFI)
 would permit the language to interact with software outside.
 A prime example of this would be libraries written in other languages,
-or even libraries writen in #languageName. Just like system calls, FFI is currently
+or even libraries writen in #ln. Just like system calls, FFI is currently
 used under the hood for printing and the likes using LIBC, but this is not
 exposed to a user of the language.
 
 === Exponentionals
 While linearity in a programming language is useful for managing resources
 such as memory, sometimes one needs to use values more than once.
-Consider a function for fibbonacci written in #languageName:
+Consider a function for fibbonacci written in #ln:
 
 ```hs
 fib : *(int ⊗ ~int)
@@ -126,3 +126,17 @@ types such as linked lists, which are currently not representable.
 It would also be beneficial to have access to contiguous data types
 such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
+
+=== Using #ln as a compilation target
+While just writing #ln on its own would be nice, a good benchmark
+and milestone of the languages capability would be another language using #ln
+as a compilation target.
+
+While the #ln is currently in the start up stage and lacks features such
+as exponentials which would be required for more complex languages,
+a simpler linear functional language could probably be compiled to #ln.
+// A linear variant of a Lisp-or ML-like language could probably suffice for this purpose.
+Currently not many of these do exist, but a subset of something like
+Linear Haskell#todo[source] could provide a suitable goal. This would make
+it easy to see what features or areas #ln is lacking in,
+making future goals clearer.
