@@ -1,8 +1,11 @@
 #import "@preview/dashy-todo:0.0.1"
 #import "@preview/curryst:0.5.1": rule, prooftree
+#import "@preview/biceps:0.0.1": flexwrap
 
 #let debug = true
 #let todo = if debug { c => dashy-todo.todo(text(size: 0.8em, c)) } else { (..) => { } }
+
+#let flex(..v) = align(center, flexwrap(main-spacing: 15pt, cross-spacing: 15pt, ..v))
 
 #let bigTodo(content) = box(
   fill: red,
