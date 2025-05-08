@@ -138,4 +138,10 @@ As can be seen in the compilation scheme for positive fragmets, lambdas are
 still in the language even in the the last step before compilation.
 
 A common tactic when compiling lambdas is to use a process such as
-lambda lifting #todo[source] or closure conversion
+lambda lifting #todo[source] or closure conversion#todo[source].
+As can be seen in the tables above lambdas are still
+part of the language in the compilation scheme at this late stage.
+Commonly lambdas are removed entierly somewhat early in a language, but in SLFL
+we remove them when compiling to x86-64.
+
+#bigTodo[yo]
