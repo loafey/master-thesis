@@ -183,3 +183,5 @@
   ": "
   box(baseline: 80%, fill: rgb("EEEEEE"), stroke: black, inset: 8pt, $txt$)
 }
+
+#let languageName = "Lithium"

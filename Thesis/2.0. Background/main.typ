@@ -2,7 +2,7 @@
 
 = Background
 
-This chapter introduces the background needed to understand SLFL.
+This chapter introduces the background needed to understand #languageName.
 
 // #include "Logic.typ"
 #include "Lambda Calculus.typ"

@@ -2,25 +2,25 @@
 #import "figures.typ": *
 
 == Compilation Target<CompilingCompilationTarget>
-When picking a compilation target there are always a lot of options, and for SLFL,
+When picking a compilation target there are always a lot of options, and for #languageName,
 x86-64 was picked. While choices like LLVM IR provide a lot of benefits to the developer
 in terms of development speed and convience, one
 ultimately sacrifices some control over the calling convention or memory allocation.
-Due to SLFL's CPS nature, tail call optimization is a must and while LLVM provides
+Due to #languageName's CPS nature, tail call optimization is a must and while LLVM provides
 tools and syntax for this, a developer can not guarantee how the stack is handled when
 functions are called nor how arguments are
 passed to these functions. For this explicit need of control x86-64 was a fitting choice.
 
-Utilizing the flexibity given by x86-64, SLFL gains a lot of control over how the calling
+Utilizing the flexibity given by x86-64, #languageName gains a lot of control over how the calling
 convention is implemented and how the stack, registers and memory in general is used.
 In other words, it gives us the ability to have complete control over
 the languages Application Binary Interface (ABI). See @languageAbiChapter
 for details about that.
 
-Similarily to other languages SLFL uses stack frames for function calls,
-but unlike other languages, SLFL only uses one during normal execution.
+Similarily to other languages #languageName uses stack frames for function calls,
+but unlike other languages, #languageName only uses one during normal execution.
 This is possible due to the finegrained control x86-64 gives a developer
-and the fact that SLFL strictly uses CPS.
+and the fact that #languageName strictly uses CPS.
 Every function call can be tail call optimized as they always end
 with calling another function.
 

@@ -1,6 +1,7 @@
+#import "../Prelude.typ": languageName
 #v(5cm)
 
-Towards a System Level Functional Langauge: SLFL
+Towards a System Level Functional Langauge: #languageName
 #v(0.2cm)
 Sebastian Selander\
 Samuel Hammersberg
@@ -17,7 +18,10 @@ Chalmers University of Technology and University of Gothenburg\
 SE-412 96 Gothenburg\
 Telephone +46 31 772 1000
 
-#align(bottom, [
-  Typeset in *Typst*\
-  Gothenburg, Sweden 2025
-])
+#align(
+  bottom,
+  [
+    Typeset in *Typst*\
+    Gothenburg, Sweden 2025
+  ],
+)

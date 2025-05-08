@@ -2,47 +2,48 @@
 #import "figures.typ": *
 #import "@preview/curryst:0.5.1": rule, prooftree
 
-= System-Level Functional Language<slflChapter>
+= System-Level Functional Language<SlflChapter>
 
 
-// System-Level Functional Language (SLFL) is meant to be an intermediate compilation target for linearly typed functional programming languages. Popular compilation targets today are LLVM, Cranelift, C, and compiling to assembly languages directly.
+// System-Level Functional Language (#languageName) is meant to be an intermediate compilation target for linearly typed functional programming languages. Popular compilation targets today are LLVM, Cranelift, C, and compiling to assembly languages directly.
 // Although the aforementioned alternatives are all viable, for a functional programming language several transformations have to be made. For instance, most functional programming languages have closures.
 
-// SLFL consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
+// #languageName consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
 // Two kinds, known size ($n,m$) and stack size $omega$.
 // Continuation-passing style.
 
-The intended use of SLFL is as a compiler intermediate representation for
-functional languages, similar to that of GHC Core #todo[CITE GHC CORE]. 
-SLFL diverges from most functional language intermediate representations in
+The intended use of #languageName is as a compiler intermediate representation for
+functional languages, similar to that of GHC Core #todo[CITE GHC CORE].
+#languageName diverges from most functional language intermediate representations in
 that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
 inspiration from linear types, which is based on Girard's linear logic.
 
-In this section we will introduce the reader to SLFL.
+In this section we will introduce the reader to #languageName.
 
 == Grammar
 
-Before going into details on SLFL it can be helpful to get an overview of how
-the language looks. The grammar of SLFL is depicted in @slfl_grammar.
+Before going into details on #languageName it can be helpful to get an overview of how
+the language looks. The grammar of #languageName is depicted in @slfl_grammar.
 
-#figure(caption: [Grammar of SLFL], align(left, complete_grammar))<slfl_grammar>
+#figure(caption: [Grammar of #languageName], align(left, complete_grammar))<slfl_grammar>
 
-We will start by showing an example, and then explain the grammar. 
+We will start by showing an example, and then explain the grammar.
 The example will assume $A$ and $B$ are concrete types which are inhabited by the values $a$ and $b$ respectively.
 
 $
-& "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
-& quad = lambda((x,y), k) -> k((y,x));\
-\
-& "main" : *~(A times.circle B) \
-& quad = lambda k -> "swap"((b,a), k); $
+  & "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
+  & quad = lambda((x,y), k) -> k((y,x));\
+  \
+  & "main" : *~(A times.circle B) \
+  & quad = lambda k -> "swap"((b,a), k);
+$
 
 A module consists of a list of definitions, where a definition is a top-level
 function, akin to Haskell. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
 piece. Commands come into play in the bodies of lambdas, and commands are only
-terminated by a function call ($z(v)$), which ensures that SLFL is written in
+terminated by a function call ($z(v)$), which ensures that #languageName is written in
 continuation-passing style.
 
 
@@ -99,36 +100,35 @@ evaluation order is determined by the order of the function calls.
 )
 == Types & kinds
 
-The types in SLFL roughly correspond to those of polarised linear logic. In
+The types in #languageName roughly correspond to those of polarised linear logic. In
 particular it corresponds to the positive fragment of polarised linear logic, see @PolarisedLinearLogic.
-In addition to the positive fragment of polarised linear logic, SLFL also contain some other types and type constructors.
+In addition to the positive fragment of polarised linear logic, #languageName also contain some other types and type constructors.
 
 #let pll_types = {
-  $A, B : : = & top | bot | x | not A | A times.circle B | A plus.circle B | exists x. A | \ 
-  & circle | square A | *A | ~A
-  $
+  $A, B : : = & top | bot | x | not A | A times.circle B | A plus.circle B | exists x. A | \
+  & circle | square A | *A | ~A$
 }
 
-#align(center,pll_types)
+#align(center, pll_types)
 
 The first row are the types that correspond to the positive fragment of
 polarised linear logic. In the second row are the types that are added on top
 of polarised linear logic. The circle ($circle$), called _empty stack_ is
-a primitive type added to SLFL. The box type constructor ($square$) represents
+a primitive type added to #languageName. The box type constructor ($square$) represents
 a pointer to a type. The last two are versions of negation ($not$). The meaning
 of each type and why they are added over polarised linear logic will make sense
 when we introduce kinds.
 
-At the core of SLFL is the kind system. Where values have types, types have
-kinds. The two kinds in SLFL are _stack-like_ ($omega$) and _known length_
-($n,m$), and we use $alpha$ to denote a variables for kinds. The kinding rules in SLFL are given in @KindRules.
+At the core of #languageName is the kind system. Where values have types, types have
+kinds. The two kinds in #languageName are _stack-like_ ($omega$) and _known length_
+($n,m$), and we use $alpha$ to denote a variables for kinds. The kinding rules in #languageName are given in @KindRules.
 
-#figure(caption: [Kind rules in SLFL], align(center, kind_judgements(true)))<KindRules>
+#figure(caption: [Kind rules in #languageName], align(center, kind_judgements(true)))<KindRules>
 
 As for the others, they are more interesting. Starting off we can see that,
 unsurprisingly, empty stack ($circle$) is stack-like. Stack-like product is akin to cons on lists.
 
-For now, the three closure types ($not, ~, *$) can be considered as pieces of a puzzle to construct valid types. 
+For now, the three closure types ($not, ~, *$) can be considered as pieces of a puzzle to construct valid types.
 In @Transformations we will explain how they all relate to each other and why we need all three.
 
 There is no subkinding in the language, meaning, if a type that is stack-like
@@ -177,7 +177,7 @@ is expected then a type with known length is not allowed and vice versa.
 
 == Types & values<TypesAndValues>
 
-SLFL consists of two fragments:
+#languageName consists of two fragments:
 
 - _Positive fragment_ describes how things are created. When we talk about
   values we refer to the positive fragment.
@@ -185,8 +185,8 @@ SLFL consists of two fragments:
 - _Negative fragment_: describes how to deconstruct environments. We will refer to
   the negative fragment as _commands_
 
-@positive_fragment contains the typing rules for the positive fragment of SLFL.
-The positive fragment of SLFL is depicted in @positive_fragment
+@positive_fragment contains the typing rules for the positive fragment of #languageName.
+The positive fragment of #languageName is depicted in @positive_fragment
 
 #figure(caption: [The positive fragment], positive(true)) <positive_fragment>
 
@@ -200,8 +200,8 @@ on use, following the rules of linear types.
 
 == Transformations<Transformations>
 
-At this stage SLFL is still a logic language. How do we bridge the gap between logic and machine?
-This section goes into the necessary transformations to turn SLFL into machine code.
+At this stage #languageName is still a logic language. How do we bridge the gap between logic and machine?
+This section goes into the necessary transformations to turn #languageName into machine code.
 
 
 - Linear closure conversion
