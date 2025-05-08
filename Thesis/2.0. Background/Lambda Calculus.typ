@@ -75,8 +75,8 @@ and $e_2 : tau$ then in the context $Gamma$ the term $e_1 e_2$ has type $tau$.
 System F is a typed lambda calculus that introduces universal quantification
 over types @girard1972systemf. It was first discovered by logician Girard in
 1972 (System F) and in 1974 by computer scientist Reynolds (Polymorphic lambda
-calculus). The grammar of types is extended with type variables and universal
-quantification. Two new terms are introduced to the grammar as well; type
+calculus). The grammar of types is extended with type variables ($alpha$) and universal
+quantification ($forall$). Two new terms are introduced to the grammar as well; type
 abstraction and type application.
 
 $
@@ -86,19 +86,42 @@ $
 
 Where in #stlc variables range over terms and lambdas have binders for terms,
 System F additionally introduces variables ranging over types as well as
-binders for types. Shown in @SystemF_rules are the two new rules introduced.
+binders for types. The context $Gamma$ is no longer only a mapping from
+variables to types, it also includes type variables. Shown in @SystemF_rules
+are the rules for type abstraction and type application.
 
 #figure(
   caption: [Type abstraction and type application rules in System F],
   flex(prooftree(tabs), prooftree(tapp)),
 ) <SystemF_rules>
 
-// The rule for type abstraction says that if in the context $Gamma$ extended with
-// $alpha$ the term $e$ has type $sigma$, then in the context $Gamma$ without
-// $alpha$ then the term $Lambda alpha. space e$ has type $forall alpha. space sigma$.
-Rather than explain how the proofs are read we will provide an example of how
-they are used to construct the identity function, and apply it to the
-monomorphic type $A$.
+The syntax $sigma[tau slash alpha]$ means replace each occurence of $alpha$ with $tau$ in $sigma$.
+As the reader might now be familiar with how proofs are read, we will give the
+proof tree of how the identity function can be constructed and applied to the variable $y$ with
+monomorphic type $A$. We assume that $y : A in Gamma$. 
+
+
+#let id_proof = prooftree(
+  rule(
+    $Gamma tack (Lambda alpha. space (lambda x : alpha. space x)) : forall alpha. space alpha -> alpha$,
+    rule($Gamma, alpha tack (lambda x : alpha. space x) : alpha -> alpha$, rule(
+      $Gamma, alpha, x : alpha tack x : alpha$,
+      $x : alpha in (Gamma, alpha, x : alpha)$,
+    )),
+  ),
+)
+#let metaid = math.bold[id]
+#let id_app_proof = prooftree(rule(
+  $Gamma tack #metaid\[A] space y : A$,
+  rule($Gamma tack #metaid\[A] : A -> A$, rule($Gamma tack #metaid : forall alpha. alpha -> alpha$, $$)),
+  rule($Gamma tack y : A$, $y : A in Gamma$),
+))
+
+#figure(caption: [The identity function], flex(id_proof)) <id_proof>
+
+We will use the meta symbol $#metaid$ to refer to the identity function in @id_proof.
+
+#figure(caption: [Applying the identity function], flex(id_app_proof))
 
 === Linear types (Substructural) <LinearTypes>
 
