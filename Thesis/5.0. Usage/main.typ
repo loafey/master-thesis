@@ -7,8 +7,16 @@ to write some smaller programs!
 == Fibonacci
 Fibonacci is not the most the most interesting program,
 but from the standpoint of linearity it is _somewhat_ interesting, as
-it reuses variables:\
-#h(10pt) $F_n = F_(n - 1) + F_(n - 2); quad F_0 = 0; quad F_1 = 1$.
+it reuses variables:
+#align(
+  center,
+  grid(
+    row-gutter: 10pt,
+    $F_n = F_(n - 1) + F_(n - 2)$,
+    $F_0 = 0$,
+    $F_1 = 1$,
+  ),
+)
 
 #bigTodo[fibbo]
 And the same program rewritten in C:
@@ -33,4 +41,3 @@ convention is heavier compared to System V#todo[source].
 #bigTodo[program]
 #bigTodo[program-c]
 #bigTodo[program-c-benchmark]
-
