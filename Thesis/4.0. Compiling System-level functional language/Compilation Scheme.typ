@@ -142,6 +142,11 @@ lambda lifting #todo[source] or closure conversion#todo[source].
 As can be seen in the tables above lambdas are still
 part of the language in the compilation scheme at this late stage.
 Commonly lambdas are removed entierly somewhat early in a language, but in #languageName
-we remove them when compiling to x86-64.
+we remove them when compiling to x86-64. The method used is very close in principle in
+lambda lifting, in that lambdas are lifted to the top,
+but unlike lambda lifting or closure conversion, the function are never modified.
+The parameters are not touched, unlike in the two other methods, where
+free variables are added as parameters or in an enviornment parameter.
 
-#bigTodo[yo]
+In the expressions where these lambdas occur, they are simply replaced with a
+function pointer to said lambda, which can then be called.
