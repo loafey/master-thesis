@@ -175,7 +175,7 @@
   [whu],
   $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> {r_0, r_1})
   = #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$,
-  [whu],
+  [Unit elimination],
   $#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
   = #code_box($#sem[c]_rho$)$,
   [whu],
@@ -184,10 +184,10 @@
   [whu],
   $#compilation_scheme($"let" square x = z^1; c$)_(rho, z |-> {r_0})
   = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
-  [whu],
+  [Stack de-allocation],
   $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
   = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
-  [whu],
+  [Case expression],
   $#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
   = #code_box(
     meta($"let" r_1 = "next"(rho, "int")$),
@@ -198,7 +198,9 @@
   )$,
   [whu],
   [$#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
-    = #box(inset: (top: 6pt), code_box($"if iszero"(r_1) "then" #sem[$c_1$]_(rho, x |-> r_s) "else" #sem[$c_2$]_(rho, y |-> r_s)$))$
+    = #box(
+      code_box($"if iszero"(r_1)$, $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$, $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$),
+    )$
     #v(10pt)
   ],
 
