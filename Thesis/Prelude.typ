@@ -7,6 +7,8 @@
 
 #let flex(..v) = align(center, flexwrap(main-spacing: 15pt, cross-spacing: 15pt, ..v))
 
+#let lollipop = $multimap$
+
 #let bigTodo(content) = box(
   fill: red,
   inset: 30pt,

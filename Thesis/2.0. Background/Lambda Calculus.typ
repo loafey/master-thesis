@@ -30,9 +30,9 @@
   name: emph[TAbs],
 )
 
-== Programming languages with linear types
+== Lambda calculus and linear types
 
-This section aims to remind the reader of the lambda calculus, and some of its
+This section aims to remind the reader of the lambda calculus and some of its
 variants, we assume familiarity with the untyped lambda calculus.
 We will introduce the simply typed lambda calculus, then extending it with
 polymorphic types, and finally explain linear types.
@@ -98,7 +98,7 @@ are the rules for type abstraction and type application.
 The syntax $sigma[tau slash alpha]$ means replace each occurence of $alpha$ with $tau$ in $sigma$.
 As the reader might now be familiar with how proofs are read, we will give the
 proof tree of how the identity function can be constructed and applied to the variable $y$ with
-monomorphic type $A$. We assume that $y : A in Gamma$. 
+monomorphic type $A$. We assume that $y : A in Gamma$.
 
 
 #let id_proof = prooftree(
@@ -113,7 +113,10 @@ monomorphic type $A$. We assume that $y : A in Gamma$.
 #let metaid = math.bold[id]
 #let id_app_proof = prooftree(rule(
   $Gamma tack #metaid\[A] space y : A$,
-  rule($Gamma tack #metaid\[A] : A -> A$, rule($Gamma tack #metaid : forall alpha. alpha -> alpha$, $$)),
+  rule($Gamma tack #metaid\[A] : A -> A$, rule(
+    $Gamma tack #metaid : forall alpha. alpha -> alpha$,
+    $$,
+  )),
   rule($Gamma tack y : A$, $y : A in Gamma$),
 ))
 
@@ -123,6 +126,24 @@ We will use the meta symbol $#metaid$ to refer to the identity function in @id_p
 
 #figure(caption: [Applying the identity function], flex(id_app_proof))
 
-=== Linear types (Substructural) <LinearTypes>
+=== Linear types <LinearTypes>
+
+The core idea of a linear type system is that variables must be used _exactly
+once_. This means the typing relation $Gamma tack e : sigma$ no longer only
+requires that the set of variables in $e$ are a subset of $Gamma$, but rather
+that the set of variables in $e$ is $Gamma$.
+
+This means the typing rule App in @stlc_typing is no longer valid. In a linear type system App would be:
+
+#let linear_app = prooftree(rule(
+  $Gamma, Delta tack e_1 e_2 : tau$,
+  $Gamma tack e_1 : sigma lollipop tau$,
+  $Delta tack e_2 : sigma$,
+))
+
+#figure(caption: [Application rule in a linear type system], flex(linear_app))
+
+The arrow $lollipop$ is called lollipop and is used to differentiate between
+linear and non-linear terms.
 
 === Polarised linear logic <PolarisedLinearLogic> #todo[Move this to 3.0]
