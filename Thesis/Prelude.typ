@@ -111,25 +111,14 @@
 
 #let green_text(txt) = text(fill: rgb(0, 125, 0, 255))[#txt]
 
-#let judge(above, below, note: "", display_note: false) = {
-  let old = false
-  if old {
-    if note == "" or not display_note {
-      $#above / #below$
-    } else {
-      $#above / #below$
-      $space$
-      text(size: 10pt, emph(note))
-    }
-  } else {
+#let judge(above, below, note: "") = {
     let tree = rule(
-      name: if note != "" and display_note { [#space #note] } else { none },
+      name: if note != "" { [#" " _#[#note]_] } else { none },
       below,
       above,
     )
     set text(size: 0.9em)
     prooftree(tree)
-  }
 }
 
 #let tack = { $space tack$ }
