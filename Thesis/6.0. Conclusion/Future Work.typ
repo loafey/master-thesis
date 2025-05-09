@@ -99,7 +99,7 @@ fibbonacci.
 
 By imagining some more syntax, we could simplify this even further!
 If we were to introduce some sugar, for example a `?` operator,
-which could simplify a term such as `let !n1 = n; let !n2 = n; k(n1 + n2)`
+which could simplify a term such as `let a b = n; let !n1 = a; let !n2 = b; k(n1 + n2)`
 into: `k(n? + n?)`.
 Rewriting fibbonacci with this operator could result in something like this instead:
 ```hs
