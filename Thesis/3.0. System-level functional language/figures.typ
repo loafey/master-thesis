@@ -81,13 +81,11 @@
       #judge(
         $Gamma tack t: A quad Delta tack u: B$,
         $Gamma, Delta tack (t,u): A times.circle B$,
-        display_note: toggle,
         note: "pair",
       )],
     [#judge(
         $dot, x: A tack c$,
         $dot tack lambda x. c : not A$,
-        display_note: toggle,
         note: "linear closure",
       )
     ],
@@ -95,28 +93,24 @@
     [#judge(
         $dot, x: A tack c$,
         $dot tack lambda x. c : *A$,
-        display_note: toggle,
         note: "static closure",
       )
     ],
     [#judge(
         $dot, x: A tack c$,
         $dot tack lambda^~x. c: ~A$,
-        display_note: toggle,
         note: "stack closure",
       )],
 
     [#judge(
         $Gamma tack t: A$,
         $Gamma tack square t: square A$,
-        display_note: toggle,
         note: "linear pointer",
       )
     ],
     [#judge(
         $x: A in Gamma$,
         $Gamma tack x: A$,
-        display_note: toggle,
         note: "var",
       )
     ],
@@ -125,7 +119,6 @@
       #judge(
         $$,
         $tack "newstack": circle$,
-        display_note: toggle,
         note: "newstack",
       )
     ],
@@ -133,7 +126,6 @@
       #judge(
         $Gamma tack t: A$,
         $Gamma tack "inl" t: A plus.circle B$,
-        display_note: toggle,
         note: "inj",
       )
     ],
@@ -142,7 +134,6 @@
       #judge(
         $Gamma tack t: B$,
         $Gamma tack "inr" t: A plus.circle B$,
-        display_note: toggle,
         note: "inj",
       )
     ],
@@ -150,13 +141,12 @@
       #judge(
         $Gamma, alpha tack t: A$,
         $Gamma tack angled(A, t): exists alpha. A$,
-        display_note: toggle,
         note: $exists #math.italic[intro]$,
       )
     ],
 
     [
-      #judge("", $dot tack () : top$, display_note: toggle, note: "unit")
+      #judge("", $dot tack () : top$, note: "unit")
     ],
   )
 }
@@ -171,7 +161,6 @@
         $Gamma tack t: A$,
         $Gamma, z: ~A tack "call"^~ z(t)$,
         note: $#math.italic[call]^~$,
-        display_note: toggle,
       )
     ],
     [
@@ -179,7 +168,6 @@
         $Gamma tack t: A$,
         $Gamma, z: *A tack "call"^* z(t)$,
         note: $#math.italic[call]^*$,
-        display_note: toggle,
       )
     ],
 
@@ -188,7 +176,6 @@
         $Gamma tack t: A$,
         $Gamma, z: not A tack "call"^not z(t)$,
         note: $#math.italic[call]^not$,
-        display_note: toggle,
       )
     ],
     [
@@ -196,7 +183,6 @@
         $Gamma tack c$,
         $Gamma, z: circle tack "freestack" z; c$,
         note: "freestack",
-        display_note: toggle,
       )
     ],
 
@@ -205,7 +191,6 @@
         $Gamma, a: A, b: B tack c$,
         $Gamma, z: A times.circle B tack "let" a,b = z; c$,
         note: "pair",
-        display_note: toggle,
       )
     ],
     [
@@ -213,7 +198,6 @@
         $Gamma, alpha, x: A tack c$,
         $Gamma, z: exists alpha. A tack "let" angled(alpha, x) = z; c$,
         note: $exists #math.italic[elim]$,
-        display_note: toggle,
       )
     ],
 
@@ -222,7 +206,6 @@
         $Gamma, x: A tack c$,
         $Gamma, z: square A tack "let" square x = z; c$,
         note: "follow",
-        display_note: toggle,
       )
     ],
     [
@@ -230,7 +213,6 @@
         $Gamma tack c$,
         $Gamma, z: top tack "let" () = z; c$,
         note: "discard",
-        display_note: toggle,
       )
     ],
 
@@ -239,7 +221,6 @@
         $Gamma, x: A_i tack c_i$,
         $Gamma, z: A_1 plus.circle A_2 tack "case" z "of" "inj"_i x_i |-> c_i$,
         note: "case",
-        display_note: toggle,
       )
     ],
   )
@@ -252,60 +233,53 @@
 }
 
 #let product_dynamic = {
-  // prooftree(
-  //   rule(
-  //     $A times.circle B: omega$,
-  //     $A: n$,
-  //     $B: omega$,
-  //   ),
-  // )
-  judge($A: n quad B: omega$, $A times.circle B: omega$)
+  judge($A: n quad B: omega$, $A times.circle B: omega$, note: [product])
 }
 
 #let product_constant = {
-  judge($A: n quad B:m$, $A times.circle B: n + m$)
+  judge($A: n quad B:m$, $A times.circle B: n + m$, note: [product])
 }
 
 #let sum_dynamic = {
-  judge($A: omega quad B: omega$, $A plus.circle B: omega$)
+  judge($A: omega quad B: omega$, $A plus.circle B: omega$, note: [sum])
 }
 
 #let sum_constant = {
-  judge($A:n quad B: m$, $A plus.circle B: 1 + max(n, m)$)
+  judge($A:n quad B: m$, $A plus.circle B: 1 + max(n, m)$, note: [sum])
 }
 
 #let static_closure = {
-  judge($A: omega$, $*A: n$)
+  judge($A: omega$, $*A: n$, note: [static closure])
 }
 #let linear_closure = {
-  judge($A:n$, $not A: n$)
+  judge($A:n$, $not A: n$, note: [linear closure])
 }
 
 #let dynamic_closure = {
-  judge($A: n$, $~A: omega$)
+  judge($A: n$, $~A: omega$, note: [stack closure])
 }
 
 #let linear_ptr = {
-  judge($A: omega$, $square A: n$)
+  judge($A: omega$, $square A: n$, note: [linear pointer])
 }
 
 #let emptystack = {
-  judge($$, $circle: omega$)
+  judge($$, $circle: omega$, note: [empty stack])
 }
 
 #let unit = {
-  judge($$, $top: n$)
+  judge($$, $top: n$, note: [top])
 }
 
 #let existential = {
-  judge($A : alpha$, $exists x. A : alpha$)
+  judge($A : alpha$, $exists x. A : alpha$, note: [#$exists$ intro])
 }
 
 #let variable = {
-  judge($$, $x : omega$)
+  judge($$, $x : omega$, note: [type var])
 }
 
-#let bottom = { judge($$, $bot : n$) }
+#let bottom = { judge($$, $bot : n$, note: [bottom]) }
 
 #let kind_judgements(include_text) = {
   grid(
@@ -317,5 +291,4 @@
     linear_closure, linear_ptr, existential,
     variable,
   )
-  todo[Make them not-small]
 }
