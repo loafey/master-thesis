@@ -51,11 +51,11 @@ Consider a function for fibbonacci written in #ln:
 fib : *(int ⊗ ~int)
   = \(n,k) -> __eq__((n,0), \res -> case res of {
     case res of {
-        inl () -> k(0); -- false
-        inr () ->       -- true
+        inl () -> k(0); -- true
+        inr () ->       -- false
           __eq__((n,0), \res -> case res of {
-            inl () -> k(1); -- false
-            inr () ->       -- true
+            inl () -> k(1); -- true
+            inr () ->       -- false
               fib((n-1, \r1 -> fib((n-2, \r2 ->  k(r1 + r2)))))
           })
       }
