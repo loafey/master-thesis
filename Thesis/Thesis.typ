@@ -74,7 +74,7 @@ In this document there are #total-words words in total.
 #include "5.0. Usage/main.typ"
 #pagebreak()
 
-#include "6.0. Conclusion/main.typ"
+#include "6.0. Discussion/main.typ"
 #pagebreak()
 <end>
 #bibliography(title: "References", "bib.bib")

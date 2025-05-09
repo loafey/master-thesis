@@ -1,7 +1,8 @@
 #import "../Prelude.typ": todo, bigTodo
 
-= Conclusion
+= Discussion
 
 #include "Future Work.typ"
 
-== Discussion
+== Conclusion
+It stinks
