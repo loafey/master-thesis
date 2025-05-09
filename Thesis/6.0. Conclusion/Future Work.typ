@@ -49,19 +49,20 @@ Consider a function for fibbonacci written in #ln:
 
 ```hs
 fib : *(int ⊗ ~int)
-  = \(n,k) -> case n == 0 of {
-      inl unit -> let () = unit; k(0);
-      inr unit -> let () = unit;
-        case n == 1 of {
-          inl unit -> let () = unit; k(1);
-          inr unit -> let () = unit; fib((n - 1 + n - 2, k))
-        }
-    }
--- The equality operator `==` returns `inl ()` or `inr ()`,
--- depending on if the values were equal or not.
+  = \(n,k) -> __eq__((n,0), \res -> case res of {
+    case res of {
+        inl () -> k(0); -- false
+        inr () ->       -- true
+          __eq__((n,0), \res -> case res of {
+            inl () -> k(1); -- false
+            inr () ->       -- true
+              fib((n-1, \r1 -> fib((n-2, \r2 ->  k(r1 + r2)))))
+          })
+      }
+  })
 ```
 
-This function does sadly not compile, as the variable `n` is used 4 times,
+This function does not compile sadly, as the variable `n` is used 4 times,
 and due to linearity one may only use it once!
 To combat this issue we would want to introduce exponentials.
 
@@ -73,20 +74,20 @@ syntax introducing a `!` kind:
 fib : *(!int ⊗ ~int)
   = \(n,k) ->
     let !n1 = n;
-    case n1 == 0 of {
-      inl unit -> let () = unit; k(0);
-      inr unit -> let () = unit;
+    __eq__((n1, 0), \res -> case res of {
+      inl () -> k(0);
+      inr () ->
         let !n2 = n;
-        case n2 == 1 of {
-          inl unit -> let () = unit; k(1);
-          inr unit -> let () = unit;
+        __eq__((n2, 1), \res -> {
+          inl () -> k(1);
+          inr () ->
             let !n3 = n;
             let !n4 = n;
             fib((n3 - 1, \r1 ->
             fib((n4 - 2, \r2 ->
             k(r1 + r2)))))
-        }
-    }
+        })
+    })
 ```
 As can be seen here, we can now re-use `n`, allowing us to actually write
 fibbonacci.

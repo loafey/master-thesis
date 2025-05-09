@@ -199,7 +199,11 @@
   [whu],
   [$#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
     = #box(
-      code_box($"if iszero"(r_1)$, $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$, $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$),
+      code_box(
+        $"if iszero"(r_1)$,
+        $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$,
+        $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$,
+      ),
     )$
     #v(10pt)
   ],
