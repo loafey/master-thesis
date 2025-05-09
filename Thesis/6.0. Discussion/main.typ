@@ -2,7 +2,7 @@
 = Discussion
 
 #include "Future Work.typ"
-
+#pagebreak()
 == Conclusion
 The goal of this thesis was to present a system-level functional language
 with linear types. The language, #ln, currently does not implement
@@ -15,3 +15,13 @@ all the requirements we set out in @Background, specifically:
   ],
 )
 #ln currently does expose many primitives for interacting with the the memory
+nor does it expose any way to write assembly. The later could probably
+be skipped and it would most likely suffice to implement FFI
+and adding syntax for system calls.
+
+The compiler we have implemented adheres to the specification presented
+in this thesis, at least at the time of writing. As previously mentioned
+the ABI might be changed in the future, for instance if the calling convention
+is optimized etc.
+
+#pagebreak()
