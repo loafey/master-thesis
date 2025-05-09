@@ -1,6 +1,9 @@
 #import "Prelude.typ": *
 #import "@preview/hydra:0.6.1": hydra
 
+#set text(fill: white, stroke: 0.2pt + white)
+#set page(background: rect(fill: black, width: 100%, height: 100%))
+
 #let in-outline = state("in-outline", false)
 #show outline: it => {
   in-outline.update(true)
