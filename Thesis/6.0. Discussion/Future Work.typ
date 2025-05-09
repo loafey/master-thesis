@@ -5,8 +5,8 @@
 As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
-// === Utilizing linearity fully
-// While #ln is a linear language it currently does
+=== Utilizing linearity fully
+While #ln is a linear language it currently does
 
 === Register allocation
 When optimizing the generated code, one important technique is
@@ -137,7 +137,7 @@ such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
 
 === Using #ln as a compilation target
-While just writing #ln on its own would be nice, a good benchmark
+While just writing #ln on its own works, a good benchmark
 and milestone of the languages capability would be another language using #ln
 as a compilation target.
 
