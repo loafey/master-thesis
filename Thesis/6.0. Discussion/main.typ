@@ -21,7 +21,7 @@ and adding syntax for system calls.
 
 The compiler we have implemented adheres to the specification presented
 in this thesis, at least at the time of writing. As previously mentioned
-the ABI might be changed in the future, for instance if the calling convention
-is optimized etc.
+the ABI might be changed in the future, for example if the calling convention
+is optimized.
 
 #pagebreak()
