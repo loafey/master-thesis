@@ -56,5 +56,5 @@ which are of critical importance in system-level programming.
 In linear logic, the uses of weakening and contraction are carefully controlled, which in
 a programming language setting means variables must be used exactly once.
 
-This thesis describes System-level functional language, the compilation scheme
+This thesis describes #ln, the compilation scheme
 for #ln, and the implementation of the compiler.
