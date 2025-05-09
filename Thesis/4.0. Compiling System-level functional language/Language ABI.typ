@@ -14,6 +14,9 @@ This stack usage is similar in nature to the JVM#todo[source] or
 WebAssembly #todo[source :)], which also makes heavy use of stacks
 and virtual registers stored on the system stack.
 
+It is worth to noting that this specification is not final, as it is with
+most languages, and may be subject to change in the future if need be!
+
 === Function calls
 When functions are called there are requirements regarding these stacks that must be fulfilled:
 #indent(12)[
