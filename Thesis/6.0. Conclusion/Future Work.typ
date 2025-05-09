@@ -56,7 +56,8 @@ fib : *(int ⊗ ~int)
           __eq__((n,0), \res -> case res of {
             inl () -> k(1); -- true
             inr () ->       -- false
-              fib((n-1, \r1 -> fib((n-2, \r2 ->  k(r1 + r2)))))
+              fib((n-1, \r1 ->
+              fib((n-2, \r2 -> k(r1 + r2)))))
           })
       }
   })
@@ -70,25 +71,29 @@ Exponentionals would let a user reuse a value multiple times opening up
 for some much needed expressiveness. Take fibbonacci again with some imagitive
 syntax introducing a `!` kind:
 
-```hs
-fib : *(!int ⊗ ~int)
-  = \(n,k) ->
-    let !n1 = n;
-    __eq__((n1, 0), \res -> case res of {
-      inl () -> k(0);
-      inr () ->
-        let !n2 = n;
-        __eq__((n2, 1), \res -> {
-          inl () -> k(1);
+#block(
+  breakable: false,
+  ```hs
+  fib : *(!int ⊗ ~int)
+    = \(n,k) ->
+        let n + zc = n; let !zc = zc;
+        __eq__((zc, 0), \res -> case res of {
+          inl () -> k(0);
           inr () ->
-            let !n3 = n;
-            let !n4 = n;
-            fib((n3 - 1, \r1 ->
-            fib((n4 - 2, \r2 ->
-            k(r1 + r2)))))
+            let n + oc = n; let !oc = oc;
+            __eq__((oc, 1), \res -> {
+              inl () -> k(1);
+              inr () ->
+                let n + n' = n;
+                let !n3 = n;
+                let !n4 = n';
+                fib((n3 - 1, \r1 ->
+                fib((n4 - 2, \r2 ->
+                k(r1 + r2)))))
+            })
         })
-    })
-```
+  ```,
+)
 As can be seen here, we can now re-use `n`, allowing us to actually write
 fibbonacci.
 
@@ -101,11 +106,11 @@ Rewriting fibbonacci with this operator could result in something like this inst
 fib : *(!int ⊗ ~int)
   = \(n,k) ->
     case n? == 0 of {
-      inl unit -> let () = unit; k(0);
-      inr unit -> let () = unit;
+      inl () -> k(0);
+      inr () ->
         case n? == 1 of {
-          inl unit -> let () = unit; k(1);
-          inr unit -> let () = unit;
+          inl () -> k(1);
+          inr () ->
             fib((n? - 1, \r1 ->
             fib((n? - 2, \r2 ->
             k(r1 + r2)))))
