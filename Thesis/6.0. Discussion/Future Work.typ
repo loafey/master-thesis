@@ -5,8 +5,6 @@
 As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
-=== Utilizing linearity fully
-While #ln is a linear language it currently does
 
 === Register allocation
 When optimizing the generated code, one important technique is
@@ -132,9 +130,30 @@ types with named fields or constructors would be
 useful for more complex types. It would also be required for recursive
 types such as linked lists, which are currently not representable.
 
-It would also be beneficial to have access to contiguous data types
+It would also be beaneficial to have access to contiguous data types
 such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
+
+=== Utilizing linearity for optimizations
+In other immutable languages such as Haskell, data is copied when
+you operate on it. Take this function for example: ```asm
+plus1 :: [Int] -> [Int]
+plus1 xs = map (+1) xs
+```
+In Haskell any list you input into this function will be duplicatted, returning
+a new list while keeping the original, in case you need it for whatever reason.
+If not, it will be garbage collected at the next collection pass.
+
+In a linear language the original list would no longer be usable, and this opens up
+room for optimizations. Instead of duplicating and mutating the list,
+a linear language could just immediately mutate the original in place.
+
+As long as the size of the type contained by the list is not changed, a
+function such as map can simply mutate the content, and thus remove the original data.
+This can potentially lead to major removal of overhead in programs where data is
+pipelined in such a way where there is not a lot of duplication needed.#todo[stanky]
+As #ln does not currently have any data-types outside of basic sum- and product-types
+this has not been implemented.
 
 === Using #ln as a compilation target
 While just writing #ln on its own works, a good benchmark
