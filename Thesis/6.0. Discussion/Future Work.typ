@@ -1,7 +1,7 @@
 #import "../Prelude.typ": *
 
 
-== Future Work
+== Future Work<FutureWork>
 As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
