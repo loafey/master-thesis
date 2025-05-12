@@ -6,37 +6,22 @@
 At this stage #ln is still a logic language. How do we bridge the gap between logic and machine?
 This section goes into the necessary transformations to turn #ln into machine code.
 
-There are three constructs in the language where it is not immediately obvious
-how they can be represented as machine code. The first of which is the linear closure ($not$).
-Remember the kind rule: #flex(linear_closure)
-
-#ln consts of three steps, the conversion steps convert higher-level features
-to lower level. Stack selection ensures that each function consist of at most
-one stack.
-
-- Linear closure conversion
-- Stack selection
-- Pointer closure conversion
+#ln consists of three intermediate steps; linear closure conversion, stack
+selection, and pointer closure conversion. The first step eliminates linear
+closures, the second step ensures that each closure contains a stack to execute
+on, and the third transformation, pointer closure conversion, replaces each
+stack closure by an explicit pair of static closure and environment.
 
 === Linear closure converison
 
-The goal of the linear closure converion phase is to convert $not$
-
+Remember the kind for the linear closure: ($(A : n) / (not A: n)$). As neither
+$A$ or $not A$ are stacks we have to introduce a stack somewhere. We can
+introduce a stack by converting it into a stack closure ($(A :n) / (~
+A : omega) $). This changes the kind of the type from $n$ to $omega$. 
+This is solved by introducing the linear pointer ($(A: omega) / (square A : n)$).
+The type $not A$ is thus converted to $square (~A)$.
+Similarily, values are transformed in the following manner:
 $(lambda^not x. c): not A => square (lambda^~ x. c): square (~A)$
-
-$not$ is a source language construct only
-
-After linear closure conversion we end up with:
-$
-  square lambda a. & "let" f,k = a; \
-  &"let" square k' = k; \
-  & k'(square lambda y. "let" square f' = f; f'(y))
-$
-
-After converting the type we end up with: $square ~(square ~ int times.circle square~square~int)$
-
-//The astute reader will now realize that $not$ is a source language construct only. There is no compilation scheme that corresponds to it.
-
 
 === Stack Selection
 
