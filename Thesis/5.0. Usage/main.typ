@@ -17,34 +17,36 @@ it reuses variables:
     $F_1 = 1$,
   ),
 )
-The following is three different implementions, one in Lithium, a recursive one in C,
-and a looping one in C.
+The following is two different implementions, one in Lithium,
+and a recursive one in C. /*, and a recursive one in Haskell, as to compare it against
+                          a mature functional programming language:*/
 #fancyTable(
-  columns: (1fr, 1.2fr),
-  table.cell(colspan: 2, [A #ln verison:]),
+  columns: (1.2fr, 1fr),
+  [A #ln verison:],
+  [A recursive version made in C:],
   table.cell(
-    colspan: 2,
+    colspan: 1,
     ```haskell
-    fib : *(int ⊗ ~int)
-      = \n,k ->
-          n,n' <- __dup__(n); is_zero <- __eq__(n', 0);
-          case is_zero of {
+    fib : *(int ⊗ ~int) = \n,k ->
+      n,n' <- __dup__(n);
+      is_zero <- __eq__(n', 0);
+      case is_zero of {
+        inl () ->
+          n,n' <- __dup__(n);
+          is_one <- __eq__(n', 1);
+          case is_one of {
             inl () ->
-              n,n' <- __dup__(n); is_one <- __eq__(n', 1);
-              case is_one of {
-                inl () ->
-                  n,m <- __dup__(n);
-                  n <- fib(n-1); m <- fib(m-2);
-                  k(n+m);
-                inr () -> k(n);
-              };
+              n,m <- __dup__(n);
+              n <- fib(n-1);
+              m <- fib(m-2);
+              k(n+m);
             inr () -> k(n);
           };
+        inr () -> k(n);
+      };
     ```,
   ),
 
-  [A recursive version made in C:],
-  [A looping version made in C:],
   ```c
   long fib(long n) {
     long m = n;
@@ -56,19 +58,15 @@ and a looping one in C.
     return a + b;
   }
   ```,
-
-  ```c
-  long fib(long fib) {
-    long x = 0;
-    long y = 1;
-    for (int i = 0; i < fib; i++) {
-      long tmp = y;
-      y = y + x;
-      x = tmp;
-    }
-    return y;
-  }
-  ```,
+  // table.cell(colspan: 2, [Haskell]),
+  // table.cell(
+  //   colspan: 2,
+  //   ```haskell
+  //   fib :: Int -> Int
+  //   fib 0 = 0
+  //   fib 1 = 1
+  //   fib n = fib (n - 1) + fib (n - 2)
+  //   ```,
 )
 
 
@@ -77,38 +75,23 @@ and a looping one in C.
 #import "@preview/cetz-plot:0.1.1": plot, chart
 
 #let lithiumResults = csv("benches/Lithium.csv")
-#let cGoodO3 = csv("benches/C Good O3.csv")
-#let cGoodO0 = csv("benches/C Good O0.csv")
 #let cBad03 = csv("benches/C Bad O3.csv")
 #let cBadO0 = csv("benches/C Bad O0.csv")
+
 #let style = (stroke: black, fill: rgb(0, 0, 200, 75))
 #let m = 1000;
-#let fn = (
-  // ("Lithium Min", x => float(lithiumResults.at(calc.floor(x + 1)).at(1)) * m),
-  // ("Lithium Max", x => float(lithiumResults.at(calc.floor(x + 1)).at(2)) * m),
-  ("Lithium - Avg", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * m),
-  // ("cBad03 Min", x => float(cBad03.at(calc.floor(x + 1)).at(1)) * m),
-  // ("cBad03 Max", x => float(cBad03.at(calc.floor(x + 1)).at(2)) * m),
-  ("C, Recursive, O3 - Avg", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * m),
-  // ("cBadO0 Min", x => float(cBadO0.at(calc.floor(x + 1)).at(1)) * m),
-  // ("cBadO0 Max", x => float(cBadO0.at(calc.floor(x + 1)).at(2)) * m),
-  ("C, Recursive, O0 - Avg", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * m),
-  // ("cGoodO3 Min", x => float(cGoodO3.at(calc.floor(x + 1)).at(1)) * m),
-  // ("cGoodO3 Max", x => float(cGoodO3.at(calc.floor(x + 1)).at(2)) * m),
-  ("C, Loop, O3 - Avg", x => float(cGoodO3.at(calc.floor(x + 1)).at(3)) * m),
-  // ("cGoodO0 Min", x => float(cGoodO0.at(calc.floor(x + 1)).at(1)) * m),
-  // ("cGoodO0 Max", x => float(cGoodO0.at(calc.floor(x + 1)).at(2)) * m),
-  ("C, Loop, O0 - Avg", x => float(cGoodO0.at(calc.floor(x + 1)).at(3)) * m),
+#let fn1 = (
+  ("Lithium", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * m),
+  ("C O0", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * m),
+  ("C O3", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * m),
 )
-// #fn.at(0).at(1)(6)
 #figure(
   caption: [
-    Benchmark comparing the time needed to calculate the
-    fibbonaci numbers 30 to 40 in the three different
-    implementions. The C tests were compiled using GCC using O0 and O3.
+    Benchmark comparing the average time needed to calculate the
+    fibbonaci numbers 30 to 40 in the two different
+    implementions. Each number was ran and timed 100 times.
     Time is measured in milliseconds.
-    Observer that there is no noticeable difference between the optimized
-    and unoptimized loop version.
+    The C version was compiled using GCC using O0 and O3.
   ],
   canvas({
     import draw: *
@@ -130,7 +113,7 @@ and a looping one in C.
       {
         let domain = (30, 40)
 
-        for (title, f) in fn {
+        for (title, f) in fn1 {
           plot.add(f, domain: domain, label: title)
         }
       },
@@ -139,13 +122,59 @@ and a looping one in C.
 )<fibbo-benchmarks>
 
 As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
-large gap between the version written in #ln and the two version written in C.
+large gap between the version written in #ln and the version written in C.
+
 
 This can be attributed to several factors but the two most significant ones
-are most likely that #ln is currently not optimized at all, and that
-#ln does a lot more functions calls compared to the C implementations, and its calling
+are most likely that #ln is currently not optimized at all, and its calling
 convention is heavier compared to System V#todo[source].
+Also worth to note that this is not the most performant implemention you can create in
+C. A version using looping and some basic memoization is much more performant.
 
-#bigTodo[program]
-#bigTodo[program-c]
-#bigTodo[program-c-benchmark]
+// #let haskellO0 = csv("benches/Haskell O0.csv")
+// #let haskellO2 = csv("benches/Haskell O2.csv")
+// #let fn2 = (
+//   ("Lithium", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * m),
+//   ("Haskell O0", x => float(haskellO0.at(calc.floor(x + 1)).at(3)) * m),
+//   ("Haskell O2", x => float(haskellO2.at(calc.floor(x + 1)).at(3)) * m),
+// )
+// #figure(
+//   caption: [
+//     Benchmark comparing the average time needed to calculate the
+//     fibbonaci numbers 30 to 40 in the two different
+//     implementions. Each number was ran and timed 100 times.
+//     Time is measured in milliseconds.
+//     The Haskell version was compiled with GHC using O0 and O2.
+//   ],
+//   canvas({
+//     import draw: *
+
+//     // Set-up a thin axis style
+//     set-style(
+//       axes: (stroke: .2pt, tick: (stroke: .2pt)),
+//       legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
+//     )
+
+//     plot.plot(
+//       size: (12, 8),
+//       x-tick-step: 1,
+//       y-tick-step: m,
+//       y-min: 0,
+//       y-max: m * 8,
+//       axis-style: "left",
+//       legend: "inner-north",
+//       {
+//         let domain = (30, 40)
+
+//         for (title, f) in fn2 {
+//           plot.add(f, domain: domain, label: title)
+//         }
+//       },
+//     )
+//   }),
+// )
+
+// As is to be expected, the Haskell version falls far behind both, but
+// as with the C version, this is not the most optional way to write fibbonaci in Haskell,
+// nor is it the best benchmark as it is a heavier language relying upon an entire runtime.
+// It is presented here as an interesting sidenote, nothing more.
