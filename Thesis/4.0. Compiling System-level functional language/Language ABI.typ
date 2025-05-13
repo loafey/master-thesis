@@ -57,7 +57,7 @@ As the time of writing, #ln does not contain that many different types,
 and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
 Important to note that both the system stack, and any stacks which are created
-dynamically grow downwards.
+dynamically, grow downwards.
 
 Memory wise, the simplest here are function pointers and stack pointers.
 Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
