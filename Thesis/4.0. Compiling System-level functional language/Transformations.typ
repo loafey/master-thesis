@@ -37,6 +37,7 @@ $
   &"let" square f' = f; \
   & k'(square lambda y. f'(y))
 $
+#todo[This section and example should be rewritten or cleaned up]
 
 Now the inner closure contains a stack.
 
