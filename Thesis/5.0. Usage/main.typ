@@ -38,52 +38,59 @@ And once again written in C but in a way that utilizes the language in a better 
 #let cBad03 = csv("benches/C Bad O3.csv")
 #let cBadO0 = csv("benches/C Bad O0.csv")
 #let style = (stroke: black, fill: rgb(0, 0, 200, 75))
+#let m = 1000;
 #let fn = (
-  ("Lithium Min", x => float(lithiumResults.at(calc.floor(x + 1)).at(1)) * 1000),
-  ("Lithium Max", x => float(lithiumResults.at(calc.floor(x + 1)).at(2)) * 1000),
-  ("Lithium Avg", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * 1000),
-  ("cGoodO3 Min", x => float(cGoodO3.at(calc.floor(x + 1)).at(1)) * 1000),
-  ("cGoodO3 Max", x => float(cGoodO3.at(calc.floor(x + 1)).at(2)) * 1000),
-  ("cGoodO3 Avg", x => float(cGoodO3.at(calc.floor(x + 1)).at(3)) * 1000),
-  ("cGoodO0 Min", x => float(cGoodO0.at(calc.floor(x + 1)).at(1)) * 1000),
-  ("cGoodO0 Max", x => float(cGoodO0.at(calc.floor(x + 1)).at(2)) * 1000),
-  ("cGoodO0 Avg", x => float(cGoodO0.at(calc.floor(x + 1)).at(3)) * 1000),
-  ("cBad03 Min", x => float(cBad03.at(calc.floor(x + 1)).at(1)) * 1000),
-  ("cBad03 Max", x => float(cBad03.at(calc.floor(x + 1)).at(2)) * 1000),
-  ("cBad03 Avg", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * 1000),
-  ("cBadO0 Min", x => float(cBadO0.at(calc.floor(x + 1)).at(1)) * 1000),
-  ("cBadO0 Max", x => float(cBadO0.at(calc.floor(x + 1)).at(2)) * 1000),
-  ("cBadO0 Avg", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * 1000),
+  // ("Lithium Min", x => float(lithiumResults.at(calc.floor(x + 1)).at(1)) * m),
+  // ("Lithium Max", x => float(lithiumResults.at(calc.floor(x + 1)).at(2)) * m),
+  ("Lithium - Avg", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * m),
+  // ("cBad03 Min", x => float(cBad03.at(calc.floor(x + 1)).at(1)) * m),
+  // ("cBad03 Max", x => float(cBad03.at(calc.floor(x + 1)).at(2)) * m),
+  ("C, Recursive, O3 - Avg", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * m),
+  // ("cBadO0 Min", x => float(cBadO0.at(calc.floor(x + 1)).at(1)) * m),
+  // ("cBadO0 Max", x => float(cBadO0.at(calc.floor(x + 1)).at(2)) * m),
+  ("C, Recursive, O0 - Avg", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * m),
+  // ("cGoodO3 Min", x => float(cGoodO3.at(calc.floor(x + 1)).at(1)) * m),
+  // ("cGoodO3 Max", x => float(cGoodO3.at(calc.floor(x + 1)).at(2)) * m),
+  ("C, Loop, O3 - Avg", x => float(cGoodO3.at(calc.floor(x + 1)).at(3)) * m),
+  // ("cGoodO0 Min", x => float(cGoodO0.at(calc.floor(x + 1)).at(1)) * m),
+  // ("cGoodO0 Max", x => float(cGoodO0.at(calc.floor(x + 1)).at(2)) * m),
+  ("C, Loop, O0 - Avg", x => float(cGoodO0.at(calc.floor(x + 1)).at(3)) * m),
 )
-#for i in range(0, 5) { [#fn.at(0).at(1)(i)\ ] }
 // #fn.at(0).at(1)(6)
-// uo
-#canvas({
-  import draw: *
+#figure(
+  caption: [
+    Benchmark comparing the time needed to calculate the
+    fibbonaci numbers 30 to 40 in the three different
+    implementions. The C tests were compiled using GCC using O0 and O3.
+    Time is measured in milliseconds.
+  ],
+  canvas({
+    import draw: *
 
-  // Set-up a thin axis style
-  set-style(
-    axes: (stroke: .5pt, tick: (stroke: .5pt)),
-    legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 80%),
-  )
+    // Set-up a thin axis style
+    set-style(
+      axes: (stroke: .2pt, tick: (stroke: .2pt)),
+      legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
+    )
 
-  plot.plot(
-    size: (12, 8),
-    x-tick-step: 5,
-    // x-format: plot.formats.multiple-of,
-    y-tick-step: 1000,
-    y-min: 0,
-    y-max: 9000,
-    legend: "inner-north",
-    {
-      let domain = (30, 40)
+    plot.plot(
+      size: (12, 8),
+      x-tick-step: 1,
+      y-tick-step: m,
+      y-min: 0,
+      y-max: m * 8,
+      axis-style: "left",
+      legend: "inner-north",
+      {
+        let domain = (30, 40)
 
-      for (title, f) in fn {
-        plot.add(f, domain: domain, label: title)
-      }
-    },
-  )
-})
+        for (title, f) in fn {
+          plot.add(f, domain: domain, label: title)
+        }
+      },
+    )
+  }),
+)
 
 #bigTodo[fibbo-benchmark]
 As can be seen in these benchmarks there is quite a large gap between the version
