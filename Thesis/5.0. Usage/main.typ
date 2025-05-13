@@ -17,15 +17,59 @@ it reuses variables:
     $F_1 = 1$,
   ),
 )
+The following is three different implementions, one in Lithium, a recursive one in C,
+and a looping one in C.
+#fancyTable(
+  columns: (1fr, 1.2fr),
+  table.cell(colspan: 2, [A #ln verison:]),
+  table.cell(
+    colspan: 2,
+    ```haskell
+    fib : *(int ⊗ ~int)
+      = \n,k ->
+          n,n' <- __dup__(n); is_zero <- __eq__(n', 0);
+          case is_zero of {
+            inl () ->
+              n,n' <- __dup__(n); is_one <- __eq__(n', 1);
+              case is_one of {
+                inl () ->
+                  n,m <- __dup__(n);
+                  n <- fib(n-1); m <- fib(m-2);
+                  k(n+m);
+                inr () -> k(n);
+              };
+            inr () -> k(n);
+          };
+    ```,
+  ),
 
-#bigTodo[fibbo]
-And the same program rewritten in C:
+  [A recursive version made in C:],
+  [A looping version made in C:],
+  ```c
+  long fib(long n) {
+    long m = n;
+    if (m == 0 || m == 1) {
+      return m;
+    }
+    long a = fib(n - 1);
+    long b = fib(n - 2);
+    return a + b;
+  }
+  ```,
 
-#bigTodo[fibbo-c]
-
-And once again written in C but in a way that utilizes the language in a better manner:
-
-#bigTodo[fibbo-c-but-good]
+  ```c
+  long fib(long fib) {
+    long x = 0;
+    long y = 1;
+    for (int i = 0; i < fib; i++) {
+      long tmp = y;
+      y = y + x;
+      x = tmp;
+    }
+    return y;
+  }
+  ```,
+)
 
 
 === Benchmarks
@@ -63,6 +107,8 @@ And once again written in C but in a way that utilizes the language in a better 
     fibbonaci numbers 30 to 40 in the three different
     implementions. The C tests were compiled using GCC using O0 and O3.
     Time is measured in milliseconds.
+    Observer that there is no noticeable difference between the optimized
+    and unoptimized loop version.
   ],
   canvas({
     import draw: *
@@ -90,11 +136,10 @@ And once again written in C but in a way that utilizes the language in a better 
       },
     )
   }),
-)
+)<fibbo-benchmarks>
 
-#bigTodo[fibbo-benchmark]
-As can be seen in these benchmarks there is quite a large gap between the version
-written in #ln and the two version written in C.
+As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
+large gap between the version written in #ln and the two version written in C.
 
 This can be attributed to several factors but the two most significant ones
 are most likely that #ln is currently not optimized at all, and that
