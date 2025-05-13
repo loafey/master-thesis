@@ -29,6 +29,6 @@ as outlined in @FutureWork, nor have they been specified in the ABI.
 We have however implemented a base which can
 be further extended upon to implement these missing features.
 
-so long bowser
+// so long bowser
 
 #pagebreak()
