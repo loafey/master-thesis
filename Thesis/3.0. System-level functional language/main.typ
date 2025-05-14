@@ -5,19 +5,15 @@
 = #ln <SlflChapter>
 
 
-// System-Level Functional Language (#languageName) is meant to be an intermediate compilation target for linearly typed functional programming languages. Popular compilation targets today are LLVM, Cranelift, C, and compiling to assembly languages directly.
-// Although the aforementioned alternatives are all viable, for a functional programming language several transformations have to be made. For instance, most functional programming languages have closures.
-
-// #languageName consists of two fragments; positive and negative. The positive fragment describes how terms are created, while the negative fragment describes how terms are consumed.
-// Two kinds, known size ($n,m$) and stack size $omega$.
-// Continuation-passing style.
-
 The intended use of #ln is as a compiler intermediate representation for
-functional languages, similar to that of GHC Core #todo[CITE GHC CORE].
+functional languages, similar to that of GHC Core. #todo[CITE GHC CORE]
 #ln diverges from most functional language intermediate representations in
 that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
 inspiration from linear types, which is based on Girard's linear logic.
+
+An important aspect of a system-level language is having the representation of types and values be efficiently ...
+
 
 In this section we will introduce the reader to #ln.
 
@@ -98,11 +94,10 @@ evaluation order is determined by the order of the function calls.
     And in this one $"baz"(x)$ has to be evaluted first
   ],
 )
-== Types & kinds
 
-The types in #ln roughly correspond to those of polarised linear logic. In
-particular it corresponds to the positive fragment of polarised linear logic, see @PolarisedLinearLogic.
-In addition to the positive fragment of polarised linear logic, #ln also contain some other types and type constructors.
+== Kinds & types
+
+The types in #ln roughly correspond to those of polarised linear logic.
 
 #let pll_types = {
   $A, B : : = & top | bot | x | not A | A times.circle B | A plus.circle B | exists x. A | \

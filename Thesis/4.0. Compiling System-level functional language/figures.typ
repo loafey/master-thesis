@@ -171,10 +171,10 @@
 #let negative_compilation_scheme = fancyTable(
   [whu],
   $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
-  = #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
+  = #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
   [whu],
-  $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> {r_0, r_1})
-  = #code_box($#sem[c]^n_(rho, x |-> {r_0}, y |-> {r_1})$)$,
+  $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
+  = #code_box($#sem[c]^n_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
   [Unit elimination],
   $#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
   = #code_box($#sem[c]_rho$)$,
@@ -191,7 +191,7 @@
   $#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
   = #code_box(
     meta($"let" r_1 = "next"(rho, "int")$),
-    $pop(r_1)$,
+    $pop_(r_0)(r_1)$,
     $"if" "iszero"(r_1)$,
     $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
     $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
