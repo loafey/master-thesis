@@ -84,63 +84,74 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
   ("C O0", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * m),
   ("C O3", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * m),
 )
+// #figure(
+//   caption: [
+//     Benchmark comparing the average time needed to calculate the
+//     fibbonaci numbers 30 to 40 in the two different
+//     implementions. Each number was ran and timed 100 times.
+//     Time is measured in milliseconds.
+//     The C version was compiled using GCC using O0 and O3.
+//   ],
+//   stack(
+//     canvas({
+//       import draw: *
+//       set-style(
+//         axes: (stroke: .2pt, tick: (stroke: .2pt)),
+//         legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
+//       )
+//       plot.plot(
+//         size: (12, 4),
+//         x-tick-step: 1,
+//         y-tick-step: m * 2,
+//         y-min: 0,
+//         y-max: m * 8,
+//         axis-style: "left",
+//         legend: "inner-north",
+//         {
+//           let domain = (30, 40)
+
+//           for (title, f) in fn1 {
+//             plot.add(f, domain: domain, label: title)
+//           }
+//         },
+//       )
+//     }),
+//   ),
+// )
+
 #figure(
   caption: [
     Benchmark comparing the average time needed to calculate the
     fibbonaci numbers 30 to 40 in the two different
     implementions. Each number was ran and timed 100 times.
-    Time is measured in milliseconds.
+    Time is measured in milliseconds, and displayed in a logarithmic manner.
     The C version was compiled using GCC using O0 and O3.
   ],
-  stack(
-    canvas({
-      import draw: *
-      set-style(
-        axes: (stroke: .2pt, tick: (stroke: .2pt)),
-        legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
-      )
-      plot.plot(
-        size: (12, 4),
-        x-tick-step: 1,
-        y-tick-step: m * 2,
-        y-min: 0,
-        y-max: m * 8,
-        axis-style: "left",
-        legend: "inner-north",
-        {
-          let domain = (30, 40)
+  [#canvas(
+      {
+        import draw: *
+        set-style(
+          axes: (stroke: .2pt, tick: (stroke: .2pt)),
+          legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
+        )
+        plot.plot(
+          y-mode: "log",
+          size: (12, 4),
+          x-tick-step: 1,
+          y-tick-step: 1,
+          y-min: 1,
+          y-max: m * 20,
+          axis-style: "left",
+          legend: "north-west",
+          {
+            let domain = (30, 40)
 
-          for (title, f) in fn1 {
-            plot.add(f, domain: domain, label: title)
-          }
-        },
-      )
-    }),
-    canvas({
-      import draw: *
-      set-style(
-        axes: (stroke: .2pt, tick: (stroke: .2pt)),
-        legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
-      )
-      plot.plot(
-        y-mode: "log",
-        size: (12, 4),
-        x-tick-step: 1,
-        y-tick-step: m * 1,
-        y-min: 1,
-        y-max: m * 500,
-        axis-style: "left",
-        legend: "inner-north",
-        {
-          let domain = (30, 40)
-
-          for (title, f) in fn1 {
-            plot.add(f, domain: domain, label: title)
-          }
-        },
-      )
-    }),
-  ),
+            for (title, f) in fn1 { plot.add(f, domain: domain, label: title) }
+          },
+        )
+      },
+    ),
+  ],
 )<fibbo-benchmarks>
 
 As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
