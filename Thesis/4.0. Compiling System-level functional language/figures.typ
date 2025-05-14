@@ -151,13 +151,13 @@
         and then push that on the stack.
       ],
       $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
-      #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$,
+      #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
     ..cell(
       [Tuple with no stack],
       [Compile the values right to left.],
-      $#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
-      #code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$,
+      $#compilation_scheme($(v_1,v_2)$)^known_(rho,sigma) =
+      #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
     ..cell(
       [Existental introduction (see #todo[add me])],
@@ -167,7 +167,7 @@
     ..cell(
       [Put a stack pointer on the current stack],
       [desc],
-      $#compilation_scheme($square v_1$)^n_rho =
+      $#compilation_scheme($square v_1$)^known_rho =
       #code_box(
         $sp = sp + 1$,
         $push_(sp)(ssp)$,
@@ -199,18 +199,18 @@
     ..cell(
       [Push variable on stack],
       [Simply pushes the a variable on the current stack.],
-      $#compilation_scheme($x$)^n_(x |-> r_0) =
+      $#compilation_scheme($x$)^known_(x |-> r_0) =
       #code_box($push_(s p)(r_0)$)$,
     ),
     ..cell(
       [Unit],
       [Nothing is done when compiling this.],
-      $#compilation_scheme($()$)^n_{} = #code_box("")$,
+      $#compilation_scheme($()$)^known_{} = #code_box("")$,
     ),
     ..cell(
       [Lambdas],
       [See @lambdaLifting for more details.],
-      $#compilation_scheme($lambda x. c$)^1_{} =
+      $#compilation_scheme($lambda x. c$)^known_{} =
       &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
@@ -248,14 +248,14 @@
     ..cell2(
       [whu],
       [if not a bee],
-      $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
-      = #code_box($#sem[c]^n_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
+      $#compilation_scheme($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
+      = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
     ),
 
     ..cell2(
       [Unit elimination],
-      [waaa],
-      $#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
+      [bzzzzzzzz],
+      $#compilation_scheme($"let" () = z^known; c$)_(rho,z |-> {})
       = #code_box($#sem[c]_rho$)$,
     ),
 
@@ -269,7 +269,7 @@
     ..cell2(
       [whu],
       [waaa],
-      $#compilation_scheme($"let" square x = z^1; c$)_(rho, z |-> {r_0})
+      $#compilation_scheme($"let" square x = z^known; c$)_(rho, z |-> {r_0})
       = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
     ),
 
@@ -296,7 +296,7 @@
     ..cell2(
       [whu],
       [waaa],
-      [$#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
+      [$#compilation_scheme($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
         = #box(
           code_box(
             $"if iszero"(r_1)$,
@@ -311,7 +311,7 @@
     ..cell2(
       [whu],
       [wooo],
-      $#compilation_scheme($"call" z^n (v)$)_(rho, z |-> {r_0}) =
+      $#compilation_scheme($"call" z^known (v)$)_(rho, z |-> {r_0}) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
     ),
   )

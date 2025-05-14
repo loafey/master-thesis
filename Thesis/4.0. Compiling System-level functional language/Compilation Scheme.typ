@@ -20,7 +20,7 @@ following operators and syntax in mind:
 
 - $#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
   for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
-  to represent either $n$ or $omega$.
+  to represent either $known$ or $omega$.
 
 - The scheme uses a mix of meta syntax, i.e, instructions that does not generate
   any code, and instructions that generate code. We differentiate meta syntax

@@ -176,3 +176,5 @@
 }
 
 #let ln = "Lithium"
+
+#let known = "\u{2776}"

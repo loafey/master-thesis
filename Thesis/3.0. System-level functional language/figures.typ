@@ -48,29 +48,25 @@
   linebreak()
 }
 
-#let complete_grammar = box(
-  inset: 7pt,
-  stroke: black,
-  [
-    _Value_
-    #values
-    #dbl_linkbreak()
-    _Command_
-    #commands
-    #dbl_linkbreak()
-    _Pattern_
-    #pat
-    #dbl_linkbreak()
-    _Type_
-    #type
-    #dbl_linkbreak()
-    _Definition_
-    #def
-    #dbl_linkbreak()
-    _Module_
-    #module
-  ],
-)
+#let complete_grammar = box(inset: 7pt, stroke: black, [
+  _Value_
+  #values
+  #dbl_linkbreak()
+  _Command_
+  #commands
+  #dbl_linkbreak()
+  _Pattern_
+  #pat
+  #dbl_linkbreak()
+  _Type_
+  #type
+  #dbl_linkbreak()
+  _Definition_
+  #def
+  #dbl_linkbreak()
+  _Module_
+  #module
+])
 
 #let positive(toggle) = {
   grid(
@@ -84,8 +80,8 @@
         note: "pair",
       )],
     [#judge(
-        $dot, x: A tack c$,
-        $dot tack lambda x. c : not A$,
+        $Gamma, x: A tack c$,
+        $Gamma tack lambda x. c : not A$,
         note: "linear closure",
       )
     ],
@@ -97,8 +93,8 @@
       )
     ],
     [#judge(
-        $dot, x: A tack c$,
-        $dot tack lambda^~x. c: ~A$,
+        $Gamma, x: A tack c$,
+        $Gamma tack lambda^~x. c: ~A$,
         note: "stack closure",
       )],
 
@@ -108,19 +104,11 @@
         note: "linear pointer",
       )
     ],
-    [#judge(
-        $x: A in Gamma$,
-        $Gamma tack x: A$,
-        note: "var",
-      )
+    [#judge($x: A in Gamma$, $Gamma tack x: A$, note: "var")
     ],
 
     [
-      #judge(
-        $$,
-        $tack "newstack": circle$,
-        note: "newstack",
-      )
+      #judge($$, $tack "newstack": circle$, note: "newstack")
     ],
     [
       #judge(
@@ -233,11 +221,11 @@
 }
 
 #let product_dynamic = {
-  judge($A: n quad B: omega$, $A times.circle B: omega$, note: [product])
+  judge($A: known quad B: omega$, $A times.circle B: omega$, note: [product])
 }
 
 #let product_constant = {
-  judge($A: n quad B:m$, $A times.circle B: n + m$, note: [product])
+  judge($A: known quad B:known$, $A times.circle B: known$, note: [product])
 }
 
 #let sum_dynamic = {
@@ -245,22 +233,22 @@
 }
 
 #let sum_constant = {
-  judge($A:n quad B: m$, $A plus.circle B: 1 + max(n, m)$, note: [sum])
+  judge($A:known quad B: known$, $A plus.circle B: known$, note: [sum])
 }
 
 #let static_closure = {
-  judge($A: omega$, $*A: n$, note: [static closure])
+  judge($A: omega$, $*A: known$, note: [static closure])
 }
 #let linear_closure = {
-  judge($A:n$, $not A: n$, note: [linear closure])
+  judge($A:known$, $not A: known$, note: [linear closure])
 }
 
 #let dynamic_closure = {
-  judge($A: n$, $~A: omega$, note: [stack closure])
+  judge($A: known$, $~A: omega$, note: [stack closure])
 }
 
 #let linear_ptr = {
-  judge($A: omega$, $square A: n$, note: [linear pointer])
+  judge($A: omega$, $square A: known$, note: [linear pointer])
 }
 
 #let emptystack = {
@@ -268,18 +256,21 @@
 }
 
 #let unit = {
-  judge($$, $top: n$, note: [top])
+  judge($$, $top: known$, note: [top])
 }
 
-#let existential = {
-  judge($A : alpha$, $exists x. A : alpha$, note: [#$exists$ intro])
+#let existential_constant = {
+  judge($A : known$, $exists alpha. A : known$, note: [#$exists$ intro])
+}
+#let existential_dynamic = {
+  judge($A : omega$, $exists alpha. A : omega$, note: [#$exists$ intro])
 }
 
-#let variable = {
-  judge($$, $x : omega$, note: [type var])
+#let type_variable = {
+  judge($$, $alpha : omega$, note: [type var])
 }
 
-#let bottom = { judge($$, $bot : n$, note: [bottom]) }
+#let bottom = { judge($$, $bot : known$, note: [bottom]) }
 
 #let kind_judgements(include_text) = {
   grid(
@@ -288,7 +279,7 @@
     emptystack, unit, bottom,
     product_dynamic, product_constant, sum_dynamic,
     sum_constant, dynamic_closure, static_closure,
-    linear_closure, linear_ptr, existential,
-    variable,
+    linear_closure, linear_ptr, existential_constant,
+    existential_dynamic, type_variable,
   )
 }
