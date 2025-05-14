@@ -1,6 +1,3 @@
-* p.11: delete: In particular it corresponds to the positive fragment of polarised linear logic
-
-
 * fix the kind system. suggestion: just 2 kinds and adapt the rules (pay attention to type variables and kind variables)
     * omega
     * ① ႑➊
