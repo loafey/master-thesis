@@ -14,21 +14,21 @@ utilizing the physical registers for variable allocation. #todo("source")
 If one were to implement this naively, it would suffice with putting the first few variables of a
 function into registers, and the rest on the system stack.
 This would however not necessarily suffice for larger functions, where one might have
-more variables than registers as it might be more efficient to store a variable
-declared later on as opposed to one declared early.
+more variables than registers because it might be more efficient to store a variable
+declared later on in a register as opposed to one declared early.
 To combat this, an efficient compiler should move variables back onto the stack
 (a process often called spilling) when they are not used, and back into registers when they are.
-Doing this efficently can prove difficult as the compiler should try to minimize
+Doing this efficently can prove difficult because the compiler should try to minimize
 the amount of spilling needed, and this has in fact been proven to be
-NP-complete #todo("source"). This was not implemented for #ln as it was
+NP-complete #todo("source"). This was not implemented for #ln because it was
 deemed an optimization, that while interesting, not something we would have the time to
 implement properly.
 
 === System Calls
-As #ln is a system-level language, it might be useful to have the ability
+Due to #ln being a system-level language, it might be useful to have the ability
 to directly make system calls to interact with the operating system.
 This allow for the possibility of not relying on, for example, LIBC,
-as the behaviour one would need from LIBC could be re-implemented
+because the behaviour one would need from LIBC could be re-implemented
 in the language. This would in theory make the language more portable,
 as it would be easier to port it to systems where LIBC might not be available.
 System calls are used under the hood in the language, but it is not something
@@ -46,7 +46,6 @@ exposed to a user of the language.
 While linearity in a programming language is useful for managing resources
 such as memory, sometimes one needs to use values more than once.
 Consider a function for fibbonacci written in #ln:
-
 ```hs
 fib : *(int ⊗ ~int)
   = \(n,k) -> __eq__((n,0), \res -> case res of {
@@ -63,7 +62,7 @@ fib : *(int ⊗ ~int)
   })
 ```
 
-This function does not compile sadly, as the variable `n` is used 4 times,
+This function does not compile sadly, because the variable `n` is used 4 times,
 and due to linearity one may only use it once!
 To combat this issue we would want to introduce exponentials.
 
@@ -135,6 +134,8 @@ types such as linked lists, which are currently not representable.
 It would also be beaneficial to have access to contiguous data types
 such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
+
+`dup(x, y, z) <- w`
 
 === Utilizing linearity for optimizations
 In other immutable languages such as Haskell, data is copied when
