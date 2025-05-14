@@ -146,13 +146,16 @@
 
     ..cell(
       [Tuple where $v_2$ is a stack],
-      [desc],
+      [
+        Compile the right value, which is a stack, then compile the left value
+        and then push that on the stack.
+      ],
       $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
       #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$,
     ),
     ..cell(
       [Tuple with no stack],
-      [desc],
+      [Compile the values right to left.],
       $#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
       #code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$,
     ),
@@ -177,39 +180,43 @@
     ),
     ..cell(
       [Sum-type left constructor],
-      [desc],
+      [Wrap a value in the left sym-type constructor.],
       $#compilation_scheme($"inl" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
     ),
     ..cell(
       [Sum-type right constructor],
-      [desc],
+      [Wrap a value in the right sym-type constructor.],
       $#compilation_scheme($"inr" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
     ),
     ..cell(
       [Set stack to variable],
-      [desc],
+      [Switches the stack to one stored in a variable.],
       $#compilation_scheme($x$)^omega_(x |-> {r_0}) =
       #code_box($&s p = r_0$)$,
     ),
     ..cell(
       [Push variable on stack],
-      [desc],
+      [Simply pushes the a variable on the current stack.],
       $#compilation_scheme($x$)^n_(x |-> r_0) =
       #code_box($push_(s p)(r_0)$)$,
     ),
-    ..cell([Unit (nothing is done)], [desc], $#compilation_scheme($()$)^n_{} = #code_box("")$),
     ..cell(
-      [Lambdas (see @lambdaLifting)],
-      [desc],
+      [Unit],
+      [Nothing is done when compiling this.],
+      $#compilation_scheme($()$)^n_{} = #code_box("")$,
+    ),
+    ..cell(
+      [Lambdas],
+      [See @lambdaLifting for more details.],
       $#compilation_scheme($lambda x. c$)^1_{} =
       &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
     ..cell(
-      [Create a stack and switch to it],
-      [desc],
+      [Newstack],
+      [Allocates a new stack and switches to it.],
       $#compilation_scheme(newstack)^omega_{} =
       #code_box($r_1 <- newstack$, $s p = r_1$)$,
     ),
