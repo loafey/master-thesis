@@ -127,12 +127,10 @@ similary to their assembly counterparts.
   )
 }
 
-#pagebreak()
 === Positive fragment
 As specified in @TypesAndValues these fragments are used to create values.
 #positive_compilation_scheme
 
-#pagebreak()
 === Negative fragment
 Once again as specified in @TypesAndValues these fragments are used to destroy values.
 #negative_compilation_scheme
