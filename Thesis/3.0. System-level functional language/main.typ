@@ -2,7 +2,7 @@
 #import "figures.typ": *
 #import "@preview/curryst:0.5.1": rule, prooftree
 
-= System-Level Functional Language<SlflChapter>
+= #ln <SlflChapter>
 
 
 // System-Level Functional Language (#languageName) is meant to be an intermediate compilation target for linearly typed functional programming languages. Popular compilation targets today are LLVM, Cranelift, C, and compiling to assembly languages directly.
