@@ -114,59 +114,101 @@
 //     ),
 //   )
 // }
+//
 
-#let positive_compilation_scheme = fancyTable(
-  columns: (0.8fr, 1fr),
-  inset: (top: 6pt, bottom: 6pt),
-  [Tuple where $v_2$ is a stack],
-  [Tuple with two values],
-  $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
-  #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$,
-  $#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
-  #code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$,
-
-  [Existental introduction (see #todo[add me])],
-  [Put a stack pointer on the current stack],
-  $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
-  $#compilation_scheme($square v_1$)^n_rho =
-  #code_box(
-    $sp = sp + 1$,
-    $push_(sp)(ssp)$,
-    $ssp = sp$,
-    $#sem[$v_1$]^omega_rho$,
-    $[ssp - 1] = sp$,
-    $sp = ssp - 1$,
-    $ssp = [ssp]$,
-  )$,
-
-  [Sum-type left constructor],
-  [Sum-type right constructor],
-  $#compilation_scheme($"inl" v_1$)^alpha_rho =
-  #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
-  $#compilation_scheme($"inr" v_1$)^alpha_rho =
-  #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
-
-  [Set stack to variable],
-  [Push variable on stack],
-  $#compilation_scheme($x$)^omega_(x |-> {r_0}) =
-  #code_box($&s p = r_0$)$,
-  $#compilation_scheme($x$)^n_(x |-> r_0) =
-  #code_box($push_(s p)(r_0)$)$,
-
-  [Unit (nothing is done)],
-  [Lambdas (see @lambdaLifting)],
-  $#compilation_scheme($()$)^n_{} = #code_box("")$,
-  $#compilation_scheme($lambda x. c$)^1_{} =
-  &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \
-  & #code_box($push_(s p)(l_1)$)$,
-
-  table.cell(colspan: 2, [Create a stack and switch to it]),
-  table.cell(
-    colspan: 2,
-    $#compilation_scheme(newstack)^omega_{} =
-    #code_box($r_1 <- newstack$, $s p = r_1$)$,
-  ),
+#let cell(title, desc, content) = (
+  table.cell(rowspan: 1, title),
+  table.cell(rowspan: 2, content),
+  table.cell(rowspan: 1, desc),
 )
+
+#let positive_compilation_scheme = {
+  let frame(stroke) = (x, y) => (
+    left: stroke,
+    right: stroke,
+    top: if (calc.rem(y, 2) == 0) { stroke } else { rgb("00000040") },
+    bottom: stroke,
+  )
+  set table(
+    fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#00000010") } else { white },
+    stroke: frame(rgb("21222C")),
+    align: (x, y) => if (calc.rem(y, 2) == 0) { center } else { left },
+  )
+  table(
+    columns: (0.8fr, 1fr),
+    inset: (top: 6pt, bottom: 6pt),
+
+    ..cell(
+      [Tuple where $v_2$ is a stack],
+      [desc],
+      $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
+      #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$,
+    ),
+    ..cell(
+      [Tuple with two values],
+      [desc],
+      $#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
+      #code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$,
+    ),
+    ..cell(
+      [Existental introduction (see #todo[add me])],
+      [desc],
+      $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
+    ),
+    ..cell(
+      [Put a stack pointer on the current stack],
+      [desc],
+      $#compilation_scheme($square v_1$)^n_rho =
+      #code_box(
+        $sp = sp + 1$,
+        $push_(sp)(ssp)$,
+        $ssp = sp$,
+        $#sem[$v_1$]^omega_rho$,
+        $[ssp - 1] = sp$,
+        $sp = ssp - 1$,
+        $ssp = [ssp]$,
+      )$,
+    ),
+    ..cell(
+      [Sum-type left constructor],
+      [desc],
+      $#compilation_scheme($"inl" v_1$)^alpha_rho =
+      #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
+    ),
+    ..cell(
+      [Sum-type right constructor],
+      [desc],
+      $#compilation_scheme($"inr" v_1$)^alpha_rho =
+      #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
+    ),
+    ..cell(
+      [Set stack to variable],
+      [desc],
+      $#compilation_scheme($x$)^omega_(x |-> {r_0}) =
+      #code_box($&s p = r_0$)$,
+    ),
+    ..cell(
+      [Push variable on stack],
+      [desc],
+      $#compilation_scheme($x$)^n_(x |-> r_0) =
+      #code_box($push_(s p)(r_0)$)$,
+    ),
+    ..cell([Unit (nothing is done)], [desc], $#compilation_scheme($()$)^n_{} = #code_box("")$),
+    ..cell(
+      [Lambdas (see @lambdaLifting)],
+      [desc],
+      $#compilation_scheme($lambda x. c$)^1_{} =
+      &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \
+      & #code_box($push_(s p)(l_1)$)$,
+    ),
+    ..cell(
+      [Create a stack and switch to it],
+      [desc],
+      $#compilation_scheme(newstack)^omega_{} =
+      #code_box($r_1 <- newstack$, $s p = r_1$)$,
+    ),
+  )
+}
 
 #let negative_compilation_scheme = fancyTable(
   [whu],
