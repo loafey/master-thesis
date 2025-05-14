@@ -19,21 +19,24 @@
   ),
 )
 
-#let indent(hg, content) = grid(
-  columns: (10pt, 1fr),
-  rect(
-    height: hg * 10pt,
-    fill: tiling(
-      size: (12pt, 10pt),
-      [
-        #place(line(stroke: rgb(0, 0, 0, 65), start: (0%, 0%), end: (100%, 100%)))
-        #place(line(stroke: rgb(0, 0, 0, 65), start: (0%, 100%), end: (100%, 0%)))
-      ],
+#let indent(hg, content) = {
+  let base = 100%
+  grid(
+    columns: (10pt, 1fr),
+    rect(
+      height: hg * 10pt,
+      fill: tiling(
+        size: (12pt, 3pt),
+        [
+          #place(line(stroke: rgb(0, 0, 0, 65), start: (0%, 0%), end: (base, base)))
+          #place(line(stroke: rgb(0, 0, 0, 65), start: (0%, base), end: (base, 0%)))
+        ],
+      ),
     ),
-  ),
-  content,
-  inset: (left: 16pt)
-)
+    content,
+    inset: (left: 16pt)
+  )
+}
 
 #let drawStack(..args) = {
   let ags = ()
@@ -112,13 +115,13 @@
 #let green_text(txt) = text(fill: rgb(0, 125, 0, 255))[#txt]
 
 #let judge(above, below, note: "") = {
-    let tree = rule(
-      name: if note != "" { [#" " _#[#note]_] } else { none },
-      below,
-      above,
-    )
-    set text(size: 0.9em)
-    prooftree(tree)
+  let tree = rule(
+    name: if note != "" { [#" " _#[#note]_] } else { none },
+    below,
+    above,
+  )
+  set text(size: 0.9em)
+  prooftree(tree)
 }
 
 #let tack = { $space tack$ }
