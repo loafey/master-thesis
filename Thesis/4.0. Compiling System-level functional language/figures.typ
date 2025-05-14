@@ -122,6 +122,12 @@
   table.cell(rowspan: 1, desc),
 )
 
+#let cell2(title, desc, content) = (
+  table.cell(rowspan: 1, title),
+  table.cell(rowspan: 1, inset: 10pt, content),
+  table.cell(rowspan: 1, desc),
+)
+
 #let positive_compilation_scheme = {
   let frame(stroke) = (x, y) => (
     left: stroke,
@@ -132,7 +138,7 @@
   set table(
     fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#00000010") } else { white },
     stroke: frame(rgb("21222C")),
-    align: (x, y) => if (calc.rem(y, 2) == 0) { center } else { left },
+    align: (x, y) => if (calc.rem(y, 2) == 0 and x == 0) { center } else { left },
   )
   table(
     columns: (0.8fr, 1fr),
@@ -210,47 +216,96 @@
   )
 }
 
-#let negative_compilation_scheme = fancyTable(
-  [whu],
-  $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
-  = #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
-  [whu],
-  $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
-  = #code_box($#sem[c]^n_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
-  [Unit elimination],
-  $#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
-  = #code_box($#sem[c]_rho$)$,
-  [whu],
-  $#compilation_scheme($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
-  = #code_box($#sem[c]_(rho, x |-> r_0)$)$,
-  [whu],
-  $#compilation_scheme($"let" square x = z^1; c$)_(rho, z |-> {r_0})
-  = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
-  [Stack de-allocation],
-  $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
-  = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
-  [Case expression],
-  $#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
-  = #code_box(
-    meta($"let" r_1 = "next"(rho, "int")$),
-    $pop_(r_0)(r_1)$,
-    $"if" "iszero"(r_1)$,
-    $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
-    $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
-  )$,
-  [whu],
-  [$#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
-    = #box(
-      code_box(
-        $"if iszero"(r_1)$,
-        $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$,
-        $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$,
-      ),
-    )$
-    #v(10pt)
-  ],
+#let negative_compilation_scheme = {
+  let frame(stroke) = (x, y) => (
+    left: stroke,
+    right: stroke,
+    top: if (calc.rem(y, 3) == 0) { stroke } else { rgb("00000040") },
+    bottom: stroke,
+  )
+  set table(
+    fill: (x, y) => if (x == 0 and calc.rem(y, 3) == 0) { rgb("#00000010") } else { white },
+    stroke: frame(rgb("21222C")),
+    align: (x, y) => if (calc.rem(y, 3) == 0) { center } else { left },
+  )
+  table(
+    columns: 1fr,
+    ..cell2(
+      [whu],
+      [what am i],
+      $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
+      = #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
+    ),
 
-  [whu],
-  $#compilation_scheme($"call" z^n (v)$)_(rho, z |-> {r_0}) =
-  #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
-)
+
+    ..cell2(
+      [whu],
+      [if not a bee],
+      $#compilation_scheme($"let" x,y = z^n : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
+      = #code_box($#sem[c]^n_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
+    ),
+
+    ..cell2(
+      [Unit elimination],
+      [waaa],
+      $#compilation_scheme($"let" () = z^n; c$)_(rho,z |-> {})
+      = #code_box($#sem[c]_rho$)$,
+    ),
+
+    ..cell2(
+      [whu],
+      [waaa],
+      $#compilation_scheme($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
+      = #code_box($#sem[c]_(rho, x |-> r_0)$)$,
+    ),
+
+    ..cell2(
+      [whu],
+      [waaa],
+      $#compilation_scheme($"let" square x = z^1; c$)_(rho, z |-> {r_0})
+      = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
+    ),
+
+    ..cell2(
+      [Stack de-allocation],
+      [waaa],
+      $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
+      = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
+    ),
+
+    ..cell2(
+      [Case expression],
+      [waaa],
+      $#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
+      = #code_box(
+        meta($"let" r_1 = "next"(rho, "int")$),
+        $pop_(r_0)(r_1)$,
+        $"if" "iszero"(r_1)$,
+        $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
+        $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
+      )$,
+    ),
+
+    ..cell2(
+      [whu],
+      [waaa],
+      [$#compilation_scheme($"case" z^n "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
+        = #box(
+          code_box(
+            $"if iszero"(r_1)$,
+            $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$,
+            $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$,
+          ),
+        )$
+        #v(10pt)
+      ],
+    ),
+
+    ..cell2(
+      [whu],
+      [wooo],
+      $#compilation_scheme($"call" z^n (v)$)_(rho, z |-> {r_0}) =
+      #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
+    ),
+  )
+}
