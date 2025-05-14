@@ -34,7 +34,6 @@
   𝜌 is a mapping from variables to a list of pseudo registers
   Fitting register ==> appropriate list of registers for the type of x.
   Separate the 2nd part of table 1 and call it "operands"
-  Tuple with two values ==> with no stack
   * Positive fragment
         explain all the arguments of the double brackets. say that you leave type implicit.
         single column

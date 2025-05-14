@@ -151,7 +151,7 @@
       #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^n_sigma$)$,
     ),
     ..cell(
-      [Tuple with two values],
+      [Tuple with no stack],
       [desc],
       $#compilation_scheme($(v_1,v_2)$)^n_(rho,sigma) =
       #code_box($#sem[$v_2$]^n_rho$, $#sem[$v_1$]^n_sigma$)$,
