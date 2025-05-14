@@ -5,6 +5,8 @@
 As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
+=== Allow using the system-stack for stacks
+In the current implementation of #ln,
 
 === Register allocation
 When optimizing the generated code, one important technique is
