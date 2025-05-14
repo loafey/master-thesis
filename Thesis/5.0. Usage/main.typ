@@ -70,7 +70,7 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
 
 
 === Benchmarks
-#import "@preview/cetz:0.3.2": canvas, draw
+#import "@preview/cetz:0.3.4": canvas, draw
 #import "@preview/cetz-plot:0.1.1": plot, chart
 
 #let lithiumResults = csv("benches/Lithium.csv")
