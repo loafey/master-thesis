@@ -33,4 +33,3 @@
       explain the role of the stack; that that the positive fragment compiliation pushes the argument on the stack. (call!)
       lambda: prepare the stack, and compile the body
 * Memory layout: mapping of types to memory.
-*  Figure 11: use log 
