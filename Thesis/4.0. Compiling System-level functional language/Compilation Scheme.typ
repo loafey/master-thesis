@@ -43,84 +43,87 @@ similary to their assembly counterparts.
   )
   figure(
     caption: [
-      Translations between pseudo and x86-64 instructions and values.
+      Translations between pseudo and x86-64 instructions and operands.
       Observe that the x86-64 instructions might differ in the compiler due to
       optimizations or the memory size of a variable.
     ],
-    grid(
-      // row-gutter: 10pt,
-      table(
-        columns: (1fr, 1fr),
-        [*Pseudo instruction*], [*x86-64 instructions*],
-        $push "VAL"$,
-        ```asm
-        subq $sizeof(VAL), %R15
-        mov  VAL,          0(%R15)
-        ```,
+    table(
+      columns: (1fr, 1fr),
+      [*Pseudo instruction*], [*x86-64 instructions*],
+      $push "OP"$,
+      ```asm
+      subq $sizeof(OP), %R15
+      mov  OP,          0(%R15)
+      ```,
 
-        $"VAL_1" = "VAL_2"$,
-        ```asm
-        mov VAL_2, VAL_1
-        ```,
+      $"OP_1" = "OP_2"$,
+      ```asm
+      mov OP_2, OP_1
+      ```,
 
-        $pop "VAL"$,
-        ```asm
-        mov 0(%R15),      VAL
-        addq sizeof(VAL), %R15
-        ```,
+      $pop "OP"$,
+      ```asm
+      mov 0(%R15),     OP
+      addq sizeof(OP), %R15
+      ```,
 
-        ```
-        if izero(VAL)
-          then C1
-          else C2
-        ```,
-        ```asm
-        mov VAL, %R10
-        cmp $0,  %R10
-        jnz lbl
-        C1 # codeblock
-        lbl:
-        C2 # codeblock
-        ```,
+      ```
+      if izero(OP)
+        then C1
+        else C2
+      ```,
+      ```asm
+      mov OP, %R10
+      cmp $0, %R10
+      jnz lbl
+      C1 # codeblock
+      lbl:
+      C2 # codeblock
+      ```,
 
-        $jmp L$,
-        ```asm
-        jmp L
-        ```,
+      $jmp L$,
+      ```asm
+      jmp L
+      ```,
 
-        $L:$,
-        ```asm
-        L: # a label
-        ```,
+      $L:$,
+      ```asm
+      L: # a label
+      ```,
 
-        $newstack$,
-        ```asm
-        mov STACKSIZE, %RDI
-        call malloc
+      $newstack$,
+      ```asm
+      mov STACKSIZE, %RDI
+      call malloc
 
-        # push to the stack
-        subq $8,  %R15
-        movq %RAX, 0(%R15)
-        ```,
+      # push to the stack
+      subq $8,  %R15
+      movq %RAX, 0(%R15)
+      ```,
 
-        $"free"("VAL")$,
-        ```asm
-        mov $0,  %RAX
-        mov VAL, %RDI
-        call free
-        ```,
-      ),
-      table(
-        columns: (1fr, 1fr),
-        [*VAL*], [*x86-64 value*],
-        `[0-9]+`, [`$[0-9]+`],
-        $#sym.rho\(x)$, [Fitting register or location on the system stack (`x(%RBP)`)],
-        `SP`, [`%R15`],
-        `SSP`, [`%R14`],
-        `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
-        `[VAL]`, [`0(%VAL)`],
-      )
+      $"free"("OP")$,
+      ```asm
+      mov $0, %RAX
+      mov OP, %RDI
+      call free
+      ```,
     ),
+  )
+
+  figure(
+    table(
+      columns: (1fr, 1.2fr),
+      [*Operand*], [*x86-64 Operand*],
+      [Numerical literal, e.g. `42`], [Numerical literal prefixed with `$`, e.g. `$42`],
+      $#sym.rho\(x)$, [Fitting register or location on the system stack (`x(%RBP)`)],
+      `SP`, [`%R15`],
+      `SSP`, [`%R14`],
+      `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
+      `[VAL]`, [`0(%VAL)`],
+    ),
+    caption: [
+      Translations between pseudo operands and x86 operands.
+    ],
   )
 }
 
