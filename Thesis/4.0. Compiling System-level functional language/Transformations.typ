@@ -12,16 +12,28 @@ closures, the second step ensures that each closure contains a stack to execute
 on, and the third transformation, pointer closure conversion, replaces each
 stack closure by an explicit pair of static closure and environment.
 
-=== Linear closure converison
+=== Linear closure conversion
 
-Remember the kind for the linear closure: ($(A : n) / (not A: n)$). As neither
-$A$ or $not A$ are stacks we have to introduce a stack somewhere. We can
-introduce a stack by converting it into a stack closure ($(A :n) / (~
-A : omega) $). This changes the kind of the type from $n$ to $omega$. 
-This is solved by introducing the linear pointer ($(A: omega) / (square A : n)$).
-The type $not A$ is thus converted to $square (~A)$.
-Similarily, values are transformed in the following manner:
-$(lambda^not x. c): not A => square (lambda^~ x. c): square (~A)$
+// Linear closure conversion: this is about making the stack pointers explicit.
+// (As we saw earlier, it is critical for 1st order programming to identify the
+// call stack. This phase introduces explicit call stacks.) The starting point
+// is: □(∼ 𝐴)
+
+It is critical for first-order programs to identify the call stack, that is,
+the point where a procedure should return control when finishing execution. In
+the case of #ln it is about where a procedure should continue when finishing
+execution because rather than where a procedure should return control, it is
+about where a procedure should continue execution. The first step in this
+process is making pointers to stacks explicit. This phase achieves this by
+converting the type $not A$ to $square (~A)$, and similarly, values are
+transformed in the following manner: $(lambda^not x. c): not A => square
+(lambda^~ x. c): square (~A)$. It is important not to forget the negative
+fragment as well. Before calling a function with type $not A$, which after
+conversion has type $square ~A$, we have to unbox the closure. For instance, if
+we have the call $f(x)$ with $f : not A$ and $x : A$. After conversion the call
+would look like this: $"let" square g = f; g(x)$. Since the conversion happens
+from $not A$ to $square ~A$, we can always treat $not A$ as $square ~A$.
+#todo[expand on this bit]
 
 === Stack Selection
 

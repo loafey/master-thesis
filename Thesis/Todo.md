@@ -27,9 +27,6 @@
 
 * note that the type *(A⊗~B⊗~C) is ill-kinded. So with * and ~ you cannot support co-routines or higher-order programming
 
-* Linear closure converison: this is about making the stack pointers explicit. (As we saw earlier, 
-   it is critical for 1st order programming to identify the call stack. This phase introduces 
-    explicit call stacks.) The starting point is: □(∼ 𝐴)
 * Stack selection: about selecting the main thread.
   𝜌 is a mapping from variables to a list of pseudo registers
   Fitting register ==> appropriate list of registers for the type of x.
