@@ -38,8 +38,8 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
             case is_one of {
               inl () ->
                 __dup__(n, \n,m ->
-                fib(n-1,   \n ->
-                fib(m-2,   \m ->
+                fib((n-1), \n   ->
+                fib((m-2), \m   ->
                 k(n+m))));
               inr () -> k(n);
             }));
