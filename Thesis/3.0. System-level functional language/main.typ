@@ -37,7 +37,7 @@ $
 $
 
 A module consists of a list of definitions, where a definition is a top-level
-function, akin to Haskell. A definition consists of a name, a type, and
+function. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
 piece. Commands come into play in the bodies of lambdas. Commands consist of
 let-bindings, case-expressons, or function calls. Notably, the only way to
@@ -58,7 +58,7 @@ identity function written in normal style would be:
   $,
 )
 
-contrast it to the CPS version, where we use $bot$ to denote a function that terminates with no value.
+Contrast it to the CPS version, where we use $bot$ to denote a function that terminates with no value.
 
 #align(
   center,
@@ -71,8 +71,8 @@ contrast it to the CPS version, where we use $bot$ to denote a function that ter
 A natural question that comes to mind now is why we want continuation-passing
 style? An immediate benefit of CPS is that every function call is a tail call,
 which enables tail call optimization for every function call. Another benefit
-is that the order of evaluation is made explicit. If we consider the following
-program written in normal style:
+is that the order of evaluation is made explicit by the syntax.
+If we consider the following program written in normal style:
 
 #align(
   center,
