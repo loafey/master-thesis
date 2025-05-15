@@ -32,4 +32,3 @@
       as for all types, positive and negative must match. lambda and call must match.
       explain the role of the stack; that that the positive fragment compiliation pushes the argument on the stack. (call!)
       lambda: prepare the stack, and compile the body
-* Memory layout: mapping of types to memory.
