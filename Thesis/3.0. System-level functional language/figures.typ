@@ -89,7 +89,7 @@
     [#judge(
         $dot, x: A tack c$,
         $dot tack lambda x. c : *A$,
-        note: "static closure",
+        note: "static function",
       )
     ],
     [#judge(
@@ -104,7 +104,7 @@
         note: "linear pointer",
       )
     ],
-    [#judge($x: A in Gamma$, $Gamma tack x: A$, note: "var")
+    [#judge($$, $x : A tack x: A$, note: "var")
     ],
 
     [
@@ -114,7 +114,7 @@
       #judge(
         $Gamma tack t: A$,
         $Gamma tack "inl" t: A plus.circle B$,
-        note: "inj",
+        note: "inj left",
       )
     ],
 
@@ -122,7 +122,7 @@
       #judge(
         $Gamma tack t: B$,
         $Gamma tack "inr" t: A plus.circle B$,
-        note: "inj",
+        note: "inj right",
       )
     ],
     [
@@ -237,7 +237,7 @@
 }
 
 #let static_closure = {
-  judge($A: omega$, $*A: known$, note: [static closure])
+  judge($A: omega$, $*A: known$, note: [static function])
 }
 #let linear_closure = {
   judge($A:known$, $not A: known$, note: [linear closure])

@@ -1,8 +1,4 @@
 * fix the kind system. suggestion: just 2 kinds and adapt the rules (pay attention to type variables and kind variables)
-    * omega
-    * ① ႑➊
-    * fix the typing rule for variable.
-    * fix the typing rules for negations.
     * add the "types and kinds" summary, with more commentary:
 
     * higher order (ok)

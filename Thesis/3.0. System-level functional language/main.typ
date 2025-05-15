@@ -108,8 +108,7 @@ The types in #ln roughly correspond to those of polarised linear logic.
 
 #align(center, pll_types)
 
-The first row are the types that correspond to the positive fragment of
-polarised linear logic. In the second row are the types that are added on top
+The first row are the types that correspond to polarised linear logic. In the second row are the types that are added on top
 of polarised linear logic. The circle ($circle$), called _empty stack_ is
 a primitive type added to #ln. The box type constructor ($square$) represents
 a pointer to a type. The last two are versions of negation ($not$) #todo[förklara lite mer här]. The meaning
@@ -128,8 +127,8 @@ unsurprisingly, empty stack ($circle$) is stack-like. Stack-like product is akin
 For now, the three closure types ($not, ~, *$) can be considered as pieces of a puzzle to construct valid types.
 In @Transformations we will explain how they all relate to each other and why we need all three.
 
-There is no subkinding in the language, meaning, if a type that is stack-like
-is expected then a type with known length is not allowed and vice versa.
+There is no subkinding in the language; if a type that is stack-like
+is expected, then a type with known length is not allowed, and vice versa.
 
 // We can now derive types following the kind rules. For instance, let
 // us derive the types
@@ -179,18 +178,36 @@ is expected then a type with known length is not allowed and vice versa.
 - _Positive fragment_ describes how things are created. When we talk about
   values we refer to the positive fragment.
 
-- _Negative fragment_: describes how to deconstruct environments. We will refer to
-  the negative fragment as _commands_
+- _Negative fragment_: describes how to deconstruct environments of values. We will refer to
+  the negative fragment as _commands_.
 
-@positive_fragment contains the typing rules for the positive fragment of #ln.
-The positive fragment of #ln is depicted in @positive_fragment
+The typing rules for the positive fragment of #ln is depicted in @positive_fragment
 
-#figure(caption: [The positive fragment], positive(true)) <positive_fragment>
+#figure(caption: [Typing rules for values in #ln], positive(true)) <positive_fragment>
 
-#figure(caption: [The negative fragment], negative(true)) <negative_fragment>
+Most of the typing judgements are uncontroversial in a linearly typed setting. The interesting additions in #ln are _newstack_, _static function_, and the two closures.
+The first addition is _newstack_. As the name suggests, _newstack_ is an atomic value for an empty stack.
+Next up is _linear pointer_, which, if we remember the kind judgement for the linear pointer ($(A : omega) / (square A : known)$) is a pointer to a stack.
+Finally we have the three lambdas: _static function_, _stack closure_, and _linear closure_.
+
+To be able to easily understand them, we will give them operational meaning.
+Each lambda can be placed in one of three groups; goto, procedural, and higher-order.
+The first is goto, which is the most primitive, it performs a one-way transfer of control.
+We can imagine that the function $f : *(A times.circle *B)$ represents
+a function that $A$ as an argument, produces a $B$ and continues with it.
+The issue is that $*B$ can not have its own saved variables in an environment (its stack).
+This is the essence of goto-programming.
+//TODO: Sebastian: continue with stack closure
+
+// Importantly, the goto style can not capture free variables, hence the environment must be empty. Because of the lack of free variables, we call it _static function_ rather than _static closure_. The _stack closure_ corresponds to a procedure, often referred to as function. 
+
+- _static function_: goto
+- _stack closure_: procedural (first-order)
+- _linear closure_: higher-order
+
+#figure(caption: [Typing rules for commands in #ln], negative(true)) <negative_fragment>
 
 The juxtaposition of the negative and positive fragments create an elegant
 picture. For every value $v$, a corresponding command exists for how to destruct
 an environment that has $v$ #todo[is this even correct]. Variables can not be destructed, rather they are consumed
 on use, following the rules of linear types.
-
