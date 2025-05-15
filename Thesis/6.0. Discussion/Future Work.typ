@@ -6,7 +6,21 @@ As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
 === Allow using the system-stack for stacks
-In the current implementation of #ln,
+In the current implementation of #ln, all dynamically created stacks
+are heap-allocated using GLIBC's malloc.
+This can potentially lead to unnecessary overhead, and can be a blockage
+for using the platform on more restricted platforms such
+as embedded devices. To alleviate this, giving the developer the option
+to allocate dynamic stacks on the system-stack would work (maybe as a compiler flag),
+and would remove the reliance on the libraries such as GLIBC.
+
+To implement this the language would need to include a runtime which can keep
+track of which memory regions on the system-stack are currently in use, as to make sure
+that stacks are not overlapping. It is also important to allocate these dynamic stacks
+_above_ the programs singular stack frame (remember: the stack grows downards).
+This is important because accessing memory below the stack pointer is considered
+undefined behavior on a lot of platforms as hardware or an OS might potentially
+use that memory for things such as interupts.
 
 === Register allocation
 When optimizing the generated code, one important technique is
