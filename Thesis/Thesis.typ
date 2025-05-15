@@ -17,6 +17,12 @@
   },
 )
 
+#show ref.where(form: "normal"): set ref(
+  supplement: it => {
+    lower(it.supplement)
+  },
+)
+
 #set page(
   margin: 1.4in,
   header: context {
