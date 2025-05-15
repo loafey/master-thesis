@@ -11,10 +11,12 @@ that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
 inspiration from linear types, which is based on Girard's linear logic.
 
-An important aspect of a system-level language is having the representation of types and values be efficiently ...
-
-
-In this section we will introduce the reader to #ln.
+An important aspect of a system-level language is the representation of types
+and values. We want the language to be efficient, and thus, the representation
+must match the computer's representation of memory. For instance, in many
+functional programming languages values are boxed, i.e, placed behind pointers.
+In a system-level language this would be counter-productive because the control
+over memory should be in the hands of the developer.
 
 == Grammar
 
@@ -37,9 +39,10 @@ $
 A module consists of a list of definitions, where a definition is a top-level
 function, akin to Haskell. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
-piece. Commands come into play in the bodies of lambdas, and commands are only
-terminated by a function call ($z(v)$), which ensures that #ln is written in
-continuation-passing style.
+piece. Commands come into play in the bodies of lambdas. Commands consist of
+let-bindings, case-expressons, or function calls. Notably, the only way to
+terminate a chain of commands is by a function call ($z(v)$), which ensures
+that #ln is written in continuation-passing style.
 
 
 == Continuation-passing Style
