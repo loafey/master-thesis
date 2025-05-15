@@ -27,23 +27,24 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
   table.cell(
     colspan: 1,
     ```haskell
-    fib : *(int ⊗ ~int) = \n,k ->
-      n,n' <- __dup__(n);
-      is_zero <- __eq__(n', 0);
-      case is_zero of {
-        inl () ->
-          n,n' <- __dup__(n);
-          is_one <- __eq__(n', 1);
-          case is_one of {
-            inl () ->
-              n,m <- __dup__(n);
-              n <- fib(n-1);
-              m <- fib(m-2);
-              k(n+m);
-            inr () -> k(n);
-          };
-        inr () -> k(n);
-      };
+    fib : *(int ⊗ ~int) =
+      \n,k ->
+        __dup__(n,      \n,n'    ->
+        __eq__((n', 0), \is_zero ->
+        case is_zero of {
+          inl () ->
+            __dup__(n,      \n,n'   ->
+            __eq__((n', 1), \is_one ->
+            case is_one of {
+              inl () ->
+                __dup__(n, \n,m ->
+                fib(n-1,   \n ->
+                fib(m-2,   \m ->
+                k(n+m))));
+              inr () -> k(n);
+            }));
+          inr () -> k(n);
+        }));
     ```,
   ),
 
