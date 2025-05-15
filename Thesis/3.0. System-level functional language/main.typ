@@ -112,13 +112,13 @@ The first row are the types that correspond to the positive fragment of
 polarised linear logic. In the second row are the types that are added on top
 of polarised linear logic. The circle ($circle$), called _empty stack_ is
 a primitive type added to #ln. The box type constructor ($square$) represents
-a pointer to a type. The last two are versions of negation ($not$). The meaning
+a pointer to a type. The last two are versions of negation ($not$) #todo[förklara lite mer här]. The meaning
 of each type and why they are added over polarised linear logic will make sense
 when we introduce kinds.
 
 At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack-like_ ($omega$) and _known length_
-($known$), and we use $alpha$ to denote a variables for kinds. The kinding rules in #ln are given in @KindRules.
+($known$). The kinding rules in #ln are given in @KindRules.
 
 #figure(caption: [Kind rules in #ln], align(center, kind_judgements(true)))<KindRules>
 
