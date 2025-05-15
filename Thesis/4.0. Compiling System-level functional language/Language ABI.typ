@@ -52,7 +52,7 @@ or variable on the system stack, or it will be pushed onto the current stack.
 This and along with with top-level functions,
 are the only time #ln strays from the strict continuation based style.
 
-=== Memory layout
+=== Mapping types and stacks to memory
 As the time of writing, #ln does not contain that many different types,
 and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
