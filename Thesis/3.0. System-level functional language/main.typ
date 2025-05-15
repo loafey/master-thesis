@@ -120,7 +120,7 @@ At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack-like_ ($omega$) and _known length_
 ($known$). The kinding rules in #ln are given in @KindRules.
 
-#figure(caption: [Kind rules in #ln], align(center, kind_judgements(true)))<KindRules>
+#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
 
 As for the others, they are more interesting. Starting off we can see that,
 unsurprisingly, empty stack ($circle$) is stack-like. Stack-like product is akin to cons on lists.
