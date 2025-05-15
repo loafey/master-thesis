@@ -13,10 +13,12 @@ To help understanding the compilation scheme the reader should keep the
 following operators and syntax in mind:
 
 - $rho : Gamma -> "List"("Reg")$ \
-  $rho$ is a mapping from variables to a list of memory addresses.
+  $rho$ is a mapping from variables to a list of psuedo register.
+  A psuedo register can either be a physical register or a location on the
+  system stack.
 
-  The reason the range of $rho$ is a list of memory addresses is because some values
-  consist of multiple values, leading to more than one memory address.
+  The reason the range of $rho$ is a list of psuedo registers is because some values
+  consist of multiple values, leading to more than one psuedo registers.
 
 - $#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
   for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
