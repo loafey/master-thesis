@@ -114,7 +114,7 @@ similary to their assembly counterparts.
 
   figure(
     table(
-      columns: (1fr, 1.2fr),
+      columns: (1fr, 1.4fr),
       [*Operand*], [*x86-64 Operand*],
       [Numerical literal, e.g. `42`], [Numerical literal prefixed with `$`, e.g. `$42`],
       $#sym.rho\(x)$, [Appropiate list of psuedo registers for type of $x$],
