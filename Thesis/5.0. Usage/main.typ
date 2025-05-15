@@ -7,7 +7,7 @@ to write some smaller programs!
 == Fibonacci
 Fibonacci is not the most the most interesting program,
 but from the standpoint of linearity it is _somewhat_ interesting, as
-it reuses variables:
+it requires the reuse of variables:
 #align(
   center,
   grid(
