@@ -117,7 +117,7 @@ similary to their assembly counterparts.
       columns: (1fr, 1.2fr),
       [*Operand*], [*x86-64 Operand*],
       [Numerical literal, e.g. `42`], [Numerical literal prefixed with `$`, e.g. `$42`],
-      $#sym.rho\(x)$, [Fitting register or location on the system stack (`x(%RBP)`)],
+      $#sym.rho\(x)$, [Appropiate list of psuedo registers for type of $x$],
       `SP`, [`%R15`],
       `SSP`, [`%R14`],
       `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
