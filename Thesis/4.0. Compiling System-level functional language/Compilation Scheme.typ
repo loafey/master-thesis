@@ -13,12 +13,12 @@ To help understanding the compilation scheme the reader should keep the
 following operators and syntax in mind:
 
 - $rho : Gamma -> "List"("Reg")$ \
-  $rho$ is a mapping from variables to a list of psuedo register.
-  A psuedo register can either be a physical register or a location on the
+  $rho$ is a mapping from variables to a list of pseudo register.
+  A pseudo register can either be a physical register or a location on the
   system stack.
 
-  The reason the range of $rho$ is a list of psuedo registers is because some values
-  consist of multiple values, leading to more than one psuedo registers.
+  The reason the range of $rho$ is a list of pseudo registers is because some values
+  consist of multiple values, leading to more than one pseudo registers.
 
 - $#sem($t$)^alpha_rho = #code_box($c$)$ reads as follows: The compilation scheme
   for $t$ with kind $alpha$ and variable environment $rho$ is $c$. We use $alpha$
@@ -117,7 +117,7 @@ similary to their assembly counterparts.
       columns: (1fr, 1.4fr),
       [*Operand*], [*x86-64 Operand*],
       [Numerical literal, e.g. `42`], [Numerical literal prefixed with `$`, e.g. `$42`],
-      $#sym.rho\(x)$, [Appropiate list of psuedo registers for type of $x$],
+      $#sym.rho\(x)$, [Appropiate list of pseudo registers for type of $x$],
       `SP`, [`%R15`],
       `SSP`, [`%R14`],
       `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
@@ -137,9 +137,14 @@ As specified in @TypesAndValues these fragments are used to create values.
 Once again as specified in @TypesAndValues these fragments are used to destroy values.
 #negative_compilation_scheme
 
+The astute reader might observe that matching positive and negative
+fragments "cancel" each other out. Linearity enforces that a positive fragment
+that creates a value,
+must be matched with a negative fragment, which destroys said value.
+
 === Lambda Compilation <lambdaLifting>
-As can be seen in the compilation scheme for positive fragmets, lambdas are
-still in the language even in the the last step before compilation.
+Lambdas are still in the language even in the the last step before compilation,
+as shown in the positive fragments.
 
 A common tactic when compiling lambdas is to use a process such as
 lambda lifting #todo[source] or closure conversion#todo[source].
@@ -152,5 +157,6 @@ but unlike lambda lifting or closure conversion, the function are never modified
 The parameters are not touched, unlike in the two other methods, where
 free variables are added as parameters or in an enviornment parameter.
 
-In the expressions where these lambdas occur, they are simply replaced with a
-function pointer to said lambda, which can then be called.
+In the expressions where these lambdas occur, the lambda is simply pushed
+to the stack, which can be seen in its positive fragment,
+which can then be destroyed the negative call fragment.

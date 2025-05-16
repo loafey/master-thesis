@@ -141,7 +141,7 @@
     align: (x, y) => if (calc.rem(y, 2) == 0 and x == 0) { center } else { left },
   )
   table(
-    columns: (0.8fr, 1fr),
+    columns: (0.84fr, 1fr),
     inset: (top: 6pt, bottom: 6pt),
 
     ..cell(
@@ -160,7 +160,7 @@
       #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
     ..cell(
-      [Existental introduction (see #todo[add me])],
+      [Existental introduction],
       [desc],
       $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
@@ -238,23 +238,34 @@
   table(
     columns: 1fr,
     ..cell2(
-      [whu],
-      [what am i],
+      [Pop top of stack],
+      [
+        Pops the top value of the stack ($x$ here)
+        and stores it in $r_1$. $y$ represents
+        the rest of the stack.
+      ],
       $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
-      = #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
+      =
+      #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
     ),
 
 
     ..cell2(
-      [whu],
-      [if not a bee],
+      [Destruct tuple],
+      [
+        Breaks a tuple into its two values.
+        Does nothing except mapping the two
+        values to pseudo registers, and compile the next command.
+      ],
       $#compilation_scheme($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
       = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
     ),
 
     ..cell2(
       [Unit elimination],
-      [bzzzzzzzz],
+      [
+        Similary like it's positive fragment variant,
+        this does nothing except compile the next command.],
       $#compilation_scheme($"let" () = z^known; c$)_(rho,z |-> {})
       = #code_box($#sem[c]_rho$)$,
     ),
@@ -275,15 +286,18 @@
 
     ..cell2(
       [Stack de-allocation],
-      [waaa],
+      [
+        Deallocates the current stack. This is currently implemented
+        using GLIBC's `free`.
+      ],
       $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
       = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
     ),
 
     ..cell2(
-      [Case expression],
+      [Case expression with variable which is a stack],
       [waaa],
-      $#compilation_scheme($"case" z^omega "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
+      $#compilation_scheme($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
       = #code_box(
         meta($"let" r_1 = "next"(rho, "int")$),
         $pop_(r_0)(r_1)$,
@@ -294,22 +308,19 @@
     ),
 
     ..cell2(
-      [whu],
-      [waaa],
+      [Case expression with variable],
+      [Cases on the top of the stack,],
       [$#compilation_scheme($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
-        = #box(
-          code_box(
-            $"if iszero"(r_1)$,
-            $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$,
-            $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$,
-          ),
+        = #code_box(
+          $"if iszero"(r_1)$,
+          $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$,
+          $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$,
         )$
-        #v(10pt)
       ],
     ),
 
     ..cell2(
-      [whu],
+      [Function call],
       [wooo],
       $#compilation_scheme($"call" z^known (v)$)_(rho, z |-> {r_0}) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
