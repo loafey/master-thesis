@@ -21,7 +21,7 @@
 * note that the type *(A⊗~B⊗~C) is ill-kinded. So with * and ~ you cannot support co-routines or higher-order programming
 
 * Stack selection: about selecting the main thread.
-* Lambda Compilation:
+<!-- * Lambda Compilation:
       as for all types, positive and negative must match. lambda and call must match.
       explain the role of the stack; that that the positive fragment compiliation pushes the argument on the stack. (call!)
-      lambda: prepare the stack, and compile the body
+      lambda: prepare the stack, and compile the body -->
