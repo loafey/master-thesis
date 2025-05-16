@@ -108,68 +108,56 @@ The types in #ln roughly correspond to those of polarised linear logic.
 
 #align(center, pll_types)
 
-The first row are the types that correspond to polarised linear logic. In the second row are the types that are added on top
+The first row are the types that correspond to polarised linear logic. The second row are the types that are added on top
 of polarised linear logic. The circle ($circle$), called _empty stack_ is
 a primitive type added to #ln. The box type constructor ($square$) represents
 a pointer to a type. The last two are versions of negation ($not$) #todo[förklara lite mer här]. The meaning
-of each type and why they are added over polarised linear logic will make sense
-when we introduce kinds.
+of each type and why they are added on top of polarised linear logic will make sense
+when we introduce kinds. #todo[REWRITE paragraph]
 
 At the core of #ln is the kind system. Where values have types, types have
-kinds. The two kinds in #ln are _stack-like_ ($omega$) and _known length_
+kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
 ($known$). The kinding rules in #ln are given in @KindRules.
 
 #figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
 
-As for the others, they are more interesting. Starting off we can see that,
-unsurprisingly, empty stack ($circle$) is stack-like. Stack-like product is akin to cons on lists.
+#todo[write about the rules except lambdas]
+It is forbidden to construct a pair of two stacks. The kinds in a sum must match
+//TODO: Sebastian: explain the rules
 
-For now, the three closure types ($not, ~, *$) can be considered as pieces of a puzzle to construct valid types.
-In @Transformations we will explain how they all relate to each other and why we need all three.
+Finally we have the three lambdas: _static function_, _stack closure_, and _linear closure_.
+To be able to easily understand them, we will give them operational meaning.
+Each lambda can be placed in one of three groups; goto, procedural, and higher-order.
+The first, goto, is the most primitive, it performs a one-way transfer of control.
+If we consider the function $f : *(A times.circle *B)$. From $f$ we can call
+the continuation $*B$, but $f$ itself can not capture any free variables.
+#todo[why]
+Because $*A$ can not capture any variables we call it _static function_ rather
+than _static closure_.
 
-There is no subkinding in the language; if a type that is stack-like
+// Importantly, the goto style can not capture free variables, hence the
+// environment must be empty. Because of the lack of free variables, we call it
+// _static function_ rather than _static closure_. The _stack closure_
+// corresponds to a procedure, often referred to as function. 
+
+The second style, procedural, enables just that, procedures. The type signature
+$f : *(A times.circle ~B)$ now exactly corresponds to the C function signature
+$B space f(A space a)$. The type $~A$ corresponds to a stack frame that accepts
+$A$ as a return value to continue with, and because the environment is a stack,
+remember the kind rule $(~A : omega)$, there is a single chosen stack to
+continue with.
+
+Finally we have higher-order programming, which unfortunately
+is not possible with $*$ and $~$. The type $*(A times.circle ~B
+times.circle ~C)$ is ill-kinded, and $*(A times.circle *B times.circle ~C)$
+would not work either as $*B$ can not cature variables.
+To allow higher-order programming we introduce the _linear closure_.
+The linear closure can capture free variables and produces an
+environment that has a known size. For example, the higher-order function apply has the type $*(¬(A ⊗ ¬B) ⊗ A ⊗ ~B)$
+In @Transformations we will explain how we transform both closures to static functions.
+
+There is no subkinding in the language; if a type that is stack
 is expected, then a type with known length is not allowed, and vice versa.
-
-// We can now derive types following the kind rules. For instance, let
-// us derive the types
-// $A times.circle B times.circle ~C$ and $A times.circle (B plus.circle C) times.circle circle$
-//
-// #let tree = rule(
-//   ($A times.circle B times.circle ~C: omega$),
-//   prooftree(rule($A:n$, "")),
-//   prooftree(
-//     rule(
-//       $B times.circle ~C: omega$,
-//       rule($B: m$),
-//       prooftree(rule($~C: omega$, prooftree(rule($C: k$)))),
-//     ),
-//   ),
-// )
-// #let tree2 = rule(
-//   ($A times.circle (B plus.circle C) times.circle circle: omega$),
-//   prooftree(rule($A:n$, "")),
-//   prooftree(
-//     rule(
-//       $(B plus.circle C) times.circle circle: omega$,
-//       prooftree(rule($B plus.circle C: max(m, k)$, $B: m$, $C: k$)),
-//       prooftree(rule($circle: omega$)),
-//     ),
-//   ),
-// )
-// #grid(
-//   columns: (1fr, 1fr),
-//   inset: (top: 0.3cm, bottom: 0.3cm, right: -3pt, left: -3pt),
-//   prooftree(tree), prooftree(tree2),
-// )
-
-// The $omega$ case of the product type ($times.circle$) can be interpreted as
-// pushing its left operand on the right operand stack. The circle ($circle$) can
-// be interpreted as being the empty stack, while $~A$ is a closure type that
-// represents "the rest of the stack". $*A$ and $not A$ are also closure types,
-// but since they construct type with kind $n$, they have no stack-like
-// representation.
-// This part will become clear when we give meaning to the types in their memory
-// representation. #todo[Refer to section]
 
 == Types & values<TypesAndValues>
 
@@ -185,24 +173,16 @@ The typing rules for the positive fragment of #ln is depicted in @positive_fragm
 
 #figure(caption: [Typing rules for values in #ln], positive(true)) <positive_fragment>
 
-Most of the typing judgements are uncontroversial in a linearly typed setting. The interesting additions in #ln are _newstack_, _static function_, and the two closures.
-The first addition is _newstack_. As the name suggests, _newstack_ is an atomic value for an empty stack.
-Next up is _linear pointer_, which, if we remember the kind judgement for the linear pointer ($(A : omega) / (square A : known)$) is a pointer to a stack.
-Finally we have the three lambdas: _static function_, _stack closure_, and _linear closure_.
+Most of the typing judgements are uncontroversial in a linearly typed setting.
+The interesting additions in #ln are _newstack_, _static function_, and the two
+closures. The first addition is _newstack_. As the name suggests, _newstack_ is
+an atomic value for an empty stack. Next up is _linear pointer_, which, if we
+remember the kind judgement for the linear pointer ($(A : omega) / (square
+A : known)$) is a pointer to a stack. 
 
-To be able to easily understand them, we will give them operational meaning.
-Each lambda can be placed in one of three groups; goto, procedural, and higher-order.
-The first is goto, which is the most primitive, it performs a one-way transfer of control.
-We can imagine that the function $f : *(A times.circle *B)$ represents
-a function that $A$ as an argument, produces a $B$ and continues with it.
-The issue is that $*B$ can not have its own saved variables in an environment (its stack).
-This is the essence of goto-programming.
-//TODO: Sebastian: continue with stack closure
-
-// Importantly, the goto style can not capture free variables, hence the environment must be empty. Because of the lack of free variables, we call it _static function_ rather than _static closure_. The _stack closure_ corresponds to a procedure, often referred to as function. 
 
 - _static function_: goto
-- _stack closure_: procedural (first-order)
+- _stack closure_: procedural
 - _linear closure_: higher-order
 
 #figure(caption: [Typing rules for commands in #ln], negative(true)) <negative_fragment>
