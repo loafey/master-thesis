@@ -19,13 +19,12 @@ most languages, and may be subject to change in the future if need be!
 
 === Function calls
 When functions are called there are requirements regarding these stacks that must be fulfilled:
-#indent(12)[
+#indent(10)[
   - Register `R15` is set to an address which points to a valid stack.
   - The address in `R15` must be a multiple of 8 (4 on a 32 bit system).
   - The stack size should be big enough for all variables in the function.
   - When the stack is empty, the origin pointer for the stack should be equal to
     the address subtracted with the stack's size.
-  - Only one stack is in use at a given moment.
   - All expected arguments exist on the stack.
   - All arguments are properly aligned.
 ]
