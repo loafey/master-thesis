@@ -78,13 +78,6 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
 #let cBad03 = csv("benches/C Bad O3.csv")
 #let cBadO0 = csv("benches/C Bad O0.csv")
 
-#let style = (stroke: black, fill: rgb(0, 0, 200, 75))
-#let m = 1000;
-#let fn1 = (
-  ("Lithium", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * m),
-  ("C O0", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * m),
-  ("C O3", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * m),
-)
 // #figure(
 //   caption: [
 //     Benchmark comparing the average time needed to calculate the
@@ -119,6 +112,14 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
 //     }),
 //   ),
 // )
+
+#let style = (stroke: black, fill: rgb(0, 0, 200, 75))
+#let m = 1000;
+#let fn1 = (
+  ("Lithium", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * m),
+  ("C O0", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * m),
+  ("C O3", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * m),
+)
 
 #figure(
   caption: [
@@ -155,15 +156,54 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
   ],
 )<fibbo-benchmarks>
 
+#let fn2 = (
+  ("Lithium", x => float(lithiumResults.at(calc.floor(x + 1)).at(3)) * (m / 10)),
+  ("C O0", x => float(cBadO0.at(calc.floor(x + 1)).at(3)) * m),
+  ("C O3", x => float(cBad03.at(calc.floor(x + 1)).at(3)) * m * 2.3),
+)
+#let overlap = canvas({
+  import draw: *
+  set-style(
+    axes: (stroke: .2pt, tick: (stroke: .2pt)),
+    legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
+  )
+  plot.plot(
+    y-mode: "log",
+    size: (12, 2),
+    x-tick-step: 100,
+    y-tick-step: 100,
+    y-min: 5,
+    y-max: m,
+    axis-style: "left",
+    legend: none,
+    {
+      let domain = (30, 40)
+
+      for (title, f) in fn2 { plot.add(f, domain: domain, label: title) }
+    },
+  )
+})
+
 As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
 large gap between the version written in #ln and the version written in C.
+However, while the #ln version is some magnitudes slower, we can see that
+the exponential growth in execution time is almost the same accross
+all three versions.
 
+This can be observed even more clearly if we overlap the benchmakrs over
+each other, and then we can see that the un-opitimized C version grows
+the same way as the #ln version, while the optimized C version is slightly
+more efficient.
+#figure(caption: [Benchmarks overlapped], overlap)
 
-This can be attributed to several factors but the two most significant ones
-are most likely that #ln is currently not optimized at all, and its calling
-convention is heavier compared to System V#todo[source].
-Also worth to note that this is not the most performant implemention you can create in
+The performance difference we can see @fibbo-benchmarks
+can be attributed to several factors but the two most significant ones
+are most likely that #ln is currently not optimized at all, and it
+genereates more code than is likely necessary. Also worth to note
+that the calling convention is heavier compared to System V#todo[source] which
+C uses, and that this is not the most performant implemention you can create in
 C. A version using looping and some basic memoization is much more performant.
+#bigTodo([Rewrite me])
 
 // #let haskellO0 = csv("benches/Haskell O0.csv")
 // #let haskellO2 = csv("benches/Haskell O2.csv")
