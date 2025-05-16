@@ -194,7 +194,7 @@ This can be observed even more clearly if we overlap the benchmakrs over
 each other, and then we can see that the un-opitimized C version grows
 the same way as the #ln version, while the optimized C version is slightly
 more efficient.
-#figure(caption: [Benchmarks overlapped], overlap)
+#figure(caption: [Benchmarks from @fibbo-benchmarks overlapped], overlap)
 
 The performance difference we can see @fibbo-benchmarks
 can be attributed to several factors but the two most significant ones
