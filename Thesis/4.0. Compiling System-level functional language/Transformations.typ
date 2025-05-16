@@ -21,9 +21,8 @@ stack closure by an explicit pair of static closure and environment.
 
 It is critical for first-order programs to identify the call stack, that is,
 the point where a procedure should return control when finishing execution. In
-the case of #ln it is about where a procedure should continue when finishing
-execution because rather than where a procedure should return control, it is
-about where a procedure should continue execution. The first step in this
+#ln, rather than returning control it is about where a procedure should continue when finishing
+execution. The first step in this
 process is making pointers to stacks explicit. This phase achieves this by
 converting the type $not A$ to $square (~A)$, and similarly, values are
 transformed in the following manner: $(lambda^not x. c): not A => square
