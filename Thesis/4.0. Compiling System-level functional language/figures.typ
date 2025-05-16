@@ -312,9 +312,9 @@
       [Cases on the top of the stack,],
       [$#compilation_scheme($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
         = #code_box(
-          $"if iszero"(r_1)$,
-          $quad "then" #sem[$c_1$]_(rho, x |-> r_s)$,
-          $quad "else" #sem[$c_2$]_(rho, y |-> r_s)$,
+          $"if" & "iszero"(r_1)\
+          & "then" #sem[$c_1$]_(rho, x |-> r_s)\
+          & "else" #sem[$c_2$]_(rho, y |-> r_s)$,
         )$
       ],
     ),
