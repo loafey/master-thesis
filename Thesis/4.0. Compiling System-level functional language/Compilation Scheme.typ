@@ -125,6 +125,8 @@ similary to their assembly counterparts.
     ),
     caption: [
       Translations between pseudo operands and x86 operands.
+      SP stands for Stack Pointer, and points to the top of the current stack.
+      SSP stands for Stack Save Pointer is used as backup register for some fragments.
     ],
   )
 }
