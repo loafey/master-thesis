@@ -81,8 +81,8 @@ and due to linearity one may only use it once!
 To combat this issue we would want to introduce exponentials.
 
 Exponentionals would let a user reuse a value multiple times opening up
-for some much needed expressiveness. Take fibbonacci again with some imagitive
-syntax introducing a `!` kind:
+for some much needed expressiveness. Take fibbonacci again with some imaginative
+syntax introducing a `!` kind, similar to #todo[reference Change the World]:
 
 #block(
   breakable: false,

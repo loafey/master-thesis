@@ -6,7 +6,7 @@
   [
     #text(weight: "bold", size: 23pt, font: "FreeSans", top-edge: 8pt)[
       Towards a System Level Functional\
-      Langauge: #ln
+      Language: #ln
     ]
 
     #v(2cm)
