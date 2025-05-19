@@ -2,16 +2,20 @@
 
 #let singleStackFrame = figure(
   kind: image,
-  drawStack(
+  grid(
+    columns: (0.5fr, 1fr, 0.5fr),
     [],
-    [`a` ],
-    [`0x40`],
-    [],
-    [`b` ],
-    [`0x38`],
-    [spilling $->$],
-    [ . . . ],
-    [`0x30`],
+    drawStack(
+      [],
+      [`a` ],
+      [`0x40`],
+      [],
+      [`b` ],
+      [`0x38`],
+      [spilling $->$],
+      [ . . . ],
+      [`0x30`],
+    ),
   ),
   caption: [
     A stack frame containing the variables `a` and `b`,
