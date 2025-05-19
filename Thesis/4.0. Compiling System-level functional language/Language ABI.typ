@@ -113,17 +113,20 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     columns: rep(len, 1fr),
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
     f(type: "tag", 2, `$42`), f(type: "pad", 6, `padding`),
-    f(type: "tag", 4, `$777`), f(4, "...")
+    f(type: "tag", 4, `$777`), f(4, type: "pad", `padding`)
   )
   #[
     As can be seen we are padding by 6. Theoretically we only need to pad by
     2 bytes here for a 4 byte integer, as 4 is of course divisible by 2.
     The reason this is done is to both to simpilfy the compilation process,
     and to simplify the needed code for any given pop and push.
-    If a pop/push can assume that the stack pointer is already
-    properly aligned then no extra calculations nor instructions are needed,
-    and thus we always pad to an address space of 8.
-
+    Notice here that we are also padding after the 4 byte integer.
+    #text(green)[A pop/push]
+    #text(red)[
+      If a pop/push can assume that the stack pointer is already
+      properly aligned then no extra calculations nor instructions are needed,
+      and thus we always pad to an address space of 8.
+    ]
     The reason padding is needed is because most, if not all, computer architectures
     assume that memory is stored in an aligned way. If a value consists of 8 bytes,
     it needs to be stored on an address divisible by 8, if its 4 bytes, the address needs
