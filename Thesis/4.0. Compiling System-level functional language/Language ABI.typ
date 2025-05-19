@@ -125,7 +125,9 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     and thus we always pad to an address space of 8.
 
     The reason padding is needed is because most, if not all, computer architectures
-    assume that memory is stored in an aligned way. While x86-64 allows
+    assume that memory is stored in an aligned way. If a value consists of 8 bytes,
+    it needs to be stored on an address divisible by 8, if its 4 bytes, the address needs
+    to be divisible by 4, and so on and so forth. While x86-64 allows
     unalligned memory interactions for some instructions, this is often heavily
     discouraged because it can potentially harm performance, as it potentially
     requires more clock cycles, and can hurt the memory sections cache friendlines.
