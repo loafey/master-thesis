@@ -121,7 +121,14 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     The reason this is done is to both to simpilfy the compilation process,
     and to simplify the needed code for any given pop and push.
     If a pop/push can assume that the stack pointer is already
-    properly aligned then no extra calculations nor instructions are needed.
+    properly aligned then no extra calculations nor instructions are needed,
+    and thus we always pad to an address space of 8.
+
+    The reason padding is needed is because most, if not all, computer architectures
+    assume that memory is stored in an aligned way. While x86-64 allows
+    unalligned memory interactions for some instructions, this is often heavily
+    discouraged as it harms performance, as it requires more clock cycles,
+    and can hurt the memory sections cache friendliness.#todo[kan skrivas bättre]
   ]
 
   The memory layout for product- and sum-types is also relatively simple.
