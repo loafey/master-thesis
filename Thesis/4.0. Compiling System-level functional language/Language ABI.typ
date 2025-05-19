@@ -1,5 +1,4 @@
-#import "../Prelude.typ": todo, drawStack, indent, bigTodo
-#import "../Prelude.typ": ln
+#import "../Prelude.typ": *
 
 == Language ABI <languageAbiChapter>
 As with any language, one should define a Application Binary Interface (ABI).
@@ -161,5 +160,10 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   Similar alignment should be done when storing variables on the system stack,
   but this is not enforced by this ABI, as the system stack is
   not used when passing variables.
+
+
+  #bigTodo[Snacka om \ #sem($A #sym.times.circle ~B$) \ #sem($~A$) \ add JP mem size func \ add all types]
 ]
+
+
 
