@@ -26,7 +26,7 @@ following operators and syntax in mind:
 
 - The scheme uses a mix of meta syntax, i.e, instructions that does not generate
   any code, and instructions that generate code. We differentiate meta syntax
-  with instructions using double quotes.
+  from instructions using double quotes.
 
 The instructions that do generate code, such as $push x$, work
 similary to their assembly counterparts.
