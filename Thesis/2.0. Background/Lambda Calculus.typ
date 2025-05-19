@@ -133,17 +133,23 @@ once_. This means the typing relation $Gamma tack e : sigma$ no longer only
 requires that the set of variables in $e$ are a subset of $Gamma$, but rather
 that the set of variables in $e$ is $Gamma$.
 
-This means the typing rule App in @stlc_typing is no longer valid. In a linear type system App would be:
+This means the typing rule App in @stlc_typing is no longer valid. The same goes for the Var, also in @stlc_typing. 
 
-#let linear_app = prooftree(rule(
+#let linear_app = prooftree(rule(name: "App",
   $Gamma, Delta tack e_1 e_2 : tau$,
   $Gamma tack e_1 : sigma lollipop tau$,
   $Delta tack e_2 : sigma$,
 ))
 
-#figure(caption: [Application rule in a linear type system], flex(linear_app))
+#let linear_var = prooftree(rule(name: "Var", $dot, x: A tack x: A$))
 
-The arrow $lollipop$ is called lollipop and is used to differentiate between
-linear and non-linear terms.
+#figure(caption: [Application and Var rule in a linear type system], flex(linear_app, linear_var))<linear_rules>
+
+The linear rule for App is shown on the left in @linear_rules. Note how the contexts for $e_1$ and $e_2$ are now disjoint, i.e. $Gamma$
+and $Delta$ must not share any variables. This is a great restriction of the
+system as many simple terms are no longer valid. 
+Similarily, the rule for Var, also depicted in @linear_rules differs from its
+simply typed variant, which now requires that the context contains only the
+variable $x: A$.
 
 === Polarised linear logic <PolarisedLinearLogic> #todo[Move this to 3.0]
