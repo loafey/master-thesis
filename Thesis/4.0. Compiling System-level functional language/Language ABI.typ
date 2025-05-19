@@ -20,8 +20,8 @@ most languages, and may be subject to change in the future if need be!
 When functions are called there are requirements regarding these stacks that must be fulfilled:
 
 #indent[
-  - Register `R15` is set to an address which points to a valid stack.
-  - The address in `R15` must be a multiple of 8 (4 on a 32 bit system).
+  - Register `R15`(`SP`) is set to an address which points to a valid stack.
+  - The address in `R15`(`SP`) must be a multiple of 8 (4 on a 32 bit system).
   - The stack size should be big enough for all variables in the function.
   - When the stack is empty, the origin pointer for the stack should be equal to
     the address subtracted with the stack's size.
