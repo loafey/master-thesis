@@ -18,7 +18,7 @@ the language's Application Binary Interface (ABI). See @languageAbiChapter
 for details about that.
 
 Similarily to other languages #ln uses stack frames for function calls,
-but unlike other languages, #ln only uses one during normal execution.
+but unlike other languages, #ln only uses one stack frame during normal execution.
 This is possible due to the finegrained control x86-64 gives a developer
 and the fact that #ln strictly uses CPS.
 Every function call can be tail call optimized as they always end
