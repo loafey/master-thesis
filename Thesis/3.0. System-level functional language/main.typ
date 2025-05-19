@@ -6,17 +6,18 @@
 
 The intended use of #ln is as a compiler intermediate representation for
 functional languages, similar to that of GHC Core. #todo[CITE GHC CORE]
-#ln diverges from most functional language intermediate representations in
+#ln diverges from GHC Core and most functional language intermediate representations in
 that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
-inspiration from linear types, which is based on Girard's linear logic.
+inspiration from linear types.
 
 An important aspect of a system-level language is the representation of types
 and values. We want the language to be efficient, and thus, the representation
 must match the computer's representation of memory. For instance, in many
 functional programming languages values are boxed, i.e, placed behind pointers.
 In a system-level language this would be counter-productive because the control
-over memory should be in the hands of the developer.
+over memory should be in the hands of the developer. Because linear types
+require variables to be used exactly once, the need for immutability is relaxed.
 
 == Grammar
 
@@ -25,8 +26,9 @@ the language looks. The grammar of #ln is depicted in @slfl_grammar.
 
 #figure(caption: [Grammar of #ln], align(left, complete_grammar))<slfl_grammar>
 
-We will start by showing an example, and then explain the grammar.
-The example will assume $A$ and $B$ are concrete types which are inhabited by the values $a$ and $b$ respectively.
+Before describing the grammar, we will show an example of the function swap.
+The example will assume $A$ and $B$ are concrete types which are inhabited by
+the values $a$ and $b$ respectively.
 
 $
   & "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
@@ -40,10 +42,9 @@ A module consists of a list of definitions, where a definition is a top-level
 function. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
 piece. Commands come into play in the bodies of lambdas. Commands consist of
-let-bindings, case-expressons, or function calls. Notably, the only way to
-terminate a chain of commands is by a function call ($z(v)$), which ensures
+let-bindings, case-expressons, or function calls. Note that the only way to
+terminate a sequence of commands is by a function call $z(v)$. This ensures
 that #ln is written in continuation-passing style.
-
 
 == Continuation-passing Style
 _Continuation-passing style_ (CPS) is a style where control is passed
@@ -70,50 +71,48 @@ Contrast it to the CPS version, where we use $bot$ to denote a function that ter
 
 A natural question that comes to mind now is why we want continuation-passing
 style? An immediate benefit of CPS is that every function call is a tail call,
-which enables tail call optimization for every function call. Another benefit
+which ensures that tail call optimization (see @CompilingCompilationTarget) #todo[consider moving to footnote] is always possible. A second benefit of CPS
 is that the order of evaluation is made explicit by the syntax.
 If we consider the following program written in normal style:
 
 #align(
   center,
-  $"foo" = lambda x. & "let" y = "bar"(x) \ & "in" "let" z = "baz"(x) \ & "in" y + z$,
+  $& "let" y = "bar"(x) "in" \ & "let" z = "baz"(x) "in" \ & y + z$,
 )
 
 Is $y$ evaluted first or is $z$ evaluted first? The choice would be up to the
-compiler. If we look at the same function in CPS we will see that the
+specification. If we look at the same function in CPS we will see that the
 evaluation order is determined by the order of the function calls.
 
 #align(
   left,
   [
 
-    $> lambda x. lambda k. & "bar"(x, lambda y. "baz"(x, lambda z. k(y+z)))$
+    + $"bar"(x, lambda y. "foo"(x, lambda z. k(y+z)))$
+    + $"foo"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
 
-    Here $"bar"(x)$ has to be evaluated first
-
-    $> lambda x. lambda k. & "baz"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
-
-    And in this one $"baz"(x)$ has to be evaluted first
+    In the first one, because the second argument of bar is in normal-form
+    #footnote[A term is in normal-form if it can not be evaluated any further],
+    the only possible execution order is to evaluate $"bar"(x,...)$.
+    Conversely, in the second one $"foo"(x,...)$ has to be evaluted first, for the same reason.
   ],
 )
 
 == Kinds & types
 
-The types in #ln roughly correspond to those of polarised linear logic.
+#ln is based on a variant of polarised linear logic. It is essentially Lafont's
+intuitionistic linear logic (ILL) @lafont1988linear, where $A lollipop B$ is replaced
+by $not A$.
 
 #let pll_types = {
-  $A, B : : = & top | bot | x | not A | A times.circle B | A plus.circle B | exists x. A | \
-  & circle | square A | *A | ~A$
+  $A, B : : = & top | bot | x | not A | A times.circle B | A plus.circle B | exists x. A | circle | square A | *A | ~A$
 }
-
+\
 #align(center, pll_types)
 
-The first row are the types that correspond to polarised linear logic. The second row are the types that are added on top
-of polarised linear logic. The circle ($circle$), called _empty stack_ is
-a primitive type added to #ln. The box type constructor ($square$) represents
-a pointer to a type. The last two are versions of negation ($not$) #todo[förklara lite mer här]. The meaning
-of each type and why they are added on top of polarised linear logic will make sense
-when we introduce kinds. #todo[REWRITE paragraph]
+There are four new constructs in #ln that extend ILL. These are: _empty stack_
+($circle$), _linear pointer_ ($square$), _static function_ ($*A$), and _stack
+closure_ ($~A$). 
 
 At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
@@ -123,29 +122,24 @@ kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
 
 #todo[write about the rules except lambdas]
 It is forbidden to construct a pair of two stacks. The kinds in a sum must match
-//TODO: Sebastian: explain the rules
+#todo[explain the rules] //TODO: Sebastian: explain the rules 
 
 Finally we have the three lambdas: _static function_, _stack closure_, and _linear closure_.
-To be able to easily understand them, we will give them operational meaning.
-Each lambda can be placed in one of three groups; goto, procedural, and higher-order.
-The first, goto, is the most primitive, it performs a one-way transfer of control.
-If we consider the function $f : *(A times.circle *B)$. From $f$ we can call
-the continuation $*B$, but $f$ itself can not capture any free variables.
-#todo[why]
-Because $*A$ can not capture any variables we call it _static function_ rather
-than _static closure_.
 
-// Importantly, the goto style can not capture free variables, hence the
-// environment must be empty. Because of the lack of free variables, we call it
-// _static function_ rather than _static closure_. The _stack closure_
-// corresponds to a procedure, often referred to as function. 
+Each lambda can be placed in one of three groups; goto, procedural, and
+higher-order. The first, goto, is the most primitive, it performs a one-way
+transfer of control. Consider the function $f : *(A times.circle *B)$. From $f$
+we can call the continuation $*B$, but $*B$ itself does not contain anything
+other than the stack $B$. Every captured variable would need to be made
+explicit in $B$, and hence, not be captured. This is why we call $*B$ a
+_static function_ rather than a _static closure_. 
 
 The second style, procedural, enables just that, procedures. The type signature
 $f : *(A times.circle ~B)$ now exactly corresponds to the C function signature
-$B space f(A space a)$. The type $~A$ corresponds to a stack frame that accepts
-$A$ as a return value to continue with, and because the environment is a stack,
+$B space f(A space a)$. The type $~B$ corresponds to a stack frame that accepts
+$B$ as a return value to continue with, and because the environment is a stack,
 remember the kind rule $(~A : omega)$, there is a single chosen stack to
-continue with.
+continue on.
 
 Finally we have higher-order programming, which unfortunately
 is not possible with $*$ and $~$. The type $*(A times.circle ~B
