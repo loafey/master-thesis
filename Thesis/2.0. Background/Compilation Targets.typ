@@ -34,7 +34,7 @@ When you directly target an assembly language portability suffers as is to
 be expected. You not only have to target different assembly languages
 for different CPU architectures, you will also have to cater to the operating system
 you are targeting. For instance, on a \*nix operating system, you can almost
-always rely upon some implemention of libc, be it glibc or musl,
+always rely upon some implemention of the C Standard Library (libc), be it glibc or musl,
 or system calls if more power is needed, while on Windows you have to instead
 depend on the provided libraries to interact with the rest of the system.
 A simple act such as printing might look wildly different
