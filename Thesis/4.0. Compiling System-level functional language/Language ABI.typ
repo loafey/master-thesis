@@ -120,13 +120,17 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     2 bytes here for a 4 byte integer, as 4 is of course divisible by 2.
     The reason this is done is to both to simpilfy the compilation process,
     and to simplify the needed code for any given pop and push.
+
     Notice here that we are also padding after the 4 byte integer.
-    #text(green)[A pop/push]
-    #text(red)[
-      If a pop/push can assume that the stack pointer is already
-      properly aligned then no extra calculations nor instructions are needed,
-      and thus we always pad to an address space of 8.
-    ]
+    A pop/push should always be able to expect that it is currently
+    aligned, and this is done to minimize the amount of instructions
+    needed when interacting with the stack. If a function is called through FFI
+    for instance, it has no way of knowing if the stack pointer
+    is currently aligned unless it does some arithetics to calculate this,
+    which would be a waste of computation time. For this reason,
+    all pushes pad to make sure that the next stack location is
+    in an address divisible by 8 (would be 4 on a 32-bit platform).
+
     The reason padding is needed is because most, if not all, computer architectures
     assume that memory is stored in an aligned way. If a value consists of 8 bytes,
     it needs to be stored on an address divisible by 8, if its 4 bytes, the address needs
