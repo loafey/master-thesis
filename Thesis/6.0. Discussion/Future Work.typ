@@ -7,12 +7,12 @@ are of course more things that can be added to said language.
 
 === Allow using the system-stack for stacks
 In the current implementation of #ln, all dynamically created stacks
-are heap-allocated using GLIBC's malloc.
+are heap-allocated using glibc's malloc.
 This can potentially lead to unnecessary overhead, and can be a blockage
 for using the platform on more restricted platforms such
 as embedded devices. To alleviate this, giving the developer the option
 to allocate dynamic stacks on the system-stack would work (maybe as a compiler flag),
-and would remove the reliance on the libraries such as GLIBC.
+and would remove the reliance on the libraries such as glibc.
 
 To implement this the language would need to include a runtime which can keep
 track of which memory regions on the system-stack are currently in use, as to make sure
@@ -41,10 +41,10 @@ implement properly.
 === System Calls
 Due to #ln being a system-level language, it might be useful to have the ability
 to directly make system calls to interact with the operating system.
-This allow for the possibility of not relying on, for example, LIBC,
-because the behaviour one would need from LIBC could be re-implemented
+This allow for the possibility of not relying on, for example, libc,
+because the behaviour one would need from libc could be re-implemented
 in the language. This would in theory make the language more portable,
-as it would be easier to port it to systems where LIBC might not be available.
+as it would be easier to port it to systems where libc might not be available.
 System calls are used under the hood in the language, but it is not something
 that is exposed to a user of the language.
 
@@ -53,7 +53,7 @@ Similarly to system calls, proper support for Foreign Function Interfaces (FFI)
 would permit the language to interact with software outside.
 A prime example of this would be libraries written in other languages,
 or even libraries writen in #ln. Just like system calls, FFI is currently
-used under the hood for printing and the likes using LIBC, but this is not
+used under the hood for printing and the likes using libc, but this is not
 exposed to a user of the language.
 
 === Exponentionals

@@ -35,7 +35,7 @@ guaranteed when calling functions using
 Foreign Function Interfaces (FFI) calls, as the function that
 is being called might allocate stack frames. While FFI
 is not exposed to the user, it is still used internally at the time of writing,
-as LIBC is used for printing and allocating memory on the heap.
+as libc is used for printing and allocating memory on the heap.
 
 #grid(
   columns: (1fr, 0.8fr),

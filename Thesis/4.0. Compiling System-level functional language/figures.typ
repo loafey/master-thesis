@@ -288,7 +288,7 @@
       [Stack de-allocation],
       [
         Deallocates the current stack. This is currently implemented
-        using GLIBC's `free`.
+        using glibc's `free`.
       ],
       $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
       = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,

@@ -43,7 +43,7 @@ and returns. This code pointer points to the actual function which can then be p
 and called when need be.
 In this manner top-level functions act much more like constants.
 
-When FFI calls #todo([introduce]) occur, such as calling a LIBC function like `printf`,
+When FFI calls #todo([introduce]) occur, such as calling a libc function like `printf`,
 this function will allocate a stack frame on top of the single stack frame, and execute like
 it would normally do. The result will then be written into a fitting register
 or variable on the system stack, or it will be pushed onto the current stack.
