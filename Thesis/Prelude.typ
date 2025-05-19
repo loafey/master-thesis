@@ -19,22 +19,10 @@
   ),
 )
 
-#let indent(hg, content) = {
-  let base = 100%
-  grid(
-    columns: (10pt, 1fr),
-    rect(
-      height: hg * 10pt,
-      fill: tiling(
-        size: (12pt, 3pt),
-        [
-          #place(line(stroke: rgb(0, 0, 0, 65), start: (0%, 0%), end: (base, base)))
-          #place(line(stroke: rgb(0, 0, 0, 65), start: (0%, base), end: (base, 0%)))
-        ],
-      ),
-    ),
+#let indent(content) = {
+  box(
     content,
-    inset: (left: 16pt)
+    inset: (left: 10pt, right: 10pt, top: 6pt, bottom: 6pt),
   )
 }
 
