@@ -127,8 +127,8 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     The reason padding is needed is because most, if not all, computer architectures
     assume that memory is stored in an aligned way. While x86-64 allows
     unalligned memory interactions for some instructions, this is often heavily
-    discouraged as it harms performance, as it requires more clock cycles,
-    and can hurt the memory sections cache friendliness.#todo[kan skrivas bättre]
+    discouraged because it harms performance, as it requires more clock cycles,
+    and can hurt the memory sections cache friendlines.#todo[kan skrivas bättre]
   ]
 
   The memory layout for product- and sum-types is also relatively simple.
