@@ -71,16 +71,16 @@ similary to their assembly counterparts.
 
       ```
       if izero(OP)
-        then C1
-        else C2
+        then C₁
+        else C₂
       ```,
       ```asm
       mov OP, %R10
       cmp $0, %R10
       jnz lbl
-      C1 # codeblock
+      C₁ # codeblock
       lbl:
-      C2 # codeblock
+      C₂ # codeblock
       ```,
 
       $jmp L$,
