@@ -145,7 +145,7 @@ types with named fields or constructors would be
 useful for more complex types. It would also be required for recursive
 types such as linked lists, which are currently not representable.
 
-It would also be beaneficial to have access to contiguous data types
+It would also be beneficial to have access to contiguous data types
 such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
 
@@ -157,7 +157,7 @@ you operate on it. Take this function for example: ```asm
 plus1 :: [Int] -> [Int]
 plus1 xs = map (+1) xs
 ```
-In Haskell any list you input into this function will be duplicatted, returning
+In Haskell any list you input into this function will be duplicated, returning
 a new list while keeping the original, in case you need it for whatever reason.
 If not, it will be garbage collected at the next collection pass.
 

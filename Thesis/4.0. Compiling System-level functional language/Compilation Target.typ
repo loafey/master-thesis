@@ -14,7 +14,7 @@ passed to these functions. For this explicit need of control x86-64 was a fittin
 Utilizing the flexibity given by x86-64, #ln gains a lot of control over how the calling
 convention is implemented and how the stack, registers and memory in general is used.
 In other words, it gives us the ability to have complete control over
-the languages Application Binary Interface (ABI). See @languageAbiChapter
+the language's Application Binary Interface (ABI). See @languageAbiChapter
 for details about that.
 
 Similarily to other languages #ln uses stack frames for function calls,
