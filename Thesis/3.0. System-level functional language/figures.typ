@@ -1,5 +1,8 @@
 #import "../Prelude.typ": *
 
+#let fatone = math.bold[1]
+#let fatzero = math.bold[0]
+
 #let grammar(named, ..rules) = {
   let arr = rules.pos()
   linebreak()
@@ -28,8 +31,8 @@
 #let pat = grammar($p$, $()$, $x$, $@t, y$, $p, p'$, $square p$)
 #let type = grammar(
   $t, t'$,
-  $top$,
-  $bot$,
+  $fatone$,
+  $fatzero$,
   $circle$,
   $x$,
   $not t$,
@@ -104,7 +107,7 @@
         note: "linear pointer",
       )
     ],
-    [#judge($$, $x : A tack x: A$, note: "var")
+    [#judge($$, $dot, x : A tack x: A$, note: "var")
     ],
 
     [
@@ -134,7 +137,7 @@
     ],
 
     [
-      #judge("", $dot tack () : top$, note: "unit")
+      #judge("", $dot tack () : fatone$, note: "unit")
     ],
   )
 }
@@ -199,7 +202,7 @@
     [
       #judge(
         $Gamma tack c$,
-        $Gamma, z: top tack "let" () = z; c$,
+        $Gamma, z: fatone tack "let" () = z; c$,
         note: "discard",
       )
     ],
@@ -256,7 +259,7 @@
 }
 
 #let unit = {
-  judge($$, $top: known$, note: [top])
+  judge($$, $fatone: known$, note: [top])
 }
 
 #let existential_constant = {
@@ -270,7 +273,8 @@
   judge($$, $alpha : omega$, note: [type var])
 }
 
-#let bottom = { judge($$, $bot : known$, note: [bottom]) }
+
+#let bottom = { judge($$, $#math.bold[0] : known$, note: [bottom]) }
 
 #let kind_judgements(include_text) = {
   grid(

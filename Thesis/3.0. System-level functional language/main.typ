@@ -105,14 +105,14 @@ intuitionistic linear logic (ILL) @lafont1988linear, where $A lollipop B$ is rep
 by $not A$.
 
 #let pll_types = {
-  $A, B : : = & top | bot | x | not A | A times.circle B | A plus.circle B | exists x. A | circle | square A | *A | ~A$
+  $A, B : : = & fatone | fatzero | x | not A | A times.circle B | A plus.circle B | exists x. A | circle | square A | *A | ~A$
 }
 \
 #align(center, pll_types)
 
 There are four new constructs in #ln that extend ILL. These are: _empty stack_
 ($circle$), _linear pointer_ ($square$), _static function_ ($*A$), and _stack
-closure_ ($~A$). 
+closure_ ($~A$). The latter two are variants of $not A$.
 
 At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
@@ -120,13 +120,16 @@ kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
 
 #figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
 
-#todo[write about the rules except lambdas]
-It is forbidden to construct a pair of two stacks. The kinds in a sum must match
-#todo[explain the rules] //TODO: Sebastian: explain the rules 
+The kinding rules in @KindRules are mostly self-descriptive, except the three
+negation types, which we will explain in more detail. Some things to keep in mind for the rules are:
 
-Finally we have the three lambdas: _static function_, _stack closure_, and _linear closure_.
+#indent[
++ It is forbidden to construct a pair of two stacks
++ The kinds in a sum type must match
++ Type variables are stacks, which means they can not be used for polymorphism.
+]
 
-Each lambda can be placed in one of three groups; goto, procedural, and
+Each negation can be placed in one of three groups; goto, procedural, and
 higher-order. The first, goto, is the most primitive, it performs a one-way
 transfer of control. Consider the function $f : *(A times.circle *B)$. From $f$
 we can call the continuation $*B$, but $*B$ itself does not contain anything
@@ -157,11 +160,12 @@ is expected, then a type with known length is not allowed, and vice versa.
 
 #ln consists of two fragments:
 
+#indent[
 - _Positive fragment_ describes how things are created. When we talk about
   values we refer to the positive fragment.
-
 - _Negative fragment_: describes how to deconstruct environments of values. We will refer to
   the negative fragment as _commands_.
+]
 
 The typing rules for the positive fragment of #ln is depicted in @positive_fragment
 
@@ -169,15 +173,11 @@ The typing rules for the positive fragment of #ln is depicted in @positive_fragm
 
 Most of the typing judgements are uncontroversial in a linearly typed setting.
 The interesting additions in #ln are _newstack_, _static function_, and the two
-closures. The first addition is _newstack_. As the name suggests, _newstack_ is
+closures. The first addition is _newstack_, which, as the name suggests, is
 an atomic value for an empty stack. Next up is _linear pointer_, which, if we
 remember the kind judgement for the linear pointer ($(A : omega) / (square
 A : known)$) is a pointer to a stack. 
 
-
-- _static function_: goto
-- _stack closure_: procedural
-- _linear closure_: higher-order
 
 #figure(caption: [Typing rules for commands in #ln], negative(true)) <negative_fragment>
 
