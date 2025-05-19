@@ -58,9 +58,9 @@ similary to their assembly counterparts.
       mov  OP,          0(%R15)
       ```,
 
-      $"OP_1" = "OP_2"$,
+      $"OP"_1 = "OP"_2$,
       ```asm
-      mov OP_2, OP_1
+      mov OP₂, OP₁
       ```,
 
       $pop "OP"$,
