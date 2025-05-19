@@ -30,9 +30,9 @@ transformed in the following manner: $(lambda^not x. c): not A => square
 fragment as well. Before calling a function with type $not A$, which after
 conversion has type $square ~A$, we have to unbox the closure. For instance, if
 we have the call $f(x)$ with $f : not A$ and $x : A$. After conversion the call
-would look like this: $"let" square g = f; g(x)$. Since the conversion happens
-from $not A$ to $square ~A$, we can always treat $not A$ as $square ~A$.
-#todo[expand on this bit]
+would look like this: $"let" square g = f; g(x)$. 
+Lastly, since the type $not A$ is transformed to $square ~A$, the type checker
+should allow $square ~A$ where $not A$ is expected.
 
 === Stack Selection
 
