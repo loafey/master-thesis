@@ -60,11 +60,6 @@ we define the needed amount of physical registers.
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
 unknown length, only used to represent the sizes of stacks.
 
-#let type_judgements(show_note) = {
-  positive(show_note)
-  linebreak()
-  negative(show_note)
-}
 
 #let fatone = math.bold[1]
 #let fatzero = math.bold[0]
@@ -107,6 +102,10 @@ unknown length, only used to represent the sizes of stacks.
   eq([#$exists$ intro], $exists alpha. A : omega$, reg($A$), mem($A$)),
   eq([Type variable], $alpha : omega$, 0, 0),
 )
+
+Outside of these types, #ln contains an auxilary type: integer.
+The memory specification of integer is the following:
+#eq([Integer], $int$, 1, `Word`)
 
 === Memory alignment
 #text(red)[
