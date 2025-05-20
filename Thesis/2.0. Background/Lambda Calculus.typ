@@ -133,9 +133,10 @@ once_. This means the typing relation $Gamma tack e : sigma$ no longer only
 requires that the set of variables in $e$ are a subset of $Gamma$, but rather
 that the set of variables in $e$ is $Gamma$.
 
-This means the typing rule App in @stlc_typing is no longer valid. The same goes for the Var, also in @stlc_typing. 
+This means the typing rules App and Var in @stlc_typing are no longer valid.
 
-#let linear_app = prooftree(rule(name: "App",
+#let linear_app = prooftree(rule(
+  name: "App",
   $Gamma, Delta tack e_1 e_2 : tau$,
   $Gamma tack e_1 : sigma lollipop tau$,
   $Delta tack e_2 : sigma$,
@@ -143,13 +144,38 @@ This means the typing rule App in @stlc_typing is no longer valid. The same goes
 
 #let linear_var = prooftree(rule(name: "Var", $dot, x: A tack x: A$))
 
-#figure(caption: [Application and Var rule in a linear type system], flex(linear_app, linear_var))<linear_rules>
+#figure(caption: [Typing rules for App and Var in a linear type system], flex(
+  linear_app,
+  linear_var,
+))<linear_rules>
 
-The linear rule for App is shown on the left in @linear_rules. Note how the contexts for $e_1$ and $e_2$ are now disjoint, i.e. $Gamma$
-and $Delta$ must not share any variables. This is a great restriction of the
-system as many simple terms are no longer valid. 
-Similarily, the rule for Var, also depicted in @linear_rules differs from its
-simply typed variant, which now requires that the context contains only the
-variable $x: A$.
+The linear rules for App and Var are shown in @linear_rules. Note how the
+contexts for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
+not share any variables. Similarily, the rule for Var, also depicted in
+@linear_rules differs from its simply typed variant, which now requires that
+the context contains only the variable $x: A$. This is a great restriction of
+the system as many simple terms are no longer valid. For example, the term in @const_term
+would not have a valid derivation.
 
-=== Polarised linear logic <PolarisedLinearLogic> #todo[Move this to 3.0]
+#figure(
+  caption: [A lambda term that discards a variable],
+  $ lambda x. lambda y. x : sigma -> (tau -> sigma)$,
+)<const_term>
+
+Linear logic, and in turn linear types, solves this issue using _exponentials_.
+Exponentials introduce an explicit way to duplicate and discard variables.
+
+#let exponential_rules = flex(
+  prooftree(rule(name: [Read], $Gamma, !A tack B$, $Gamma, A tack B$)),
+  prooftree(rule(name: [Disc], $Gamma, !A tack B$, $Gamma tack B$)),
+  prooftree(rule(name: [Dupl], $Gamma, !A tack B$, $Gamma, !A, !A tack B$)),
+  prooftree(rule(name: [Promote], $!Gamma tack !A$, $!Gamma tack A$)),
+)
+
+#figure(
+  caption: [Typing rules for exponentials. $!Gamma$ represents a sequence $!A_1,..., !A_n$],
+  exponential_rules,
+)<exponential_rules>
+
+Using the rules in @exponential_rules, it is possible to create terms that discard and 
+reuse variables.
