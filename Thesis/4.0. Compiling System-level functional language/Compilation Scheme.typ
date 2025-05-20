@@ -142,7 +142,7 @@ Once again as specified in @TypesAndValues these fragments are used to destroy v
 The astute reader might observe that matching positive and negative
 fragments "cancel" each other out. Linearity enforces that a positive fragment
 that creates a value,
-must be matched with a negative fragment, which destroys said value.
+must be matched with a negative fragment at some point, which destroys said value.
 
 === Lambda Compilation <lambdaLifting>
 Lambdas are still in the language even in the the last step before compilation,
