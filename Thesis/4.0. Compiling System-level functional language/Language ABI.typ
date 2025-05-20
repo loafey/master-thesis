@@ -53,8 +53,9 @@ are the only time #ln strays from the strict continuation based style.
 === Mapping types to memory
 An important part of any ABI is specifying types are represented.
 The following chapter specifies how much memory the types in #ln uses, and also the amount
-of how many physical are registers needed to store them. Keep in mind that while the ABI
-does not utilize registers at the moment, this might change in the future.
+of how many physical registers are needed to store them. Keep in mind that while the ABI
+does not utilize registers at the moment, this might change in the future, hence why
+we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
 unknown length, only used to represent the sizes of stacks.
@@ -78,6 +79,7 @@ unknown length, only used to represent the sizes of stacks.
     ..(table.cell(colspan: 2, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
   ),
 )
+
 #grid(
   gutter: 4pt,
   eq([Product-type], $A times.circle B: omega$, $1$, $\ quad quad #mem($A$) + #mem($B$) + #sym.infinity$),
