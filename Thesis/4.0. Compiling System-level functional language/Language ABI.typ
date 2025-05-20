@@ -179,7 +179,6 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   but this is not enforced by this ABI, as the system stack is
   not used when passing variables.
 
-
   #bigTodo[Snacka om \ #sem($A #sym.times.circle ~B$) \ #sem($~A$) \ add JP mem size func \ add all types,
 
     $#sem($o$)^("REG") = "Type" -> NN$\

@@ -165,12 +165,12 @@
     ),
     ..cell(
       [Existental introduction],
-      [desc],
+      [Types do not exist at runtime, so $@t$ is removed, and $v_1$ is compiled.],
       $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
     ..cell(
       [Put a stack pointer on the current stack],
-      [desc],
+      [#bigTodo[what]],
       $#compilation_scheme($square v_1$)^known_rho =
       #code_box(
         $sp = sp + 1$,
@@ -275,15 +275,17 @@
     ),
 
     ..cell2(
-      [whu],
-      [waaa],
+      [Existential destruction],
+      [Similarily to existential introduction, this does nothing except
+        bind $x$, destruct $z^alpha$ and compile the next command.],
       $#compilation_scheme($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
       = #code_box($#sem[c]_(rho, x |-> r_0)$)$,
     ),
 
     ..cell2(
-      [whu],
-      [waaa],
+      [Destruct stack pointer],
+      [Does nothing except compile the next command, and give you access to
+        a stack which can then be switched or freed.],
       $#compilation_scheme($"let" square x = z^known; c$)_(rho, z |-> {r_0})
       = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
     ),
@@ -300,7 +302,7 @@
 
     ..cell2(
       [Case expression with variable which is a stack],
-      [waaa],
+      [Pop the top value of the stack and pattern match on it.],
       $#compilation_scheme($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
       = #code_box(
         meta($"let" r_1 = "next"(rho, "int")$),
@@ -313,7 +315,7 @@
 
     ..cell2(
       [Case expression with variable],
-      [Cases on the top of the stack,],
+      [Pattern match on a variable.],
       [$#compilation_scheme($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
         = #code_box(
           $"if" & "iszero"(r_1)\
@@ -325,7 +327,8 @@
 
     ..cell2(
       [Function call],
-      [wooo],
+      [Compile $v$, preparing the stack with needed arguments, and then jmp to
+        $z^known$.],
       $#compilation_scheme($"call" z^known (v)$)_(rho, z |-> {r_0}) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
     ),
