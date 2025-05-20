@@ -73,22 +73,37 @@ unknown length, only used to represent the sizes of stacks.
   breakable: false,
   table(
     columns: (1.01fr, 1fr),
-    ..(table.cell(colspan: 2, name), $#reg(eq) = #a$, $#mem(eq) = #b$),
+    stroke: 0.3pt,
+    inset: (top: 10pt, left: 4pt, bottom: 10pt),
+    ..(table.cell(colspan: 2, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
   ),
 )
 #grid(
-  gutter: 10pt,
-  eq([product], $A times.circle B: omega$, $1$, $#mem($A$) + #mem($B$) + #sym.infinity$),
-  eq([product], $A times.circle B: known$, $#reg($A$) + #reg($B$)$, $#mem($A$) + #mem($B$)$),
-
-  eq([sum], $A plus.circle B: omega$, $1$, $8 + max(mem(A), mem(B)) + #sym.infinity$),
-  eq([sum], $A plus.circle B: known$, $1 + max(reg(A), reg(B))$, $8 + max(mem(A), mem(B))$),
-
-  eq([static function], $*A: known$, 1, `Word`), eq([linear closure], $not A: known$, 1, `Word`),
-  eq([stack closure], $~A: omega$, 1, `Word`), eq([linear pointer], $square A: known$, 1, `Word`),
-  eq([empty stack], $circle: omega$, 1, `Word`), eq([top], $fatone: known$, 0, 0),
-  eq([bot], $fatzero: known$, 0, 0), eq([#$exists$ intro], $exists alpha. A : known$, reg($A$), mem($A$)),
-  eq([#$exists$ intro], $exists alpha. A : omega$, reg($A$), mem($A$)), eq([type var], $alpha : omega$, 0, 0),
+  gutter: 4pt,
+  eq([Product-type], $A times.circle B: omega$, $1$, $\ quad quad #mem($A$) + #mem($B$) + #sym.infinity$),
+  eq(
+    [Product-type],
+    $A times.circle B: known$,
+    $\ quad quad #reg($A$) + #reg($B$)$,
+    $\ quad quad #mem($A$) + #mem($B$)$,
+  ),
+  eq([Sum-type], $A plus.circle B: omega$, $1$, $\ quad quad 8 + max(mem(A), mem(B)) + #sym.infinity$),
+  eq(
+    [Sum-type],
+    $A plus.circle B: known$,
+    $\ quad quad 1 + max(reg(A), reg(B))$,
+    $\ quad quad 8 + max(mem(A), mem(B))$,
+  ),
+  eq([Static function], $*A: known$, 1, `Word`),
+  eq([Linear closure], $not A: known$, 1, `Word`),
+  eq([Stack closure], $~A: omega$, 1, `Word`),
+  eq([Linear pointer], $square A: known$, 1, `Word`),
+  eq([Empty stack], $circle: omega$, 1, `Word`),
+  eq([Top], $fatone: known$, 0, 0),
+  eq([Bot], $fatzero: known$, 0, 0),
+  eq([#$exists$ intro], $exists alpha. A : known$, reg($A$), mem($A$)),
+  eq([#$exists$ intro], $exists alpha. A : omega$, reg($A$), mem($A$)),
+  eq([Type variable], $alpha : omega$, 0, 0),
 )
 
 === Memory alignment
