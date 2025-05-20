@@ -50,13 +50,55 @@ it would normally do. The result will then be written into a fitting register
 or variable on the system stack, or it will be pushed onto the current stack.
 This and along with with top-level functions,
 are the only time #ln strays from the strict continuation based style.
+=== Mapping types to memory
+An important part of any ABI is specifying types are represented.
+The following chapter specifies how much memory the types in #ln uses, and also the amount
+of how many physical are registers needed to store them. Keep in mind that while the ABI
+does not utilize registers at the moment, this might change in the future.
 
-=== Mapping types and stacks to memory
-As the time of writing, #ln does not contain that many different types,
-and currently it is limited to integers, function pointers, stack pointers,
-and product- and sum-types.
-Important to note that both the system stack, and any stacks which are created
-dynamically, grow downwards.
+In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
+unknown length, only used to represent the sizes of stacks.
+
+#let type_judgements(show_note) = {
+  positive(show_note)
+  linebreak()
+  negative(show_note)
+}
+
+#let fatone = math.bold[1]
+#let fatzero = math.bold[0]
+#let reg(x) = $#sem(x)^"REG"$
+#let mem(x) = $#sem(x)^"MEM"$
+#let eq(name, eq, a, b) = block(
+  breakable: false,
+  table(
+    columns: (1.01fr, 1fr),
+    ..(table.cell(colspan: 2, name), $#reg(eq) = #a$, $#mem(eq) = #b$),
+  ),
+)
+#grid(
+  gutter: 10pt,
+  eq([product], $A times.circle B: omega$, $1$, $#mem($A$) + #mem($B$) + #sym.infinity$),
+  eq([product], $A times.circle B: known$, $#reg($A$) + #reg($B$)$, $#mem($A$) + #mem($B$)$),
+
+  eq([sum], $A plus.circle B: omega$, $1$, $8 + max(mem(A), mem(B)) + #sym.infinity$),
+  eq([sum], $A plus.circle B: known$, $1 + max(reg(A), reg(B))$, $8 + max(mem(A), mem(B))$),
+
+  eq([static function], $*A: known$, 1, `Word`), eq([linear closure], $not A: known$, 1, `Word`),
+  eq([stack closure], $~A: omega$, 1, `Word`), eq([linear pointer], $square A: known$, 1, `Word`),
+  eq([empty stack], $circle: omega$, 1, `Word`), eq([top], $fatone: known$, 0, 0),
+  eq([bot], $fatzero: known$, 0, 0), eq([#$exists$ intro], $exists alpha. A : known$, reg($A$), mem($A$)),
+  eq([#$exists$ intro], $exists alpha. A : omega$, reg($A$), mem($A$)), eq([type var], $alpha : omega$, 0, 0),
+)
+
+=== Memory alignment
+#text(red)[
+  As the time of writing, #ln does not contain that many different types,
+  and currently it is limited to integers, function pointers, stack pointers,
+  and product- and sum-types.
+  Important to note that both the system stack, and any stacks which are created
+  dynamically, grow downwards.
+]#todo[rewrite]
 
 Memory wise, the simplest here are function pointers and stack pointers.
 Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
@@ -188,29 +230,3 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   ]
 ]
 
-#let type_judgements(show_note) = {
-  positive(show_note)
-  linebreak()
-  negative(show_note)
-}
-
-#let fatone = math.bold[1]
-#let fatzero = math.bold[0]
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 5pt,
-  ..($A times.circle B: omega$, [product]),
-  ..($A times.circle B: known$, [product]),
-  ..($A plus.circle B: omega$, [sum]),
-  ..($A plus.circle B: known$, [sum]),
-  ..($*A: known$, [static function]),
-  ..($not A: known$, [linear closure]),
-  ..($~A: omega$, [stack closure]),
-  ..($square A: known$, [linear pointer]),
-  ..($circle: omega$, [empty stack]),
-  ..($fatone: known$, [top]),
-  ..($fatzero: known$, [bot]),
-  ..($exists alpha. A : known$, [#$exists$ intro]),
-  ..($exists alpha. A : omega$, [#$exists$ intro]),
-  ..($alpha : omega$, [type var])
-)
