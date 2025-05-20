@@ -103,7 +103,7 @@ unknown length, only used to represent the sizes of stacks.
   eq([Type variable], $alpha : omega$, 0, 0),
 )
 
-Outside of these types, #ln contains an auxilary type: integer.
+Outside of these types, #ln contains an auxilary type: the integer.
 The memory specification of integer is the following:
 #eq([Integer], $int$, 1, `Word`)
 
