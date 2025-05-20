@@ -6,7 +6,7 @@
 At this stage #ln is still a logic language. How do we bridge the gap between logic and machine?
 This section goes into the necessary transformations to turn #ln into machine code.
 
-#ln consists of three intermediate steps; linear closure conversion, stack
+#ln consists of three intermediate steps: linear closure conversion, stack
 selection, and pointer closure conversion. The first step eliminates linear
 closures, the second step ensures that each closure contains a stack to execute
 on, and the third transformation, pointer closure conversion, replaces each
@@ -52,11 +52,7 @@ $
 
 Now the inner closure contains a stack.
 
-//We need to make sure each term consists of zero or one stack for the pointer
-//closure conversion step. If it contains zero stacks, then the environment of
-//the closure will create one using the _newstack_ primitive.
-
-=== Pointer Closure Conversion
+=== Pointer Closure Conversion <PointerClosureConversion>
 
 The goal of this phase is to make the structure of stacks explicit, replacing
 a stack closure by an explicit pair of static function pointer and environment.
