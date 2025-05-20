@@ -188,5 +188,29 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   ]
 ]
 
+#let type_judgements(show_note) = {
+  positive(show_note)
+  linebreak()
+  negative(show_note)
+}
 
-
+#let fatone = math.bold[1]
+#let fatzero = math.bold[0]
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 5pt,
+  ..($A times.circle B: omega$, [product]),
+  ..($A times.circle B: known$, [product]),
+  ..($A plus.circle B: omega$, [sum]),
+  ..($A plus.circle B: known$, [sum]),
+  ..($*A: known$, [static function]),
+  ..($not A: known$, [linear closure]),
+  ..($~A: omega$, [stack closure]),
+  ..($square A: known$, [linear pointer]),
+  ..($circle: omega$, [empty stack]),
+  ..($fatone: known$, [top]),
+  ..($fatzero: known$, [bot]),
+  ..($exists alpha. A : known$, [#$exists$ intro]),
+  ..($exists alpha. A : omega$, [#$exists$ intro]),
+  ..($alpha : omega$, [type var])
+)
