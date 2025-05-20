@@ -113,19 +113,19 @@ fibbonacci.
 By imagining some more syntax, we could simplify this even further!
 If we were to introduce some sugar, for example a `?` operator,
 which could simplify a term such as `let a b = n; let !n1 = a; let !n2 = b; k(n1 + n2)`
-into: `k(n? + n?)`.
+into: `k(*n + *n)`.
 Rewriting fibbonacci with this operator could result in something like this instead:
 ```hs
 fib : *(!int ⊗ ~int)
   = \(n,k) ->
-    case n? == 0 of {
+    case *n == 0 of {
       inl () -> k(0);
       inr () ->
-        case n? == 1 of {
+        case *n == 1 of {
           inl () -> k(1);
           inr () ->
-            fib((n? - 1, \r1 ->
-            fib((n? - 2, \r2 ->
+            fib((*n - 1, \r1 ->
+            fib((*n - 2, \r2 ->
             k(r1 + r2)))))
         }
     }
