@@ -18,6 +18,7 @@ functional programming languages values are boxed, i.e, placed behind pointers.
 In a system-level language this would be counter-productive because the control
 over memory should be in the hands of the developer. Because linear types
 require variables to be used exactly once, the need for immutability is relaxed.
+#todo[Move to 4.x probably]
 
 == Grammar
 
