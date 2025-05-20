@@ -8,7 +8,7 @@
   [],
 
   prooftree(rule(
-    $Gamma tack (lambda x:sigma. space e) : sigma -> tau$,
+    $Gamma tack lambda x:sigma. space e : sigma -> tau$,
     $Gamma, x:sigma tack e: tau$,
     name: "Abs",
   )),
@@ -103,8 +103,8 @@ monomorphic type $A$. We assume that $y : A in Gamma$.
 
 #let id_proof = prooftree(
   rule(
-    $Gamma tack (Lambda alpha. space (lambda x : alpha. space x)) : forall alpha. space alpha -> alpha$,
-    rule($Gamma, alpha tack (lambda x : alpha. space x) : alpha -> alpha$, rule(
+    $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
+    rule($Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$, rule(
       $Gamma, alpha, x : alpha tack x : alpha$,
       $x : alpha in (Gamma, alpha, x : alpha)$,
     )),
@@ -142,10 +142,12 @@ This means the typing rules App and Var in @stlc_typing are no longer valid.
   $Delta tack e_2 : sigma$,
 ))
 
+#let linear_abs = prooftree(rule(name: "Abs", $Gamma tack lambda x. e : sigma -> tau$, $Gamma, x: sigma tack e : tau$))
 #let linear_var = prooftree(rule(name: "Var", $dot, x: A tack x: A$))
 
-#figure(caption: [Typing rules for App and Var in a linear type system], flex(
+#figure(caption: [Typing rules for App, Abs, and Var in a linear type system], flex(
   linear_app,
+  linear_abs,
   linear_var,
 ))<linear_rules>
 
@@ -179,3 +181,7 @@ Exponentials introduce an explicit way to duplicate and discard variables.
 
 Using the rules in @exponential_rules, it is possible to create terms that discard and 
 reuse variables.
+
+=== Polarised Linear Logic
+
+hej
