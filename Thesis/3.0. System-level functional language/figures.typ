@@ -71,149 +71,128 @@
   #module
 ])
 
+#let pair_value = judge(
+  $Gamma tack t: A quad Delta tack u: B$,
+  $Gamma, Delta tack (t,u): A times.circle B$,
+  note: "pair",
+)
+
+#let linear_closure_value = judge(
+  $Gamma, x: A tack c$,
+  $Gamma tack lambda^not x. c : not A$,
+  note: "linear closure",
+)
+
+#let static_function_value = judge(
+  $dot, x: A tack c$,
+  $dot tack lambda^* x. c : *A$,
+  note: "static function",
+)
+#let stack_closure_value = judge(
+  $Gamma, x: A tack c$,
+  $Gamma tack lambda^~x. c: ~A$,
+  note: "stack closure",
+)
+#let linear_pointer_value = judge(
+  $Gamma tack t: A$,
+  $Gamma tack square t: square A$,
+  note: "linear pointer",
+)
+#let var_value = judge($$, $dot, x : A tack x: A$, note: "var")
+#let newstack_value = judge($$, $tack "newstack": circle$, note: "newstack")
+#let inj_left_value = judge(
+  $Gamma tack t: A$,
+  $Gamma tack "inl" t: A plus.circle B$,
+  note: "inj left",
+)
+#let inj_right_value = judge(
+  $Gamma tack t: B$,
+  $Gamma tack "inr" t: A plus.circle B$,
+  note: "inj right",
+)
+#let exists_intro_value = judge(
+  $Gamma, alpha tack t: A$,
+  $Gamma tack angled(A, t): exists alpha. A$,
+  note: $exists #math.italic[intro]$,
+)
+#let unit_value = judge("", $dot tack () : fatone$, note: "unit")
+
 #let positive(toggle) = {
   grid(
     align: left,
     columns: (1fr, 1fr),
     row-gutter: 16pt,
-    [
-      #judge(
-        $Gamma tack t: A quad Delta tack u: B$,
-        $Gamma, Delta tack (t,u): A times.circle B$,
-        note: "pair",
-      )],
-    [#judge(
-        $Gamma, x: A tack c$,
-        $Gamma tack lambda x. c : not A$,
-        note: "linear closure",
-      )
-    ],
-
-    [#judge(
-        $dot, x: A tack c$,
-        $dot tack lambda x. c : *A$,
-        note: "static function",
-      )
-    ],
-    [#judge(
-        $Gamma, x: A tack c$,
-        $Gamma tack lambda^~x. c: ~A$,
-        note: "stack closure",
-      )],
-
-    [#judge(
-        $Gamma tack t: A$,
-        $Gamma tack square t: square A$,
-        note: "linear pointer",
-      )
-    ],
-    [#judge($$, $dot, x : A tack x: A$, note: "var")
-    ],
-
-    [
-      #judge($$, $tack "newstack": circle$, note: "newstack")
-    ],
-    [
-      #judge(
-        $Gamma tack t: A$,
-        $Gamma tack "inl" t: A plus.circle B$,
-        note: "inj left",
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma tack t: B$,
-        $Gamma tack "inr" t: A plus.circle B$,
-        note: "inj right",
-      )
-    ],
-    [
-      #judge(
-        $Gamma, alpha tack t: A$,
-        $Gamma tack angled(A, t): exists alpha. A$,
-        note: $exists #math.italic[intro]$,
-      )
-    ],
-
-    [
-      #judge("", $dot tack () : fatone$, note: "unit")
-    ],
+    pair_value, linear_closure_value,
+    static_function_value, stack_closure_value,
+    linear_pointer_value, var_value,
+    newstack_value, inj_left_value,
+    inj_right_value, exists_intro_value,
+    unit_value,
   )
 }
+
+#let stack_call_command = judge(
+  $Gamma tack t: A$,
+  $Gamma, z: ~A tack "call"^~ z(t)$,
+  note: $#math.italic[call]^~$,
+)
+
+#let static_call_command = judge(
+  $Gamma tack t: A$,
+  $Gamma, z: *A tack "call"^* z(t)$,
+  note: $#math.italic[call]^*$,
+)
+
+#let linear_call_command = judge(
+  $Gamma tack t: A$,
+  $Gamma, z: not A tack "call"^not z(t)$,
+  note: $#math.italic[call]^not$,
+)
+
+#let freestack_command = judge(
+  $Gamma tack c$,
+  $Gamma, z: circle tack "freestack" z; c$,
+  note: "freestack",
+)
+
+#let pair_command = judge(
+  $Gamma, a: A, b: B tack c$,
+  $Gamma, z: A times.circle B tack "let" a,b = z; c$,
+  note: "pair",
+)
+#let exists_elim_command = judge(
+  $Gamma, alpha, x: A tack c$,
+  $Gamma, z: exists alpha. A tack "let" angled(alpha, x) = z; c$,
+  note: $exists #math.italic[elim]$,
+)
+#let follow_command = judge(
+  $Gamma, x: A tack c$,
+  $Gamma, z: square A tack "let" square x = z; c$,
+  note: "follow",
+)
+
+#let discard_command = judge(
+  $Gamma tack c$,
+  $Gamma, z: fatone tack "let" () = z; c$,
+  note: "discard",
+)
+
+#let case_command = judge(
+  $Gamma, x: A_i tack c_i$,
+  $Gamma, z: A_1 plus.circle A_2 tack "case" z "of" "inj"_i x_i |-> c_i$,
+  note: "case",
+)
 
 #let negative(toggle) = {
   grid(
     align: left,
     columns: (1fr, 1fr),
     row-gutter: 16pt,
-    [
-      #judge(
-        $Gamma tack t: A$,
-        $Gamma, z: ~A tack "call"^~ z(t)$,
-        note: $#math.italic[call]^~$,
-      )
-    ],
-    [
-      #judge(
-        $Gamma tack t: A$,
-        $Gamma, z: *A tack "call"^* z(t)$,
-        note: $#math.italic[call]^*$,
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma tack t: A$,
-        $Gamma, z: not A tack "call"^not z(t)$,
-        note: $#math.italic[call]^not$,
-      )
-    ],
-    [
-      #judge(
-        $Gamma tack c$,
-        $Gamma, z: circle tack "freestack" z; c$,
-        note: "freestack",
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma, a: A, b: B tack c$,
-        $Gamma, z: A times.circle B tack "let" a,b = z; c$,
-        note: "pair",
-      )
-    ],
-    [
-      #judge(
-        $Gamma, alpha, x: A tack c$,
-        $Gamma, z: exists alpha. A tack "let" angled(alpha, x) = z; c$,
-        note: $exists #math.italic[elim]$,
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma, x: A tack c$,
-        $Gamma, z: square A tack "let" square x = z; c$,
-        note: "follow",
-      )
-    ],
-    [
-      #judge(
-        $Gamma tack c$,
-        $Gamma, z: fatone tack "let" () = z; c$,
-        note: "discard",
-      )
-    ],
-
-    [
-      #judge(
-        $Gamma, x: A_i tack c_i$,
-        $Gamma, z: A_1 plus.circle A_2 tack "case" z "of" "inj"_i x_i |-> c_i$,
-        note: "case",
-      )
-    ],
+    stack_call_command, static_call_command,
+    linear_call_command, freestack_command,
+    pair_command, exists_elim_command,
+    follow_command, discard_command,
+    case_command,
   )
 }
 
