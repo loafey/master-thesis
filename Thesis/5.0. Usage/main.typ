@@ -209,6 +209,9 @@ that the calling convention is heavier compared to System V#todo[source] which
 C uses, and that this is not the most performant implemention you can create in
 C. A version using looping and some basic memoization is much more performant.
 
+Overall a benchmark is currently not necessarily that interesting in #ln current state.
+They are presented here nontheless to showcase some of the language's current capabilities.
+
 // #let haskellO0 = csv("benches/Haskell O0.csv")
 // #let haskellO2 = csv("benches/Haskell O2.csv")
 // #let fn2 = (
