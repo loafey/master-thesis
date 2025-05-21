@@ -139,6 +139,8 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   #let f(type: "normal", size, body) = table.cell(
     fill: if type == "pad" {
       rgb("#edf064")
+    } else if type == "inf" {
+      orange
     } else if type == "tag" {
       lime
     } else if type == "cons" {
@@ -251,7 +253,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
       columns: rep(len, 1fr),
       table.cell(colspan: 8, `...`),
       ..range(start, start + 8).rev().map(a => raw(str(a, base: 16))),
-      f(type: "cons", 8, sym.infinity), f(type: "tag", 8, $A$),
+      f(type: "inf", 8, sym.infinity), f(type: "tag", 8, $A$),
     ),
   )
   This just means that $B$ is a stack of unknown size, but we at least know that
