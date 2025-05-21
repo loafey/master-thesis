@@ -13,7 +13,8 @@ all the requirements we set out in @Background, specifically:
 ]
 
 #ln currently not does expose many primitives for interacting with the the memory
-nor does it expose any way to write assembly. The later could probably
+nor does it expose any way to inline assembly code.
+The latter could probably
 be skipped and it could likely suffice to implement FFI
 and adding syntax for system calls.
 
@@ -25,7 +26,7 @@ is optimized.
 We did not have time to implement everything we wanted in the compiler,
 as outlined in @FutureWork, nor have they been specified in the ABI.
 We have however implemented a base which can
-be further extended upon to implement these missing features.
+be further expanded upon to implement these missing features.
 
 // so long bowser
 

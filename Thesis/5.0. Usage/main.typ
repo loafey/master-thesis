@@ -1,8 +1,8 @@
 #import "../Prelude.typ": *
 
 = Usage
-As of this report #ln is in it's infancy and it is very limited, but #ln has been used
-to write some smaller programs!
+As of this report #ln is in it's infancy, and no major programs have been writen in it.
+But to demonstrate some levels of usablity we have implemented the following:
 
 == Fibonacci
 Fibonacci is not the most the most interesting program,
@@ -17,7 +17,7 @@ it requires the reuse of variables:
     $F_1 = 1$,
   ),
 )
-The following is two different implementions, one in Lithium,
+The following are two different implementions, one in Lithium,
 and a recursive one in C. /*, and a recursive one in Haskell, as to compare it against
                           a mature functional programming language:*/
 #fancyTable(
@@ -127,7 +127,7 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
     fibbonaci numbers 30 to 40 in the two different
     implementions. Each number was ran and timed 100 times.
     Time is measured in milliseconds, and displayed in a logarithmic manner.
-    The C version was compiled using GCC using O0 and O3.
+    The C version was compiled using GCC with O0 and O3.
   ],
   [#canvas(
       {
@@ -203,7 +203,6 @@ genereates more code than is likely necessary. Also worth to note
 that the calling convention is heavier compared to System V#todo[source] which
 C uses, and that this is not the most performant implemention you can create in
 C. A version using looping and some basic memoization is much more performant.
-#bigTodo([Rewrite me])
 
 // #let haskellO0 = csv("benches/Haskell O0.csv")
 // #let haskellO2 = csv("benches/Haskell O2.csv")

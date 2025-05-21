@@ -136,7 +136,6 @@ To avoid leaking memory, exponentials would need automatic de-allocation.
 We would suggest using reference counting for this, but other methods such as
 garbage collection could suffice.
 
-#bigTodo("insert logic rules here plz :)")
 
 === Data Types
 While the language currently contains sum and product types
@@ -148,8 +147,6 @@ types such as linked lists, which are currently not representable.
 It would also be beneficial to have access to contiguous data types
 such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
-
-`dup(x, y, z) <- w`
 
 === Utilizing linearity for optimizations
 In other immutable languages such as Haskell, data is copied when
