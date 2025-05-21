@@ -50,7 +50,7 @@ it would normally do. The result will then be written into a fitting register
 or variable on the system stack, or it will be pushed onto the current stack.
 This and along with with top-level functions,
 are the only time #ln strays from the strict continuation based style.
-=== Mapping types to memory
+=== Mapping types to memory<mappingMemToType>
 An important part of any ABI is specifying types are represented.
 The following chapter specifies how much memory the types in #ln uses, and also the amount
 of how many physical registers are needed to store them. Keep in mind that while the ABI
@@ -58,7 +58,8 @@ does not utilize registers at the moment, this might change in the future, hence
 we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
-unknown length, only used to represent the sizes of stacks.
+unknown length, only used to represent the sizes of stacks. A more detailed explanation
+of #sym.infinity can be found in @MemoryAlignment.
 
 
 #let fatone = math.bold[1]
@@ -79,10 +80,9 @@ unknown length, only used to represent the sizes of stacks.
     ..(table.cell(colspan: 2, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
   ),
 )
-
 #grid(
   // gutter: 4pt,
-  eq([Product-type], $A times.circle B: omega$, $1$, $\ quad quad #mem($A$) + #mem($B$) + #sym.infinity$),
+  eq([Product-type], $A times.circle B: omega$, $1$, $#mem($A$) + #sym.infinity$),
   eq(
     [Product-type],
     $A times.circle B: known$,
@@ -113,7 +113,7 @@ The memory specification of integer is the following:
 #eq([Integer], $int$, 1, `Word`)
 
 
-=== Memory alignment
+=== Memory alignment<MemoryAlignment>
 As the time of writing, #ln does not contain that many different types,
 and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
@@ -240,13 +240,21 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   Similar alignment should be done when storing variables on the system stack,
   but this is not enforced by this ABI, as the system stack is
   not used when passing variables.
-
-  #bigTodo[Snacka om \ #sem($A #sym.times.circle ~B$) \ #sem($~A$) \ add JP mem size func \ add all types,
-
-    $#sem($o$)^("REG") = "Type" -> NN$\
-    $#sem($o$)^("MEM") = "Type" & -> NN\
-    & \^\
-    & "bytes"$
-  ]
+  #pagebreak()
+  In @mappingMemToType some more complicated types be seen, specifically some
+  types involving #sym.infinity. Take $A times.circle B: omega$ for instance, which memory usage is calculated as such: $#mem($A$) + #sym.infinity$. Here $A$ is a variable with the kind
+  $known$ and $B$ is a stack with kind $omega$. Visually this would be represented like this
+  (if #mem($A$) = 8):
+  #block(
+    breakable: false,
+    table(
+      columns: rep(len, 1fr),
+      table.cell(colspan: 8, `...`),
+      ..range(start, start + 8).rev().map(a => raw(str(a, base: 16))),
+      f(type: "cons", 8, sym.infinity), f(type: "tag", 8, $A$),
+    ),
+  )
+  This just means that $B$ is a stack of unknown size, but we at least know that
+  _on top_ $B$ there are 8 bytes dedicated to a value of type $A$.
 ]
 
