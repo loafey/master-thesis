@@ -101,25 +101,24 @@ unknown length, only used to represent the sizes of stacks.
   eq([Stack closure], $~A: omega$, 1, `Word`),
   eq([Linear pointer], $square A: known$, 1, `Word`),
   eq([Empty stack], $circle: omega$, 1, `Word`),
-  eq([Top], $fatone: known$, 0, 0),
-  eq([Bot], $fatzero: known$, 0, 0),
+  eq([Unit], $fatone: known$, 0, 0),
+  eq([Empty], $fatzero: known$, 0, 0),
   eq([#$exists$ intro], $exists alpha. A : known$, reg($A$), mem($A$)),
   eq([#$exists$ intro], $exists alpha. A : omega$, reg($A$), mem($A$)),
   eq([Type variable], $alpha : omega$, 0, 0),
 )
 
-Outside of these types, #ln contains an auxilary type: the integer.
+Outside of these types, #ln contains an auxilary type: a word sized integer.
 The memory specification of integer is the following:
 #eq([Integer], $int$, 1, `Word`)
 
+
 === Memory alignment
-#text(red)[
-  As the time of writing, #ln does not contain that many different types,
-  and currently it is limited to integers, function pointers, stack pointers,
-  and product- and sum-types.
-  Important to note that both the system stack, and any stacks which are created
-  dynamically, grow downwards.
-]#todo[rewrite]
+As the time of writing, #ln does not contain that many different types,
+and currently it is limited to integers, function pointers, stack pointers,
+and product- and sum-types.
+Important to note that both the system stack, and any stacks which are created
+dynamically, grow downwards.
 
 Memory wise, the simplest here are function pointers and stack pointers.
 Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
