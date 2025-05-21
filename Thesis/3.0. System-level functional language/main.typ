@@ -72,6 +72,7 @@ Contrast it to the CPS version, where we use $a -> bot$ to denote a function tha
   $,
 )
 
+Continuations have been used extensively in compiler engineering #todo[cite appel, STG, and more?]
 A natural question that comes to mind now is why we want continuation-passing
 style? An immediate benefit of CPS is that every function call is a tail call,
 which ensures that tail call optimization (see @CompilingCompilationTarget) #todo[consider moving to footnote] is always possible. A second benefit of CPS
@@ -116,8 +117,8 @@ that takes $A$ as argument and terminates with no value, like in @cps.
 #align(center, pll_types)
 
 There are four new constructs in #ln that extend ILL. These are: _empty stack_
-($circle$), _linear pointer_ ($square$), _static function_ ($*A$), and _stack
-closure_ ($~A$). The latter two are variants of $not A$.
+($circle$), _linear pointer_ ($square$), and _static function_ ($*A$).
+ The latter two are variants of $not A$.
 
 At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
@@ -130,38 +131,44 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
 #indent[
 + It is forbidden to construct a pair of two stacks
 + The kinds in a sum type must match
-+ Type variables are stacks, which means they can not be used for regualr polymorphism.
++ Type variables are stacks, which means they can not be used for regular polymorphism.
 ]
 
 The reason type variables are stacks is a requirement for when we make the
 structure of stacks explicit. We will expand on this in
 @PointerClosureConversion.
 
-Each negation can be placed in one of three programming styles; goto, procedural, and
+Each negation can be placed #todo[enables ...] in one of three programming styles; goto, procedural, and
 higher-order. The first, goto, is the most primitive, we can consider it as a one-way
 transfer of control. Consider the function $f : *(A times.circle *B)$. From $f$
-we can call the continuation $*B$, but $*B$ itself does not contain anything
-other than the stack $B$. Every captured variable would need to be made
-explicit in $B$, and hence, not be captured. This is why we call $*B$ a
-_static function_ rather than a _static closure_. 
+we can call the continuation $*B$, which is just a static function pointer. //itself does not contain anything
+As such, it can not capture any state. The state that it manipulates is exactly $B$, and it is passed explicitly by $f$.
+// other than the stack $B$. Every captured variable would need to be made
+// explicit in $B$, and hence, not be captured. This is why we call $*B$ a
+// _static function_ rather than a _static closure_. 
 
 The second style, procedural, enables just that, procedures (functions). The type signature
 $f : *(A times.circle ~B)$ now exactly corresponds to the C function signature
-$B space f(A space a)$. The type $~B$ corresponds to a stack frame that accepts
-$B$ as a return value to continue with, and because the environment is a stack,
-remember the kind rule $~A : omega$, there is a single chosen stack to
-continue on.
+$B space f(A space a)$. The type $~B$ corresponds to a stack that accepts
+$B$ as a return value to continue with. This stack can capture arbitrary
+state of kind $omega$.
+There can only be a single stack passed to a static function due to the kinding rules of $*$ and $times.circle$ #todo[maybe change].
 
-Finally we have higher-order programming, which unfortunately
+//and because the environment is a stack,
+// remember the kind rule $~A : omega$, there is a single chosen stack to
+// continue on.
+
+Finally we have higher-order programming, which 
 is not possible with $*$ and $~$. The type $*(A times.circle ~B
 times.circle ~C)$ is ill-kinded, and $*(A times.circle *B times.circle ~C)$
-would not work either as $*B$ can not cature variables.
+would not work either because $*B$ can not capture state.
 To allow higher-order programming we introduce the _linear closure_.
-The linear closure can capture free variables and produces an
+The linear closure can capture arbitrary state and produces an
 environment that has a known size. For example, the higher-order function apply has the type $*(¬(A ⊗ ¬B) ⊗ A ⊗ ~B)$.
 In @Transformations we will explain how we transform closures to static functions.
+#todo[REWRITE using state rather than free variables]
 
-Finally, there is no subkinding in the language -- if a type with kind $omega$
+Finally, there is no subkinding in the language; if a type with kind $omega$
 is expected, then a type with kind $known$ is not allowed, and vice versa.
 
 == Types & values<TypesAndValues>
@@ -204,7 +211,7 @@ rules for the negative fragment.
     "",
     "",
     linear_pointer_value,
-    [Boxing a value],
+    [Making an indirection],
     "",
     "",
     exists_intro_value,
@@ -223,10 +230,6 @@ rules for the negative fragment.
     [The linear closure can capture variables, so the remaining environment does not need to be empty],
     "",
 ))<typing_positive_fragment>
-
-// The typing rules for the positive fragment of #ln are depicted in @positive_fragment.
-//
-// #figure(caption: [Typing rules for values in #ln], positive(true)) <positive_fragment>
 
 The typing rules for _pair_, _var_, and the closures mimic those in @LinearTypes.
 The interesting additions in #ln are _newstack_, _static function_, and the two
@@ -249,7 +252,7 @@ closures.
     "",
     "",
     follow_command,
-    [Unbox $z$, binding the stack behind the pointer to $x$],
+    [Follow the indirection, binding the stack behind the pointer to $x$],
     "",
     "",
     exists_elim_command,
@@ -257,7 +260,7 @@ closures.
     "",
     "",
     static_call_command,
-    [Call the static function $z$ with the term $t$ as argument. Note that the environment must no be empty when calling static functions],
+    [Call the static function $z$ with the term $t$ as argument. Note that the environment does not need to be empty when calling static functions],
     "",
     "",
     stack_call_command,
@@ -270,9 +273,7 @@ closures.
     "",
 )) <typing_negative_fragment>
 
-// #figure(caption: [Typing rules for commands in #ln], negative(true)) <negative_fragment>
-
 The juxtaposition of the negative and positive fragments create an elegant
 picture. For every value $v$, a corresponding command exists for how to destruct
-an environment of $v$. Variables are not explicitly destructed -- rather, they are consumed
+an environment of $v$. Variables are not explicitly destructed; they are consumed
 on use.
