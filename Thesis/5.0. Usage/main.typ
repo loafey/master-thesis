@@ -69,6 +69,11 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
   //   ```,
 )
 
+A quick sidenote: this program uses `__dup__` and `__eq__` which are two
+built-in functions in the language. `__dup__` simply duplicates the integer passed to it,
+and `__eq__` checks if two integers are equal. If equal, it returns `inr ()`
+which represents false, otherwise it returns `inl ()` which represents true.
+
 
 === Benchmarks
 #import "@preview/cetz:0.3.4": canvas, draw
