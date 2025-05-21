@@ -238,7 +238,7 @@
 }
 
 #let unit = {
-  judge($$, $fatone: known$, note: [top])
+  judge($$, $fatone: known$, note: [unit])
 }
 
 #let existential_constant = {
@@ -253,7 +253,7 @@
 }
 
 
-#let bottom = { judge($$, $#math.bold[0] : known$, note: [bottom]) }
+#let bottom = { judge($$, $#math.bold[0] : known$, note: [empty]) }
 
 #let kind_judgements(include_text) = {
   grid(
