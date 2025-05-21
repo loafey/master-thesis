@@ -68,15 +68,20 @@ unknown length, only used to represent the sizes of stacks.
 #let eq(name, eq, a, b) = block(
   breakable: false,
   table(
+    fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#00000010") } else { white },
     columns: (1.01fr, 1fr),
     stroke: 0.3pt,
-    inset: (top: 10pt, left: 4pt, bottom: 10pt),
+    inset: (x, y) => if (calc.rem(y, 2) != 0) {
+      (top: 10pt, left: 4pt, bottom: 10pt)
+    } else {
+      6pt // (top: 10pt, left: 4pt, bottom: 10pt)
+    },
     ..(table.cell(colspan: 2, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
   ),
 )
 
 #grid(
-  gutter: 4pt,
+  // gutter: 4pt,
   eq([Product-type], $A times.circle B: omega$, $1$, $\ quad quad #mem($A$) + #mem($B$) + #sym.infinity$),
   eq(
     [Product-type],
