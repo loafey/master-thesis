@@ -120,16 +120,24 @@
 // }
 //
 
-#let cell(title, desc, content) = (
-  table.cell(rowspan: 1, title),
-  table.cell(rowspan: 2, content),
-  table.cell(rowspan: 1, desc),
+#let cell(title, desc, content) = block(
+  breakable: false,
+  table(
+    columns: (0.8fr, 1fr),
+    table.cell(rowspan: 1, title),
+    table.cell(rowspan: 2, block(inset: 4pt, content)),
+    table.cell(rowspan: 1, desc),
+  ),
 )
 
-#let cell2(title, desc, content) = (
-  table.cell(rowspan: 1, title),
-  table.cell(rowspan: 1, inset: 10pt, content),
-  table.cell(rowspan: 1, desc),
+#let cell2(title, desc, content) = block(
+  breakable: false,
+  table(
+    columns: 100%,
+    table.cell(rowspan: 1, title),
+    table.cell(rowspan: 1, inset: 10pt, content),
+    table.cell(rowspan: 1, desc),
+  ),
 )
 
 #let positive_compilation_scheme = {
@@ -144,11 +152,8 @@
     stroke: frame(rgb("21222C")),
     align: (x, y) => if (calc.rem(y, 2) == 0 and x == 0) { center } else { left },
   )
-  table(
-    columns: (0.84fr, 1fr),
-    inset: (top: 6pt, bottom: 6pt),
-
-    ..cell(
+  grid(
+    cell(
       [Tuple where $v_2$ is a stack],
       [
         Compile the right value, which is a stack, then compile the left value
@@ -157,18 +162,19 @@
       $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
       #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
-    ..cell(
+    cell(
       [Tuple with no stack],
       [Compile the values right to left.],
       $#compilation_scheme($(v_1,v_2)$)^known_(rho,sigma) =
       #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
-    ..cell(
+
+    cell(
       [Existental introduction],
       [Types do not exist at runtime, so $@t$ is removed, and $v_1$ is compiled.],
       $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
-    ..cell(
+    cell(
       [Put a stack pointer on the current stack],
       [#bigTodo[what]],
       $#compilation_scheme($square v_1$)^known_rho =
@@ -182,43 +188,47 @@
         $ssp = [ssp]$,
       )$,
     ),
-    ..cell(
+
+    cell(
       [Sum-type left constructor],
       [Wrap a value in the left sym-type constructor.],
       $#compilation_scheme($"inl" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
     ),
-    ..cell(
+    cell(
       [Sum-type right constructor],
       [Wrap a value in the right sym-type constructor.],
       $#compilation_scheme($"inr" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
     ),
-    ..cell(
+
+    cell(
       [Set stack to variable],
       [Switches the stack to one stored in a variable.],
       $#compilation_scheme($x$)^omega_(x |-> {r_0}) =
       #code_box($&s p = r_0$)$,
     ),
-    ..cell(
+    cell(
       [Push variable on stack],
       [Simply pushes the a variable on the current stack.],
       $#compilation_scheme($x$)^known_(x |-> r_0) =
       #code_box($push_(s p)(r_0)$)$,
     ),
-    ..cell(
+
+    cell(
       [Unit],
       [Nothing is done when compiling this.],
       $#compilation_scheme($()$)^known_{} = #code_box("")$,
     ),
-    ..cell(
+    cell(
       [Lambdas],
       [See @lambdaLifting for more details.],
       $#compilation_scheme($lambda x. c$)^known_{} =
       &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
-    ..cell(
+
+    cell(
       [Newstack],
       [Allocates a new stack and switches to it.],
       $#compilation_scheme(newstack)^omega_{} =
@@ -239,9 +249,8 @@
     stroke: frame(rgb("21222C")),
     align: (x, y) => if (calc.rem(y, 3) == 0) { center } else { left },
   )
-  table(
-    columns: 1fr,
-    ..cell2(
+  grid(
+    cell2(
       [Pop top of stack],
       [
         Pops the top value of the stack ($x$ here)
@@ -253,8 +262,7 @@
       #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
     ),
 
-
-    ..cell2(
+    cell2(
       [Destruct tuple],
       [
         Breaks a tuple into its two values.
@@ -265,7 +273,7 @@
       = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
     ),
 
-    ..cell2(
+    cell2(
       [Unit elimination],
       [
         Similary like it's positive fragment variant,
@@ -274,7 +282,7 @@
       = #code_box($#sem[c]_rho$)$,
     ),
 
-    ..cell2(
+    cell2(
       [Existential destruction],
       [Similarily to existential introduction, this does nothing except
         bind $x$, destruct $z^alpha$ and compile the next command.],
@@ -282,7 +290,7 @@
       = #code_box($#sem[c]_(rho, x |-> r_0)$)$,
     ),
 
-    ..cell2(
+    cell2(
       [Destruct stack pointer],
       [Does nothing except compile the next command, and give you access to
         a stack which can then be switched or freed.],
@@ -290,7 +298,7 @@
       = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
     ),
 
-    ..cell2(
+    cell2(
       [Stack de-allocation],
       [
         Deallocates the current stack. This is currently implemented
@@ -300,7 +308,7 @@
       = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
     ),
 
-    ..cell2(
+    cell2(
       [Case expression with variable which is a stack],
       [Pop the top value of the stack and pattern match on it.],
       $#compilation_scheme($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
@@ -313,7 +321,7 @@
       )$,
     ),
 
-    ..cell2(
+    cell2(
       [Case expression with variable],
       [Pattern match on a variable.],
       [$#compilation_scheme($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
@@ -325,7 +333,7 @@
       ],
     ),
 
-    ..cell2(
+    cell2(
       [Function call],
       [Compile $v$, preparing the stack with needed arguments, and then jmp to
         $z^known$.],
