@@ -53,8 +53,8 @@ and a recursive one in C. /*, and a recursive one in Haskell, as to compare it a
     if (m == 0 || m == 1) {
       return m;
     }
-    long a = fib(n - 1);
-    long b = fib(n - 2);
+    long a = fib(m - 1);
+    long b = fib(m - 2);
     return a + b;
   }
   ```,
