@@ -35,5 +35,7 @@
 #pagebreak()
 #include "0.2. Licence.typ"
 #pagebreak()
-#include "0.3. Abstract.typ"
+#include "0.3. Acknowledgements.typ"
+#pagebreak()
+#include "0.4. Abstract.typ"
 #pagebreak()
