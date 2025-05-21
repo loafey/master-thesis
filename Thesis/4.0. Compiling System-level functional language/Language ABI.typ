@@ -256,5 +256,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   )
   This just means that $B$ is a stack of unknown size, but we at least know that
   _on top_ $B$ there are 8 bytes dedicated to a value of type $A$.
+  Without $A$, $B$ could potentially be empty, or it could be huge, but we cannot know
+  from the types alone.
 ]
 
