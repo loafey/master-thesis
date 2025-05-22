@@ -114,11 +114,9 @@ The memory specification of integer is the following:
 
 
 === Memory alignment<MemoryAlignment>
-As the time of writing, #ln does not contain that many different types,
+At the time of writing, #ln does not contain that many different types,
 and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
-Important to note that both the system stack, and any stacks which are created
-dynamically, grow downwards.
 
 Memory wise, the simplest here are function pointers and stack pointers.
 Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
@@ -130,7 +128,7 @@ This might however change in the future as it is useful to have access to
 integers of different sizes, especially so when working with a systems-level language.
 When these are introduced, memory alignment is something
 that needs to be taken into consideration. Function pointers and stack pointers
-are the stored the exact same way as word sized integers.
+are stored the exact same way as word sized integers.
 
 When pushing values of different sizes alignment needs to be considered.
 Take this stack that just contains a 16 bit integer with the value `42`.
@@ -185,6 +183,12 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     2 bytes here for a 4 byte integer, as 4 is of course divisible by 2.
     The reason this is done is to both to simpilfy the compilation process,
     and to simplify the needed code for any given pop and push.
+
+    Also, as can bee seen in the illustrations, the addresses grow downwards.
+    System stacks on most architectures grow downards, and the dynamic stacks
+    in #ln simulate this as well. This is done to allow an implementation of
+    the language to use the system stack if need be, and use the built in
+    pop and push instructions which exists in most instruction sets.
 
     Notice here that we are also padding after the 4 byte integer.
     A pop/push should always be able to expect that it is currently
