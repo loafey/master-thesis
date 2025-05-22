@@ -8,7 +8,13 @@ These judgements can thankfully be translated to x86-64 assembly in a
 straightforward manner. They are first translated into "pseudo" instructions which can
 then be translated into x86-64.
 
-=== Syntax
+=== Syntax 
+#todo[
+change name of section
+
+introduce pre/post conditions for $known slash omega$
+] 
+
 To help understanding the compilation scheme the reader should keep the
 following operators and syntax in mind:
 
