@@ -49,6 +49,8 @@ _immutable_ data structures, as opposed to _mutable_ data structures. The
 former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
 
+To introduce mutable data strcutures in the context of functional programming languages,
+#ln makes use of linear logic.
 Girard's linear logic @girard1987linear is a refinement of classical and
 intuitionistic logic, where, rather than propositions being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.
