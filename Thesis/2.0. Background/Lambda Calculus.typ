@@ -7,16 +7,20 @@
   prooftree(rule($Gamma tack x: sigma$, $x:sigma in Gamma$, name: "Var")),
   [],
 
-  prooftree(rule(
-    $Gamma tack lambda x:sigma. space e : sigma -> tau$,
-    $Gamma, x:sigma tack e: tau$,
-    name: "Abs",
-  )),
-  prooftree(rule(
-    $Gamma tack e_1 e_2: tau$,
-    $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
-    name: "App",
-  )),
+  prooftree(
+    rule(
+      $Gamma tack lambda x:sigma. space e : sigma -> tau$,
+      $Gamma, x:sigma tack e: tau$,
+      name: "Abs",
+    ),
+  ),
+  prooftree(
+    rule(
+      $Gamma tack e_1 e_2: tau$,
+      $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
+      name: "App",
+    ),
+  ),
 )
 
 #let tapp = rule(
@@ -48,7 +52,7 @@ shown in @stlc_syntax.
 #figure(
   caption: [Syntax for #stlc],
   $
-    & #math.italic[Types] A "::=" A_1 -> A_2 | T            \
+    & #math.italic[Types] A "::=" A_1 -> A_2 | T \
     & #math.italic[Terms] e "::=" x | e_1 e_2 | lambda x. e \
   $,
 )<stlc_syntax>
@@ -104,21 +108,29 @@ monomorphic type $A$. We assume that $y : A in Gamma$.
 #let id_proof = prooftree(
   rule(
     $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
-    rule($Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$, rule(
-      $Gamma, alpha, x : alpha tack x : alpha$,
-      $x : alpha in (Gamma, alpha, x : alpha)$,
-    )),
+    rule(
+      $Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$,
+      rule(
+        $Gamma, alpha, x : alpha tack x : alpha$,
+        $x : alpha in (Gamma, alpha, x : alpha)$,
+      ),
+    ),
   ),
 )
 #let metaid = math.bold[id]
-#let id_app_proof = prooftree(rule(
-  $Gamma tack #metaid\[A] space y : A$,
-  rule($Gamma tack #metaid\[A] : A -> A$, rule(
-    $Gamma tack #metaid : forall alpha. alpha -> alpha$,
-    $$,
-  )),
-  rule($Gamma tack y : A$, $y : A in Gamma$),
-))
+#let id_app_proof = prooftree(
+  rule(
+    $Gamma tack #metaid\[A] space y : A$,
+    rule(
+      $Gamma tack #metaid\[A] : A -> A$,
+      rule(
+        $Gamma tack #metaid : forall alpha. alpha -> alpha$,
+        $$,
+      ),
+    ),
+    rule($Gamma tack y : A$, $y : A in Gamma$),
+  ),
+)
 
 #figure(caption: [The identity function], flex(id_proof)) <id_proof>
 
@@ -135,21 +147,26 @@ that the set of variables in $e$ is $Gamma$.
 
 This means the typing rules App and Var in @stlc_typing are no longer valid.
 
-#let linear_app = prooftree(rule(
-  name: "App",
-  $Gamma, Delta tack e_1 e_2 : tau$,
-  $Gamma tack e_1 : sigma lollipop tau$,
-  $Delta tack e_2 : sigma$,
-))
+#let linear_app = prooftree(
+  rule(
+    name: "App",
+    $Gamma, Delta tack e_1 e_2 : tau$,
+    $Gamma tack e_1 : sigma lollipop tau$,
+    $Delta tack e_2 : sigma$,
+  ),
+)
 
 #let linear_abs = prooftree(rule(name: "Abs", $Gamma tack lambda x. e : sigma -> tau$, $Gamma, x: sigma tack e : tau$))
 #let linear_var = prooftree(rule(name: "Var", $dot, x: A tack x: A$))
 
-#figure(caption: [Typing rules for App, Abs, and Var in a linear type system], flex(
-  linear_app,
-  linear_abs,
-  linear_var,
-))<linear_rules>
+#figure(
+  caption: [Typing rules for App, Abs, and Var in a linear type system],
+  flex(
+    linear_app,
+    linear_abs,
+    linear_var,
+  ),
+)<linear_rules>
 
 The linear rules for App and Var are shown in @linear_rules. Note how the
 contexts for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
@@ -161,7 +178,7 @@ would not have a valid derivation.
 
 #figure(
   caption: [A lambda term that discards a variable],
-  $ lambda x. lambda y. x : sigma -> (tau -> sigma)$,
+  $lambda x. lambda y. x : sigma -> (tau -> sigma)$,
 )<const_term>
 
 Linear logic, and in turn linear types, solves this issue using _exponentials_.
@@ -179,9 +196,9 @@ Exponentials introduce an explicit way to duplicate and discard variables.
   exponential_rules,
 )<exponential_rules>
 
-Using the rules in @exponential_rules, it is possible to create terms that discard and 
+Using the rules in @exponential_rules, it is possible to create terms that discard and
 reuse variables.
 
 === Polarised Linear Logic
 
-hej
+hej då
