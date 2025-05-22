@@ -27,6 +27,7 @@ When functions are called there are requirements regarding these stacks that mus
     the address subtracted with the stack's size.
   - All expected arguments exist on the stack.
   - All arguments are properly aligned.
+  - The bottom of the stack contains the start pointer of the stack.
 ]
 
 At any given moment only one stack is in use, which means that while
@@ -50,6 +51,9 @@ it would normally do. The result will then be written into a fitting register
 or variable on the system stack, or it will be pushed onto the current stack.
 This and along with with top-level functions,
 are the only time #ln strays from the strict continuation based style.
+
+#bigTodo[add something about newstack and freestack]
+
 === Mapping types to memory<mappingMemToType>
 An important part of any ABI is specifying types are represented.
 The following chapter specifies how much memory the types in #ln uses, and also the amount
@@ -137,6 +141,8 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   #let f(type: "normal", size, body) = table.cell(
     fill: if type == "pad" {
       rgb("#edf064")
+    } else if type == "sp" {
+      rgb("#ff7bcc")
     } else if type == "inf" {
       orange
     } else if type == "tag" {
@@ -246,7 +252,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   Similar alignment should be done when storing variables on the system stack,
   but this is not enforced by this ABI, as the system stack is
   not used when passing variables.
-  #pagebreak()
+
   In @mappingMemToType some more complicated types be seen, specifically some
   types involving #sym.infinity. Take $A times.circle B: omega$ for instance, which memory usage is calculated as such: $#mem($A$) + #sym.infinity$. Here $A$ is a variable with the kind
   $known$ and $B$ is a stack with kind $omega$. Visually this would be represented like this
@@ -264,5 +270,21 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   _on top_ $B$ there are 8 bytes dedicated to a value of type $A$.
   Without $A$, $B$ could potentially be empty, or it could be huge, but we cannot know
   from the types alone.
+
+  When allocating new stacks the first value on the stack must be the pointer
+  which points to the start of the stack. As said earlier, stacks grow downwards,
+  and thus their pointers need to be offset by their size on allocation.
+  This however creates to problem as we can not de-allocate using this updated pointer,
+  and we need to instead use the non-offseted pointer. To combat this
+  the original pointer is placed on the stack, which can then be popped
+  when the stack is empty and freestack is called.
+  #block(
+    breakable: false,
+    table(
+      columns: rep(len, 1fr),
+      ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+      f(type: "sp", 8, `start pointer`), f(8, `...`),
+    ),
+  )
 ]
 
