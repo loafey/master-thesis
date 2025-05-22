@@ -74,7 +74,7 @@ $(lambda x : sigma. space e) : sigma -> tau$. The last rule, App, short for
 application says that if in the context $Gamma$ we have $e_1 : sigma -> tau$
 and $e_2 : tau$ then in the context $Gamma$ the term $e_1 e_2$ has type $tau$.
 
-=== Polymorphic Lambda Calculus (System F)
+=== Polymorphic Lambda Calculus
 
 System F is a typed lambda calculus that introduces universal quantification
 over types @girard1972systemf. It was first discovered by logician Girard in
