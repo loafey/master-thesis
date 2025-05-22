@@ -43,5 +43,5 @@ as libc is used for printing and allocating memory on the heap.
 The single stack frame is used for variable storage and register spilling,
 and it's size is determined at compile time and can vary between functions.
 This size is based on the amount of variables used by the function,
-and does not account for register spilling as pushing and popping handles
-stack frame size dynamically, as it updates the stack pointer accordingly.
+and does not account for register spilling as pushing and popping updates
+stack frame size dynamically.
