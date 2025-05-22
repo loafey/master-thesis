@@ -36,7 +36,7 @@ this: $"let" square g = f; g(x)$. Lastly, since the type $not A$ is transformed
 to $square ~A$, the type checker should allow $square ~A$ where $not A$ is
 expected.
 
-=== Stack Selection
+=== Stack Selection <StackSelection>
 
 It is important for every stack closure ($~A$) to identify a single unique stack that
 it can execute on. Stack selection selects a single unique stack for every
@@ -44,24 +44,28 @@ closure if at least one stack exists, ensuring that every closure has _at most_ 
 prepared. In @PointerClosureConversion we will explain why stack selection can
 not guarantee that there is _exactly one_ stack prepared for every closure.
 
-Consider the following program: 
+Consider the following program:
 $ lambda (f,k). space k(lambda y. space f(y)) : *(not A times.circle ~not A) $
 
 After making the pointers to stacks explicit we end up with the following program:
-$ lambda (f,k). space "let" square k' = k; space k'(lambda y. "let" square f' = f; space f'(y)) 
-: *(square ~ A times.circle ~(square~A)) $
+$
+  lambda (f,k). space "let" k(square lambda y. "let" square f' = f; space f'(y))
+  : *(square ~ A times.circle ~(square~A))
+$
 
-Because $k'$ has type $~(square~A)$, it must also be a stack. The issue is that the
-only variable that is a stack is $f'$, but it can not be the chosen stack because 
+Because $k$ has type $~(square~A)$, its environment must be a stack. The issue is that the
+only variable that is a stack is $f'$, but it can not be the chosen stack because
 bound variables are stored on the stack. The chosen stack must be a variable
 that is bound outside the closure, or an explicit newstack.
 
 Stack selection moves the $"let" square f' = f$ out of the closure, making $f'$
 free in the closure, and selecting it as the stack.
 
-The resulting program would end up being: 
-$ lambda (f,k). space "let" square k' = k; "let" square f' = f; space k'(lambda y. space f'(y)) 
-: *(square ~ A times.circle ~(square~A)) $ 
+The resulting program would end up being:
+$
+  lambda (f,k). space "let" square f' = f; space k(lambda y. space f'(y))
+  : *(square ~ A times.circle ~(square~A))
+$
 
 === Pointer Closure Conversion <PointerClosureConversion>
 
@@ -71,18 +75,99 @@ pointer and environment. At the assembly level the concept of procedures and
 closures do not exist, there are only jumps (gotos) and labels.
 
 The representation for $*A$ is straightforward; it is a label. Calling
-a function of type $*A$ corresponds to jumping to the label. The pointer
-closure conversion phase transforms $~A$ to $exists gamma. *(A times.circle
-gamma) times.circle gamma$, eliminating both procedurs and closures. The
-existential quantification is there because the structure of the environment is
-unknown for the callee. Now we can see why type variables must have kind
-$omega$; if they had kind $known$, then $*(A times.circle gamma)$ would be
-ill-kinded, and we would have no way of representing the environment in the type.
+a function of type $*A$ corresponds to jumping to the label. Because labels and
+jumps are the only thing available to us at the assembly level, we need to
+transform $~$ to $*$, and we need to make the closure explicit.
 
-#todo[
-  Explain translation of values. 
+The pointer closure conversion phase transforms $~A$ to $exists gamma. *(A
+  times.circle gamma) times.circle gamma$, eliminating both procedures and
+closures. The existential quantification is there because the structure of the
+environment is unknown for the callee. Now we can see why type variables must
+have kind $omega$; if they had kind $known$, then $*(A times.circle gamma)$
+would be ill-kinded, and we would have no way of representing the environment
+in the type.
 
-  Explain translation of commands. 
+Values and commands need to be transformed as well to ensure that they match the types.
+Stack closures $(lambda^~)$ are transformed in the following manner:
+#grid(
+  columns: (1fr, 2fr),
+  stroke: black,
+  inset: 10pt,
+  [Source], [Target],
+  $lambda^~ . c : ~A$,
+  $#angled($times.circle.big Gamma$, $(lambda^* (x, rho) . "unpairAll"(rho); c, "pairvars"(Gamma))$)$,
+)
+$Gamma$ represents the free variables in the closure.
+$times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$
+The function pairvars needs to construct a newstack $(circle)$ when $Gamma$ does not contain a stack.
 
-  Explain why introducing newstacks is possible only after closures are explicit
-]
+Since the closures are converted, the corresponding commands must also be
+transformed to match. Fortunately, the transformation is straightforward:
+
+#grid(
+  columns: (1fr, 2fr),
+  stroke: black,
+  inset: 10pt,
+  [Source], [Target],
+  $z(a)$,
+  $"let" angled(alpha,z_1) = z; "let" z_2, rho = z_1; z_2(a, rho)$
+)
+
+The conversion might be easier to understand given a concrete example. We will
+show two examples; one where $Gamma$ contains a stack, and one where it does
+not.
+
+Take the resulting program from @StackSelection.
+$
+  lambda (f,k). space "let" square f' = f; space k(lambda y. space f'(y))
+  : *(square ~ A times.circle ~(square~A))
+$
+
+Because $f'$ is a stack, and a free variable in $lambda y. f'(y)$, pairvars
+does not need to construct a newstack. Transforming the program would yield
+the following:
+
+/*
+\ b,c -> let #d = b;
+         let @e, f = c;
+         let g, h = f;
+         g(◻(@ ∃γ . * (int ⊗ γ) ⊗ γ, \j,k -> let @l, m = k;
+                                             let n, o = m;
+                                             n (j, o), d), h)
+
+*/
+$
+  lambda^*(f,k). & "let" square f' = f; \
+                 & "let" angled(alpha, k') = k;    \
+                 & "let" g, rho_1 = k';     \
+                 & g(square #angled(
+                     $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
+                     $(lambda^* (y, rho_2). & "let" angled(beta, x) = rho_2; \ & & "let" h,rho_4 = x; \ & & h(y, rho_4), f')$)
+                   ,rho_1)
+$
+#todo[fix the alignment]
+
+Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$
+after closure conversion, the second and third row are necessary to access the
+static function $g : *(A times.circle gamma)$. The same process is repeated
+inside the argument of $g$. Also, note how $f'$ is the environment inside $g$
+now. 
+
+Let us now consider an example where a stack closure does not contain a stack in the environment.
+Assume that the static function $"foo" : *A$ exists.
+
+$ (lambda^~ x. "foo"(x)) : space ~A $
+
+There is no stack in the environment of the closure; the conversion phase needs
+to insert an explicit newstack to ensure that there is a stack to execute on.
+After conversion this closure would end up being:
+$
+  #angled(
+    $circle$,
+    $(lambda^* (x,rho_1). "freestack" rho_1; "foo"(x), newstack)$
+  )
+$
+
+Introducing explicit stacks sounds like something for the stack selection
+phase. Unfortunately, there is no way to do it before making environments
+explicit, which happens here.
