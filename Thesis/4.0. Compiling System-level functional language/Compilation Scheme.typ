@@ -11,7 +11,6 @@ straightforward manner. They are first translated into "pseudo" instructions whi
 then be translated into x86-64.
 
 #todo[
-
   introduce pre/post conditions for $known slash omega$
 ]
 
@@ -26,6 +25,9 @@ We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragme
 If we use $alpha$ inplace of $omega$ and $known$, then the definition
 should exist for both kinds.
 The function $rho$ is a mapping from variables to a list of pseudo registers.
+The syntax $rho, x |-> s_n$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
+If we instead write $rho, x |-> {r_0, ..., r_n}$ then $x$ maps to the list containing $r_0, ..., r_n$.
+
 A pseudo register is a physical register or a location on the
 stack. Formally, $rho$ can be seen as the function: $rho : Gamma -> "List"("Reg")$.
 The range of $rho$ is a list of pseudo registers because not all values
@@ -34,6 +36,15 @@ can be stored in one physical register.
 The scheme also contains the meta instruction: $\""let" r_n = "next"(rho,
 t)\"$, where $"next"$  has the type $"List"("Reg") -> "Type" -> "List"("Reg")$. The pseudo registers chosen depends on which pseudo registers are used in $rho$, and the size of the type $t$. The meta instruction exists
 only at compile time.
+
+To ensure correctness and consistency of the compilation scheme, we specify
+pre- and post-conditions for each compilation function: 
+
+Before calling $#scheme_pos($v$)^omega$, the stack pointer (SP) can be used
+freely. After the call, SP points to $v$. $#scheme_pos($v$)^known$ requries
+that SP points to a valid stack before being called. After being called, $v$ is
+pushed on the stack pointed to by SP. Finally, we have $#scheme_neg($v$)$. It
+has no pre-conditions, only the post-condition that the program is terminated.
 
 The translation between pseudo instructions and x86-64 assembly can be seen in @translation_table,
 and in @operand_table we explain the operands used in the compilation scheme.
@@ -59,10 +70,10 @@ and in @operand_table we explain the operands used in the compilation scheme.
     table(
       columns: (1fr, 1fr),
       [*Pseudo instruction*], [*x86-64 instructions*],
-      $push "OP"$,
+      $push_R ("OP")$,
       ```asm
-      subq $sizeof(OP), %R15
-      mov  OP,          0(%R15)
+      subq $sizeof(OP), R
+      mov  OP,          0(R)
       ```,
 
       $"OP"_1 = "OP"_2$,
@@ -70,10 +81,10 @@ and in @operand_table we explain the operands used in the compilation scheme.
       mov OP₂, OP₁
       ```,
 
-      $pop "OP"$,
+      $pop_R ("OP")$,
       ```asm
-      mov 0(%R15),     OP
-      addq sizeof(OP), %R15
+      mov 0(R),        OP
+      addq sizeof(OP), R
       ```,
 
       ```
@@ -135,19 +146,15 @@ and in @operand_table we explain the operands used in the compilation scheme.
   ) <operand_table>
 ]
 
-=== Positive fragment
-As specified in @TypesAndValues these fragments are used to create values.
 #show figure: set block(breakable: true)
-#figure(caption: [Compilation scheme for the positive fragment of #ln], positive_compilation_scheme) <compscheme_positive>
 
-=== Negative fragment
-Once again as specified in @TypesAndValues these fragments are used to destroy values.
+#figure(caption: [Compilation scheme for the positive fragment of #ln], positive_compilation_scheme) <compscheme_positive>
 #figure(caption: [Compilation scheme for the negative fragment of #ln], negative_compilation_scheme) <compscheme_negative>
 
 The astute reader might observe that matching positive and negative
 fragments "cancel" each other out. Linearity enforces that a positive fragment
 that creates a value,
-must be matched with a negative fragment at some point, which destroys said value.
+must be matched with a negative fragment at some point, which consumes said value.
 
 === Lambda Compilation <lambdaLifting>
 Lambdas are still in the language even in the the last step before compilation,

@@ -153,27 +153,28 @@
     cell(
       [Tuple where $v_2$ is a stack],
       [
-        Compile the right value, which is a stack, then compile the left value
-        and then push that on the stack.
+        Compile $v_2$ first to ensure that SP points to a stack, then compile $v_1$.
       ],
       $#scheme_pos($(v_1,v_2)$)^omega_(rho,sigma) =
       #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
     cell(
       [Tuple with no stack],
-      [Compile the values right to left.],
+      [Compile $v_2$ first, to ensure conformity with the stack tuple.],
       $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
       #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
 
     cell(
       [Existental introduction],
-      [Types do not exist at runtime, so $@t$ is removed, and $v_1$ is compiled.],
+      [Compile the value $v_1$. Because types do not exist at runtime it is just a recursive call.],
       $#scheme_pos($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
     cell(
-      [Put a stack pointer on the current stack],
-      [#bigTodo[what]],
+      [Put the stack pointer $v_1$ on the current stack.],
+      [Create space on the stack for the stack pointer to $v_1$. Backup SSP and
+      SP. Compile $v_1$, setting SP to the stack $v_1$. Write SP to the space
+      created, then restore SP and SSP to their previous states.],
       $#scheme_pos($square v_1$)^known_rho =
       #code_box(
         $sp = sp + 1$,
@@ -188,13 +189,13 @@
 
     cell(
       [Sum-type left constructor],
-      [Wrap a value in the left sym-type constructor.],
+      [Wrap a value in the left sum-type constructor.],
       $#scheme_pos($"inl" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
     ),
     cell(
       [Sum-type right constructor],
-      [Wrap a value in the right sym-type constructor.],
+      [Wrap a value in the right sum-type constructor.],
       $#scheme_pos($"inr" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
     ),
