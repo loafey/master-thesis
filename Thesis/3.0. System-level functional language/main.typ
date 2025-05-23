@@ -171,6 +171,7 @@ In @Transformations we will explain how we transform closures to static function
 Finally, there is no subkinding in the language; if a type with kind $omega$
 is expected, then a type with kind $known$ is not allowed, and vice versa.
 
+#pagebreak()
 == Types & values<TypesAndValues>
 
 #ln consists of two fragments:
@@ -186,8 +187,9 @@ The typing rules for the positive fragment are depicted in
 @typing_positive_fragment, while @typing_negative_fragment shows the typing
 rules for the negative fragment.
 
+#show figure: set block(breakable: true)
 #figure(
-  caption: [],
+  caption: [Typing rules for the positive fragment],
   grid(
     inset: (bottom: 15pt),
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
@@ -219,9 +221,7 @@ rules for the negative fragment.
   ),
 )<typing_positive_fragment>
 
-The typing rules for _pair_, _var_, and the closures mimic those in @LinearTypes.
-The interesting additions in #ln are _newstack_, _static function_, and the two
-closures.
+\
 
 #figure(
   caption: [Typing rules for the negative fragment],
