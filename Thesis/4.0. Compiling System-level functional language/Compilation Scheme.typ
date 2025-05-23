@@ -46,9 +46,7 @@ following operators and syntax in mind:
 The instructions that do generate code, such as $push x$, work
 similary to their assembly counterparts.
 
-The first box contains a translation from pseudo instructions to x86-64 instructions. #todo[make better]
-
-The second box contains translations from psuedo operands to proper x86-64 operands.
+The first box contains a translation from pseudo instructions to x86-64 instructions. #todo[make better] The second box contains translations from psuedo operands to proper x86-64 operands.
 
 #[
   #let frame(stroke) = (x, y) => (
