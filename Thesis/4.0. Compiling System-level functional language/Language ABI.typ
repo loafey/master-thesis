@@ -52,8 +52,6 @@ or variable on the system stack, or it will be pushed onto the current stack.
 This and along with with top-level functions,
 are the only time #ln strays from the strict continuation based style.
 
-#bigTodo[add something about newstack and freestack]
-
 === Mapping types to memory<mappingMemToType>
 An important part of any ABI is specifying types are represented.
 The following chapter specifies how much memory the types in #ln uses, and also the amount

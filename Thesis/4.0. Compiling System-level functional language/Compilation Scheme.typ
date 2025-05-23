@@ -101,7 +101,12 @@ similary to their assembly counterparts.
       $newstack$,
       ```asm
       mov STACKSIZE, %RDI
-      call malloc
+      call malloc # result = %RAX
+      movq %RAX, %RDX
+      addq STACKSIZE, %RAX
+
+      subq $16, %RAX
+      movq %RDX, 0(%RAX) # backup ptr
 
       # push to the stack
       subq $8,  %R15

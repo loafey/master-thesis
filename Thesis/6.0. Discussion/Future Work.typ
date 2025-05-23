@@ -136,6 +136,7 @@ To avoid leaking memory, exponentials would need automatic de-allocation.
 We would suggest using reference counting for this, but other methods such as
 garbage collection could suffice.
 
+
 === Data Types<DataTypes>
 While the language currently contains sum and product types
 ($a plus.circle b$ and $a times.circle b$ respectively), having

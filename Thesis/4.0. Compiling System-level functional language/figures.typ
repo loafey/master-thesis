@@ -305,7 +305,7 @@
         using glibc's `free`.
       ],
       $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
-      = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
+      = #code_box($pop(r_0)$, $"free"(r_0)$, $#sem[c]_rho$)$,
     ),
 
     cell2(
