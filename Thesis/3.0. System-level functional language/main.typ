@@ -77,7 +77,7 @@ A natural question that comes to mind now is why we want continuation-passing
 style? An immediate benefit of CPS is that every function call is a tail call,
 which ensures that tail call optimization (see @CompilingCompilationTarget) #todo[consider moving to footnote] is always possible. A second benefit of CPS
 is that the order of evaluation is made explicit by the syntax.
-#todo[provide sources of usages of CPS]
+#todo[provide examples and sources of usages of CPS]
 If we consider the following program written in normal style:
 
 #align(
