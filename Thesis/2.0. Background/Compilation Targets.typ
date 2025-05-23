@@ -6,8 +6,8 @@ Unless you are directly targeting binary machine code, most of the time
 you want a more higher level compilation target.
 
 There are a lot of different fitting choices for this task and some of the more
-commons ones are for example LLVM IR#todo("source"), Cranelift #todo("source") and GNU's
-GENERIC and GIMPLE #todo[source]. These languages are what is known as
+commons ones are for example LLVM IR @lattner2004llvm, Cranelift @Cranelift and GNU's
+GIMPLE @Gimple. These languages are what is known as
 intermediate representations (IR), and are all targeted by different compilers.
 They remove the need for the compilers to directly target
 CPU specific machine code or assembly.
