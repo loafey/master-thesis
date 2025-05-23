@@ -28,7 +28,7 @@ machine code, and it is often made to resemble CPU instructions
 relatively closely. x86-64 is currently the most used instruction set in CPUs for
 personal computers and server architectures,
 and it is an extension that was created in 2000 based on the already popular
-instruction set x86 #todo[cite].
+instruction set x86 @x86WhitePaper.
 
 When you directly target an assembly language portability suffers as is to
 be expected. You not only have to target different assembly languages

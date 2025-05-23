@@ -5,7 +5,7 @@
 = #ln <SlflChapter>
 
 The intended use of #ln is as a compiler intermediate representation for
-functional languages, similar to that of GHC Core. #todo[CITE GHC CORE]
+functional languages, similar to that of GHC Core @jones1993glasgow.
 #ln diverges from GHC Core and most functional language intermediate representations in
 that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
@@ -51,7 +51,7 @@ that #ln is written in continuation-passing style.
 _Continuation-passing style_ (CPS) is a style where control is passed
 explicitly via continuation functions rather than returning values.
 intuitively, we can think of continuations as functions that capture "the rest
-of the program". 
+of the program".
 The identity function written in normal style would be:
 
 #align(
@@ -118,7 +118,7 @@ that takes $A$ as argument and terminates with no value, like in @cps.
 
 There are four new constructs in #ln that extend ILL. These are: _empty stack_
 ($circle$), _linear pointer_ ($square$), and _static function_ ($*A$).
- The latter two are variants of $not A$.
+The latter two are variants of $not A$.
 
 At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
@@ -129,9 +129,9 @@ kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
 
 #indent[
-+ It is forbidden to construct a pair of two stacks
-+ The kinds in a sum type must match
-+ Type variables are stacks, which means they can not be used for regular polymorphism.
+  + It is forbidden to construct a pair of two stacks
+  + The kinds in a sum type must match
+  + Type variables are stacks, which means they can not be used for regular polymorphism.
 ]
 
 The reason type variables are stacks is a requirement for when we make the
@@ -145,7 +145,7 @@ we can call the continuation $*B$, which is just a static function pointer. //it
 As such, it can not capture any state. The state that it manipulates is exactly $B$, and it is passed explicitly by $f$.
 // other than the stack $B$. Every captured variable would need to be made
 // explicit in $B$, and hence, not be captured. This is why we call $*B$ a
-// _static function_ rather than a _static closure_. 
+// _static function_ rather than a _static closure_.
 
 The second style, procedural, enables just that, procedures (functions). The type signature
 $f : *(A times.circle ~B)$ now exactly corresponds to the C function signature
@@ -158,9 +158,9 @@ There can only be a single stack passed to a static function due to the kinding 
 // remember the kind rule $~A : omega$, there is a single chosen stack to
 // continue on.
 
-Finally we have higher-order programming, which 
+Finally we have higher-order programming, which
 is not possible with $*$ and $~$. The type $*(A times.circle ~B
-times.circle ~C)$ is ill-kinded, and $*(A times.circle *B times.circle ~C)$
+  times.circle ~C)$ is ill-kinded, and $*(A times.circle *B times.circle ~C)$
 would not work either because $*B$ can not capture state.
 To allow higher-order programming we introduce the _linear closure_.
 The linear closure can capture arbitrary state and produces an
@@ -176,102 +176,77 @@ is expected, then a type with kind $known$ is not allowed, and vice versa.
 #ln consists of two fragments:
 
 #indent[
-- _Positive fragment_ describes how things are created. When we talk about
-  values we refer to the positive fragment.
-- _Negative fragment_: describes how to deconstruct environments of values. The
-  negative fragment can also be referred to as commands.
+  - _Positive fragment_ describes how things are created. When we talk about
+    values we refer to the positive fragment.
+  - _Negative fragment_: describes how to deconstruct environments of values. The
+    negative fragment can also be referred to as commands.
 ]
 
 The typing rules for the positive fragment are depicted in
 @typing_positive_fragment, while @typing_negative_fragment shows the typing
 rules for the negative fragment.
 
-#figure(caption: [], grid(
+#figure(
+  caption: [],
+  grid(
     inset: (bottom: 15pt),
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
-    "",
-    newstack_value,
-    [Newstack is a primitive for creating an empty stack],
-    "",
-    "",
-    var_value,
-    [All variables must used exactly once],
-    "",
+    "", newstack_value, [Newstack is a primitive for creating an empty stack], "",
+    "", var_value, [All variables must used exactly once], "",
     "",
     pair_value,
     [Constructing a pair from the two values $u$ and $v$. Note that the contexts $Gamma, Delta$, must be disjoint],
     "",
-    "",
-    inj_left_value,
-    [Constructing the left value of a sum type],
-    "",
-    "",
-    inj_right_value,
-    [Constructing the right value of a sum type],
-    "",
-    "",
-    linear_pointer_value,
-    [Making an indirection],
-    "",
-    "",
-    exists_intro_value,
-    [Existentially quantifying the term $t : A$ with the type variable $alpha$],
-    "",
+
+    "", inj_left_value, [Constructing the left value of a sum type], "",
+    "", inj_right_value, [Constructing the right value of a sum type], "",
+    "", linear_pointer_value, [Making an indirection], "",
+    "", exists_intro_value, [Existentially quantifying the term $t : A$ with the type variable $alpha$], "",
     "",
     static_function_value,
     [Because the static function can not capture any variables, the remaining environment has to be empty],
     "",
+
     "",
     stack_closure_value,
     [The stack closure can capture variables, so the remaining environment does not need to be empty],
     "",
+
     "",
     linear_closure_value,
     [The linear closure can capture variables, so the remaining environment does not need to be empty],
     "",
-))<typing_positive_fragment>
+  ),
+)<typing_positive_fragment>
 
 The typing rules for _pair_, _var_, and the closures mimic those in @LinearTypes.
 The interesting additions in #ln are _newstack_, _static function_, and the two
-closures. 
+closures.
 
-#figure(caption: [Typing rules for the negative fragment], grid(
+#figure(
+  caption: [Typing rules for the negative fragment],
+  grid(
     inset: (bottom: 15pt),
     columns: (0.1fr, 1.5fr, 1fr, 0.1fr),
-    "",
-    freestack_command,
-    [Consume and free the stack $z$],
-    "",
-    "",
-    pair_command,
-    [Consume and destruct the pair $z$, introducing the variables $a$ and $b$],
-    "",
+    "", freestack_command, [Consume and free the stack $z$], "",
+    "", pair_command, [Consume and destruct the pair $z$, introducing the variables $a$ and $b$], "",
     "",
     case_command,
     [Pattern match on the sum, binding the value of $z$ to $x_i$ and continue with the continuation $c_i$],
     "",
-    "",
-    follow_command,
-    [Follow the indirection, binding the stack behind the pointer to $x$],
-    "",
-    "",
-    exists_elim_command,
-    [Match the existenially quantified term $z$ to access the actual term $x$],
-    "",
+
+    "", follow_command, [Follow the indirection, binding the stack behind the pointer to $x$], "",
+    "", exists_elim_command, [Match the existenially quantified term $z$ to access the actual term $x$], "",
     "",
     static_call_command,
     [Call the static function $z$ with the term $t$ as argument. Note that the environment does not need to be empty when calling static functions],
     "",
+
+    "", stack_call_command, [Call the stack closure $z$ with the term $t$ as argument], "",
+    "", linear_call_command, [Call the linear closure $z$ with the term $t$ as argument], "",
     "",
-    stack_call_command,
-    [Call the stack closure $z$ with the term $t$ as argument],
-    "",
-    "",
-    linear_call_command,
-    [Call the linear closure $z$ with the term $t$ as argument],
-    "",
-    "",
-)) <typing_negative_fragment>
+  ),
+) <typing_negative_fragment>
 
 The juxtaposition of the negative and positive fragments create an elegant
 picture. For every value $v$, a corresponding command exists for how to destruct
