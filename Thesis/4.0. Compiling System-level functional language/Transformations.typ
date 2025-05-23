@@ -32,7 +32,7 @@ important not to forget the negative fragment as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
 have to follow the indirection to access the closure. If we have the call
 $f(x)$ with $f : not A$ and $x : A$. After conversion the call would look like
-this: $"let" square g = f; g(x)$. Lastly, since the type $not A$ is transformed
+this: $"let" square g = f; g(x)$. Lastly, because the type $not A$ is transformed
 to $square ~A$, the type checker should allow $square ~A$ where $not A$ is
 expected.
 
@@ -101,7 +101,7 @@ $Gamma$ represents the free variables in the closure.
 $times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$
 The function pairvars needs to construct a newstack $(circle)$ when $Gamma$ does not contain a stack.
 
-Since the closures are converted, the corresponding commands must also be
+Because the closures are converted, the corresponding commands must also be
 transformed to match. Fortunately, the transformation is straightforward:
 
 #grid(
@@ -142,8 +142,10 @@ $
                  & "let" g, rho_1 = k';     \
                  & g(square #angled(
                      $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
-                     $(lambda^* (y, rho_2). & "let" angled(beta, x) = rho_2; \ & & "let" h,rho_4 = x; \ & & h(y, rho_4), f')$)
-                   ,rho_1)
+                     $(lambda^* (y, rho_2). & "let" angled(beta, x) = rho_2; \ 
+                                          & & "let" h,rho_4 = x; \ 
+                                          & & h(y, rho_4), f')$)
+                 , rho_1)
 $
 #todo[fix the alignment]
 
