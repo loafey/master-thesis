@@ -2,13 +2,12 @@
 
 == Compilation Scheme
 As can be seen in the @SlflChapter chapter every aspect of #ln
-is based upon a set of judgements, split into positive and negative fragments.
+is based on a set of judgements, split into positive and negative fragments.
 
 These judgements can thankfully be translated to x86-64 assembly in a
 straightforward manner. They are first translated into "pseudo" instructions which can
 then be translated into x86-64.
 
-=== Syntax 
 #todo[
 change name of section
 
@@ -21,7 +20,7 @@ following operators and syntax in mind:
 - $rho : Gamma -> "List"("Reg")$ \
   $rho$ is a mapping from variables to a list of pseudo register.
   A pseudo register can either be a physical register or a location on the
-  system stack.
+  stack.
 
   The reason the range of $rho$ is a list of pseudo registers is because some values
   consist of multiple values, leading to more than one pseudo registers.
