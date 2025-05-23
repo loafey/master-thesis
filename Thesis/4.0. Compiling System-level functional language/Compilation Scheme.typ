@@ -9,10 +9,10 @@ straightforward manner. They are first translated into "pseudo" instructions whi
 then be translated into x86-64.
 
 #todo[
-change name of section
+  change name of section
 
-introduce pre/post conditions for $known slash omega$
-] 
+  introduce pre/post conditions for $known slash omega$
+]
 
 To help understanding the compilation scheme the reader should keep the
 following operators and syntax in mind:
@@ -157,14 +157,18 @@ A common tactic when compiling lambdas is to use a process such as
 lambda lifting #todo[source] or closure conversion#todo[source].
 As can be seen in the tables above lambdas are still
 part of the language in the compilation scheme at this late stage.
-Commonly lambdas are removed entierly somewhat early in a language, but in #ln
+Commonly lambdas are removed entirely in earlier steps of the compilation process
+of a language, but in #ln
 we remove them at almost the last step; when compiling to x86-64.
-The method used is very close in principle in
+The method used is very close in principle to
 lambda lifting, in that lambdas are lifted to the top,
 but unlike lambda lifting or closure conversion, the function are never modified.
 The parameters are not touched, unlike in the two other methods, where
 free variables are added as parameters or in an enviornment parameter.
+Free variables in #ln are instead pushed to appropiate stacks so that they
+can be popped when needed.
 
 In the expressions where these lambdas occur, the lambda is simply pushed
 to the stack, which can be seen in its positive fragment,
 which can then be destroyed the negative call fragment.
+
