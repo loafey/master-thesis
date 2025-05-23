@@ -62,6 +62,7 @@ In this document there are #total-words words in total.
 
 #counter(page).update(1)
 #outline()
+#outline(title: [Figures], target: figure)
 #in-outline.update(true)
 #pagebreak()
 
