@@ -19,7 +19,7 @@ then be translated into x86-64.
 To help understanding the compilation scheme the reader should keep the
 following operators and syntax in mind:
 
-- The compilation scheme consists of three functions: 
+- The compilation scheme consists of three functions:
   - $#scheme_pos($\_$)^known_rho : "Value" -> "Pseudo instruction"$
 
   - $#scheme_pos($\_$)^omega_rho : "Value" -> "Pseudo instruction"$
@@ -45,9 +45,10 @@ following operators and syntax in mind:
 
 The instructions that do generate code, such as $push x$, work
 similary to their assembly counterparts.
- 
+
 The first box contains a translation from pseudo instructions to x86-64 instructions. #todo[make better]
-The second box ... #todo[implement]
+
+The second box contains translations from psuedo operands to proper x86-64 operands.
 
 #[
   #let frame(stroke) = (x, y) => (
