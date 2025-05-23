@@ -1,7 +1,6 @@
 #import "../Prelude.typ": *
 
 #let singleStackFrame = figure(
-  kind: image,
   grid(
     columns: (0.5fr, 1fr, 0.5fr),
     [],
@@ -25,7 +24,6 @@
 
 #let x86withTailCall = figure(
   caption: "Function call with tail call optimization",
-  kind: image,
   grid(
     columns: (1fr, 1fr),
     stack(
@@ -51,7 +49,6 @@
 
 #let x86withoutTailCall = figure(
   caption: "Function call without tail call optimization",
-  kind: image,
   grid(
     columns: (1fr, 1fr),
     stack(
@@ -123,9 +120,9 @@
 #let cell(title, desc, content) = block(
   breakable: false,
   table(
-    columns: (0.8fr, 1fr),
+    columns: (0.7fr, 1fr),
     table.cell(rowspan: 1, title),
-    table.cell(rowspan: 2, block(inset: 4pt, content)),
+    table.cell(rowspan: 2, align(horizon, block(inset: 4pt, content))),
     table.cell(rowspan: 1, desc),
   ),
 )
@@ -234,10 +231,13 @@
         Allocates a new stack and switches to it.
         $S$ is the size of the stack to be allocated.
 
-        The start pointer is stored at the bottom of the stack.
+        Some implementation specific details are omitted. @MemoryAlignment goes
+        into more detail how a stack is allocated in #ln.
+        // The start pointer is stored at the bottom of the stack.
       ],
       $#scheme_pos(newstack)^omega_{} =
-      #code_box($r_1 <- "malloc"(S)$, $r_2 = r_1$, $r_1 = r_1 + S$, $r_1 = r_1 - 8$, $s p = r_1$, $push_sp (r_2)$)$,
+      #code_box($r_1 <- "malloc"(S)$, $s p = r_1$)$,
+      // #code_box($r_1 <- "malloc"(S)$, $r_2 = r_1$, $r_1 = r_1 + S$, $r_1 = r_1 - 8$, $s p = r_1$, $push_sp (r_2)$)$,
     ),
   )
 }

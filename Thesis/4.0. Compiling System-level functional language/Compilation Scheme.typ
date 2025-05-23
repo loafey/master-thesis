@@ -11,42 +11,32 @@ straightforward manner. They are first translated into "pseudo" instructions whi
 then be translated into x86-64.
 
 #todo[
-  change name of section
 
   introduce pre/post conditions for $known slash omega$
 ]
 
-To help understanding the compilation scheme the reader should keep the
-following operators and syntax in mind:
-
-- The compilation scheme consists of three functions:
+The compilation scheme consists of three functions: 
   - $#scheme_pos($\_$)^known_rho : "Value" -> "Pseudo instruction"$
 
   - $#scheme_pos($\_$)^omega_rho : "Value" -> "Pseudo instruction"$
 
   - $#scheme_neg($\_$)_rho : "Command" -> "Pseudo instruction"$
 
-  We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragments.
-  The translation between pseudo instructions and x86-64 assembly can be seen in @translation_table
+We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragments.
+If we use $alpha$ inplace of $omega$ and $known$, then the definition
+should exist for both kinds.
+The function $rho$ is a mapping from variables to a list of pseudo registers.
+A pseudo register is a physical register or a location on the
+stack. Formally, $rho$ can be seen as the function: $rho : Gamma -> "List"("Reg")$.
+The range of $rho$ is a list of pseudo registers because not all values
+can be stored in one physical register.
 
+The scheme also contains the meta instruction: $\""let" r_n = "next"(rho,
+t)\"$, where $"next"$  has the type $"List"("Reg") -> "Type" -> "List"("Reg")$. The pseudo registers chosen depends on which pseudo registers are used in $rho$, and the size of the type $t$. The meta instruction exists
+only at compile time.
 
-- $rho$ is a mapping from variables to a list of pseudo register.
-  A pseudo register is a physical register or a location on the
-  stack. Formally, $rho$ can be seen as the function: $rho : Gamma -> "List"("Reg")$
-
-  The reason the range of $rho$ is a list of pseudo registers is because some values
-  require more space than a physical register can store.
-
-
-
-- The scheme uses a mix of meta syntax, i.e, instructions that does not generate
-  any code, and instructions that generate code. We differentiate meta syntax
-  from instructions using double quotes.
-
-The instructions that do generate code, such as $push x$, work
-similary to their assembly counterparts.
-
-The first box contains a translation from pseudo instructions to x86-64 instructions. #todo[make better] The second box contains translations from psuedo operands to proper x86-64 operands.
+The translation between pseudo instructions and x86-64 assembly can be seen in @translation_table,
+and in @operand_table we explain the operands used in the compilation scheme.
 
 #[
   #let frame(stroke) = (x, y) => (
@@ -140,18 +130,19 @@ The first box contains a translation from pseudo instructions to x86-64 instruct
     caption: [
       Translations between pseudo operands and x86 operands.
       SP stands for Stack Pointer, and points to the top of the current stack.
-      SSP stands for Stack Save Pointer is used as backup register for some fragments.
+      SSP stands for Save Stack Pointer and is used to backup SP.
     ],
-  )
+  ) <operand_table>
 ]
 
-=== Positive fragment #todo[make figure]
+=== Positive fragment
 As specified in @TypesAndValues these fragments are used to create values.
-#positive_compilation_scheme
+#show figure: set block(breakable: true)
+#figure(caption: [Compilation scheme for the positive fragment of #ln], positive_compilation_scheme) <compscheme_positive>
 
-=== Negative fragment #todo[make figure]
+=== Negative fragment
 Once again as specified in @TypesAndValues these fragments are used to destroy values.
-#negative_compilation_scheme
+#figure(caption: [Compilation scheme for the negative fragment of #ln], negative_compilation_scheme) <compscheme_negative>
 
 The astute reader might observe that matching positive and negative
 fragments "cancel" each other out. Linearity enforces that a positive fragment

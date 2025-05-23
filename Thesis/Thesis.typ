@@ -4,6 +4,8 @@
 // #set text(fill: white, stroke: 0.2pt + white)
 // #set page(background: rect(fill: black, width: 100%, height: 100%))
 
+#set figure(supplement: "Figure", kind: "figure")
+
 #let in-outline = state("in-outline", false)
 #show outline: it => {
   in-outline.update(true)
