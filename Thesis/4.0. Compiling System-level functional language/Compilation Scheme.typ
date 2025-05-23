@@ -145,11 +145,11 @@ The first box contains a translation from pseudo instructions to x86-64 instruct
   )
 ]
 
-=== Positive fragment
+=== Positive fragment #todo[make figure]
 As specified in @TypesAndValues these fragments are used to create values.
 #positive_compilation_scheme
 
-=== Negative fragment
+=== Negative fragment #todo[make figure]
 Once again as specified in @TypesAndValues these fragments are used to destroy values.
 #negative_compilation_scheme
 

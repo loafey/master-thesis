@@ -9,8 +9,8 @@ This stack frame is located on the stack given by the operating system, which wi
 to as the system stack henceforth, and outside of this system stack,
 #ln makes heavy use of other stacks.
 These stacks are used for passing variables and all calculations.
-This stack usage is similar in nature to the JVM#todo[source] or
-WebAssembly #todo[source :)], which also makes heavy use of stacks
+This stack usage is similar in nature to the Java Virtual Machine @JavaOracle or
+WebAssembly @WASMhaas2017bringing, which also makes heavy use of stacks
 and virtual registers stored on the system stack.
 
 It is worth to noting that this specification is not final, as it is with

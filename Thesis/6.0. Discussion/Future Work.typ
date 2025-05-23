@@ -24,7 +24,7 @@ use that memory for things such as interupts.
 
 === Register allocation
 When optimizing the generated code, one important technique is
-utilizing the physical registers for variable allocation. #todo("source")
+utilizing the physical registers for variable allocation.
 If one were to implement this naively, it would suffice with putting the first few variables of a
 function into registers, and the rest on the system stack.
 This would however not necessarily suffice for larger functions, where one might have
@@ -34,7 +34,7 @@ To combat this, an efficient compiler should move variables back onto the stack
 (a process often called spilling) when they are not used, and back into registers when they are.
 Doing this efficently can prove difficult because the compiler should try to minimize
 the amount of spilling needed, and this has in fact been proven to be
-NP-complete #todo("source"). This was not implemented for #ln because it was
+NP-complete @RegisterAllocationbouchez2006register. This was not implemented for #ln because it was
 deemed an optimization, that while interesting, not something we would have the time to
 implement properly.
 
@@ -82,7 +82,7 @@ To combat this issue we would want to introduce exponentials.
 
 Exponentionals would let a user reuse a value multiple times opening up
 for some much needed expressiveness. Take fibbonacci again with some imaginative
-syntax introducing a `!` kind, similar to #todo[reference Change the World]:
+syntax introducing a `!` kind:
 
 #block(
   breakable: false,
@@ -149,7 +149,7 @@ such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
 
 When de-allocating memory for data types, it has to be done recursivly _if_
-the the type is recursive. A simple free would not suffice for these.
+the the type is recursive. A simple free would not suffice for these @LinearTypeswadler1990linear.
 
 
 === Utilizing linearity for optimizations
