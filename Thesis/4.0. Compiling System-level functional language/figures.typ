@@ -159,25 +159,25 @@
         Compile the right value, which is a stack, then compile the left value
         and then push that on the stack.
       ],
-      $#compilation_scheme($(v_1,v_2)$)^omega_(rho,sigma) =
+      $#scheme_pos($(v_1,v_2)$)^omega_(rho,sigma) =
       #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
     cell(
       [Tuple with no stack],
       [Compile the values right to left.],
-      $#compilation_scheme($(v_1,v_2)$)^known_(rho,sigma) =
+      $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
       #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
 
     cell(
       [Existental introduction],
       [Types do not exist at runtime, so $@t$ is removed, and $v_1$ is compiled.],
-      $#compilation_scheme($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
+      $#scheme_pos($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
     cell(
       [Put a stack pointer on the current stack],
       [#bigTodo[what]],
-      $#compilation_scheme($square v_1$)^known_rho =
+      $#scheme_pos($square v_1$)^known_rho =
       #code_box(
         $sp = sp + 1$,
         $push_(sp)(ssp)$,
@@ -192,46 +192,46 @@
     cell(
       [Sum-type left constructor],
       [Wrap a value in the left sym-type constructor.],
-      $#compilation_scheme($"inl" v_1$)^alpha_rho =
+      $#scheme_pos($"inl" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
     ),
     cell(
       [Sum-type right constructor],
       [Wrap a value in the right sym-type constructor.],
-      $#compilation_scheme($"inr" v_1$)^alpha_rho =
+      $#scheme_pos($"inr" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
     ),
 
     cell(
       [Set stack to variable],
       [Switches the stack to one stored in a variable.],
-      $#compilation_scheme($x$)^omega_(x |-> {r_0}) =
+      $#scheme_pos($x$)^omega_(x |-> {r_0}) =
       #code_box($&s p = r_0$)$,
     ),
     cell(
       [Push variable on stack],
       [Simply pushes the a variable on the current stack.],
-      $#compilation_scheme($x$)^known_(x |-> r_0) =
+      $#scheme_pos($x$)^known_(x |-> r_0) =
       #code_box($push_(s p)(r_0)$)$,
     ),
 
     cell(
       [Unit],
       [Nothing is done when compiling this.],
-      $#compilation_scheme($()$)^known_{} = #code_box("")$,
+      $#scheme_pos($()$)^known_{} = #code_box("")$,
     ),
     cell(
       [Lambdas],
       [See @lambdaLifting for more details.],
-      $#compilation_scheme($lambda x. c$)^known_{} =
-      &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $#sem[c]_(x |-> {r_1})$) \
+      $#scheme_pos($lambda x. c$)^known_{} =
+      &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $""^-#sem[c]_(x |-> {r_1})$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
 
     cell(
       [Newstack],
       [Allocates a new stack and switches to it.],
-      $#compilation_scheme(newstack)^omega_{} =
+      $#scheme_pos(newstack)^omega_{} =
       #code_box($r_1 <- newstack$, $s p = r_1$)$,
     ),
   )
@@ -257,7 +257,7 @@
         and stores it in $r_1$. $y$ represents
         the rest of the stack.
       ],
-      $#compilation_scheme($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
+      $#scheme_neg($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
       =
       #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
     ),
@@ -269,7 +269,7 @@
         Does nothing except mapping the two
         values to pseudo registers, and compile the next command.
       ],
-      $#compilation_scheme($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
+      $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
       = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
     ),
 
@@ -278,7 +278,7 @@
       [
         Similary like it's positive fragment variant,
         this does nothing except compile the next command.],
-      $#compilation_scheme($"let" () = z^known; c$)_(rho,z |-> {})
+      $#scheme_neg($"let" () = z^known; c$)_(rho,z |-> {})
       = #code_box($#sem[c]_rho$)$,
     ),
 
@@ -286,7 +286,7 @@
       [Existential destruction],
       [Similarily to existential introduction, this does nothing except
         bind $x$, destruct $z^alpha$ and compile the next command.],
-      $#compilation_scheme($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
+      $#scheme_neg($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
       = #code_box($#sem[c]_(rho, x |-> r_0)$)$,
     ),
 
@@ -294,7 +294,7 @@
       [Destruct stack pointer],
       [Does nothing except compile the next command, and give you access to
         a stack which can then be switched or freed.],
-      $#compilation_scheme($"let" square x = z^known; c$)_(rho, z |-> {r_0})
+      $#scheme_neg($"let" square x = z^known; c$)_(rho, z |-> {r_0})
       = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
     ),
 
@@ -304,14 +304,14 @@
         Deallocates the current stack. This is currently implemented
         using glibc's `free`.
       ],
-      $#compilation_scheme($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
+      $#scheme_neg($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
       = #code_box($pop(r_0)$, $"free"(r_0)$, $#sem[c]_rho$)$,
     ),
 
     cell2(
       [Case expression with variable which is a stack],
       [Pop the top value of the stack and pattern match on it.],
-      $#compilation_scheme($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
+      $#scheme_neg($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
       = #code_box(
         meta($"let" r_1 = "next"(rho, "int")$),
         $pop_(r_0)(r_1)$,
@@ -324,7 +324,7 @@
     cell2(
       [Case expression with variable],
       [Pattern match on a variable.],
-      [$#compilation_scheme($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
+      [$#scheme_neg($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
         = #code_box(
           $"if" & "iszero"(r_1)\
           & "then" #sem[$c_1$]_(rho, x |-> r_s)\
@@ -337,7 +337,7 @@
       [Function call],
       [Compile $v$, preparing the stack with needed arguments, and then jmp to
         $z^known$.],
-      $#compilation_scheme($"call" z^known (v)$)_(rho, z |-> {r_0}) =
+      $#scheme_neg($"call" z^known (v)$)_(rho, z |-> {r_0}) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
     ),
   )

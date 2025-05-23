@@ -152,7 +152,8 @@
   $bracket.l.double #t bracket.r.double$
 }
 
-#let compilation_scheme(t) = $#sem[$#t$]$
+#let scheme_pos(t) = $""^+#sem(t)$
+#let scheme_neg(t) = $""^-#sem(t)$
 
 #let code_box(..t) = {
   let txt = t.pos().join($\ $)
