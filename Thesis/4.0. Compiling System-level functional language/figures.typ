@@ -151,7 +151,7 @@
   )
   grid(
     cell(
-      [Tuple where $v_2$ is a stack],
+      [Stack tuple],
       [
         Compile $v_2$ first to ensure that SP points to a stack, then compile $v_1$.
       ],
@@ -159,7 +159,7 @@
       #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
     cell(
-      [Tuple with no stack],
+      [Tuple],
       [Compile $v_2$ first, to ensure conformity with the stack tuple.],
       $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
       #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
@@ -171,7 +171,7 @@
       $#scheme_pos($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
     cell(
-      [Put the stack pointer $v_1$ on the current stack.],
+      [Indirection to a stack],
       [Create space on the stack for the stack pointer to $v_1$. Backup SSP and
       SP. Compile $v_1$, setting SP to the stack $v_1$. Write SP to the space
       created, then restore SP and SSP to their previous states.],
@@ -188,40 +188,46 @@
     ),
 
     cell(
-      [Sum-type left constructor],
-      [Wrap a value in the left sum-type constructor.],
+      [Right injection],
+      [Compile $v_1$ and push the tag $0$ on the stack. The tag must be pushed
+      after the compilation of $v_1$ because when $alpha = omega$, SP might not
+      be a valid stack.],
       $#scheme_pos($"inl" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
     ),
     cell(
-      [Sum-type right constructor],
-      [Wrap a value in the right sum-type constructor.],
+      [Left injection],
+      [Compile $v_1$ and push the tag $1$ on the stack.],
       $#scheme_pos($"inr" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
     ),
 
     cell(
-      [Set stack to variable],
-      [Switches the stack to one stored in a variable.],
+      [Stack variable],
+      [Set SP to $r_0$, essentially switching stack.],
       $#scheme_pos($x$)^omega_(x |-> {r_0}) =
       #code_box($&s p = r_0$)$,
     ),
     cell(
-      [Push variable on stack],
-      [Simply pushes the a variable on the current stack.],
+      [Variable],
+      [Push the variable on the stack.],
       $#scheme_pos($x$)^known_(x |-> r_0) =
       #code_box($push_(s p)(r_0)$)$,
     ),
 
     cell(
       [Unit],
-      [Nothing is done when compiling this.],
+      [$()$ does not exist at runtime. \ \
+    ],
       $#scheme_pos($()$)^known_{} = #code_box("")$,
     ),
     cell(
-      [Lambdas],
-      [See @lambdaLifting for more details.],
-      $#scheme_pos($lambda x. c$)^known_{} =
+      [Static function],
+      [Generate a unique label $l_1$. Create a "block" of instructions under
+      $l_1$ where we set $r_1$ to the next available pseudo register, set $r_1$
+      to $sp$, and compile $c$. This block has to be placed outside other
+      blocks. Finally, push $l_1$ on the stack.],
+      $#scheme_pos($lambda^* x. c$)^known_{} =
       &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $""^-#sem[c]_(x |-> {r_1})$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
@@ -259,7 +265,7 @@
     cell2(
       [Pop top of stack],
       [
-        Pops the top value of the stack ($x$ here)
+        Pops the top value of the stack $z$
         and stores it in $r_1$. $y$ represents
         the rest of the stack.
       ],
@@ -271,9 +277,8 @@
     cell2(
       [Destruct tuple],
       [
-        Breaks a tuple into its two values.
-        Does nothing except mapping the two
-        values to pseudo registers, and compile the next command.
+        Split the tuple into its two disjoint lists of pseudo registers.
+        Generates no pseudo instructions.
       ],
       $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
       = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
@@ -281,25 +286,21 @@
 
     cell2(
       [Unit elimination],
-      [
-        Similary like it's positive fragment variant,
-        this does nothing except compile the next command.],
+      [Because unit does not exist at runtime, matching on it generates nothing.],
       $#scheme_neg($"let" () = z^known; c$)_(rho,z |-> {})
       = #code_box($#sem[c]_rho$)$,
     ),
 
     cell2(
       [Existential destruction],
-      [Similarily to existential introduction, this does nothing except
-        bind $x$, destruct $z^alpha$ and compile the next command.],
+      [Again, types have no runtime representation, so we just compile $c$.],
       $#scheme_neg($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
       = #code_box($#sem[c]_(rho, x |-> r_0)$)$,
     ),
 
     cell2(
-      [Destruct stack pointer],
-      [Does nothing except compile the next command, and give you access to
-        a stack which can then be switched or freed.],
+      [Following an indirection],
+      [TEXT HERE #bigTodo[Continue here]],
       $#scheme_neg($"let" square x = z^known; c$)_(rho, z |-> {r_0})
       = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
     ),
