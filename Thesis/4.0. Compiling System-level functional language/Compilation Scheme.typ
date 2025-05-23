@@ -111,19 +111,11 @@ The second box ... #todo[implement]
       L: # a label
       ```,
 
-      $newstack$,
+      $"OP"_1 <- "malloc"("OP"_2)$,
       ```asm
-      mov STACKSIZE, %RDI
-      call malloc # result = %RAX
-      movq %RAX, %RDX
-      addq STACKSIZE, %RAX
-
-      subq $16, %RAX
-      movq %RDX, 0(%RAX) # backup ptr
-
-      # push to the stack
-      subq $8,  %R15
-      movq %RAX, 0(%R15)
+      mov OP₂, %RDI
+      call malloc
+      movq %RAX, OP₁
       ```,
 
       $"free"("OP")$,

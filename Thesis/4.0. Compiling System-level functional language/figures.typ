@@ -230,9 +230,14 @@
 
     cell(
       [Newstack],
-      [Allocates a new stack and switches to it.],
+      [
+        Allocates a new stack and switches to it.
+        $S$ is the size of the stack to be allocated.
+
+        The start pointer is stored at the bottom of the stack.
+      ],
       $#scheme_pos(newstack)^omega_{} =
-      #code_box($r_1 <- newstack$, $s p = r_1$)$,
+      #code_box($r_1 <- "malloc"(S)$, $r_2 = r_1$, $r_1 = r_1 + S$, $r_1 = r_1 - 8$, $s p = r_1$, $push_sp (r_2)$)$,
     ),
   )
 }
