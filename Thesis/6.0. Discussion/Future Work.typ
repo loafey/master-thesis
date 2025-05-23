@@ -136,8 +136,7 @@ To avoid leaking memory, exponentials would need automatic de-allocation.
 We would suggest using reference counting for this, but other methods such as
 garbage collection could suffice.
 
-
-=== Data Types
+=== Data Types<DataTypes>
 While the language currently contains sum and product types
 ($a plus.circle b$ and $a times.circle b$ respectively), having
 types with named fields or constructors would be
@@ -147,6 +146,10 @@ types such as linked lists, which are currently not representable.
 It would also be beneficial to have access to contiguous data types
 such as arrays. In the paper "Linear types can Change the World" #todo[source]
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
+
+When de-allocating memory for data types, it has to be done recursivly _if_
+the the type is recursive. A simple free would not suffice for these.
+
 
 === Utilizing linearity for optimizations
 In other immutable languages such as Haskell, data is copied when
