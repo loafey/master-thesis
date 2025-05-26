@@ -2,7 +2,11 @@
 = Discussion
 
 #include "Future Work.typ"
+
+#include "Related Work.typ"
+
 #pagebreak()
+
 == Conclusion
 The goal of this thesis was to present a system-level functional language
 with linear types. The language, #ln, currently does not implement
