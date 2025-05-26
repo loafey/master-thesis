@@ -26,7 +26,12 @@ If we use $alpha$ inplace of $omega$ and $known$, then the definition
 should exist for both kinds.
 The function $rho$ is a mapping from variables to a list of pseudo registers.
 The syntax $rho, x |-> s_n$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
-If we instead write $rho, x |-> {r_0, ..., r_n}$ then $x$ maps to the list containing $r_0, ..., r_n$.
+If we instead write $rho, x |-> [r_0, ..., r_n]$ then $x$ maps to the list containing $r_0, ..., r_n$.
+Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail.
+Finally, $s_1 ++ s_2$ means the concatenation of the two lists $s_0$ and $s_1$.
+
+We denote a variable $z^omega$ or $z^known$ in the negative fragment as
+a reminder of the kind of the type of the variable.
 
 A pseudo register is a physical register or a location on the
 stack. Formally, $rho$ can be seen as the function: $rho : Gamma -> "List"("Reg")$.
@@ -70,35 +75,38 @@ and in @operand_table we explain the operands used in the compilation scheme.
     table(
       columns: (1fr, 1fr),
       [*Pseudo instruction*], [*x86-64 instructions*],
-      $push_R ("OP")$,
+      $push_R ("OP"_n)$,
       ```asm
-      subq $sizeof(OP), R
-      mov  OP,          0(R)
+      subq $n, R
+      movq OP₁, 0(R)
+      ...
+      movq OPₙ, n(R)
       ```,
 
-      $"OP"_1 = "OP"_2$,
+      $"OP1" = "OP2"$,
       ```asm
-      mov OP₂, OP₁
+      movq OP2, OP1
       ```,
-
-      $pop_R ("OP")$,
+      $pop_R ("OP"_n)$,
       ```asm
-      mov 0(R),        OP
-      addq sizeof(OP), R
+      movq n(R), OPₙ
+      ...
+      movq 0(R), OP₁
+      addq $n, R
       ```,
 
       ```
-      if izero(OP)
-        then C₁
-        else C₂
+      if izero(OP₁)
+        then C1
+        else C2
       ```,
       ```asm
-      mov OP, %R10
+      movq OP₁, %R10
       cmp $0, %R10
       jnz lbl
-      C₁ # codeblock
+      C1 # codeblock
       lbl:
-      C₂ # codeblock
+      C2 # codeblock
       ```,
 
       $jmp L$,
@@ -111,17 +119,17 @@ and in @operand_table we explain the operands used in the compilation scheme.
       L: # a label
       ```,
 
-      $"OP"_1 <- "malloc"("OP"_2)$,
+      $"OP1"_1 <- "malloc"("OP2"_1)$,
       ```asm
-      mov OP₂, %RDI
+      movq OP2₁, %RDI
       call malloc
-      movq %RAX, OP₁
+      movqq %RAX, OP1₁
       ```,
 
-      $"free"("OP")$,
+      $"free"("OP"_1)$,
       ```asm
-      mov $0, %RAX
-      mov OP, %RDI
+      movq $0, %RAX
+      movq OP₁, %RDI
       call free
       ```,
     ),
@@ -151,31 +159,31 @@ and in @operand_table we explain the operands used in the compilation scheme.
 #figure(caption: [Compilation scheme for the positive fragment of #ln], positive_compilation_scheme) <compscheme_positive>
 #figure(caption: [Compilation scheme for the negative fragment of #ln], negative_compilation_scheme) <compscheme_negative>
 
-The astute reader might observe that matching positive and negative
-fragments "cancel" each other out. Linearity enforces that a positive fragment
-that creates a value,
-must be matched with a negative fragment at some point, which consumes said value.
+// The astute reader might observe that matching positive and negative
+// fragments "cancel" each other out. Linearity enforces that a positive fragment
+// that creates a value,
+// must be matched with a negative fragment at some point, which consumes said value.
 
-=== Lambda Compilation <lambdaLifting>
-Lambdas are still in the language even in the the last step before compilation,
-as shown in the positive fragments.
-
-A common tactic when compiling lambdas is to use a process such as
-lambda lifting #todo[source] or closure conversion#todo[source].
-As can be seen in the tables above lambdas are still
-part of the language in the compilation scheme at this late stage.
-Commonly lambdas are removed entirely in earlier steps of the compilation process
-of a language, but in #ln
-we remove them at almost the last step; when compiling to x86-64.
-The method used is very close in principle to
-lambda lifting, in that lambdas are lifted to the top,
-but unlike lambda lifting or closure conversion, the function are never modified.
-The parameters are not touched, unlike in the two other methods, where
-free variables are added as parameters or in an enviornment parameter.
-Free variables in #ln are instead pushed to appropiate stacks so that they
-can be popped when needed.
-
-In the expressions where these lambdas occur, the lambda is simply pushed
-to the stack, which can be seen in its positive fragment,
-which can then be destroyed the negative call fragment.
-
+// === Lambda Compilation <lambdaLifting>
+// Lambdas are still in the language even in the the last step before compilation,
+// as shown in the positive fragments.
+//
+// A common tactic when compiling lambdas is to use a process such as
+// lambda lifting #t odo[source] or closure conversion #t odo[source].
+// As can be seen in the tables above lambdas are still
+// part of the language in the compilation scheme at this late stage.
+// Commonly lambdas are removqed entirely in earlier steps of the compilation process
+// of a language, but in #ln
+// we removqe them at almost the last step; when compiling to x86-64.
+// The method used is very close in principle to
+// lambda lifting, in that lambdas are lifted to the top,
+// but unlike lambda lifting or closure conversion, the function are never modified.
+// The parameters are not touched, unlike in the two other methods, where
+// free variables are added as parameters or in an enviornment parameter.
+// Free variables in #ln are instead pushed to appropiate stacks so that they
+// can be popped when needed.
+//
+// In the expressions where these lambdas occur, the lambda is simply pushed
+// to the stack, which can be seen in its positive fragment,
+// which can then be destroyed the negative call fragment.
+//

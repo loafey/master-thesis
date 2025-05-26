@@ -205,30 +205,31 @@
     cell(
       [Stack variable],
       [Set SP to $r_0$, essentially switching stack.],
-      $#scheme_pos($x$)^omega_(x |-> {r_0}) =
+      $#scheme_pos($x$)^omega_(x |-> [r_0]) =
       #code_box($&s p = r_0$)$,
     ),
     cell(
       [Variable],
       [Push the variable on the stack.],
-      $#scheme_pos($x$)^known_(x |-> r_0) =
-      #code_box($push_(s p)(r_0)$)$,
+      $#scheme_pos($x$)^known_(x |-> s_n) =
+      #code_box($push_(s p)(s_n)$)$,
     ),
 
     cell(
       [Unit],
       [$()$ does not exist at runtime. \ \
     ],
-      $#scheme_pos($()$)^known_{} = #code_box("")$,
+      $#scheme_pos($()$)^known_[] = #code_box("")$,
     ),
     cell(
       [Static function],
-      [Generate a unique label $l_1$. Create a "block" of instructions under
-      $l_1$ where we set $r_1$ to the next available pseudo register, set $r_1$
-      to $sp$, and compile $c$. This block has to be placed outside other
-      blocks. Finally, push $l_1$ on the stack.],
-      $#scheme_pos($lambda^* x. c$)^known_{} =
-      &#code_block($l_1$, meta($"let" r_1 = "next"({}, #math.italic("ptr"))$), $r_1 = s p$, $""^-#sem[c]_(x |-> {r_1})$) \
+      [Generate a unique label $l_1$. Under $l_1$, let $r_1$ be the next
+      available pseudo register, then set it to $sp$ and compile the command
+      $c$. Finally, push $l_1$ on the stack. $l_1$ and the block can be thought
+      of as creating a procedure in a C-like language, and thus, we must be
+      careful about nesting.],
+      $#scheme_pos($lambda^* x. c$)^known_[] =
+      &#code_block($l_1$, meta($"let" r_1 = "next"([], #math.italic("ptr"))$), $r_1 = s p$, $""^-#sem[c]_(x |-> [r_1])$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
 
@@ -242,7 +243,7 @@
         into more detail how a stack is allocated in #ln.
         // The start pointer is stored at the bottom of the stack.
       ],
-      $#scheme_pos(newstack)^omega_{} =
+      $#scheme_pos(newstack)^omega_[] =
       #code_box($r_1 <- "malloc"(S)$, $s p = r_1$)$,
       // #code_box($r_1 <- "malloc"(S)$, $r_2 = r_1$, $r_1 = r_1 + S$, $r_1 = r_1 - 8$, $s p = r_1$, $push_sp (r_2)$)$,
     ),
@@ -269,16 +270,16 @@
         and stores it in $r_1$. $y$ represents
         the rest of the stack.
       ],
-      $#scheme_neg($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> {r_0})
+      $#scheme_neg($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> [r_0])
       =
-      #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> {r_0})$)$,
+      #code_box(meta($"let" r_1 = "next"(rho, A)$), $pop_(r_0)(r_1)$, $#sem[c]^omega_(rho, x |-> r_1, y |-> [r_0])$)$,
     ),
 
     cell2(
       [Destruct tuple],
       [
-        Split the tuple into its two disjoint lists of pseudo registers.
-        Generates no pseudo instructions.
+        Split the environment into two disjoint lists of pseudo registers. The
+        environment $s_0$ corresponds to $x$ and $s_1$ corresponds to $y$. 
       ],
       $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
       = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
@@ -287,64 +288,65 @@
     cell2(
       [Unit elimination],
       [Because unit does not exist at runtime, matching on it generates nothing.],
-      $#scheme_neg($"let" () = z^known; c$)_(rho,z |-> {})
+      $#scheme_neg($"let" () = z^known; c$)_(rho,z |-> [])
       = #code_box($#sem[c]_rho$)$,
     ),
 
     cell2(
-      [Existential destruction],
-      [Again, types have no runtime representation, so we just compile $c$.],
-      $#scheme_neg($"let" @t, x = z^alpha; c$)_(rho, z |-> r_0)
-      = #code_box($#sem[c]_(rho, x |-> r_0)$)$,
+      [Existential elimination],
+      [Types have no runtime representation, so we just compile $c$.],
+      $#scheme_neg($"let" @t, x = z^alpha; c$)_(rho, z |-> s_n)
+      = #code_box($#sem[c]_(rho, x |-> s_n)$)$,
     ),
 
     cell2(
       [Following an indirection],
-      [TEXT HERE #bigTodo[Continue here]],
-      $#scheme_neg($"let" square x = z^known; c$)_(rho, z |-> {r_0})
-      = #code_box($#sem[c]_(rho, x |-> {r_0})$)$,
+      [Because $r_0$ contains the pointer to the stack already, we just need to update the environment.],
+      $#scheme_neg($"let" square x = z^known; c$)_(rho, z |-> [r_0])
+      = #code_box($#sem[c]_(rho, x |-> [r_0])$)$,
     ),
 
     cell2(
-      [Stack de-allocation],
+      [Stack deallocation],
       [
-        Deallocates the current stack. This is currently implemented
-        using glibc's `free`.
-      ],
-      $#scheme_neg($"let" \_ = "freestack" z^omega; c$)_(rho, z |-> {r_0})
-      = #code_box($pop(r_0)$, $"free"(r_0)$, $#sem[c]_rho$)$,
+        Deallocates the stack in $r_0$, then compile the command $c$.],
+      $#scheme_neg($"freestack" z^omega; c$)_(rho, z |-> [r_0])
+      = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
     ),
 
     cell2(
       [Case expression with variable which is a stack],
-      [Pop the top value of the stack and pattern match on it.],
-      $#scheme_neg($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> {r_0})
+      [Pop the tag from the stack $r_0$. Generate the appropriate branching
+      instructions using iszero. Because the tag has been popped from $r_0$,
+      the value under the injection is at the top of the stack.],
+      $#scheme_neg($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> [r_0])
       = #code_box(
         meta($"let" r_1 = "next"(rho, "int")$),
         $pop_(r_0)(r_1)$,
         $"if" "iszero"(r_1)$,
-        $quad "then" #sem[$c_1$]_(rho, x |-> {r_0})$,
-        $quad "else" #sem[$c_2$]_(rho, y |-> {r_0})$,
+        $quad "then" #sem[$c_1$]_(rho, x |-> [r_0])$,
+        $quad "else" #sem[$c_2$]_(rho, y |-> [r_0])$,
       )$,
     ),
 
     cell2(
       [Case expression with variable],
-      [Pattern match on a variable.],
-      [$#scheme_neg($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: r_s)
+      [Because $z$ is not a stack, it corresponds to a non-empty list of pseudo
+      registers where the head is the tag, and the remaining pseudo registers
+      correspond to the value under the injection.],
+      [$#scheme_neg($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: s_n)
         = #code_box(
           $"if" & "iszero"(r_1)\
-          & "then" #sem[$c_1$]_(rho, x |-> r_s)\
-          & "else" #sem[$c_2$]_(rho, y |-> r_s)$,
+          & "then" #sem[$c_1$]_(rho, x |-> s_n)\
+          & "else" #sem[$c_2$]_(rho, y |-> s_n)$,
         )$
       ],
     ),
 
     cell2(
       [Function call],
-      [Compile $v$, preparing the stack with needed arguments, and then jmp to
-        $z^known$.],
-      $#scheme_neg($"call" z^known (v)$)_(rho, z |-> {r_0}) =
+      [Compile $v$, preparing the stack, and then jmp to the label $r_0$.],
+      $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
     ),
   )
