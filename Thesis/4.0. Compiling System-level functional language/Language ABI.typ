@@ -40,12 +40,12 @@ functions as values on the stack.
 Top-level functions however work differently, and works in a somewhat similar manner
 to how functions work in most other languages. There is one major difference however.
 A top-level function does not actually execute the function,
-and it instead pushes a code pointer onto the current stack#todo[skulle vi ändra detta?]
+and it instead pushes a code pointer onto the current stack
 and returns. This code pointer points to the actual function which can then be popped
 and called when need be.
 In this manner top-level functions act much more like constants.
 
-When FFI calls #todo([introduce]) occur, such as calling a libc function like `printf`,
+When FFI calls occur, such as calling a libc function like `printf`,
 this function will allocate a stack frame on top of the single stack frame, and execute like
 it would normally do. The result will then be written into a fitting register
 or variable on the system stack, or it will be pushed onto the current stack.
@@ -204,14 +204,13 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     all pushes pad to make sure that the next stack location is
     in an address divisible by 8 (would be 4 on a 32-bit platform).
 
-    The reason padding is needed is because most, if not all, computer architectures
+    The reason padding is needed is simply because a lot of computer architectures
     assume that memory is stored in an aligned way. If a value consists of 8 bytes,
     it needs to be stored on an address divisible by 8, if its 4 bytes, the address needs
     to be divisible by 4, and so on and so forth. While x86-64 allows
-    unalligned memory interactions for some instructions, this is often heavily
-    discouraged because it can potentially harm performance, as it potentially
-    requires more clock cycles, and can hurt the memory sections cache friendlines.
-    #todo[kan skrivas bättre]
+    unaligned memory interactions for some instructions, this is often heavily
+    discouraged because it can potentially harm performance, as it can
+    require more clock cycles, and cache friendlines of the values being interacted with.
   ]
 
   The memory layout for product- and sum-types is also relatively simple.
