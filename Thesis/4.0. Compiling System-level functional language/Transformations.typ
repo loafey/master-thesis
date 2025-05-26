@@ -41,9 +41,12 @@ expected.
 It is important for every stack closure ($~A$) to identify a single unique stack that
 it can execute on. Stack selection selects a single unique stack for every
 closure if at least one stack exists, ensuring that every closure has _at most_ one stack
-prepared. In @PointerClosureConversion we will explain why stack selection can
-not guarantee that there is _exactly one_ stack prepared for every closure.
-
+prepared. The reason we can not guarantee that there is _exactly one_ stack
+prepared is because stacks have not been made explicit yet. If we consider the
+following program, where $f : *A$ is defined: $ lambda^~ x. f(x) : space ~A $
+It is not possible to introduce a stack to this closure without also
+transforming the type. In @PointerClosureConversion we will show the necessary transformations to make stacks explicit, and how to introduce new stacks. 
+ 
 Consider the following program:
 $ lambda (f,k). space k(lambda y. space f(y)) : *(not A times.circle ~not A) $
 
@@ -166,6 +169,4 @@ $
   #angled($circle$, $(lambda^* (x,rho_1). "freestack" rho_1; "foo"(x), newstack)$)
 $
 
-Introducing explicit stacks sounds like something for the stack selection
-phase. Unfortunately, there is no way to do it before making environments
-explicit, which happens here.
+Now the environment is a new empty stack, and we free it before calling the static function $"foo"()$

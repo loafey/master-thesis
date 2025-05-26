@@ -153,7 +153,7 @@
     cell(
       [Stack tuple],
       [
-        Compile $v_2$ first to ensure that SP points to a stack, then compile $v_1$.
+        Compile $v_2$ first to ensure that SP points to a valid stack, then compile $v_1$.
       ],
       $#scheme_pos($(v_1,v_2)$)^omega_(rho,sigma) =
       #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
@@ -167,7 +167,8 @@
 
     cell(
       [Existental introduction],
-      [Compile the value $v_1$. Because types do not exist at runtime it is just a recursive call.],
+      [Compile the value $v_1$. Because types do not exist at runtime it is
+      just a recursive call.],
       $#scheme_pos($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
     cell(
@@ -267,7 +268,7 @@
       [Pop top of stack],
       [
         Pops the top value of the stack $z$
-        and stores it in $r_1$. $y$ represents
+        and stores it in $r_1$. $y$ is
         the rest of the stack.
       ],
       $#scheme_neg($"let" x,y = z^omega : A times.circle B; c$)_(rho, z |-> [r_0])
@@ -279,29 +280,28 @@
       [Destruct tuple],
       [
         Split the environment into two disjoint lists of pseudo registers. The
-        environment $s_0$ corresponds to $x$ and $s_1$ corresponds to $y$. 
-      ],
+        environment $x$ is the environment $s_0$ and $y$ is $s_1$. The invariant states that the size of $s_0$ and $s_1$ are determined by the size of the types $A$ and $B$],
       $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
-      = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "size" A; |s_1| = "size" B$,
+      = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "sizeof"(A); |s_1| = "sizeof"(B)$,
     ),
 
     cell2(
       [Unit elimination],
-      [Because unit does not exist at runtime, matching on it generates nothing.],
+      [Because the unit value does not exist at runtime, the matching exists only to ensure linearity.],
       $#scheme_neg($"let" () = z^known; c$)_(rho,z |-> [])
       = #code_box($#sem[c]_rho$)$,
     ),
 
     cell2(
       [Existential elimination],
-      [Types have no runtime representation, so we just compile $c$.],
+      [Types have no runtime representation.],
       $#scheme_neg($"let" @t, x = z^alpha; c$)_(rho, z |-> s_n)
       = #code_box($#sem[c]_(rho, x |-> s_n)$)$,
     ),
 
     cell2(
       [Following an indirection],
-      [Because $r_0$ contains the pointer to the stack already, we just need to update the environment.],
+      [Because $r_0$ is the pointer to the stack already, we just need to update the environment.],
       $#scheme_neg($"let" square x = z^known; c$)_(rho, z |-> [r_0])
       = #code_box($#sem[c]_(rho, x |-> [r_0])$)$,
     ),
@@ -309,7 +309,7 @@
     cell2(
       [Stack deallocation],
       [
-        Deallocates the stack in $r_0$, then compile the command $c$.],
+        Deallocate the stack $r_0$, then compile the command $c$.],
       $#scheme_neg($"freestack" z^omega; c$)_(rho, z |-> [r_0])
       = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
     ),
