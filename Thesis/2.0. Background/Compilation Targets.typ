@@ -25,9 +25,9 @@ For these case, it might be nicer to target an assembly language directly instea
 
 An assembly language is often as low as you can go without directly targeting
 machine code, and it is often made to resemble CPU instructions
-relatively closely. x86-64 is currently the most used instruction set in CPUs for
-personal computers and server architectures,
-and it is an extension that was created in 2000 based on the already popular
+relatively closely. x86-64 is a very popular instruction set for CPUs, used in
+personal computers and servers.
+It is an extension that was created in 2000 based on the already popular
 instruction set x86 @x86WhitePaper.
 
 When you directly target an assembly language portability suffers as is to
