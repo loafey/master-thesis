@@ -5,7 +5,7 @@
   margin: (top: 510pt, bottom: 24pt, left: 64pt, right: 0pt),
   [
     #text(weight: "bold", size: 23pt, font: "FreeSans", top-edge: 8pt)[
-      Towards a System Level Functional\
+      Towards a System-Level Functional\
       Language: #ln
     ]
 

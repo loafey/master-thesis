@@ -18,7 +18,7 @@ The compilation scheme consists of three functions:
   - $#scheme_neg($\_$)_rho : "Command" -> "Pseudo instruction"$
 
 We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragments.
-If we use $alpha$ inplace of $omega$ and $known$, then the definition
+If we use $alpha$ in-place of $omega$ and $known$, then the definition
 should exist for both kinds.
 The function $rho$ is a mapping from variables to a list of pseudo registers.
 The syntax $rho, x |-> s_n$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
@@ -35,14 +35,14 @@ The range of $rho$ is a list of pseudo registers because not all values
 can be stored in one physical register.
 
 The scheme also contains the meta instruction: $\""let" r_n = "next"(rho,
-t)\"$, where $"next"$  has the type $"List"("Reg") -> "Type" -> "List"("Reg")$. The pseudo registers chosen depends on which pseudo registers are used in $rho$, and the size of the type $t$. The meta instruction exists
+t)\"$, where $"next"$ has the type $"List"("Reg") -> "Type" -> "List"("Reg")$. The pseudo registers chosen depends on which pseudo registers are used in $rho$, and the size of the type $t$. The meta instruction exists
 only at compile time.
 
 To ensure correctness and consistency of the compilation scheme, we specify
 pre- and post-conditions for each compilation function: 
 
 Before calling $#scheme_pos($v$)^omega$, the stack pointer (SP) can be used
-freely. After the call, SP points to $v$. $#scheme_pos($v$)^known$ requries
+freely. After the call, SP points to $v$. $#scheme_pos($v$)^known$ requires
 that SP points to a valid stack before being called. After being called, $v$ is
 pushed on the stack pointed to by SP. Finally, we have $#scheme_neg($v$)$. It
 has no pre-conditions, only the post-condition that the program is terminated.
@@ -136,7 +136,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
       columns: (1fr, 1.4fr),
       [*Operand*], [*x86-64 Operand*],
       [Numerical literal, e.g. `42`], [Numerical literal prefixed with `$`, e.g. `$42`],
-      $#sym.rho\(x)$, [Appropiate list of pseudo registers for type of $x$],
+      $#sym.rho\(x)$, [Appropriate list of pseudo registers for type of $x$],
       `SP`, [`%R15`],
       `SSP`, [`%R14`],
       `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
@@ -168,15 +168,15 @@ and in @operand_table we explain the operands used in the compilation scheme.
 // lambda lifting #t odo[source] or closure conversion #t odo[source].
 // As can be seen in the tables above lambdas are still
 // part of the language in the compilation scheme at this late stage.
-// Commonly lambdas are removqed entirely in earlier steps of the compilation process
+// Commonly lambdas are removed entirely in earlier steps of the compilation process
 // of a language, but in #ln
-// we removqe them at almost the last step; when compiling to x86-64.
+// we remove them at almost the last step; when compiling to x86-64.
 // The method used is very close in principle to
 // lambda lifting, in that lambdas are lifted to the top,
 // but unlike lambda lifting or closure conversion, the function are never modified.
 // The parameters are not touched, unlike in the two other methods, where
-// free variables are added as parameters or in an enviornment parameter.
-// Free variables in #ln are instead pushed to appropiate stacks so that they
+// free variables are added as parameters or in an environment parameter.
+// Free variables in #ln are instead pushed to appropriate stacks so that they
 // can be popped when needed.
 //
 // In the expressions where these lambdas occur, the lambda is simply pushed

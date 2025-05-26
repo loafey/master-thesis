@@ -6,15 +6,13 @@ Unless you are directly targeting binary machine code, most of the time
 you want a more higher level compilation target.
 
 There are a lot of different fitting choices for this task and some of the more
-commons ones are for example LLVM IR @lattner2004llvm, Cranelift @Cranelift and GNU's
-GIMPLE @Gimple. These languages are what is known as
-intermediate representations (IR), and are all targeted by different compilers.
-They remove the need for the compilers to directly target
-CPU specific machine code or assembly.
-Most of the time these IRs are also cross platform, giving compilers
-portability if need be.
-As these languages are higher level compared to an assembly language,
-it of course comes with the cost of removing some control.
+commons ones are for example LLVM IR @lattner2004llvm, Cranelift @Cranelift and
+GNU's GIMPLE @Gimple. These languages are what is known as intermediate
+representations (IR), and are all targeted by different compilers. They remove
+the need for the compilers to directly target CPU specific machine code or
+assembly. Most of the time these IRs are also cross platform, giving compilers
+portability if need be. As these languages are higher level compared to an
+assembly language, it of course comes with the cost of removing some control.
 
 Depending on the source language you are compiling a lot of these IRs
 might not necessarily be the most fitting choices.
@@ -34,7 +32,7 @@ When you directly target an assembly language portability suffers as is to
 be expected. You not only have to target different assembly languages
 for different CPU architectures, you will also have to cater to the operating system
 you are targeting. For instance, on a \*nix operating system, you can almost
-always rely upon some implemention of the C Standard Library (libc), be it glibc or musl,
+always rely upon some implementation of the C Standard Library (libc), be it glibc or musl,
 or system calls if more power is needed, while on Windows you have to instead
 depend on the provided libraries to interact with the rest of the system.
 A simple act such as printing might look wildly different

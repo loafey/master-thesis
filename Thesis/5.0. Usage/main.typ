@@ -128,7 +128,7 @@ which represents false, otherwise it returns `inl ()` which represents true.
 // #figure(
 //   caption: [
 //     Benchmark comparing the average time needed to calculate the
-//     fibbonaci numbers 30 to 40 in the two different
+//     fibonacci numbers 30 to 40 in the two different
 //     implementions. Each number was ran and timed 100 times.
 //     Time is measured in milliseconds.
 //     The C version was compiled using GCC using O0 and O3.
@@ -171,8 +171,8 @@ which represents false, otherwise it returns `inl ()` which represents true.
 #figure(
   caption: [
     Benchmark comparing the average time needed to calculate the
-    fibbonaci numbers 30 to 40 in the two different
-    implementions. Each number was ran and timed 100 times.
+    fibonacci numbers 30 to 40 in the two different
+    implementations. Each number was run and timed 100 times.
     Time is measured in milliseconds, and displayed in a logarithmic manner.
     The C version was compiled using GCC with O0 and O3.
   ],
@@ -264,7 +264,7 @@ They are presented here nontheless to showcase some of the language's current ca
 // #figure(
 //   caption: [
 //     Benchmark comparing the average time needed to calculate the
-//     fibbonaci numbers 30 to 40 in the two different
+//     fibonacci numbers 30 to 40 in the two different
 //     implementions. Each number was ran and timed 100 times.
 //     Time is measured in milliseconds.
 //     The Haskell version was compiled with GHC using O0 and O2.
@@ -298,6 +298,6 @@ They are presented here nontheless to showcase some of the language's current ca
 // )
 
 // As is to be expected, the Haskell version falls far behind both, but
-// as with the C version, this is not the most optional way to write fibbonaci in Haskell,
+// as with the C version, this is not the most optional way to write fibonacci in Haskell,
 // nor is it the best benchmark as it is a heavier language relying upon an entire runtime.
 // It is presented here as an interesting sidenote, nothing more.

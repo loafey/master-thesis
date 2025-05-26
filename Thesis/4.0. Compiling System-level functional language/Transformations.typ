@@ -3,12 +3,13 @@
 
 == Transformations <Transformations>
 
-At this stage #ln is still a logic language. How do we bridge the gap between logic and machine?
-This section goes into the necessary transformations to turn #ln into machine code.
+At this stage #ln is still a logic language. How do we bridge the gap between
+logic and machine? This section goes into the necessary transformations to turn
+#ln into a language that can be lowered to an assembly language.
 
 #ln consists of three intermediate steps: linear closure conversion, stack
 selection, and pointer closure conversion. The first step eliminates linear
-closures, the second step ensures that each closure contains a stack to execute
+closures, the second step ensures that each closure contains at most one stack to execute
 on, and the third transformation, pointer closure conversion, replaces each
 stack closure by an explicit pair of static function and environment.
 

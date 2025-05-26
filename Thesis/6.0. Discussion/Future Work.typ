@@ -17,10 +17,10 @@ and would remove the reliance on the libraries such as glibc.
 To implement this the language would need to include a runtime which can keep
 track of which memory regions on the system stack are currently in use, as to make sure
 that stacks are not overlapping. It is also important to allocate these dynamic stacks
-_above_ the programs singular stack frame (remember: the stack grows downards).
+_above_ the programs singular stack frame (remember: the stack grows downwards).
 This is important because accessing memory below the stack pointer is considered
 undefined behavior on a lot of platforms as hardware or an OS might potentially
-use that memory for things such as interupts.
+use that memory for things such as interrupts.
 
 === Register allocation
 When optimizing the generated code, one important technique is
@@ -32,7 +32,7 @@ more variables than registers because it might be more efficient to store a vari
 declared later on in a register as opposed to one declared early.
 To combat this, an efficient compiler should move variables back onto the stack
 (a process often called spilling) when they are not used, and back into registers when they are.
-Doing this efficently can prove difficult because the compiler should try to minimize
+Doing this efficiently can prove difficult because the compiler should try to minimize
 the amount of spilling needed, and this has in fact been proven to be
 NP-complete @RegisterAllocationbouchez2006register. This was not implemented for #ln because it was
 deemed an optimization, that while interesting, not something we would have the time to
@@ -52,14 +52,14 @@ that is exposed to a user of the language.
 Similarly to system calls, proper support for Foreign Function Interfaces (FFI)
 would permit the language to interact with software outside.
 A prime example of this would be libraries written in other languages,
-or even libraries writen in #ln. Just like system calls, FFI is currently
+or even libraries written in #ln. Just like system calls, FFI is currently
 used under the hood for printing and the likes using libc, but this is not
 exposed to a user of the language.
 
-=== Exponentionals
+=== Exponentials
 While linearity in a programming language is useful for managing resources
 such as memory, sometimes one needs to use values more than once.
-Consider a function for fibbonacci written in #ln:
+Consider a function for fibonacci written in #ln:
 ```hs
 fib : *(int ⊗ ~int)
   = \(n,k) -> __eq__((n,0), \res -> case res of {
@@ -80,8 +80,8 @@ This function does not compile sadly, because the variable `n` is used 4 times,
 and due to linearity one may only use it once!
 To combat this issue we would want to introduce exponentials.
 
-Exponentionals would let a user reuse a value multiple times opening up
-for some much needed expressiveness. Take fibbonacci again with some imaginative
+Exponentials would let a user reuse a value multiple times opening up
+for some much needed expressiveness. Take fibonacci again with some imaginative
 syntax introducing a `!` kind:
 
 #block(
@@ -108,13 +108,13 @@ syntax introducing a `!` kind:
   ```,
 )
 As can be seen here, we can now re-use `n`, allowing us to actually write
-fibbonacci.
+fibonacci.
 
 By imagining some more syntax, we could simplify this even further!
 If we were to introduce some sugar, for example a `?` operator,
 which could simplify a term such as `let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)`
 into: `k(*n + *n)`.
-Rewriting fibbonacci with this operator could result in something like this instead:
+Rewriting fibonacci with this operator could result in something like this instead:
 ```hs
 fib : *(!int ⊗ ~int)
   = \(n,k) ->

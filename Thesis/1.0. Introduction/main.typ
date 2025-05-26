@@ -2,10 +2,10 @@
 #import "../Prelude.typ": ln
 
 = Introduction
-The concept of linearity in programming languages is not a newly discoverd one.
+The concept of linearity in programming languages is not a newly discovered one.
 A language with linearity allows a developer to write software without the
 worries of mismanaging things such as memory and files.
-While there are benefits to linearity not many languages have opted to implement it.
+While there are benefits to linearity, not many languages have opted to implement it.
 This concept is most commonly found in functional programming, but one thing
 functional languages commonly do not contain is system-level programming.
 
@@ -15,7 +15,7 @@ by introducing a system-level functional programming language.
 
 == Background <Background>
 System-level programming is the act of developing software that interacts directly with a computer's
-hardware, or providing foundational services to other software.
+hardware or providing foundational services to other software.
 We will define system-level programming as Wikipedia @wiki:Systems_programming defines it:
 
 #indent[
@@ -32,7 +32,7 @@ For system-level programming today developers mostly choose between procedural
 programming languages, for instance: C, C++, or Rust. In C memory management
 is manual, and in C++ there are options for automatic memory management, but
 the compile time guarantees are few and weak. Rust has mostly solved the issue of
-memory management with the introduction of an ownership model and a borrow checker @matsakis2014rust.
+memory management by introducing an ownership model and a borrow checker @matsakis2014rust.
 
 Although Rust offers many functional aspects, many are still missing, for
 instance; _purity_ and _referential transparency_. We propose
@@ -49,8 +49,8 @@ _immutable_ data structures, as opposed to _mutable_ data structures. The
 former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
 
-To introduce mutable data strcutures in the context of functional programming languages,
-#ln makes use of linear logic.
+#ln makes use of linear logic to introduce mutable data structures in the
+context of functional programming languages
 Girard's linear logic @girard1987linear is a refinement of classical and
 intuitionistic logic, where, rather than propositions being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.

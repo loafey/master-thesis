@@ -99,7 +99,7 @@ are the rules for type abstraction and type application.
   flex(prooftree(tabs), prooftree(tapp)),
 ) <SystemF_rules>
 
-The syntax $sigma[tau slash alpha]$ means replace each occurence of $alpha$ with $tau$ in $sigma$.
+The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
 As the reader might now be familiar with how proofs are read, we will give the
 proof tree of how the identity function can be constructed and applied to the variable $y$ with
 monomorphic type $A$. We assume that $y : A in Gamma$.
@@ -170,7 +170,7 @@ This means the typing rules App and Var in @stlc_typing are no longer valid.
 
 The linear rules for App and Var are shown in @linear_rules. Note how the
 contexts for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
-not share any variables. Similarily, the rule for Var, also depicted in
+not share any variables. Similarly, the rule for Var, also depicted in
 @linear_rules differs from its simply typed variant, which now requires that
 the context contains only the variable $x: A$. This is a great restriction of
 the system as many simple terms are no longer valid. For example, the term in @const_term
@@ -198,7 +198,3 @@ Exponentials introduce an explicit way to duplicate and discard variables.
 
 Using the rules in @exponential_rules, it is possible to create terms that discard and
 reuse variables.
-
-=== Polarised Linear Logic
-
-hej då

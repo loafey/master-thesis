@@ -178,7 +178,7 @@
 )
 
 #let case_command = judge(
-  $Gamma, x: A_i tack c_i$,
+  $Gamma, x_i: A_i tack c_i$,
   $Gamma, z: A_1 plus.circle A_2 tack "case" z "of" "inj"_i x_i |-> c_i$,
   note: "case",
 )

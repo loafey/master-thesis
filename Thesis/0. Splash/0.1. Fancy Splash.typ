@@ -10,7 +10,7 @@
     #v(4cm)
 
     #text(weight: "bold", size: 16pt, font: "New Computer Modern", top-edge: 8pt)[
-      Towards a System Level Functional
+      Towards a System-Level Functional
       Language: #ln
     ]
 

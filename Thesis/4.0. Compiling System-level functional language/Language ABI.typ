@@ -5,7 +5,7 @@ As with any language, one should define a Application Binary Interface (ABI).
 #ln defines it's own data type allocation strategy and calling convention.
 As said before in @CompilingCompilationTarget, #ln only uses one stack frame during
 normal execution which is used for variable storage and register spilling.
-This stack frame is located on the stack given by the operating system, which will be refered
+This stack frame is located on the stack given by the operating system, which will be referred
 to as the system stack henceforth, and outside of this system stack,
 #ln makes heavy use of other stacks.
 These stacks are used for passing variables and all calculations.
