@@ -5,7 +5,8 @@
 When picking a compilation target there are always a lot of options, and for #ln,
 x86-64 was picked. While choices like LLVM IR provide a lot of benefits to the developer
 in terms of development speed and convience, one
-ultimately sacrifices some control over things like the calling convention #todo[calling convention kan väljas i llvm] and memory allocation.
+ultimately sacrifices some control over things like the calling convention
+#todo[calling convention kan väljas i llvm] and memory allocation.
 Due to #ln's CPS nature, tail call optimization is a must and while LLVM provides
 tools and syntax for this, a developer can not guarantee how the stack is handled when
 functions are called nor how arguments are
@@ -21,8 +22,8 @@ for details about that.
 Similarily to other languages #ln uses stack frames for function calls,
 but unlike other languages, #ln only uses one stack frame during normal execution.
 This is possible due to the finegrained control x86-64 gives a developer
-and the fact that #ln strictly uses CPS.
-Every function call can be tail call optimized as they always end
+and the fact that #ln is written in CPS.
+Every function call can be tail call optimized because they always end
 with calling another function.
 
 #v(0.5cm)
