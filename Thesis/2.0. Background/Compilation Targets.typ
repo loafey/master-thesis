@@ -25,7 +25,7 @@ For these case, it might be nicer to target an assembly language directly instea
 
 An assembly language is often as low as you can go without directly targeting
 machine code, and it is often made to resemble CPU instructions
-relatively closely. x86-64 is a very popular instruction set for CPUs, used in
+relatively closely. x86-64 is a instruction set for CPUs, widely used in
 personal computers and servers.
 It is an extension that was created in 2000 based on the already popular
 instruction set x86 @x86WhitePaper.
