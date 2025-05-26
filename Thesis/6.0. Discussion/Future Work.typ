@@ -145,7 +145,7 @@ useful for more complex types. It would also be required for recursive
 types such as linked lists, which are currently not representable.
 
 It would also be beneficial to have access to contiguous data types
-such as arrays. In the paper "Linear types can Change the World" #todo[source]
+such as arrays. In the paper "Linear types can Change the World" @LinearTypeswadler1990linear
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
 
 When de-allocating memory for data types, it has to be done recursivly _if_
@@ -167,9 +167,9 @@ room for optimizations. Instead of duplicating and mutating the list,
 a linear language could just immediately mutate the original in place.
 
 As long as the size of the type contained by the list is not changed, a
-function such as map can simply mutate the content, and thus remove the original data.
-This can potentially lead to major removal of overhead in programs where data is
-pipelined in such a way where there is not a lot of duplication needed.#todo[stanky]
+function such as map can simply mutate the content, and thus just replace the original data.
+This can potentially lead to major performance benefits in programs where data is
+pipelined in such a way where there is not a lot of need for duplication.
 As #ln does not currently have any data-types outside of basic sum- and product-types
 this has not been implemented.
 
@@ -183,6 +183,6 @@ as exponentials which would be required for more complex languages,
 a simpler linear functional language could probably be compiled to #ln.
 // A linear variant of a Lisp-or ML-like language could probably suffice for this purpose.
 Currently not many of these do exist, but a subset of something like
-Linear Haskell#todo[source] could provide a suitable goal. This would make
+Linear Haskell @linearhaskell2017 could provide a suitable goal. This would make
 it easy to see what features or areas #ln is lacking in,
 making future goals clearer.
