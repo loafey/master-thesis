@@ -10,10 +10,6 @@ These judgements can thankfully be translated to x86-64 assembly in a
 straightforward manner. They are first translated into "pseudo" instructions which can
 then be translated into x86-64.
 
-#todo[
-  introduce pre/post conditions for $known slash omega$
-]
-
 The compilation scheme consists of three functions: 
   - $#scheme_pos($\_$)^known_rho : "Value" -> "Pseudo instruction"$
 
@@ -27,8 +23,8 @@ should exist for both kinds.
 The function $rho$ is a mapping from variables to a list of pseudo registers.
 The syntax $rho, x |-> s_n$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
 If we instead write $rho, x |-> [r_0, ..., r_n]$ then $x$ maps to the list containing $r_0, ..., r_n$.
-Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail.
-Finally, $s_1 ++ s_2$ means the concatenation of the two lists $s_0$ and $s_1$.
+Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail, and
+finally, $s_0 ++ s_1$ means the concatenation of the lists $s_0$ and $s_1$.
 
 We denote a variable $z^omega$ or $z^known$ in the negative fragment as
 a reminder of the kind of the type of the variable.
