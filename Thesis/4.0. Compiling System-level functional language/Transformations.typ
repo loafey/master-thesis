@@ -109,8 +109,7 @@ transformed to match. Fortunately, the transformation is straightforward:
   stroke: black,
   inset: 10pt,
   [Source], [Target],
-  $z(a)$,
-  $"let" angled(alpha,z_1) = z; "let" z_2, rho = z_1; z_2(a, rho)$
+  $z(a)$, $"let" angled(alpha, z_1) = z; "let" z_2, rho = z_1; z_2(a, rho)$,
 )
 
 The conversion might be easier to understand given a concrete example. We will
@@ -138,22 +137,22 @@ the following:
 */
 $
   lambda^*(f,k). & "let" square f' = f; \
-                 & "let" angled(alpha, k') = k;    \
-                 & "let" g, rho_1 = k';     \
-                 & g(square #angled(
-                     $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
-                     $(lambda^* (y, rho_2). & "let" angled(beta, x) = rho_2; \ 
-                                          & & "let" h,rho_4 = x; \ 
-                                          & & h(y, rho_4), f')$)
-                 , rho_1)
+  & "let" angled(alpha, k') = k; \
+  & "let" g, rho_1 = k'; & \
+  & g(square #angled(
+      $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
+      $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
+        & & & "let" h,rho_4 = x; & \
+        & & & h(y, rho_4), f')$,
+    )
+    , rho_1)
 $
-#todo[fix the alignment]
 
 Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$
 after closure conversion, the second and third row are necessary to access the
 static function $g : *(A times.circle gamma)$. The same process is repeated
 inside the argument of $g$. Also, note how $f'$ is the environment inside $g$
-now. 
+now.
 
 Let us now consider an example where a stack closure does not contain a stack in the environment.
 Assume that the static function $"foo" : *A$ exists.
@@ -164,10 +163,7 @@ There is no stack in the environment of the closure; the conversion phase needs
 to insert an explicit newstack to ensure that there is a stack to execute on.
 After conversion this closure would end up being:
 $
-  #angled(
-    $circle$,
-    $(lambda^* (x,rho_1). "freestack" rho_1; "foo"(x), newstack)$
-  )
+  #angled($circle$, $(lambda^* (x,rho_1). "freestack" rho_1; "foo"(x), newstack)$)
 $
 
 Introducing explicit stacks sounds like something for the stack selection
