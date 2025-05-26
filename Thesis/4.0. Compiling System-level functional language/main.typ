@@ -11,6 +11,6 @@ a compilation scheme for values and commands, and also describe how #ln can be
 translated into something that can be represented on a machine.
 
 #include "Transformations.typ"
-#include "Compilation Target.typ"
 #include "Compilation Scheme.typ"
+#include "Compilation Target.typ"
 #include "Language ABI.typ"
