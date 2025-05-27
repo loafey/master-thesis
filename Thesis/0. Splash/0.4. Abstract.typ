@@ -5,7 +5,7 @@ The language aims to fill the hole created by the lack of
 functional system-level, linear, and intermediate representation languages.
 #ln tries to combine all of these concepts into one coherent experience.
 
-The language is based on the theory of Linear Logic and Lambda Calculus,
+The language is based on the theory of linear logic and lambda calculus,
 and exclusively uses continuation passing style. In it's current state the language
 is fairly limited, but enough work has been done so that future work on it
 can expand upon it. The implementation presented in this paper is compiled to x86-64.
