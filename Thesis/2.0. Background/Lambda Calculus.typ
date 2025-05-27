@@ -7,20 +7,16 @@
   prooftree(rule($Gamma tack x: sigma$, $x:sigma in Gamma$, name: "Var")),
   [],
 
-  prooftree(
-    rule(
-      $Gamma tack lambda x:sigma. space e : sigma -> tau$,
-      $Gamma, x:sigma tack e: tau$,
-      name: "Abs",
-    ),
-  ),
-  prooftree(
-    rule(
-      $Gamma tack e_1 e_2: tau$,
-      $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
-      name: "App",
-    ),
-  ),
+  prooftree(rule(
+    $Gamma tack lambda x:sigma. space e : sigma -> tau$,
+    $Gamma, x:sigma tack e: tau$,
+    name: "Abs",
+  )),
+  prooftree(rule(
+    $Gamma tack e_1 e_2: tau$,
+    $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
+    name: "App",
+  )),
 )
 
 #let tapp = rule(
@@ -52,7 +48,7 @@ shown in @stlc_syntax.
 #figure(
   caption: [Syntax for #stlc],
   $
-    & #math.italic[Types] A "::=" A_1 -> A_2 | T \
+    & #math.italic[Types] A "::=" A_1 -> A_2 | T            \
     & #math.italic[Terms] e "::=" x | e_1 e_2 | lambda x. e \
   $,
 )<stlc_syntax>
@@ -108,29 +104,21 @@ monomorphic type $A$. We assume that $y : A in Gamma$.
 #let id_proof = prooftree(
   rule(
     $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
-    rule(
-      $Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$,
-      rule(
-        $Gamma, alpha, x : alpha tack x : alpha$,
-        $x : alpha in (Gamma, alpha, x : alpha)$,
-      ),
-    ),
+    rule($Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$, rule(
+      $Gamma, alpha, x : alpha tack x : alpha$,
+      $x : alpha in (Gamma, alpha, x : alpha)$,
+    )),
   ),
 )
 #let metaid = math.bold[id]
-#let id_app_proof = prooftree(
-  rule(
-    $Gamma tack #metaid\[A] space y : A$,
-    rule(
-      $Gamma tack #metaid\[A] : A -> A$,
-      rule(
-        $Gamma tack #metaid : forall alpha. alpha -> alpha$,
-        $$,
-      ),
-    ),
-    rule($Gamma tack y : A$, $y : A in Gamma$),
-  ),
-)
+#let id_app_proof = prooftree(rule(
+  $Gamma tack #metaid\[A] space y : A$,
+  rule($Gamma tack #metaid\[A] : A -> A$, rule(
+    $Gamma tack #metaid : forall alpha. alpha -> alpha$,
+    $$,
+  )),
+  rule($Gamma tack y : A$, $y : A in Gamma$),
+))
 
 #figure(caption: [The identity function], flex(id_proof)) <id_proof>
 
@@ -147,42 +135,34 @@ that the set of variables in $e$ is $Gamma$.
 
 This means the typing rules App and Var in @stlc_typing are no longer valid.
 
-#let linear_app = prooftree(
-  rule(
-    name: "App",
-    $Gamma, Delta tack e_1 e_2 : tau$,
-    $Gamma tack e_1 : sigma lollipop tau$,
-    $Delta tack e_2 : sigma$,
-  ),
-)
+#let linear_app = prooftree(rule(
+  name: "App",
+  $Gamma, Delta tack e_1 e_2 : tau$,
+  $Gamma tack e_1 : sigma lollipop tau$,
+  $Delta tack e_2 : sigma$,
+))
 
-#let linear_abs = prooftree(rule(name: "Abs", $Gamma tack lambda x. e : sigma -> tau$, $Gamma, x: sigma tack e : tau$))
+#let linear_abs = prooftree(rule(
+  name: "Abs",
+  $Gamma tack lambda x. e : sigma lollipop tau$,
+  $Gamma, x: sigma tack e : tau$,
+))
 #let linear_var = prooftree(rule(name: "Var", $dot, x: A tack x: A$))
 
 #figure(
   caption: [Typing rules for App, Abs, and Var in a linear type system],
-  flex(
-    linear_app,
-    linear_abs,
-    linear_var,
-  ),
+  flex(linear_app, linear_abs, linear_var),
 )<linear_rules>
 
 The linear rules for App and Var are shown in @linear_rules. Note how the
 contexts for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
-not share any variables. Similarly, the rule for Var, also depicted in
-@linear_rules differs from its simply typed variant, which now requires that
-the context contains only the variable $x: A$. This is a great restriction of
-the system as many simple terms are no longer valid. For example, the term in @const_term
-would not have a valid derivation.
+not share any variables. Similarly, the rule for Var, differs from its simply typed variant, which now requires that
+the context contains only the variable $x: A$.
 
-#figure(
-  caption: [A lambda term that discards a variable],
-  $lambda x. lambda y. x : sigma -> (tau -> sigma)$,
-)<const_term>
-
+How would we derive terms that a use variable twice, or perhaps a term that does not use a variable?
 Linear logic, and in turn linear types, solves this issue using _exponentials_.
 Exponentials introduce an explicit way to duplicate and discard variables.
+The rules for exponentials are shown in @exponential_rules.
 
 #let exponential_rules = flex(
   prooftree(rule(name: [Read], $Gamma, !A tack B$, $Gamma, A tack B$)),
@@ -196,5 +176,21 @@ Exponentials introduce an explicit way to duplicate and discard variables.
   exponential_rules,
 )<exponential_rules>
 
-Using the rules in @exponential_rules, it is possible to create terms that discard and
-reuse variables.
+The three rules on top are read bottom-to-top, while the promote-rule is read top-to-bottom.
+The derivation of a term that discards the variable $x$ is shown in @const_term.
+
+#figure(
+  caption: [Derivation of a linearly typed term that discard the variable $x$],
+  prooftree(rule(
+    name: [Abs],
+    $dot tack lambda x. lambda y. y : !tau lollipop sigma lollipop sigma$,
+    rule(
+      name: [Disc],
+      $dot, x : !tau tack lambda y. y : sigma lollipop sigma$,
+      rule(name: [Abs],
+        $dot tack lambda y. y : sigma lollipop sigma$,
+        rule($dot, y : sigma tack y : sigma$),
+      ),
+    ),
+  )),
+) <const_term>
