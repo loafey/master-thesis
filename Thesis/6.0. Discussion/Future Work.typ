@@ -5,11 +5,11 @@
 As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
-=== Allow using the system stack for stacks
-In the current implementation of #ln, all dynamically created stacks
-are heap-allocated using glibc's malloc.
-This can potentially lead to unnecessary overhead, and can be a blockage
-for using the platform on more restricted platforms such
+=== Compiler interface for creating stacks
+In the current implementation of #ln, all stacks created
+are heap-allocated using libc's malloc.
+This can lead to unnecessary overhead, and can be a blockage
+for using the language on more restricted platforms such
 as embedded devices. To alleviate this, giving the developer the option
 to allocate dynamic stacks on the system stack would work (maybe as a compiler flag),
 and would remove the reliance on the libraries such as glibc.
