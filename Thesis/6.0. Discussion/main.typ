@@ -1,12 +1,5 @@
 #import "../Prelude.typ": *
-= Discussion
-
-#include "Future Work.typ"
-
-
-#pagebreak()
-
-== Conclusion
+= Conclusion
 The goal of this thesis was to present a system-level functional language
 with linear types. The language, #ln, currently does not implement
 all the requirements we set out in @Background, specifically:

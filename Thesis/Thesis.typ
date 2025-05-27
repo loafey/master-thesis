@@ -80,7 +80,7 @@ In this document there are #total-words words in total.
 #include "4.0. Compiling System-level functional language/main.typ"
 #pagebreak()
 
-#include "5.0. Usage/main.typ"
+#include "5.0. Discussion/main.typ"
 #pagebreak()
 
 #include "6.0. Discussion/main.typ"
