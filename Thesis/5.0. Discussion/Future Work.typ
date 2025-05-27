@@ -28,7 +28,7 @@ utilizing the physical registers for variable allocation.
 If one were to implement this naively, it would suffice with putting the first few variables of a
 function into registers, and the rest on the system stack.
 
-This would however not necessarily suffice for larger functions, where there may be 
+This would however not necessarily suffice for larger functions, where there may be
 more variables than registers because it might be more efficient to store a variable
 declared later on in a register as opposed to one declared early. #todo[review sentence]
 
@@ -84,7 +84,7 @@ To combat this issue we would want to introduce exponentials.
 
 Exponentials would let a user reuse a value multiple times opening up
 for some much needed expressiveness. Take Fibonacci again with some imaginative
-syntax introducing a `!` kind:
+syntax using exponentials:
 
 #block(
   breakable: false,
