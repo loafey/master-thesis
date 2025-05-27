@@ -1,6 +1,6 @@
 #import "../Prelude.typ": *
 
-== Fibonacci<Fibbo>
+== Usage<Fibbo>
 Fibonacci is not the most the most interesting program,
 but from the standpoint of linearity it is _somewhat_ interesting, as
 it requires the reuse of variables:
