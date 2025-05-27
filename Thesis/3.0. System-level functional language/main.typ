@@ -9,7 +9,7 @@ functional languages, similar to that of GHC Core @jones1993glasgow.
 #ln diverges from GHC Core and most functional language intermediate representations in
 that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
-inspiration from linear types and intuitionistic linear logic (ILL) @lafont1988linear.
+inspiration from linear types and intuitionistic linear logic @lafont1988linear.
 
 == Grammar
 
@@ -41,7 +41,7 @@ that #ln is written in continuation-passing style.
 == Kinds & types <kind_and_types>
 
 #ln is based on a variant of polarised linear logic @laurent2002etude. It is essentially Lafont's
-intuitionistic linear logic (ILL) @lafont1988linear, where $A lollipop B$ is replaced
+intuitionistic linear logic @lafont1988linear, where $A lollipop B$ is replaced
 by $not A$. Intuitively, we can think of $not A$ as $A -> bot$, or from a programmer's perspective: a function
 that takes $A$ as argument and terminates with no value, like in @cps.
 
