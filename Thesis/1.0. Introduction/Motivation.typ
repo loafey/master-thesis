@@ -22,4 +22,4 @@ In linear logic, the uses of weakening and contraction are carefully controlled,
 a programming language setting means variables must be used exactly once.
 
 This thesis describes #ln, the compilation scheme
-for #ln, and the implementation of the compiler.
+for #ln, and the implementation and specification of the compiler.

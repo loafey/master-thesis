@@ -17,15 +17,21 @@
 // @hofmann2000 presents a way to compile a linearly typed first-order>l is to
 // create efficient machine code, the virtual machine can not be a target language
 // either.
+//
+A lot of research has gone into researching linear logic, and linear logic in programming
+languages. Not much research has been done however in actually implementing
+functional system-level linear languages.
 
 In the previous year (2024), Nordmark wrote his
 master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024.
-This work can be seen as a predecessor of the work presented here in this thesis,
+This work can be seen as some sort of predecessor of the work presented here in this thesis,
 and is similar in nature to this thesis.
 
 Nordmark compiled a similar language to #ln to
 an untyped byte code, which ran in a custom made virtual machine.
-This is in quite the contrast to our own, where we
-have instead aimed for a more lower level approach.
+This is in contrast to our own implementation, where we instead compile #ln to machine code,
+running directly on a machine without the need of a virtual machine.
+While using a virtual machine works, we deemed that this was not low-level enough
+for a system-level language.
 
