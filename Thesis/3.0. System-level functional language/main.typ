@@ -158,25 +158,24 @@ rules for the negative fragment.
   grid(
     inset: (bottom: 15pt),
     columns: (0.1fr, 1.5fr, 1fr, 0.1fr),
-    "", freestack_command, [Free the stack $z$], "",
-    "", pair_command, [Destruct the pair $z$, introducing the variables $a$ and $b$], "",
-    "",
-    case_command,
-    [Pattern match on the sum, binding the value of $z$ to $x_i$ and continue
-      with the continuation $c_i$. The subscript $i$ is used to indicate that
-      there are two possible injections.],
-    "",
+    ..content(freestack_command, [Free the stack $z$]),
+    ..content(pair_command, [Destruct the pair $z$, introducing the variables $a$ and $b$]),
+    ..content(
+      case_command,
+      [Pattern match on the sum, binding the value of $z$ to $x_i$ and continue
+        with the continuation $c_i$. The subscript $i$ is used to indicate that
+        there are two possible injections.],
+    ),
 
-    "", follow_command, [Follow the indirection, binding the stack behind the pointer to $x$], "",
-    "", exists_elim_command, [Match the existentially quantified term $z$ to access the actual term $x$], "",
-    "",
-    static_call_command,
-    [Call the static function $z$ with the term $t$ as argument. Note that the environment does not need to be empty when calling static functions],
-    "",
+    ..content(follow_command, [Follow the indirection, binding the stack behind the pointer to $x$]),
+    ..content(exists_elim_command, [Match the existentially quantified term $z$ to access the actual term $x$]),
+    ..content(
+      static_call_command,
+      [Call the static function $z$ with the term $t$ as argument. Note that the environment does not need to be empty when calling static functions],
+    ),
 
-    "", stack_call_command, [Call the stack closure $z$ with the term $t$ as argument], "",
-    "", linear_call_command, [Call the linear closure $z$ with the term $t$ as argument], "",
-    "",
+    ..content(stack_call_command, [Call the stack closure $z$ with the term $t$ as argument]),
+    ..content(linear_call_command, [Call the linear closure $z$ with the term $t$ as argument]),
   ),
 ) <typing_negative_fragment>
 
