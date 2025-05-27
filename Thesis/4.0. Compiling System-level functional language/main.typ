@@ -4,14 +4,13 @@
 
 An important aspect of a system-level language is the representation of types
 and values. We want the language to be efficient, and thus, the representation
-must match the computer's representation of memory. For instance, in many
-functional programming languages values are boxed, i.e, placed behind pointers.
-In a system-level language this would be counter-productive because the control
-over memory should be in the hands of the developer.
+must match the computer's representation of memory.
 
-In this chapter we will give the memory representation for types, we provide
-a compilation scheme for values and commands, and describe how #ln can be
-translated into something that can be represented on a machine.
+In this chapter we describe how #ln can be translated to something that can be
+represented in an assembly language. We continue by giving a compilation scheme
+for the language, and describe how the output of the scheme translates to
+assembly. We then give a mapping of types to memory, and specify the
+Application Binary Interface (ABI).
 
 #include "Transformations.typ"
 #include "Compilation Scheme.typ"
