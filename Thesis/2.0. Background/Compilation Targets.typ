@@ -10,15 +10,14 @@ some commons examples are: LLVM IR @lattner2004llvm, Cranelift @Cranelift and
 GNU's GIMPLE @Gimple. These languages are what is known as intermediate
 representations (IR), and they are all targeted by different compilers. They remove
 the need for the compilers to directly target CPU specific machine code or
-assembly. Most of the time these IRs are also cross platform, making compilers
-portable. 
+assembly. Most of the time these IRs are also cross platform, making portability easier to achieve.
 Because the intermediate representations are higher level 
-than assembly languages are, they trade-off explicit control over machine code
-in favour of flexible abstractions.
+than assembly languages are, they trade-off explicit control over assembly code
+in favor of abstractions.
 
 Depending on the source language you are compiling, an IR
 is not necessarily the most fitting option.
-Many IRs are modelled for procedural languages, and expect
+Many IRs are modeled for procedural languages, and expect
 the source language to follow a traditional stack frame based calling convention,
 which might not always be desired.
 If this is the case, targeting an assembly language directly can prove more advantageous.
@@ -35,7 +34,7 @@ When you directly target assembly languages portability suffers as is to
 be expected. You not only have to target different assembly languages
 for different CPU architectures, you will also have to cater to the operating system
 you are targeting. For instance, on a \*nix based operating system, you can almost
-always rely upon some implementation of the C Standard Library (libc), be it glibc or musl,
+always rely on some implementation of the C Standard Library (libc), be it glibc or musl,
 or system calls if more power is needed.
 This does not apply to operating systems
 such as Windows however,
