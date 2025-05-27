@@ -35,13 +35,13 @@
 This section aims to remind the reader of the lambda calculus and some of its
 variants, we assume familiarity with the untyped lambda calculus and typing judgements.
 We will introduce the simply typed lambda calculus, then extending it with
-polymorphic types, and finally explain linear types.
+polymorphic types, and finish with linear types.
 
 === Simply Typed Lambda Calculus
 
 Simply typed lambda calculus was first introduced by Church to avoid the
 paradoxical use of the untyped lambda calculus @church1940formulation. It
-consists of two worlds; the type world and the term world. The two worlds
+consists of two worlds: the type world and the term world. The two worlds
 correspond to logic and computation, respectively. The syntax for #stlc is
 shown in @stlc_syntax. The symbol T is used to denote monomorphic types.
 
