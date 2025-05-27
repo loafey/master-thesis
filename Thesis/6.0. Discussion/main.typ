@@ -16,7 +16,7 @@ and adding syntax for system calls.
 
 The compiler so far adheres to the specification presented
 in this thesis, at least at the time of writing. As previously mentioned
-the ABI might be changed in the future, for example if the calling convention
+the ABI may be changed in the future, for example if the calling convention
 is optimized.
 
 We did not have time to implement everything we wanted in the compiler,

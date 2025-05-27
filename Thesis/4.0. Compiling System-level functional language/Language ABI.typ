@@ -56,7 +56,7 @@ are the only time #ln strays from the strict continuation based style.
 An important part of any ABI is specifying types are represented.
 The following chapter specifies how much memory the types in #ln uses, and the amount
 of how many physical registers are needed to store them. Keep in mind that while the ABI
-does not utilize registers at the moment, this might change in the future, hence why
+does not utilize registers at the moment, this may change in the future, hence why
 we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
@@ -126,7 +126,7 @@ they can always fit in a register and thus never need to be split up across mult
 registers when working with them.
 
 Integers are currently also simple, as they are also the size of a word.
-This might however change in the future as it is useful to have access to
+This may however change in the future as it is useful to have access to
 integers of different sizes, especially so when working with a systems-level language.
 When these are introduced, memory alignment is something
 that needs to be taken into consideration. Function pointers and stack pointers

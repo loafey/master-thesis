@@ -19,17 +19,19 @@ track of which memory regions on the system stack are currently in use, as to ma
 that stacks are not overlapping. It is also important to allocate these dynamic stacks
 _above_ the programs singular stack frame (remember: the stack grows downwards).
 This is important because accessing memory below the stack pointer is considered
-undefined behavior on a lot of platforms as hardware or an OS might potentially
-use that memory for things such as interrupts.
+undefined behavior on a lot of platforms as hardware or an OS may potentially
+use that memory for things such as interrupts or exceptions.
 
 === Register allocation
 When optimizing the generated code, one important technique is
 utilizing the physical registers for variable allocation.
 If one were to implement this naively, it would suffice with putting the first few variables of a
 function into registers, and the rest on the system stack.
-This would however not necessarily suffice for larger functions, where one might have
+
+This would however not necessarily suffice for larger functions, where there may be 
 more variables than registers because it might be more efficient to store a variable
-declared later on in a register as opposed to one declared early.
+declared later on in a register as opposed to one declared early. #todo[review sentence]
+
 To combat this, an efficient compiler should move variables back onto the stack
 (a process often called spilling) when they are not used, and back into registers when they are.
 Doing this efficiently can prove difficult because the compiler should try to minimize
@@ -39,7 +41,7 @@ deemed an optimization, that while interesting, not something we would have the 
 implement properly.
 
 === System Calls
-Due to #ln being a system-level language, it might be useful to have the ability
+Due to #ln being a system-level language, it may be useful to have the ability
 to directly make system calls to interact with the operating system.
 This allow for the possibility of not relying on, for example, libc,
 because the behavior one would need from libc could be re-implemented

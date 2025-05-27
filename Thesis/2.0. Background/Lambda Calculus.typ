@@ -98,7 +98,7 @@ are the rules for type abstraction and type application.
 ) <SystemF_rules>
 
 The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
-As the reader might now be familiar with how proofs are read, we will give the
+As the reader hopefully is familiar with how proofs are read, we will give the
 proof tree of how the identity function can be constructed and applied to the variable $y$ with
 monomorphic type $A$. We assume that $y : A in Gamma$.
 

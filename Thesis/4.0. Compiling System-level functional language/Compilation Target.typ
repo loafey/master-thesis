@@ -32,7 +32,7 @@ with calling another function.
 As can be seen in @x86withoutTailCall and @x86withTailCall, when using tail call optimization
 the last stack frame is simply replaced frame. This optimizations is however not
 guaranteed when calling functions using
-Foreign Function Interfaces (FFI) calls, as the function that
+Foreign Function Interfaces (FFI) calls, because the function that
 is being called might allocate stack frames. While FFI
 is not exposed to the user, it is still used internally at the time of writing,
 as libc is used for printing and allocating memory on the heap.

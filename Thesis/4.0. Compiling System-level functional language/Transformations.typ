@@ -116,8 +116,8 @@ transformed to match. Fortunately, the transformation is straightforward:
   $z(a)$, $"let" angled(alpha, z_1) = z; "let" z_2, rho = z_1; z_2(a, rho)$,
 )
 
-The conversion might be easier to understand given a concrete example. We will
-show two examples; one where $Gamma$ contains a stack, and one where it does
+The conversion can be easier to understand given a concrete example. We will
+show two examples: one where $Gamma$ contains a stack, and one where it does
 not.
 
 Take the resulting program from @StackSelection.

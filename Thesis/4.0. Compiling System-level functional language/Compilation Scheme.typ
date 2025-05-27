@@ -65,7 +65,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
   #figure(
     caption: [
       Translations between pseudo and x86-64 instructions and operands.
-      Observe that the x86-64 instructions might differ in the compiler due to
+      Observe that the x86-64 instructions may differ in the compiler due to
       optimizations or the memory size of a variable.
     ],
     table(
