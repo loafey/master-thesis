@@ -30,7 +30,7 @@ and is similar in nature to this thesis.
 
 Nordmark compiled a similar language to #ln to
 an untyped byte code, which ran in a custom made virtual machine.
-This is in contrast to our own implementation, where we instead compile #ln to machine code,
+This is in contrast to our own implementation, where we instead compile #ln to assembly code,
 running directly on a machine without the need of a virtual machine.
 While using a virtual machine works, we deemed that this was not low-level enough
 for a system-level language.
