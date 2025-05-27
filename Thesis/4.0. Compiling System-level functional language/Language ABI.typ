@@ -1,8 +1,8 @@
 #import "../Prelude.typ": *
 
 == Language ABI <languageAbiChapter>
-As with any language, one should define a Application Binary Interface (ABI).
-#ln defines it's own data type allocation strategy and calling convention.
+As with any language, one should define an Application Binary Interface (ABI).
+#ln defines it's own datatype allocation strategy and calling convention.
 As said before in @CompilingCompilationTarget, #ln only uses one stack frame during
 normal execution which is used for variable storage and register spilling.
 This stack frame is located on the stack given by the operating system, which will be referred
@@ -49,12 +49,12 @@ When FFI calls occur, such as calling a libc function like `printf`,
 this function will allocate a stack frame on top of the single stack frame, and execute like
 it would normally do. The result will then be written into a fitting register
 or variable on the system stack, or it will be pushed onto the current stack.
-This and along with with top-level functions,
+This and along with top-level functions,
 are the only time #ln strays from the strict continuation based style.
 
 === Mapping types to memory<mappingMemToType>
 An important part of any ABI is specifying types are represented.
-The following chapter specifies how much memory the types in #ln uses, and also the amount
+The following chapter specifies how much memory the types in #ln uses, and the amount
 of how many physical registers are needed to store them. Keep in mind that while the ABI
 does not utilize registers at the moment, this might change in the future, hence why
 we define the needed amount of physical registers.
@@ -110,7 +110,7 @@ of #sym.infinity can be found in @MemoryAlignment.
   eq([Type variable], $alpha : omega$, 0, 0),
 )
 
-Outside of these types, #ln contains an auxilary type: a word sized integer.
+Outside of these types, #ln contains an auxiliary type: a word sized integer.
 The memory specification of integer is the following:
 #eq([Integer], $int$, 1, `Word`)
 
@@ -122,7 +122,7 @@ and product- and sum-types.
 
 Memory wise, the simplest here are function pointers and stack pointers.
 Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
-they can always fit in a register and thus never need to be split up accross multiple
+they can always fit in a register and thus never need to be split up across multiple
 registers when working with them.
 
 Integers are currently also simple, as they are also the size of a word.
@@ -185,11 +185,11 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   #[
     As can be seen we are padding by 6. Theoretically we only need to pad by
     2 bytes here for a 4 byte integer, as 4 is of course divisible by 2.
-    The reason this is done is to both to simpilfy the compilation process,
+    The reason this is done is to both to simplify the compilation process,
     and to simplify the needed code for any given pop and push.
 
     Also, as can bee seen in the illustrations, the addresses grow downwards.
-    System stacks on most architectures grow downards, and the dynamic stacks
+    System stacks on most architectures grow downwards, and the dynamic stacks
     in #ln simulate this as well. This is done to allow an implementation of
     the language to use the system stack if need be, and use the built in
     pop and push instructions which exists in most instruction sets.
@@ -199,8 +199,9 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     aligned, and this is done to minimize the amount of instructions
     needed when interacting with the stack. If a function is called through FFI
     for instance, it has no way of knowing if the stack pointer
-    is currently aligned unless it does some arithetics to calculate this,
-    which would be a waste of computation time. For this reason,
+    is currently aligned, unless it explicitly checks the current
+    stack pointer and manually aligns.
+    This would be a waste of computation time, and for this reason,
     all pushes pad to make sure that the next stack location is
     in an address divisible by 8 (would be 4 on a 32-bit platform).
 
@@ -210,17 +211,20 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     to be divisible by 4, and so on and so forth. While x86-64 allows
     unaligned memory interactions for some instructions, this is often heavily
     discouraged because it can potentially harm performance, as it can
-    require more clock cycles, and cache friendlines of the values being interacted with.
+    require more clock cycles, and cache friendliness of the values being interacted with.
   ]
 
   The memory layout for product- and sum-types is also relatively simple.
   When we put a sum-type value such as `inl 42` on the stack it looks like this:
+
   #table(
     columns: rep(len, 1fr),
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
     f(type: "tag", 8, `$42`), f(type: "cons", 8, `0`),
   )
-  and similarily if we put the value `inr 777` on the stack, it will look like this:
+
+  and similarly if we put the value `inr 777` on the stack, it will look like this:
+
   #table(
     columns: rep(len, 1fr),
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
@@ -236,7 +240,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     f(type: "tag", 8, `$1`), f(type: "tag", 8, `$2`),
   )
 
-  For a more comples value such as `(1,(2,3))` it would look like this:
+  For a more complex value such as `(1,(2,3))` it would look like this:
   #table(
     columns: rep(len, 1fr),
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
@@ -271,10 +275,10 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   When allocating new stacks the first value on the stack must be the pointer
   which points to the start of the stack. As said earlier, stacks grow downwards,
   and thus their pointers need to be offset by their size on allocation.
-  This however creates to problem as we can not de-allocate using this updated pointer,
-  and we need to instead use the non-offseted pointer. To combat this
+  This however creates to problem as we can not deallocate using this updated pointer,
+  and we need to instead use the original pointer. To combat this
   the original pointer is placed on the stack, which can then be popped
-  when the stack is empty and freestack is called.
+  when the stack is empty and `freestack` is called.
   #block(
     breakable: false,
     table(

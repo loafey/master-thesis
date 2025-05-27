@@ -42,7 +42,7 @@ implement properly.
 Due to #ln being a system-level language, it might be useful to have the ability
 to directly make system calls to interact with the operating system.
 This allow for the possibility of not relying on, for example, libc,
-because the behaviour one would need from libc could be re-implemented
+because the behavior one would need from libc could be re-implemented
 in the language. This would in theory make the language more portable,
 as it would be easier to port it to systems where libc might not be available.
 System calls are used under the hood in the language, but it is not something
@@ -59,7 +59,7 @@ exposed to a user of the language.
 === Exponentials
 While linearity in a programming language is useful for managing resources
 such as memory, sometimes one needs to use values more than once.
-Consider a function for fibonacci written in #ln:
+Consider a function for Fibonacci written in #ln:
 ```hs
 fib : *(int ⊗ ~int)
   = \(n,k) -> __eq__((n,0), \res -> case res of {
@@ -81,7 +81,7 @@ and due to linearity one may only use it once!
 To combat this issue we would want to introduce exponentials.
 
 Exponentials would let a user reuse a value multiple times opening up
-for some much needed expressiveness. Take fibonacci again with some imaginative
+for some much needed expressiveness. Take Fibonacci again with some imaginative
 syntax introducing a `!` kind:
 
 #block(
@@ -108,13 +108,13 @@ syntax introducing a `!` kind:
   ```,
 )
 As can be seen here, we can now re-use `n`, allowing us to actually write
-fibonacci.
+Fibonacci.
 
 By imagining some more syntax, we could simplify this even further!
 If we were to introduce some sugar, for example a `?` operator,
 which could simplify a term such as `let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)`
 into: `k(*n + *n)`.
-Rewriting fibonacci with this operator could result in something like this instead:
+Rewriting Fibonacci with this operator could result in something like this instead:
 ```hs
 fib : *(!int ⊗ ~int)
   = \(n,k) ->
@@ -142,14 +142,14 @@ While the language currently contains sum and product types
 ($a plus.circle b$ and $a times.circle b$ respectively), having
 types with named fields or constructors would be
 useful for more complex types. It would also be required for recursive
-types such as linked lists, which are currently not representable.
+types such as linked lists, which are currently not implementable.
 
 It would also be beneficial to have access to contiguous data types
 such as arrays. In the paper "Linear types can Change the World" @LinearTypeswadler1990linear
 Wadler introduces a way to implement arrays which could perhaps be mimicked.
 
-When de-allocating memory for data types, it has to be done recursivly _if_
-the the type is recursive. A simple free would not suffice for these @LinearTypeswadler1990linear.
+When deallocating memory for data types, it has to be done recursively _if_
+the type is recursive. A simple free would not suffice for these @LinearTypeswadler1990linear.
 
 
 === Utilizing linearity for optimizations

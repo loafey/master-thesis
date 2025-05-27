@@ -18,13 +18,14 @@
 // create efficient machine code, the virtual machine can not be a target language
 // either.
 
-In the previous year (2024), Filip Nordmark wrote his
-thesis master's thesis "Towards a practical execution model for functional
+In the previous year (2024), Nordmark wrote his
+master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024.
 This work can be seen as a predecessor of the work presented here in this thesis,
-and is somewhat similar in nature.
+and is similar in nature to this thesis.
 
 Nordmark compiled a similar language to #ln to
-an untyped custom made virtual machine.
+an untyped byte code, which ran in a custom made virtual machine.
 This is in quite the contrast to our own, where we
-instead aimed for a more lower level approach.
+have instead aimed for a more lower level approach.
+

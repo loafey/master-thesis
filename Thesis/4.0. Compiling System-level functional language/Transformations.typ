@@ -46,8 +46,8 @@ prepared. The reason we can not guarantee that there is _exactly one_ stack
 prepared is because stacks have not been made explicit yet. If we consider the
 following program, where $f : *A$ is defined: $ lambda^~ x. f(x) : space ~A $
 It is not possible to introduce a stack to this closure without also
-transforming the type. In @PointerClosureConversion we will show the necessary transformations to make stacks explicit, and how to introduce new stacks. 
- 
+transforming the type. In @PointerClosureConversion we will show the necessary transformations to make stacks explicit, and how to introduce new stacks.
+
 Consider the following program:
 $ lambda (f,k). space k(lambda y. space f(y)) : *(not A times.circle ~not A) $
 
@@ -58,7 +58,7 @@ $
 $
 
 Because $k$ has type $~(square~A)$, its environment must be a stack. The issue is that the
-only variable that is a stack is $f'$, but it can not be the chosen stack because
+only variable that is a stack is $f'$, but it cannot be the chosen stack because
 bound variables are stored on the stack. The chosen stack must be a variable
 that is bound outside the closure, or an explicit newstack.
 
@@ -153,7 +153,7 @@ $
 $
 
 Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$
-after closure conversion, the second and third row are necessary to access the
+after closure conversion, the second, and third row are necessary to access the
 static function $g : *(A times.circle gamma)$. The same process is repeated
 inside the argument of $g$. Also, note how $f'$ is the environment inside $g$
 now.

@@ -51,25 +51,29 @@
   linebreak()
 }
 
-#let complete_grammar = box(inset: 7pt, stroke: black, [
-  _Value_
-  #values
-  #dbl_linkbreak()
-  _Command_
-  #commands
-  #dbl_linkbreak()
-  _Pattern_
-  #pat
-  #dbl_linkbreak()
-  _Type_
-  #type
-  #dbl_linkbreak()
-  _Definition_
-  #def
-  #dbl_linkbreak()
-  _Module_
-  #module
-])
+#let complete_grammar = box(
+  inset: 7pt,
+  stroke: black,
+  [
+    _Value_
+    #values
+    #dbl_linkbreak()
+    _Command_
+    #commands
+    #dbl_linkbreak()
+    _Pattern_
+    #pat
+    #dbl_linkbreak()
+    _Type_
+    #type
+    #dbl_linkbreak()
+    _Definition_
+    #def
+    #dbl_linkbreak()
+    _Module_
+    #module
+  ],
+)
 
 #let pair_value = judge(
   $Gamma tack t: A quad Delta tack u: B$,

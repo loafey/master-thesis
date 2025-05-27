@@ -57,7 +57,7 @@ evaluation order is determined by the order of the function calls.
     + $"foo"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
 
     In the first one, because the second argument of bar is in normal-form
-    #footnote[A term is in normal-form if it can not be evaluated any further],
+    #footnote[A term is in normal-form if it cannot be evaluated any further],
     the only possible execution order is to evaluate $"bar"(x,...)$.
     Conversely, in the second one $"foo"(x,...)$ has to be evaluated first, for the same reason.
   ],

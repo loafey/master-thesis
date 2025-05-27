@@ -15,7 +15,7 @@ all the requirements we set out in @Background, specifically:
   - The programmer may write parts of the program directly in assembly language
 ]
 
-#ln currently not does expose many primitives for interacting with the the memory
+#ln currently not does expose many primitives for interacting with the memory
 nor does it expose any way to inline assembly code.
 The latter could probably
 be skipped and it could likely suffice to implement FFI

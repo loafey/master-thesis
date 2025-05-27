@@ -1,8 +1,8 @@
 #import "../Prelude.typ": *
 
 = Usage
-As of this report #ln is in it's infancy, and no major programs have been writen in it.
-But to demonstrate some levels of usablity we have implemented the following:
+As of this report #ln is in it's infancy, and no major programs have been written in it.
+But to demonstrate some levels of usability we have implemented the following:
 
 == Some extensions
 As can be seen in the earlier chapters, the language provides some of the necessities
@@ -47,6 +47,7 @@ Using these two extensions we can write some more interesting programs: see @Fib
 Fibonacci is not the most the most interesting program,
 but from the standpoint of linearity it is _somewhat_ interesting, as
 it requires the reuse of variables:
+
 #align(
   center,
   grid(
@@ -56,14 +57,15 @@ it requires the reuse of variables:
     $F_1 = 1$,
   ),
 )
-The following are two different implementions, one in Lithium,
+
+The following are two different implementations, one in Lithium,
 and a recursive one in C. /*, and a recursive one in Haskell, as to compare it against
                           a mature functional programming language:*/
 #block(
   breakable: false,
   fancyTable(
     columns: (1.2fr, 1fr),
-    [A #ln verison:],
+    [A #ln version:],
     [A recursive version made in C:],
     table.cell(
       colspan: 1,
@@ -171,7 +173,7 @@ which represents false, otherwise it returns `inl ()` which represents true.
 #figure(
   caption: [
     Benchmark comparing the average time needed to calculate the
-    fibonacci numbers 30 to 40 in the two different
+    Fibonacci numbers 30 to 40 in the two different
     implementations. Each number was run and timed 100 times.
     Time is measured in milliseconds, and displayed in a logarithmic manner.
     The C version was compiled using GCC with O0 and O3.
@@ -234,11 +236,11 @@ which represents false, otherwise it returns `inl ()` which represents true.
 As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
 large gap between the version written in #ln and the version written in C.
 However, while the #ln version is some magnitudes slower, we can see that
-the exponential growth in execution time is almost the same accross
+the exponential growth in execution time is almost the same across
 all three versions.
 
-This can be observed even more clearly if we overlap the benchmakrs over
-each other, and then we can see that the un-opitimized C version grows
+This can be observed even more clearly if we overlap the benchmarks over
+each other, and then we can see that the unoptimized C version grows
 the same way as the #ln version, while the optimized C version is slightly
 more efficient.
 #figure(caption: [Benchmarks from @fibbo-benchmarks overlapped], overlap)
@@ -246,13 +248,13 @@ more efficient.
 The performance difference we can see @fibbo-benchmarks
 can be attributed to several factors but the two most significant ones
 are most likely that #ln is currently not optimized at all, and it
-genereates more code than is likely necessary. Also worth to note
+generates more code than is likely necessary. Also worth to note
 that the calling convention is heavier compared to System V @SystemVmatz2013system which
-C uses, and that this is not the most performant implemention you can create in
-C. A version using looping and some basic memoization is much more performant.
+C uses. This is not the most performant implementation you can create in
+C either. A version using looping and some basic memoization is much more performant.
 
 Overall a benchmark is currently not necessarily that interesting in #ln current state.
-They are presented here nontheless to showcase some of the language's current capabilities.
+They are presented here nonetheless to showcase some of the language's current capabilities.
 
 // #let haskellO0 = csv("benches/Haskell O0.csv")
 // #let haskellO2 = csv("benches/Haskell O2.csv")

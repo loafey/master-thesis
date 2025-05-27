@@ -166,16 +166,16 @@
     ),
 
     cell(
-      [Existental introduction],
+      [Existential introduction],
       [Compile the value $v_1$. Because types do not exist at runtime it is
-      just a recursive call.],
+        just a recursive call.],
       $#scheme_pos($(@t, v_1)$)^alpha_rho = #code_box($#sem[$v_1$]^alpha_rho$)$,
     ),
     cell(
       [Indirection to a stack],
       [Create space on the stack for the stack pointer to $v_1$. Backup SSP and
-      SP. Compile $v_1$, setting SP to the stack $v_1$. Write SP to the space
-      created, then restore SP and SSP to their previous states.],
+        SP. Compile $v_1$, setting SP to the stack $v_1$. Write SP to the space
+        created, then restore SP and SSP to their previous states.],
       $#scheme_pos($square v_1$)^known_rho =
       #code_box(
         $sp = sp + 1$,
@@ -191,8 +191,8 @@
     cell(
       [Right injection],
       [Compile $v_1$ and push the tag $0$ on the stack. The tag must be pushed
-      after the compilation of $v_1$ because when $alpha = omega$, SP might not
-      be a valid stack.],
+        after the compilation of $v_1$ because when $alpha = omega$, SP might not
+        be a valid stack.],
       $#scheme_pos($"inl" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
     ),
@@ -219,16 +219,16 @@
     cell(
       [Unit],
       [$()$ does not exist at runtime. \ \
-    ],
+      ],
       $#scheme_pos($()$)^known_[] = #code_box("")$,
     ),
     cell(
       [Static function],
       [Generate a unique label $l_1$. Under $l_1$, let $r_1$ be the next
-      available pseudo register, then set it to $sp$ and compile the command
-      $c$. Finally, push $l_1$ on the stack. $l_1$ and the block can be thought
-      of as creating a procedure in a C-like language, and thus, we must be
-      careful about nesting.],
+        available pseudo register, then set it to $sp$ and compile the command
+        $c$. Finally, push $l_1$ on the stack. $l_1$ and the block can be thought
+        of as creating a procedure in a C-like language, and thus, we must be
+        careful about nesting.],
       $#scheme_pos($lambda^* x. c$)^known_[] =
       &#code_block($l_1$, meta($"let" r_1 = "next"([], #math.italic("ptr"))$), $r_1 = s p$, $""^-#sem[c]_(x |-> [r_1])$) \
       & #code_box($push_(s p)(l_1)$)$,
@@ -317,8 +317,8 @@
     cell2(
       [Case expression with variable which is a stack],
       [Pop the tag from the stack $r_0$. Generate the appropriate branching
-      instructions using iszero. Because the tag has been popped from $r_0$,
-      the value under the injection is at the top of the stack.],
+        instructions using `iszero`. Because the tag has been popped from $r_0$,
+        the value under the injection is at the top of the stack.],
       $#scheme_neg($"case" & z^omega "of" { \ & "inl" x |-> c_1; \ & "inr" y |-> c_2;}$)_(rho, z |-> [r_0])
       = #code_box(
         meta($"let" r_1 = "next"(rho, "int")$),
@@ -332,8 +332,8 @@
     cell2(
       [Case expression with variable],
       [Because $z$ is not a stack, it corresponds to a non-empty list of pseudo
-      registers where the head is the tag, and the remaining pseudo registers
-      correspond to the value under the injection.],
+        registers where the head is the tag, and the remaining pseudo registers
+        correspond to the value under the injection.],
       [$#scheme_neg($"case" z^known "of" { "inl" x |-> c_1; "inr" y |-> c_2;}$)_(rho, z |-> r_1: s_n)
         = #code_box(
           $"if" & "iszero"(r_1)\
@@ -345,7 +345,7 @@
 
     cell2(
       [Function call],
-      [Compile $v$, preparing the stack, and then jmp to the label $r_0$.],
+      [Compile $v$, preparing the stack, and then jump to the label $r_0$.],
       $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
     ),

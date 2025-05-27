@@ -1,8 +1,8 @@
 == Logic
 This section will introduce the reader to logic and its connection to computation in the form of functional programming through the Curry-Howard correspondence.
 
-Logic is a formal system that uses reason to deduce truths. There are several proof systems where logic can be expressed. To prove $A$ and $B$, one has to prove $A$ and independently prove $B$. In natural deduction, this can be expressed with the following proof tree. 
-$ (A quad B)/(A and B) $
+Logic is a formal system that uses reason to deduce truths. There are several proof systems where logic can be expressed. To prove $A$ and $B$, one has to prove $A$ and independently prove $B$. In natural deduction, this can be expressed with the following proof tree.
+$ (A quad B) / (A and B) $
 
 This reads as: given a proof of $A$ and a proof of $B$, we can prove $A$ and $B$.
 The deductions above the line lead to the conclusion below the line.

@@ -12,7 +12,7 @@ former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
 
 #ln makes use of linear logic to introduce mutable data structures in the
-context of functional programming languages
+context of functional programming languages.
 Girard's linear logic @girard1987linear is a refinement of classical and
 intuitionistic logic, where, rather than propositions being truth statements, they represent
 _resources_, meaning propositions are objects that can be modified into other objects.

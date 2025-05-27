@@ -16,14 +16,14 @@ assembly language, it of course comes with the cost of removing some control.
 
 Depending on the source language you are compiling a lot of these IRs
 might not necessarily be the most fitting choices.
-A lot of these are modelled for imperative languages, and expect
+A lot of these are modeled for imperative languages, and expect
 the source language to follow a traditional stack frame based calling convention,
 which might not always be the most fitting choice.
 For these case, it might be nicer to target an assembly language directly instead.
 
 An assembly language is often as low as you can go without directly targeting
 machine code, and it is often made to resemble CPU instructions
-relatively closely. x86-64 is a instruction set for CPUs, widely used in
+relatively closely. x86-64 is an instruction set for CPUs, widely used in
 personal computers and servers.
 It is an extension that was created in 2000 based on the already popular
 instruction set x86 @x86WhitePaper.
@@ -31,10 +31,11 @@ instruction set x86 @x86WhitePaper.
 When you directly target an assembly language portability suffers as is to
 be expected. You not only have to target different assembly languages
 for different CPU architectures, you will also have to cater to the operating system
-you are targeting. For instance, on a \*nix operating system, you can almost
+you are targeting. For instance, on a \*nix based operating system, you can almost
 always rely upon some implementation of the C Standard Library (libc), be it glibc or musl,
-or system calls if more power is needed, while on Windows you have to instead
-depend on the provided libraries to interact with the rest of the system.
+or system calls if more power is needed. This is not the same on Windows,
+as you have to instead depend on the provided system libraries to interact with the rest of the
+system, as libc availability is not a guarantee.
 A simple act such as printing might look wildly different
 depending on the operating system because even though they might use the same
 assembly language, they can involve extremely different calls to the operating system.

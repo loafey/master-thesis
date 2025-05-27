@@ -24,10 +24,10 @@ the values $a$ and $b$ respectively.
 
 $
   & "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
-  & quad = lambda((x,y), k) -> k((y,x));                            \
-                                                                    \
-  & "main" : *~(A times.circle B)                                   \
-  & quad = lambda k -> "swap"((b,a), k);                            \
+  & quad = lambda((x,y), k) -> k((y,x)); \
+  \
+  & "main" : *~(A times.circle B) \
+  & quad = lambda k -> "swap"((b,a), k); \
 $
 
 A module consists of a list of definitions, where a definition is a top-level
@@ -60,16 +60,14 @@ At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
 ($known$). The kinding rules in #ln are given in @KindRules.
 
-#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(
-  true,
-)))<KindRules>
+#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
 
 #indent[
   + It is forbidden to construct a pair of two stacks
   + The kinds in a sum type must match
-  + Type variables are stacks, which means they can not be used for regular polymorphism.
+  + Type variables are stacks, which means they cannot be used for regular polymorphism.
 ]
 
 The reason type variables are stacks is a requirement for when we make the
@@ -99,7 +97,7 @@ is not possible with $*$ and $~$. The type $*(A times.circle ~B
 would not work either because $*B$ can not capture state.
 To enable higher-order programming we introduce the _linear closure_.
 The linear closure can capture arbitrary state and produces an
-environment with a known size (remember the kinding rule). 
+environment with a known size (remember the kinding rule).
 Now we can write the higher-order function: $*(A times.circle not B times.circle ~C)$.
 In @Transformations we explain how closures are transformed to static functions
 and explicit stack environments.
@@ -120,8 +118,8 @@ is expected, then a type with kind $known$ is not allowed, and vice versa.
 ]
 
 Values and commands are given the form $Gamma tack v : A$ and $Gamma tack c$.
-Values have a right side type to symbolise construction. Conversely, commands lack a right
-side type, to symbolise consumption. The rules for values are read in a top-to-bottom fashion, whereas the rules for commands are read in a bottom-to-top fashion.
+Values have a right side type to symbolize construction. Conversely, commands lack a right
+side type, to symbolize consumption. The rules for values are read in a top-to-bottom fashion, whereas the rules for commands are read in a bottom-to-top fashion.
 
 The typing rules for the positive fragment are depicted in
 @typing_positive_fragment, while @typing_negative_fragment shows the typing
@@ -133,11 +131,7 @@ rules for the negative fragment.
   grid(
     inset: (bottom: 15pt),
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
-    "",
-    newstack_value,
-    [Newstack is a primitive for creating an empty stack],
-    "",
-
+    "", newstack_value, [Newstack is a primitive for creating an empty stack], "",
     "", var_value, [All variables must used exactly once], "",
     "",
     pair_value,
@@ -147,11 +141,7 @@ rules for the negative fragment.
     "", inj_left_value, [Constructing the left value of a sum type], "",
     "", inj_right_value, [Constructing the right value of a sum type], "",
     "", linear_pointer_value, [Making an indirection], "",
-    "",
-    exists_intro_value,
-    [Existentially quantifying the term $t : A$ with the type variable $alpha$],
-    "",
-
+    "", exists_intro_value, [Existentially quantifying the term $t : A$ with the type variable $alpha$], "",
     "",
     static_function_value,
     [Because the static function can not capture any variables, the remaining environment has to be empty],
@@ -177,43 +167,23 @@ rules for the negative fragment.
     inset: (bottom: 15pt),
     columns: (0.1fr, 1.5fr, 1fr, 0.1fr),
     "", freestack_command, [Free the stack $z$], "",
-    "",
-    pair_command,
-    [Destruct the pair $z$, introducing the variables $a$ and $b$],
-    "",
-
+    "", pair_command, [Destruct the pair $z$, introducing the variables $a$ and $b$], "",
     "",
     case_command,
     [Pattern match on the sum, binding the value of $z$ to $x_i$ and continue
-    with the continuation $c_i$. The subscript $i$ is used to indicate that
-    there are two possible injections.],
+      with the continuation $c_i$. The subscript $i$ is used to indicate that
+      there are two possible injections.],
     "",
 
-    "",
-    follow_command,
-    [Follow the indirection, binding the stack behind the pointer to $x$],
-    "",
-
-    "",
-    exists_elim_command,
-    [Match the existentially quantified term $z$ to access the actual term $x$],
-    "",
-
+    "", follow_command, [Follow the indirection, binding the stack behind the pointer to $x$], "",
+    "", exists_elim_command, [Match the existentially quantified term $z$ to access the actual term $x$], "",
     "",
     static_call_command,
     [Call the static function $z$ with the term $t$ as argument. Note that the environment does not need to be empty when calling static functions],
     "",
 
-    "",
-    stack_call_command,
-    [Call the stack closure $z$ with the term $t$ as argument],
-    "",
-
-    "",
-    linear_call_command,
-    [Call the linear closure $z$ with the term $t$ as argument],
-    "",
-
+    "", stack_call_command, [Call the stack closure $z$ with the term $t$ as argument], "",
+    "", linear_call_command, [Call the linear closure $z$ with the term $t$ as argument], "",
     "",
   ),
 ) <typing_negative_fragment>
