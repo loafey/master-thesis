@@ -17,8 +17,7 @@ It is worth to noting that this specification is not final, as it is with
 most languages, and may be subject to change in the future if need be!
 
 === Function calls
-When functions are called there are requirements regarding these stacks that must be fulfilled:
-
+When functions are called these are the requirements that must be fulfilled:
 #indent[
   - Register `R15`(`SP`) is set to an address which points to a valid stack.
   - The address in `R15`(`SP`) must be a multiple of 8 (4 on a 32 bit system).
