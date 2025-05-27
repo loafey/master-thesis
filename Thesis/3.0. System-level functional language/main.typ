@@ -120,36 +120,34 @@ The typing rules for the positive fragment are depicted in
 rules for the negative fragment.
 
 #show figure: set block(breakable: true)
+#let content = (a, b) => ("", a, block(breakable: false, b), "")
 #figure(
   caption: [Typing rules for the positive fragment of #ln],
   grid(
     inset: (bottom: 15pt),
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
-    "", newstack_value, [Newstack is a primitive for creating an empty stack], "",
-    "", var_value, [All variables must used exactly once], "",
-    "",
-    pair_value,
-    [Constructing a pair from the two values $u$ and $v$. Note that the contexts $Gamma, Delta$, must be disjoint],
-    "",
-
-    "", inj_left_value, [Constructing the left value of a sum type], "",
-    "", inj_right_value, [Constructing the right value of a sum type], "",
-    "", linear_pointer_value, [Making an indirection], "",
-    "", exists_intro_value, [Existentially quantifying the term $t : A$ with the type variable $alpha$], "",
-    "",
-    static_function_value,
-    [Because the static function can not capture any variables, the remaining environment has to be empty],
-    "",
-
-    "",
-    stack_closure_value,
-    [The stack closure can capture variables, so the remaining environment does not need to be empty],
-    "",
-
-    "",
-    linear_closure_value,
-    [The linear closure can capture variables, so the remaining environment does not need to be empty],
-    "",
+    ..content(newstack_value, [Newstack is a primitive for creating an empty stack]),
+    ..content(var_value, [All variables must used exactly once]),
+    ..content(
+      pair_value,
+      [Constructing a pair from the two values $u$ and $v$. Note that the contexts $Gamma, Delta$, must be disjoint],
+    ),
+    ..content(inj_left_value, [Constructing the left value of a sum type]),
+    ..content(inj_right_value, [Constructing the right value of a sum type]),
+    ..content(linear_pointer_value, [Making an indirection]),
+    ..content(exists_intro_value, [Existentially quantifying the term $t : A$ with the type variable $alpha$]),
+    ..content(
+      static_function_value,
+      [Because the static function can not capture any variables, the remaining environment has to be empty],
+    ),
+    ..content(
+      stack_closure_value,
+      [The stack closure can capture variables, so the remaining environment does not need to be empty],
+    ),
+    ..content(
+      linear_closure_value,
+      [The linear closure can capture variables, so the remaining environment does not need to be empty],
+    )
   ),
 )<typing_positive_fragment>
 
