@@ -23,27 +23,23 @@ which might not always be desired.
 If this is the case, targeting an assembly language directly can prove more advantageous.
 
 An assembly language is often as low as you can go without directly targeting
-machine code, and they are almost always made to resemble CPU instructions closely.
-These assembly languages are tailored after CPU specific instruction sets,
-and one of these instruction sets is x86-64, which widely used in
-personal computers and servers.
-It is an extension that was created in 2000 based on the already popular
-instruction set x86 @x86WhitePaper.
+machine code. They are usually made to resemble machine code in text form, and
+are tailored after CPU specific instruction sets. Personal computers and servers
+commonly use the instruction set x86-64, which is an extension that was created
+in 2000 based on the already popular instruction set x86 @x86WhitePaper.
 
-When you directly target assembly languages portability suffers as is to
-be expected. You not only have to target different assembly languages
-for different CPU architectures, you will also have to cater to the operating system
-you are targeting. For instance, on a \*nix based operating system, you can almost
-always rely on some implementation of the C Standard Library (libc), be it glibc or musl,
-or system calls if more power is needed.
-This does not apply to operating systems
-such as Windows however,
-where you instead have to depend on the provided system libraries to interact
-with the rest of the system.
-On Windows libc availability is not a guarantee and system calls are to be avoided, as
-they do not have a stable API.
-Due to reasons such as this, a simple act such as printing might look wildly different
-depending on the operating system. Even though they might use the same
-assembly language, they can involve extremely different calls to the operating system.
-This is something you have to consider with most IRs as well, but it can
-be alleviated with sufficient abstractions.
+When you directly target assembly languages portability suffers. You not only
+have to target different assembly languages for different CPU architectures,
+you will also have to cater to the operating system you are targeting. For
+instance, on a unix-like operating system, you can almost always rely on an
+implementation of the C Standard Library (libc), or system calls if direct
+communication with the operating system is needed. This does not apply to
+operating systems such as Windows however, where you instead have to depend on
+the provided system libraries to interact with the rest of the system. 
+
+On Windows libc availability is not a guarantee, and because they do not have
+a stable API, it is _strongly_ recommended to avoid using system calls
+directly. Due to reasons such as this, the simple act of printing may look
+wildly different depending on the operating system, even though they may use
+the same assembly language. This is something you have to consider with most
+IRs as well, but it can be alleviated with sufficient abstractions.
