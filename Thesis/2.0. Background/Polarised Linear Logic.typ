@@ -1,2 +1,0 @@
-== Polarised Linear Logic
-

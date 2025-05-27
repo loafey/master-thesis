@@ -9,7 +9,7 @@ functional languages, similar to that of GHC Core @jones1993glasgow.
 #ln diverges from GHC Core and most functional language intermediate representations in
 that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
-inspiration from linear types and polarised linear logic.
+inspiration from linear types and intuitionistic linear logic (ILL) @lafont1988linear.
 
 == Grammar
 
@@ -38,12 +38,11 @@ let-bindings, case-expressions, or function calls. Note that the only way to
 terminate a sequence of commands is by a function call $z(v)$. This ensures
 that #ln is written in continuation-passing style.
 
-
 == Kinds & types <kind_and_types>
 
-#ln is based on a variant of polarised linear logic. It is essentially Lafont's
+#ln is based on a variant of polarised linear logic @laurent2002etude. It is essentially Lafont's
 intuitionistic linear logic (ILL) @lafont1988linear, where $A lollipop B$ is replaced
-by $not A$. Intuitively, we can think of $not A$ as $A -> bot$, i.e. a function
+by $not A$. Intuitively, we can think of $not A$ as $A -> bot$, or from a programmer's perspective: a function
 that takes $A$ as argument and terminates with no value, like in @cps.
 
 #let pll_types = {
@@ -105,7 +104,6 @@ and explicit stack environments.
 Finally, there is no sub-kinding in #ln\; if a type with kind $omega$
 is expected, then a type with kind $known$ is not allowed, and vice versa.
 
-#pagebreak()
 == Types & values<TypesAndValues>
 
 #ln consists of two fragments:
