@@ -129,6 +129,7 @@ We will use the meta symbol $#metaid$ to refer to the identity function in @id_p
 #figure(caption: [Applying the identity function to the variable $y$ with type $A$], flex(id_app_proof))
 
 === Linear types <LinearTypes>
+#todo[Some linear logic stuff too]
 
 The core idea of a linear type system is that variables must be used _exactly
 once_. This means the typing relation $Gamma tack e : sigma$ no longer only
