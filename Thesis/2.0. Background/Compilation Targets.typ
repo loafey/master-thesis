@@ -2,13 +2,13 @@
 
 == Compilation Targets
 When you are compiling your language you have to pick a target to compile it to.
-Unless you are directly targeting binary machine code, most of the time
-you want a more higher level compilation target.
+Unless you are directly targeting machine code, most of the time
+you want a higher level compilation target.
 
 There are a lot of different fitting choices for this task and some of the more
 commons ones are for example LLVM IR @lattner2004llvm, Cranelift @Cranelift and
 GNU's GIMPLE @Gimple. These languages are what is known as intermediate
-representations (IR), and are all targeted by different compilers. They remove
+representations (IR), and they are all targeted by different compilers. They remove
 the need for the compilers to directly target CPU specific machine code or
 assembly. Most of the time these IRs are also cross platform, giving compilers
 portability if need be. As these languages are higher level compared to an
@@ -16,28 +16,33 @@ assembly language, it of course comes with the cost of removing some control.
 
 Depending on the source language you are compiling a lot of these IRs
 might not necessarily be the most fitting choices.
-A lot of these are modeled for imperative languages, and expect
+A lot of them are modeled for procedural languages, and expect
 the source language to follow a traditional stack frame based calling convention,
 which might not always be the most fitting choice.
-For these case, it might be nicer to target an assembly language directly instead.
+For these cases, it might be nicer to target an assembly language directly instead.
 
 An assembly language is often as low as you can go without directly targeting
-machine code, and it is often made to resemble CPU instructions
-relatively closely. x86-64 is an instruction set for CPUs, widely used in
+machine code, and they are almost always made to resemble CPU instructions closely.
+These assembly languages are tailored after CPU specific instruction sets,
+and one of these instruction sets is x86-64, which widely used in
 personal computers and servers.
 It is an extension that was created in 2000 based on the already popular
 instruction set x86 @x86WhitePaper.
 
-When you directly target an assembly language portability suffers as is to
+When you directly target assembly languages portability suffers as is to
 be expected. You not only have to target different assembly languages
 for different CPU architectures, you will also have to cater to the operating system
 you are targeting. For instance, on a \*nix based operating system, you can almost
 always rely upon some implementation of the C Standard Library (libc), be it glibc or musl,
-or system calls if more power is needed. This is not the same on Windows,
-as you have to instead depend on the provided system libraries to interact with the rest of the
-system, as libc availability is not a guarantee.
-A simple act such as printing might look wildly different
-depending on the operating system because even though they might use the same
+or system calls if more power is needed.
+This does not apply to operating systems
+such as Windows however,
+where you instead have to depend on the provided system libraries to interact
+with the rest of the system.
+On Windows libc availability is not a guarantee and system calls are to be avoided, as
+they do not have a stable API.
+Due to reasons such as this, a simple act such as printing might look wildly different
+depending on the operating system. Even though they might use the same
 assembly language, they can involve extremely different calls to the operating system.
 This is something you have to consider with most IRs as well, but it can
 be alleviated with sufficient abstractions.
