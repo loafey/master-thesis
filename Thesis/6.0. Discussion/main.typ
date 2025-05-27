@@ -22,7 +22,7 @@ is optimized.
 We did not have time to implement everything we wanted in the compiler,
 as outlined in @FutureWork, nor have they been specified in the ABI.
 We have however implemented a base which can
-be further expanded upon to implement these missing features.
+be further expanded on to implement these missing features.
 
 // so long bowser
 

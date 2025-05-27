@@ -22,7 +22,7 @@ which are needed when writing more advanced programs.
 // )
 //
 First we have the equality function, which takes in two integers and returns a value of
-type `() ⊕ ()` (acts as a boolean) which can be pattern matched upon.
+type `() ⊕ ()` (acts as a boolean) which can be pattern matched on.
 ```hs
 main : *~int
     = \e -> __eq__((3,4), \res -> case res of {
