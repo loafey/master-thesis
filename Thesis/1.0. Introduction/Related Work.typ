@@ -19,7 +19,7 @@
 // either.
 //
 A lot of research has gone into researching linear logic, and linear logic in programming
-languages. Not much research has been done however in actually implementing
+languages. Not much research has however been done in actually implementing
 functional system-level linear languages.
 
 In the previous year (2024), Nordmark wrote his
