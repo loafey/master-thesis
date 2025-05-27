@@ -3,7 +3,6 @@
 
 #include "Future Work.typ"
 
-#include "Related Work.typ"
 
 #pagebreak()
 
