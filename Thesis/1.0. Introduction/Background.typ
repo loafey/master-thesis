@@ -22,5 +22,4 @@ the compile time guarantees are few and weak. Rust has mostly solved the issue o
 memory management by introducing an ownership model and a borrow checker @matsakis2014rust.
 
 Although Rust offers many functional aspects, many are still missing, for
-instance; _purity_ and _referential transparency_. We propose
-an alternative that addresses these points, the programming language: #ln.
+instance: _purity_ and _referential transparency_.

@@ -21,5 +21,6 @@ which are of critical importance in system-level programming.
 In linear logic, the uses of weakening and contraction are carefully controlled, which in
 a programming language setting means variables must be used exactly once.
 
-This thesis describes #ln, the compilation scheme
-for #ln, and the implementation and specification of the compiler.
+The goal for #ln is not only to be used as a system-level level language, but
+also as an intermedate compilation target for (linear) functional programming
+languages.

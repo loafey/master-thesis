@@ -9,8 +9,7 @@ While there are benefits to linearity, not many languages have opted to implemen
 This concept is most commonly found in functional programming, but one thing
 functional languages commonly do not contain is system-level programming.
 
-This thesis introduces a new language, #ln, which tries to fill this void,
-by introducing a system-level functional programming language.
+This thesis introduces a new system-level functional programming language, #ln, which tries to fill this void.
 
 
 #include "Background.typ"
