@@ -131,9 +131,7 @@ which represents false, otherwise it returns `inl ()` which represents true.
   caption: [
     Benchmark comparing the average time needed to calculate the
     Fibonacci numbers 30 to 40 in the two different
-    implementations. Each number was run and timed 100 times.
-    Time is measured in milliseconds, and displayed in a logarithmic manner.
-    The C version was compiled using GCC with O0 and O3.
+    implementations.
   ],
   [#canvas(
       {
@@ -192,6 +190,9 @@ which represents false, otherwise it returns `inl ()` which represents true.
 
 As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
 large gap between the version written in #ln and the version written in C.
+Each number was run and timed 100 times.
+Time is measured in milliseconds, and displayed in a logarithmic manner.
+The C version was compiled using GCC with O0 and O3.
 However, while the #ln version is some magnitudes slower, we can see that
 the exponential growth in execution time is almost the same across
 all three versions.
