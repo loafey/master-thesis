@@ -18,10 +18,7 @@ the language looks. The grammar of #ln is depicted in @slfl_grammar.
 
 #figure(caption: [Grammar of #ln], align(left, complete_grammar))<slfl_grammar>
 
-Before describing the grammar, we will show an example of the function swap.
-The example will assume $A$ and $B$ are concrete types which are inhabited by
-the values $a$ and $b$ respectively.
-
+Before describing the grammar, we will show an example of the function swap:
 $
   & "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
   & quad = lambda((x,y), k) -> k((y,x)); \
@@ -51,13 +48,14 @@ that takes $A$ as argument and terminates with no value, like in @cps.
 \
 #align(center, pll_types)
 
-There are four new constructs in #ln that extend ILL. These are: _empty stack_
-($circle$), _linear pointer_ ($square$), and _static function_ ($*A$).
-The latter two are variants of $not A$.
+There are four new constructs in #ln that extend intuitionistic linear logic.#todo[fact check]
+These are: _empty stack_
+($circle$), _linear pointer_ ($square$), _static closure_ ($~$), and _static function_ ($*$).
+The latter two are variants of negation ($not$).
 
 At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
-($known$). The kinding rules in #ln are given in @KindRules.
+($known$).
 
 #figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
 
@@ -66,22 +64,20 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
 #indent[
   + It is forbidden to construct a pair of two stacks
   + The kinds in a sum type must match
-  + Type variables are stacks, which means they cannot be used for regular polymorphism.
+  + Type variables are stacks, which means they cannot be used for polymorphism
+    (see @PointerClosureConversion).
 ]
-
-The reason type variables are stacks is a requirement for when we make the
-structure of stacks explicit. We will expand on this in
-@PointerClosureConversion.
 
 Each negation enables one of three programming styles: goto ($*$) , procedural
 ($~$), and higher-order ($not$).
 
-The first, goto, is the most primitive, it can
-be considered as a one-way transfer of control. Consider the function $f
+The first, goto, is the most primitive.
+It can be considered as a one-way transfer of control. Consider the function $f
 : *(A times.circle *B)$. From $f$ we can call the continuation $*B$, which is
 just a static function pointer, and because it is only a static function pointer, it can not capture any
-state. The state that $*B$ manipulates is exactly $B$, and it is passed
-explicitly by $f$.
+state.
+The state that $*B$ manipulates is exactly the stack $B$,
+and it is passed by $f$. #todo[add image, ill-kinded]
 
 The second style, procedural, enables exactly what its name suggests: procedures.
 The type signature $f : *(A times.circle ~B)$ now exactly corresponds to the
