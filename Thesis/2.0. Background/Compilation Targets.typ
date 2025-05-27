@@ -5,21 +5,23 @@ When you are compiling your language you have to pick a target to compile it to.
 Unless you are directly targeting machine code, most of the time
 you want a higher level compilation target.
 
-There are a lot of different fitting choices for this task and some of the more
-commons ones are for example LLVM IR @lattner2004llvm, Cranelift @Cranelift and
+There are a lot of different choices for this task, 
+some commons examples are: LLVM IR @lattner2004llvm, Cranelift @Cranelift and
 GNU's GIMPLE @Gimple. These languages are what is known as intermediate
 representations (IR), and they are all targeted by different compilers. They remove
 the need for the compilers to directly target CPU specific machine code or
-assembly. Most of the time these IRs are also cross platform, giving compilers
-portability if need be. As these languages are higher level compared to an
-assembly language, it of course comes with the cost of removing some control.
+assembly. Most of the time these IRs are also cross platform, making compilers
+portable. 
+Because the intermediate representations are higher level 
+than assembly languages are, they trade-off explicit control over machine code
+in favour of flexible abstractions.
 
-Depending on the source language you are compiling a lot of these IRs
-might not necessarily be the most fitting choices.
-A lot of them are modeled for procedural languages, and expect
+Depending on the source language you are compiling, an IR
+is not necessarily the most fitting option.
+Many IRs are modelled for procedural languages, and expect
 the source language to follow a traditional stack frame based calling convention,
-which might not always be the most fitting choice.
-For these cases, it might be nicer to target an assembly language directly instead.
+which might not always be desired.
+If this is the case, targeting an assembly language directly can prove more advantageous.
 
 An assembly language is often as low as you can go without directly targeting
 machine code, and they are almost always made to resemble CPU instructions closely.
