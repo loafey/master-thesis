@@ -35,7 +35,7 @@ guaranteed when calling functions using
 Foreign Function Interfaces (FFI) calls, because the function that
 is being called might allocate stack frames. While FFI
 is not exposed to the user, it is still used internally at the time of writing,
-as libc is used for printing and allocating memory on the heap.
+because libc is used for printing and allocating memory on the heap.
 
 #singleStackFrame
 
