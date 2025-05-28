@@ -170,3 +170,36 @@
 #let ln = "Lithium"
 
 #let known = "\u{2776}"
+
+#let pre = (
+  anim: (base, slides) => {
+    for s in slides {
+      base
+      linebreak()
+      [#s]
+      pagebreak()
+    }
+  },
+  bullets: (base, bullets, first: false, numbered: false) => {
+    let concat = ()
+    if first {
+      base
+      pagebreak()
+    }
+    for b in bullets {
+      concat.push(b)
+
+      base
+      linebreak()
+      let func = if numbered {
+        enum
+      } else {
+        list
+      }
+      func(..concat)
+      pagebreak()
+    }
+  },
+)
+
+
