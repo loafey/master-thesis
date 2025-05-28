@@ -71,13 +71,12 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
 Each negation enables one of three programming styles: goto ($*$) , procedural
 ($~$), and higher-order ($not$).
 
-The first, goto, is the most primitive.
-It can be considered as a one-way transfer of control. Consider the function $f
-: *(A times.circle *B)$. From $f$ we can call the continuation $*B$, which is
-just a static function pointer, and because it is only a static function pointer, it can not capture any
-state.
-The state that $*B$ manipulates is exactly the stack $B$,
-and it is passed by $f$. #todo[add image, ill-kinded]
+The first, goto, is the most primitive. It can be considered as a one-way
+transfer of control. Consider the function $f : *(A times.circle *B times.circle circle)$. 
+From $f$ we can call the continuation $*B$, which is
+just a static function pointer, and because it is only a static function
+pointer, it can not capture any state. The state that $*B$ manipulates is
+exactly the stack $B$, and it is passed by $f$.
 
 The second style, procedural, enables exactly what its name suggests: procedures.
 The type signature $f : *(A times.circle ~B)$ now exactly corresponds to the
