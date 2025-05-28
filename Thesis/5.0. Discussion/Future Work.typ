@@ -6,16 +6,14 @@ As with any thesis involving the creation of a language, there
 are of course more things that can be added to said language.
 
 === Compiler interface for creating stacks
-In the current implementation of #ln, all stacks created
-are heap-allocated using libc's malloc.
-This can lead to unnecessary overhead, and can be a blockage
-for using the language on more restricted platforms such
-as embedded devices. To alleviate this, giving the developer the option
-to allocate dynamic stacks on the system stack would work (maybe as a compiler flag),
-and would remove the reliance on the libraries such as glibc.
+In the current implementation of #ln, all stacks are heap-allocated. This can
+lead to unnecessary overhead, and can be a blockage for using the language on
+more restricted platforms such as embedded devices. To alleviate this, giving
+the developer the option to allocate stacks on the system stack would work
+(maybe as a compiler flag or as a linked library).
 
 To implement this the language would need to include a runtime which can keep
-track of which memory regions on the system stack are currently in use, as to make sure
+track of which memory regions on the system stack are currently in use, to make sure
 that stacks are not overlapping. It is also important to allocate these dynamic stacks
 _above_ the programs singular stack frame (remember: the stack grows downwards).
 This is important because accessing memory below the stack pointer is considered
@@ -37,7 +35,7 @@ To combat this, an efficient compiler should move variables back onto the stack
 Doing this efficiently can prove difficult because the compiler should try to minimize
 the amount of spilling needed, and this has in fact been proven to be
 NP-complete @RegisterAllocationbouchez2006register. This was not implemented for #ln because it was
-deemed an optimization, that while interesting, not something we would have the time to
+deemed an optimization that, while interesting, was not something we would have time to
 implement properly.
 
 === System Calls
