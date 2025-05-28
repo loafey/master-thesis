@@ -180,7 +180,7 @@
       pagebreak()
     }
   },
-  bullets: (base, bullets, first: false, numbered: false) => {
+  bullets: (base, bullets, first: false, numbered: false, spacing: 1.5em, indent: 1.5em) => {
     let concat = ()
     if first {
       base
@@ -191,6 +191,8 @@
 
       base
       linebreak()
+      set list(spacing: spacing, indent: indent)
+      set enum(spacing: spacing, indent: indent)
       let func = if numbered {
         enum
       } else {

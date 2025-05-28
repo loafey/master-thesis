@@ -171,3 +171,14 @@ $
 $
 
 Now the environment is a new empty stack, and we free it before calling the static function $"foo"()$
+
+```rs
+struct Circle {
+  inner: Rc<Node>,
+}
+struct Node {
+  val: i32,
+  next: Rc<Node>,
+}
+
+```
