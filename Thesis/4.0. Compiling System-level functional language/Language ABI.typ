@@ -65,24 +65,43 @@ of #sym.infinity can be found in @MemoryAlignment.
 
 #let fatone = math.bold[1]
 #let fatzero = math.bold[0]
-#let reg(x) = $#sem(x)^"REG"$
-#let mem(x) = $#sem(x)^"MEM"$
+#let reg(x) = $#sem(x)^"R"$
+#let mem(x) = $#sem(x)^"M"$
 #let eq(name, eq, a, b) = block(
   breakable: false,
   table(
-    fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#00000010") } else { white },
-    columns: (1.01fr, 1fr),
-    stroke: 0.3pt,
+    fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
+    columns: (0.4fr, 1.01fr, 1fr),
+    stroke: 0.1pt,
     inset: (x, y) => if (calc.rem(y, 2) != 0) {
       (top: 10pt, left: 4pt, bottom: 10pt)
     } else {
       6pt // (top: 10pt, left: 4pt, bottom: 10pt)
     },
-    ..(table.cell(colspan: 2, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
+    ..(table.cell(colspan: 1, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
+  ),
+)
+#let title = block(
+  breakable: false,
+  table(
+    fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
+    columns: (0.4fr, 1.01fr, 1fr),
+    stroke: 0.1pt,
+    inset: (x, y) => if (calc.rem(y, 2) != 0) {
+      (top: 10pt, left: 4pt, bottom: 10pt)
+    } else {
+      6pt // (top: 10pt, left: 4pt, bottom: 10pt)
+    },
+    ..(
+      align(center)[*Type*],
+      align(center)[*Registers* $#sem($A$)^R = NN$],
+      align(center)[*Memory* $#sem($A$)^M = NN$],
+    ),
   ),
 )
 #grid(
   // gutter: 4pt,
+  title,
   eq([Product-type], $A times.circle B: omega$, $1$, $#mem($A$) + #sym.infinity$),
   eq(
     [Product-type],
@@ -99,13 +118,13 @@ of #sym.infinity can be found in @MemoryAlignment.
   ),
   eq([Static function], $*A: known$, 1, `Word`),
   eq([Linear closure], $not A: known$, 1, `Word`),
-  eq([Stack closure], $~A: omega$, 1, `Word`),
+  eq([Stack\ closure], $~A: omega$, 1, `Word`),
   eq([Linear pointer], $square A: known$, 1, `Word`),
   eq([Empty stack], $circle: omega$, 1, `Word`),
-  eq([Unit], $fatone: known$, 0, 0),
-  eq([Empty], $fatzero: known$, 0, 0),
-  eq([#$exists$ intro], $exists alpha. A : known$, reg($A$), mem($A$)),
-  eq([#$exists$ intro], $exists alpha. A : omega$, reg($A$), mem($A$)),
+  eq([Unit\ $$], $fatone: known$, 0, 0),
+  eq([Empty\ $$], $fatzero: known$, 0, 0),
+  eq([#$exists$ intro \ $$], $exists alpha. A : known$, reg($A$), mem($A$)),
+  eq([#$exists$ intro \ $$], $exists alpha. A : omega$, reg($A$), mem($A$)),
   eq([Type variable], $alpha : omega$, 0, 0),
 )
 

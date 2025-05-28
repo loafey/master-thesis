@@ -8,8 +8,6 @@ good
 skriv om sista stycket lite finare
 
 # 2.2
-Lägg till namn istället för 8, 9, 10.
-
 "Choice would be up to the specification" -> "Specification of the language" maube??
 
 lite förvirrande med

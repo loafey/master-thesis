@@ -10,12 +10,12 @@ These judgements can thankfully be translated to x86-64 assembly in a
 straightforward manner. They are first translated into "pseudo" instructions which can
 then be translated into x86-64.
 
-The compilation scheme consists of three functions: 
-  - $#scheme_pos($\_$)^known_rho : "Value" -> "Pseudo instruction"$
+The compilation scheme consists of three functions:
+- $#scheme_pos($\_$)^known_rho : "Value" -> "Pseudo instruction"$
 
-  - $#scheme_pos($\_$)^omega_rho : "Value" -> "Pseudo instruction"$
+- $#scheme_pos($\_$)^omega_rho : "Value" -> "Pseudo instruction"$
 
-  - $#scheme_neg($\_$)_rho : "Command" -> "Pseudo instruction"$
+- $#scheme_neg($\_$)_rho : "Command" -> "Pseudo instruction"$
 
 We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragments.
 If we use $alpha$ in-place of $omega$ and $known$, then the definition
@@ -35,11 +35,11 @@ The range of $rho$ is a list of pseudo registers because not all values
 can be stored in one physical register.
 
 The scheme also contains the meta instruction: $\""let" r_n = "next"(rho,
-t)\"$, where $"next"$ has the type $"List"("Reg") -> "Type" -> "List"("Reg")$. The pseudo registers chosen depends on which pseudo registers are used in $rho$, and the size of the type $t$. The meta instruction exists
+  t)\"$, where $"next"$ has the type $"List"("Reg") -> "Type" -> "List"("Reg")$. The pseudo registers chosen depends on which pseudo registers are used in $rho$, and the size of the type $t$. The meta instruction exists
 only at compile time.
 
 To ensure correctness and consistency of the compilation scheme, we specify
-pre- and post-conditions for each compilation function: 
+pre- and post-conditions for each compilation function:
 
 Before calling $#scheme_pos($v$)^omega$, the stack pointer (SP) can be used
 freely. After the call, SP points to $v$. $#scheme_pos($v$)^known$ requires
@@ -69,6 +69,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
       optimizations or the memory size of a variable.
     ],
     table(
+      stroke: 0.1pt,
       columns: (1fr, 1fr),
       [*Pseudo instruction*], [*x86-64 instructions*],
       $push_R ("OP"_n)$,
@@ -83,6 +84,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
       ```asm
       movq OP2, OP1
       ```,
+
       $pop_R ("OP"_n)$,
       ```asm
       movq n(R), OPₙ
@@ -134,6 +136,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
   #figure(
     table(
       columns: (1fr, 1.4fr),
+      stroke: 0.1pt,
       [*Operand*], [*x86-64 Operand*],
       [Numerical literal, e.g. `42`], [Numerical literal prefixed with `$`, e.g. `$42`],
       $#sym.rho\(x)$, [Appropriate list of pseudo registers for type of $x$],
@@ -152,8 +155,14 @@ and in @operand_table we explain the operands used in the compilation scheme.
 
 #show figure: set block(breakable: true)
 
-#figure(caption: [Compilation scheme for the positive fragment of #ln], positive_compilation_scheme) <compscheme_positive>
-#figure(caption: [Compilation scheme for the negative fragment of #ln], negative_compilation_scheme) <compscheme_negative>
+#figure(
+  caption: [Compilation scheme for the positive fragment of #ln],
+  positive_compilation_scheme,
+) <compscheme_positive>
+#figure(
+  caption: [Compilation scheme for the negative fragment of #ln],
+  negative_compilation_scheme,
+) <compscheme_negative>
 
 // The astute reader might observe that matching positive and negative
 // fragments "cancel" each other out. Linearity enforces that a positive fragment

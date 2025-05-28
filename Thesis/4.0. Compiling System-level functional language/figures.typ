@@ -121,6 +121,7 @@
   breakable: false,
   table(
     columns: (0.7fr, 1fr),
+    stroke: 0.1pt,
     table.cell(rowspan: 1, title),
     table.cell(rowspan: 2, align(horizon, block(inset: 4pt, content))),
     table.cell(rowspan: 1, desc),
@@ -131,6 +132,7 @@
   breakable: false,
   table(
     columns: 100%,
+    stroke: 0.1pt,
     table.cell(rowspan: 1, title),
     table.cell(rowspan: 1, inset: 10pt, content),
     table.cell(rowspan: 1, desc),

@@ -95,7 +95,7 @@ Values and commands need to be transformed as well to ensure that they match the
 Stack closures $(lambda^~)$ are transformed in the following manner:
 #grid(
   columns: (1fr, 2fr),
-  stroke: black,
+  stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
   $lambda^~ . c : ~A$,
@@ -110,7 +110,7 @@ transformed to match. Fortunately, the transformation is straightforward:
 
 #grid(
   columns: (1fr, 2fr),
-  stroke: black,
+  stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
   $z(a)$, $"let" angled(alpha, z_1) = z; "let" z_2, rho = z_1; z_2(a, rho)$,

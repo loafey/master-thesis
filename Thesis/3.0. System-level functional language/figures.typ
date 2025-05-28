@@ -53,7 +53,7 @@
 
 #let complete_grammar = box(
   inset: 7pt,
-  stroke: black,
+  stroke: black + 0.1pt,
   [
     _Value_
     #values
