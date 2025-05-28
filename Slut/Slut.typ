@@ -19,6 +19,7 @@
 ]
 
 #include "Intro/main.typ"
-#include "Theory/main.typ"
+#include "Background/main.typ"
 #include "Language/main.typ"
+#include "Compilation/main.typ"
 #include "Demonstration/main.typ"
