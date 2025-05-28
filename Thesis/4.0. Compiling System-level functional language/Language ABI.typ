@@ -59,7 +59,7 @@ does not utilize physical registers at the moment, this may change in the future
 we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
-unknown length, only used to represent the sizes of stacks. A more detailed explanation
+is 8 bytes. unknown length, only used to represent the sizes of stacks. In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU a `Word` is 8 bytes. A more detailed explanation
 of #sym.infinity can be found in @MemoryAlignment.
 
 
@@ -139,18 +139,17 @@ and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
 
 Memory wise, the simplest here are function pointers and stack pointers.
-Both of these are simply the size of a word, i.e 8 bytes on x86-64, and
-they can always fit in a register and thus never need to be split up across multiple
+Both of these are simply the size of a word, and
+they can always fit in a register, and thus never need to be split up across multiple
 registers when working with them.
 
 Integers are currently also simple, as they are also the size of a word.
 This may however change in the future as it is useful to have access to
-integers of different sizes, especially so when working with a systems-level language.
-When these are introduced, memory alignment is something
-that needs to be taken into consideration. Function pointers and stack pointers
-are stored the exact same way as word sized integers.
+integers of different sizes, especially so when working in a systems-level language.
+When integers of different sizes are introduced, memory alignment
+needs to be taken into consideration.
 
-When pushing values of different sizes alignment needs to be considered.
+When pushing values of different sizes to the stack, alignment needs to be considered.
 Take this stack that just contains a 16 bit integer with the value `42`.
 
 #[
@@ -202,7 +201,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   )
   #[
     As can be seen we are padding by 6. Theoretically we only need to pad by
-    2 bytes here for a 4 byte integer, as 4 is of course divisible by 2.
+    2 bytes here for a 4 byte integer, because 4 is divisible by 2.
     The reason this is done is to both to simplify the compilation process,
     and to simplify the needed code for any given pop and push.
 
