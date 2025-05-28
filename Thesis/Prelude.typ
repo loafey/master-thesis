@@ -127,10 +127,10 @@
 
 #let fancyTable(columns: 1fr, ..content) = {
   let frame(stroke) = (x, y) => (
-    left: stroke,
-    right: stroke,
-    top: if (calc.rem(y, 2) == 0) { stroke } else { rgb("00000040") },
-    bottom: stroke,
+    left: 0.1pt + stroke,
+    right: 0.1pt + stroke,
+    top: if (calc.rem(y, 2) == 0) { 0.1pt + stroke } else { 0.1pt + rgb("00000040") },
+    bottom: 0.1pt + stroke,
   )
   set table(
     fill: (x, y) => if (calc.rem(y, 2) == 0) { rgb("#00000010") } else { white },
