@@ -52,10 +52,10 @@ This and along with top-level functions,
 are the only time #ln strays from the strict continuation based style.
 
 === Mapping types to memory<mappingMemToType>
-An important part of any ABI is specifying types are represented.
-The following chapter specifies how much memory the types in #ln uses, and the amount
+An important part of any ABI is specifying how types are represented.
+The following chapter specifies the memory representation of types in #ln, and 
 of how many physical registers are needed to store them. Keep in mind that while the ABI
-does not utilize registers at the moment, this may change in the future, hence why
+does not utilize physical registers at the moment, this may change in the future, hence why
 we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
@@ -272,10 +272,12 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   but this is not enforced by this ABI, as the system stack is
   not used when passing variables.
 
-  In @mappingMemToType some more complicated types be seen, specifically some
-  types involving #sym.infinity. Take $A times.circle B: omega$ for instance, which memory usage is calculated as such: $#mem($A$) + #sym.infinity$. Here $A$ is a variable with the kind
-  $known$ and $B$ is a stack with kind $omega$. Visually this would be represented like this
-  (if #mem($A$) = 8):
+  In @mappingMemToType we have seen more complicated memory mappings of types, specifically 
+  mappings involving #sym.infinity. Take $A times.circle B: omega$ for
+  instance, whose memory usage is calculated as: $#mem($A$) + #sym.infinity$.
+  Here $A$ is a type with kind
+  $known$ and $B$ has kind $omega$, hence it is a stack. Visually this would be represented like this
+  (if #mem($A$) = `Word`):
   #block(
     breakable: false,
     table(
@@ -285,8 +287,8 @@ Take this stack that just contains a 16 bit integer with the value `42`.
       f(type: "inf", 8, sym.infinity), f(type: "tag", 8, $A$),
     ),
   )
-  This just means that $B$ is a stack of unknown size, but we at least know that
-  _on top_ $B$ there are 8 bytes dedicated to a value of type $A$.
+  This means that $B$ is a stack of unknown size, but we know that
+  _on top_ of $B$ there are 8 bytes dedicated to a value of type $A$.
   Without $A$, $B$ could potentially be empty, or it could be huge, but we cannot know
   from the types alone.
 
