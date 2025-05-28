@@ -155,7 +155,7 @@ the context contains only the variable $x: A$. The arrow $lollipop$ is used inst
   $Gamma tack lambda x. e : sigma lollipop tau$,
   $Gamma, x: sigma tack e : tau$,
 ))
-#let linear_var = prooftree(rule(name: "Var", $dot, x: A tack x: A$))
+#let linear_var = prooftree(rule(name: "Var", $dot, x: sigma tack x: sigma$))
 
 #figure(
   caption: [Typing rules for App, Abs, and Var in a linear type system],
@@ -168,10 +168,10 @@ Exponentials introduce an explicit way to duplicate and discard variables.
 The rules for exponentials are shown in @exponential_rules.
 
 #let exponential_rules = flex(
-  prooftree(rule(name: [Read], $Gamma, !A tack B$, $Gamma, A tack B$)),
-  prooftree(rule(name: [Disc], $Gamma, !A tack B$, $Gamma tack B$)),
-  prooftree(rule(name: [Dupl], $Gamma, !A tack B$, $Gamma, !A, !A tack B$)),
-  prooftree(rule(name: [Promote], $!Gamma tack !A$, $!Gamma tack A$)),
+  prooftree(rule(name: [Derelict], $Gamma, x : !A tack e : B$, $Gamma, x : A tack e : B$)),
+  prooftree(rule(name: [Discard], $Gamma, x : !A tack e : B$, $Gamma tack e : B$)),
+  prooftree(rule(name: [Duplicate], $Gamma, x : !A tack e : B$, $Gamma, x : !A, y : !A tack e : B$)),
+  prooftree(rule(name: [Promote], $!Gamma tack e : !B$, $!Gamma tack e : B$)),
 )
 
 #figure(
@@ -179,22 +179,26 @@ The rules for exponentials are shown in @exponential_rules.
   exponential_rules,
 )<exponential_rules>
 
-Because the the three rules on top manipulate the left side of the turnstyle,
-they are read bottom-to-top. The promote rule manipulates the right side of the
-turnstyle, and is read top-to-bottom. Now we can create a derivation for the term $lambda x. lambda y. y : !tau lollipop sigma lollipop sigma$ that discards
-the variable $x$. The derivation is show in @const_term.
+Because the Derelict, Discard, and Duplicate manipulate the left side of the
+turnstyle, they are read bottom-to-top. The Promote rule manipulates the right
+side of the turnstyle, and is read top-to-bottom. 
+Syntactically we leave the terms for derelict, discard, and duplicate silent,
+i.e. no explicit syntax is used to derelict, discard, and duplicate variables. 
+Now we can create a derivation for the term $lambda x. lambda y. y : !tau
+lollipop sigma lollipop sigma$ that discards the variable $x$. The derivation
+is show in @const_term.
 
 #figure(
   caption: [Derivation of a linearly typed term that discard the variable $x$],
   prooftree(rule(
     name: [Abs],
-    $dot tack lambda x. lambda y. y : !tau lollipop sigma lollipop sigma$,
+    $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,
     rule(
-      name: [Disc],
-      $dot, x : !tau tack lambda y. y : sigma lollipop sigma$,
+      name: [Discard],
+      $dot, x : !B tack lambda y. y : A lollipop A$,
       rule(name: [Abs],
-        $dot tack lambda y. y : sigma lollipop sigma$,
-        rule($dot, y : sigma tack y : sigma$),
+        $dot tack lambda y. y : A lollipop A$,
+        rule(name: [Var], $dot, y : A tack y : A$),
       ),
     ),
   )),
