@@ -3,7 +3,7 @@
 
 == Transformations <Transformations>
 
-At this stage #ln is still a logic language. How do we bridge the gap between
+At this stage #ln is still a language in the logic domain. How do we bridge the gap between
 logic and machine? This section goes into the necessary transformations to turn
 #ln into a language that can be lowered to an assembly language.
 
