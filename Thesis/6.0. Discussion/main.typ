@@ -7,6 +7,8 @@ Throughout the thesis the language #ln has been presented,
 and how #ln is transformed from a higher level linearly typed functional language
 into assembly code.
 
+#ln so long wow
+
 The transforms turn higher-order closures and procedures into labels and jumps, with their environments
 being translated into stack pointers, and explicit environments.
 The last translation into assembly code is specified using a compilation scheme,
