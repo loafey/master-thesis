@@ -1,5 +1,5 @@
 
-== Some extensions
+== Compiler primitives
 As can be seen in the earlier chapters, the language provides some of the necessities
 needed to construct programs, but not all.
 To alleviate with the construction of software the standard library introduces two functions

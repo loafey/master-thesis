@@ -205,3 +205,6 @@
 )
 
 
+#let fatone = math.bold[1]
+#let fatzero = math.bold[0]
+

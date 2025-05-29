@@ -127,6 +127,7 @@ rules for the negative fragment.
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
     ..content(newstack_value, [Newstack is a primitive for creating an empty stack]),
     ..content(var_value, [All variables must used exactly once]),
+    ..content(unit_value, [The unit value]),
     ..content(
       pair_value,
       [Constructing a pair from the two values $u$ and $v$. Note that the contexts $Gamma, Delta$, must be disjoint],
@@ -158,6 +159,7 @@ rules for the negative fragment.
     inset: (bottom: 15pt),
     columns: (0.1fr, 1.5fr, 1fr, 0.1fr),
     ..content(freestack_command, [Free the stack $z$]),
+    ..content(discard_command, [Discard the unit value]),
     ..content(pair_command, [Destruct the pair $z$, introducing the variables $a$ and $b$]),
     ..content(
       case_command,

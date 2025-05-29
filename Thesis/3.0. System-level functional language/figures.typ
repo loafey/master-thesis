@@ -1,8 +1,5 @@
 #import "../Prelude.typ": *
 
-#let fatone = math.bold[1]
-#let fatzero = math.bold[0]
-
 #let grammar(named, ..rules) = {
   let arr = rules.pos()
   linebreak()

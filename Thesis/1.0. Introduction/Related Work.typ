@@ -18,20 +18,17 @@
 // create efficient machine code, the virtual machine can not be a target language
 // either.
 //
-A lot of research has gone into researching linear logic, and linear logic in programming
-languages. Not much research has however been done in actually implementing
-functional system-level linear languages.
-
+// A lot of research has gone into researching linear logic, and linear logic in programming
+// languages.
+//
 In the previous year (2024), Nordmark wrote his
 master's thesis "Towards a practical execution model for functional
 languages with linear types" @nordmark2024.
-This work can be seen as some sort of predecessor of the work presented here in this thesis,
-and is similar in nature to this thesis.
-
-Nordmark compiled a similar language to #ln to
+This work can be seen as a sort of predecessor of the work presented in this thesis,
+and is similar in nature to his thesis. Nordmark compiled a language similar to #ln to
 an untyped byte code, which ran in a custom made virtual machine.
-This is in contrast to our own implementation, where we instead compile #ln to assembly code,
-running directly on a machine without the need of a virtual machine.
-While using a virtual machine works, we deemed that this was not low-level enough
-for a system-level language.
 
+In _Efficient Implementation of a Linear Logic Programming Language_
+@efficient1998 the authors give an implementation of a compiler for the linearly typed
+logic language Lolli. They also show that the linear logic programming solution to a problem
+is more efficient than the traditional logic programming solution.
