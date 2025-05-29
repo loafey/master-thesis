@@ -294,8 +294,8 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   When allocating new stacks the first value on the stack must be the pointer
   which points to the start of the stack. As said earlier, stacks grow downwards,
   and thus their pointers need to be offset by their size on allocation.
-  This however creates to problem as we can not deallocate using this updated pointer,
-  and we need to instead use the original pointer. To combat this
+  This however creates a problem because we can not deallocate using this updated pointer,
+  we need to instead use the original pointer. To combat this
   the original pointer is placed on the stack, which can then be popped
   when the stack is empty and `freestack` is called.
   #block(

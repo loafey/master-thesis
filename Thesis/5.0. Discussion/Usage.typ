@@ -2,7 +2,7 @@
 
 == Usage<Fibbo>
 Fibonacci is not the most the most interesting program,
-but from the standpoint of linearity it is _somewhat_ interesting, as
+but from the standpoint of linearity it is _somewhat_ interesting, because
 it requires the reuse of variables:
 
 #align(

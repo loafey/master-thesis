@@ -46,7 +46,7 @@ to directly make system calls to interact with the operating system.
 This allow for the possibility of not relying on, for example, libc,
 because the behavior one would need from libc could be re-implemented
 in the language. This would in theory make the language more portable,
-as it would be easier to port it to systems where libc might not be available.
+because it would be easier to port it to systems where libc might not be available.
 System calls are used under the hood in the language, but it is not something
 that is exposed to a user of the language.
 One simple approach would be to implement a compiler function, similar to
