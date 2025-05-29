@@ -4,7 +4,7 @@
 #let stlc = [simply typed lambda calculus]
 
 #let lc = flex(
-  prooftree(rule($Gamma tack x: sigma$, $x:sigma in Gamma$, name: "Var")),
+  prooftree(rule($Gamma, x : sigma tack x: sigma$, $$, name: "Var")),
   [],
 
   prooftree(rule(
@@ -37,7 +37,7 @@ variants. We assume familiarity with the untyped lambda calculus and typing judg
 We will introduce the simply typed lambda calculus, then extending it with
 polymorphic types, and finish with linear types.
 
-=== Simply Typed Lambda Calculus
+=== Simply Typed Lambda Calculus <stlc>
 
 Simply typed lambda calculus was first introduced by Church to avoid the
 paradoxical use of the untyped lambda calculus @church1940formulation. It
@@ -62,8 +62,7 @@ extends $Gamma$ by associating the variable $x$ with $A$. The typing rules for
 
 #figure(caption: [Typing rules for #stlc], lc)<stlc_typing>
 
-The first rule, Var, reads: if $x : sigma$ is in $Gamma$ then $x : sigma$ is
-a term in context $Gamma$. 
+The first rule, Var, says that $x : sigma$ is a term if the context $Gamma$ contains the variable $x : sigma$. 
 The rule Abs, short for abstraction, also commonly
 called lambda says that if the term $e : tau$ can be deduced in the context $Gamma$ extended with $x: sigma$, then in the context $Gamma$ the term 
 $(lambda x : sigma. space e) : sigma -> tau$ is valid. 
@@ -98,9 +97,9 @@ are the rules for type abstraction and type application.
 ) <SystemF_rules>
 
 The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
-As the reader hopefully is familiar with how proofs are read, we will give the
-proof tree of how the identity function can be constructed and applied to the variable $y$ with
-monomorphic type $A$. We assume that $y : A in Gamma$.
+The proof tree for the identity function
+applied to the variable $y$ with monomorphic type $A$ can be seen in @id_proof. We assume that $y : A in
+Gamma$.
 
 
 #let id_proof = prooftree(
@@ -108,7 +107,7 @@ monomorphic type $A$. We assume that $y : A in Gamma$.
     $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
     rule($Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$, rule(
       $Gamma, alpha, x : alpha tack x : alpha$,
-      $x : alpha in (Gamma, alpha, x : alpha)$,
+      $$,
     )),
   ),
 )
@@ -124,12 +123,11 @@ monomorphic type $A$. We assume that $y : A in Gamma$.
 
 #figure(caption: [The identity function], flex(id_proof)) <id_proof>
 
-We will use the meta symbol $#metaid$ to refer to the identity function in @id_proof to keep it concise.
+We will use the meta symbol $#metaid$ to refer to the identity function constructed in @id_proof to keep it concise.
 
 #figure(caption: [Applying the identity function to the variable $y$ with type $A$], flex(id_app_proof))
 
 === Linear types <LinearTypes>
-#todo[Some linear logic stuff too]
 
 The core idea of a linear type system is that variables must be used _exactly
 once_. This means the typing relation $Gamma tack e : sigma$ no longer only
