@@ -88,7 +88,7 @@ The pointer closure conversion phase transforms $~A$ to $exists gamma. *(A
 closures. The existential quantification is there because the structure of the
 environment is unknown for the callee. Now we can see why type variables must
 have kind $omega$; if they had kind $known$, then $*(A times.circle gamma)$
-would be ill-kinded, and we would have no way of representing the environment
+would be ill-kinded, and we would not be able to represent the environment
 in the type.
 
 Values and commands need to be transformed as well to ensure that they match the types.
