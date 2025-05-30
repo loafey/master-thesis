@@ -3,6 +3,24 @@
 
 #bigTodo[rewrite]
 
+#text(fill: green)[
+  This thesis presented the system-level functional programming language #ln. It
+  takes advantage of linear types to ensure both safety and performance. By
+  applying a series of transformations to #ln, the language is lowered to an assembly
+  compatible version. The transformations turn higher-order closure and procedures
+  into labels and jump, with environments being translated into stacks, and
+  pointers to stacks are made explicit.
+
+  We specified a compilation scheme that turns the lowered language into a set
+  of pseudo assembly instructions, which in turn were easily translated into a concrete assembly language.
+  Additionally, we created the application binary interface (ABI) for future interoperability.
+
+  We finished the thesis by presenting a concrete example of a program written
+  in #ln, a simple benchmark for context, and several future ideas, extensions,
+  and optimizations to refine and improve the language.
+]
+
+
 Throughout the thesis the language #ln has been presented,
 and how #ln is transformed from a higher level linearly typed functional language
 into assembly code.
