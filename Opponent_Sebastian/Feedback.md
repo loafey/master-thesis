@@ -1,3 +1,5 @@
+IM ON PAGE 30 (SKIPPED SOME BACKGROUND)
+
 # Questions
 - Figure 4.2: What determines the results to be "presentable"
 - No Pre-specified Cluster Count: Is this computationally feasible? K-means is NP-hard already
