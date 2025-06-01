@@ -1,13 +1,17 @@
-IM ON PAGE 30 (SKIPPED SOME BACKGROUND)
+IM ON PAGE 45
 
 # Questions
 - Figure 4.2: What determines the results to be "presentable"
 - No Pre-specified Cluster Count: Is this computationally feasible? K-means is NP-hard already
 - Why is DBSCAN the reference standard?
+- How accurate is IP.LSH.DBSCAN compared to DBSCAN?
+- How do you determine what are good values for $k$? (page 31)
 
 # Thoughts
 - There a lot of defintions to digest in 2.0. After finishing this section I definitely hope everything is relevant
 - 3.6 very good section to include, nicely done!
+- What is "elbow point"
+- What is "red flag"
 
 # Text nitpicking
 - The parameter selection is critical, as inappropriate ... >> The parameter selection is critical, because inappropriate ...
@@ -16,3 +20,6 @@ IM ON PAGE 30 (SKIPPED SOME BACKGROUND)
 - lose effectiveness [39], as even ... >>  lose effectiveness [39], because even ... 
 - while the exact measurement at 02.00 >> while the same measurement at 02.00 
 - Text under 4.2 Core Components could perhaps spoil the sub-chapter a bit, so that I (the reader) know what to expect.
+- page 32: "For each parameter combination, the framework executes clustering through IP.LSH.DBSCAN calculates quality metrics, which will be explained in greater detail in the coming section, to evaluate the results"
+- as it utilizes minimum and maximum distances >> because it utilizes minimum and maximum distance
+- as it can handle arbitrary >> because it can handle arbitrary
