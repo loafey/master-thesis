@@ -187,7 +187,7 @@ lollipop sigma lollipop sigma$ that discards the variable $x$. The derivation
 is show in @const_term.
 
 #figure(
-  caption: [Derivation of a linearly typed term that discard the variable $x$],
+  caption: [Derivation of a linearly typed term that discards the variable $x$],
   prooftree(rule(
     name: [Abs],
     $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,

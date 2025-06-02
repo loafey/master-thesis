@@ -58,9 +58,13 @@ of how many physical registers are needed to store them. Keep in mind that while
 does not utilize physical registers at the moment, this may change in the future, hence why
 we define the needed amount of physical registers.
 
-In the table `Word` represents 8 bytes, and #sym.infinity is a memory section of
-is 8 bytes. unknown length, only used to represent the sizes of stacks. In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU a `Word` is 8 bytes. A more detailed explanation
-of #sym.infinity can be found in @MemoryAlignment.
+In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
+of unknown length, used to represent a stack. Although we write $A + #sym.infinity$ 
+to be explicit, it can be seen as $#sym.infinity$ in memory.
+In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
+a `Word` is 8 bytes. A more detailed explanation of #sym.infinity can be found
+in @MemoryAlignment.
+
 
 
 #let fatone = math.bold[1]
@@ -109,7 +113,7 @@ of #sym.infinity can be found in @MemoryAlignment.
     $\ quad quad #reg($A$) + #reg($B$)$,
     $\ quad quad #mem($A$) + #mem($B$)$,
   ),
-  eq([Sum-type], $A plus.circle B: omega$, $1$, $#`Word` \ quad quad + max(mem(A), mem(B)) + #sym.infinity$),
+  eq([Sum-type \ $ $ ], $A plus.circle B: omega$, $2$, $#`Word` + #sym.infinity$),
   eq(
     [Sum-type],
     $A plus.circle B: known$,
@@ -118,14 +122,14 @@ of #sym.infinity can be found in @MemoryAlignment.
   ),
   eq([Static function], $*A: known$, 1, `Word`),
   eq([Linear closure], $not A: known$, 1, `Word`),
-  eq([Stack\ closure], $~A: omega$, 1, `Word`),
+  eq([Stack\ closure], $~A: omega$, 1, sym.infinity),
   eq([Linear pointer], $square A: known$, 1, `Word`),
-  eq([Empty stack], $circle: omega$, 1, `Word`),
+  eq([Empty stack], $circle: omega$, 1, sym.infinity),
   eq([Unit\ $$], $fatone: known$, 0, 0),
   eq([Empty\ $$], $fatzero: known$, 0, 0),
   eq([#$exists$ intro \ $$], $exists alpha. A : known$, reg($A$), mem($A$)),
   eq([#$exists$ intro \ $$], $exists alpha. A : omega$, reg($A$), mem($A$)),
-  eq([Type variable], $alpha : omega$, 0, 0),
+  eq([Type variable], $alpha : omega$, 1, sym.infinity),
 )
 
 Outside of these types, #ln contains an auxiliary type: a word sized integer.

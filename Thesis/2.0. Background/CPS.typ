@@ -9,8 +9,8 @@ Continuations have seen successful use in many compilers for strict languages,
 for example by:
 Appel @appel2007compiling, Fradet and Métayer @fradet1991compilation,
 and Kelsey and Hudak @kelsey1989realistic.
-Additionally, in the Spineless Tagless G-Machine (STG), the abstract
-machine of GHC, continuations are used to manage thunks, function
+Additionally, in the Spineless Tagless G-Machine, the abstract
+machine of the Glasgow Haskell Compiler (GHC), continuations are used to manage thunks, function
 application, and case analysis.
 
 Continuation-passing style is easiest explained by example.

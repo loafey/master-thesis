@@ -4,9 +4,10 @@
 Functional programming tends to emphasize _referential transparency_, _higher-order
 functions_, _algebraic type systems_, and _strong type systems_.
 Although the merits of functional programming are evident @hughes1989, it is under
-represented for system-level programming. The reason functional languages are
-not used in system-level programming is the lack of predictable performance.
-Unpredictable performance can be traced back the use of
+represented for system-level programming. 
+Functional languages are rarely used in system-level programming due to their
+lack of predictable performance
+The lack of predictable performance can be traced back the use of
 _immutable_ data structures, as opposed to _mutable_ data structures. The
 former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
@@ -22,5 +23,5 @@ setting means variables must be used exactly once.
 Because the use of resources is carefully controlled, mutable data structures can be used in a safe way.
 
 The goal for #ln is not only to be used as a system-level level language, but
-also as an intermedate compilation target for (linear) functional programming
+also as an intermediate compilation target for (linear) functional programming
 languages.
