@@ -67,7 +67,7 @@ exposed to a user of the language.
 === Exponentials
 While linearity in a programming language is useful for managing resources
 such as memory, sometimes one needs to use values more than once.
-Consider a function for Fibonacci written in #ln:
+Consider the fibonacci function where we do not use `__dup__`:
 ```hs
 fib : *(int ⊗ ~int)
   = \(n,k) -> __eq__((n,0), \res -> case res of {
@@ -89,26 +89,36 @@ and due to linearity one may only use it once!
 To combat this issue we would want to introduce exponentials.
 
 Exponentials would let a user reuse a value multiple times opening up
-for some much needed expressiveness. Take Fibonacci again with some imaginative
-syntax using exponentials:
+for some much needed expressiveness. Take Fibonacci again with syntax for
+duplicating exponential variables and reading exponential variables. The variable $z$ has type $!A$
+
+#indent[
+- $"let" a + b = z$: the environment is extended with $a: !A$ and $b: !A$
+- $"let" !z_1 = z$: the environment is extended with $z_1: A$.
+]
+
+The first extension corresponds to the Duplicate rule in @linear_rules, and the
+second one corresponds to Derelict in the same figure.
+We would also need syntax for Promote and Discard, but we leave that to the reader's imagination.
 
 #block(
   breakable: false,
   ```hs
   fib : *(!int ⊗ ~int)
     = \(n,k) ->
-        let n + zc = n; -- duplicate, not addition
-        let !zc = zc;
-        __eq__((zc, 0), \res -> case res of {
+        let n1 + z1 = n; -- duplicate as a pattern, not addition
+        let !z2 = z1;
+        __eq__((z2, 0), \res -> case res of {
           inl () -> k(0);
           inr () ->
-            let n + oc = n; let !oc = oc;
-            __eq__((oc, 1), \res -> {
+            let n2 + o1 = n1; 
+            let !o2 = o1;
+            __eq__((o2, 1), \res -> {
               inl () -> k(1);
               inr () ->
-                let n + n' = n;
-                let !n3 = n;
-                let !n4 = n';
+                let n3 + p = n2;
+                let !n3 = n3;
+                let !n4 = p;
                 fib((n3 - 1, \r1 ->
                 fib((n4 - 2, \r2 ->
                 k(r1 + r2)))))
@@ -116,14 +126,14 @@ syntax using exponentials:
         })
   ```,
 )
-As can be seen here, we can now re-use `n`, allowing us to actually write
-Fibonacci.
+As can be seen here, we can now re-use the value in `n`, allowing us to write
+the fibonacci function without compiler defined functions.
 
-By imagining some more syntax, we could simplify this even further!
-If we were to introduce some sugar, for example a `*` operator,
-which could simplify a term such as `let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)`
-into: `k(*n + *n)`.
-Rewriting Fibonacci with this operator could result in something like this instead:
+Although the function is now possible, it is still noisy.
+If we were to introduce some syntax sugar, for example a `*` operator that combines both Duplicate and Derelict.
+we could simplify the term: `let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)`
+to: `k(*n + *n)`.
+Rewriting the fibonacci function with this operator would result in:
 ```hs
 fib : *(!int ⊗ ~int)
   = \(n,k) ->
@@ -140,9 +150,9 @@ fib : *(!int ⊗ ~int)
     }
 ```
 
-
-To avoid leaking memory, exponentials would need automatic de-allocation.
-We would suggest using reference counting to avoid a runtime, but a garbage collector would suffice as well.
+Because exponentials create more than one reference to memory, we would need
+automatic de-allocation, or we risk leaking memory. This could be solved using
+reference counting or garbage collection.
 
 === Data Types<DataTypes>
 While the language currently contains sum and product types
