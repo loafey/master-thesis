@@ -307,7 +307,8 @@ CLUE separates feature engineering to clustering.
 Data is normalized as to avoid large numbers dominating the clustering process.
 
 # 5 Evaluation
-
+Evaluates performance metrics and quality assessment techniques and application-specific
+validation methods.
 ## 5.1 Evaluation Methodology
 ### 5.1.1 Technical Performance Metrics
 ### 5.1.2 Application Speciﬁc Validation of CLUE
@@ -315,7 +316,7 @@ Data is normalized as to avoid large numbers dominating the clustering process.
 ## 5.2 Experimental Setup
 
 ## 5.3 Core Algorithm Performance Evaluation
-### 5.3.1 Computational Eﬃciency Comparison
+### 5.3.1 Computational Efficiency Comparison
 ### 5.3.2 LSH Parameter Impact
 
 ## 5.4 CLUE Macrobenchmarks - Performance
