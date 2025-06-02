@@ -189,29 +189,122 @@ structure through stochastic gradient descent.
 
 # 3 Problem Definition
 ## 3.1 Case Study: Göteborg Energi AB
+Göteborg Energi wants to improve the analytics and management for the following:
+- Grid Capacity, as they see an upcoming rise in demand
+- Peak Demand Management, as they want to see which customers contribute to peaks
+  and the behavioral patterns.
+- Customer Behavior Knowledge, as similar behaviors can be seen across different
+  business types, while variations can exist within the same types.
+
+The primary objective of the thesis is to understand Göteborg Energi's
+customer base through clustering.
+
+This segmentation would enable Göteborg Energi to:
+- Identify customer groups with similar consumption that span industry boundaries
+- Recognize emerging consumption trends that might indicate shifts in business
+  operations or energy usage
+- Establish baseline behavioral profile, against which future consumption patterns 
+  can be compared
+- Understand the diversity of consumption patterns within traditional customer
+  categories
+- Utilize specialized communication with their customers on a large scale by the
+  use of cluster statistics
+
 ## 3.2 High-Dimensional Time Series Clustering Challenges
+Repeat: about how time series is hard to work with due to high dimensionality.
 ### 3.2.1 Dimensionality Effects on Distance Metrics and Computation
+Repeat: about why high dimensionality is hard to work with.
+Their data is very high dimensional.
+
 ### 3.2.2 Temporal Dependencies and Structure
+Repeat: why temporal data is hard to work with.
 
 ## 3.3 The Parameterization Problem
+Repeat: why parameter choice is important to work with.
 
-## 3.4 Feature Engineering vsRaw Data Approaches
+## 3.4 Feature Engineering vs Raw Data Approaches
+Repeat: about this.
 
-## 3.5 Computational Eﬃciency vsAccuracy
+## 3.5 Computational Efficiency vs Accuracy
+IP.LSH.DBSCAN is faster than DBSCAN but results in 
+less accurate results.
 
 ## 3.6 Domain Knowledge
+If you are technical you might not know what you are analyzing but you how to analyze it,
+but if you know what you are analyzing you might not know how to analyze it :).
 
-## 3.7 Reﬁned Problem Statement
+## 3.7 Refined Problem Statement
+How can we develop a flexible, computationally efficient approach for clustering high-dimensional time series data that balances analytical accuracy
+with practical interpretability, while accommodating domain-speciﬁc requirements 
+and the expertise gap between data scientists and domain experts?
+
+This problem statement can be broken down into four distinct sub-problems:
+- Efficient High-Dimensional Clustering: Implementing clustering approaches
+  that scale eﬀectively with the quantity and dimensionality of time series data.
+
+- Automated Parameter Optimization: Developing strategies to identify
+  appropriate clustering parameters without requiring extensive manual tuning.
+
+- Usage Flexibility: Allowing selections and combinations of algorithms and
+  features to fit a variety of uses.
+
+- Interactive Exploration: Enabling rapid exploration of clustering results
+  to support iterative refinement and insight generation.
+  In the following chapters, we present our CLUE toolchain as a solution to these
+  problems, demonstrating its application to electricity consumption data while 
+  highlighting its flexibility for other time series analysis tasks.
 
 # 4 CLUE Toolchain Architecture
+This chapter could be heavily shortened down.
+It is a lot of repeated theory.
 
 ## 4.1 Overview and Design Goals
+CLUE is a framework that lets you temporal vector data.
+It tries to address the following: 
+- The computational complexity of high-dimensional clustering
+- The difficulties in parameter selection
+- The need to bridge the gap between algorithmic capabilities and domain expertise
+
+
+The toolchain consists of three primary components that can be independently 
+configured and interchanged:
+1. Clustering Algorithms
+2. Distance/Similarity Metrics
+3. (Optional) Parameter Optimization / Feature Standardization
+
+In the pipeline clue is looped (?) until we are finished using
+different clustering algorithms and distance similarities 
+(I guess this is cluster strategies?).
 
 ## 4.2 Core Components
 ### 4.2.1 Clustering Algorithms
+While CLUE offers many different clustering algorithms it primarily
+uses density-based methods for several reasons (this is a repeat):
+- Arbitrary Cluster Shapes: density-based approaches can identify arbitrary shapes
+  as opposed to K-means.
+
+- Automatic Noise Detection: Density-based methods are good at removing outliers and noise.
+
+- No Pre-specific Cluster Count: we don't need to specify the amount of clusters.
+
+Repeat: info about DBSCAN, IP.LSH.DBSCAN and K-means.
+
 ### 4.2.2 Distance/Similarity Metrics
+Explains Euclidean/Angular Distance and distance in a better way
+than done in theory?
+
+DTW is new.
+
 ### 4.2.3 Parameter Optimization
+Using IP.LSH.DBSCAN you can do parameter analysis faster :)
+Crucially this can only be done due to examinator's algorithms exceptional speed.
+- K-Distance Plot Analysis
+- Grid Search Framework
+- Internal Cluster Quality Metrics
+
 ### 4.2.4 Feature Standardization
+CLUE separates feature engineering to clustering.
+Data is normalized as to avoid large numbers dominating the clustering process.
 
 # 5 Evaluation
 
