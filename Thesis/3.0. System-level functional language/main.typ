@@ -21,10 +21,10 @@ the language looks. The grammar of #ln is depicted in @slfl_grammar.
 Before describing the grammar, we will show an example of the function swap:
 $
   & "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
-  & quad = lambda((x,y), k) -> k((y,x)); \
-  \
-  & "main" : *~(A times.circle B) \
-  & quad = lambda k -> "swap"((b,a), k); \
+  & quad = lambda((x,y), k) -> k((y,x));                            \
+                                                                    \
+  & "main" : *~(A times.circle B)                                   \
+  & quad = lambda k -> "swap"((b,a), k);                            \
 $
 
 A module consists of a list of definitions, where a definition is a top-level
@@ -48,7 +48,7 @@ that takes $A$ as argument and terminates with no value, like in @cps.
 \
 #align(center, pll_types)
 
-There are four new constructs in #ln that extend intuitionistic linear logic.#todo[fact check]
+There are four new constructs in #ln that extend intuitionistic linear logic.
 These are: _empty stack_
 ($circle$), _linear pointer_ ($square$), _static closure_ ($~$), and _static function_ ($*$).
 The latter two are variants of negation ($not$).
@@ -57,7 +57,9 @@ At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
 ($known$).
 
-#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
+#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(
+  true,
+)))<KindRules>
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
 
@@ -72,7 +74,7 @@ Each negation enables one of three programming styles: goto ($*$) , procedural
 ($~$), and higher-order ($not$).
 
 The first, goto, is the most primitive. It can be considered as a one-way
-transfer of control. Consider the function $f : *(A times.circle *B times.circle circle)$. 
+transfer of control. Consider the function $f : *(A times.circle *B times.circle circle)$.
 From $f$ we can call the continuation $*B$, which is
 just a static function pointer, and because it is only a static function
 pointer, it can not capture any state. The state that $*B$ manipulates is
@@ -111,8 +113,11 @@ is expected, then a type with kind $known$ is not allowed, and vice versa.
 ]
 
 Values and commands are given the form $Gamma tack v : A$ and $Gamma tack c$.
-Values have a right side type to symbolize construction. Conversely, commands lack a right
-side type, to symbolize consumption. The rules for values are read in a top-to-bottom fashion, whereas the rules for commands are read in a bottom-to-top fashion.
+Values have a right side type ($v: A$) to symbolize construction. Conversely, commands do not have a right
+side type, to symbolize consumption.
+Because the rules for values have a right side type, they are read in
+a top-to-bottom fashion. The rules for commands are read in a bottom-to-top
+fashion.
 
 The typing rules for the positive fragment are depicted in
 @typing_positive_fragment, while @typing_negative_fragment shows the typing
@@ -125,9 +130,15 @@ rules for the negative fragment.
   grid(
     inset: (bottom: 15pt),
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
-    ..content(newstack_value, [Newstack is a primitive for creating an empty stack]),
-    ..content(var_value, [All variables must used exactly once]),
-    ..content(unit_value, [The unit value]),
+    ..content(
+      newstack_value,
+      [Newstack is a primitive for creating an empty stack],
+    ),
+    ..content(
+      var_value,
+      [Because the environment must be exactly $x: A$, every variable has to be used exactly once.],
+    ),
+    ..content(unit_value, [The unit value. The environment must be empty]),
     ..content(
       pair_value,
       [Constructing a pair from the two values $u$ and $v$. Note that the contexts $Gamma, Delta$, must be disjoint],
@@ -135,18 +146,21 @@ rules for the negative fragment.
     ..content(inj_left_value, [Constructing the left value of a sum type]),
     ..content(inj_right_value, [Constructing the right value of a sum type]),
     ..content(linear_pointer_value, [Making an indirection]),
-    ..content(exists_intro_value, [Existentially quantifying the term $t : A$ with the type variable $alpha$]),
+    ..content(
+      exists_intro_value,
+      [Existentially quantifying the term $t : A$ with the type variable $alpha$],
+    ),
     ..content(
       static_function_value,
-      [Because the static function can not capture any variables, the remaining environment has to be empty],
+      [Create a static funcion. The environment must be empty, which means the static function can not capture any free variables.],
     ),
     ..content(
       stack_closure_value,
-      [The stack closure can capture variables, so the remaining environment does not need to be empty],
+      [Create a stack closure. It can capture free variables, which means the environment does not have to be empty.],
     ),
     ..content(
       linear_closure_value,
-      [The linear closure can capture variables, so the remaining environment does not need to be empty],
+      [Create a linear closure. It can capture free variables, which means the environment does not have to be empty.],
     )
   ),
 )<typing_positive_fragment>
@@ -158,9 +172,18 @@ rules for the negative fragment.
   grid(
     inset: (bottom: 15pt),
     columns: (0.1fr, 1.5fr, 1fr, 0.1fr),
-    ..content(freestack_command, [Free the stack $z$]),
-    ..content(discard_command, [Discard the unit value]),
-    ..content(pair_command, [Destruct the pair $z$, introducing the variables $a$ and $b$]),
+    ..content(
+      freestack_command,
+      [Free the stack $z$. The variable $z$ is removed from the environment.],
+    ),
+    ..content(
+      discard_command,
+      [Discard the unit value. The variable $z$ is removed from the environment.],
+    ),
+    ..content(
+      pair_command,
+      [Destruct the pair $z$, introducing the variables $a$ and $b$, and remove $z$ from the environment.],
+    ),
     ..content(
       case_command,
       [Pattern match on the sum, binding the value of $z$ to $x_i$ and continue
@@ -168,15 +191,27 @@ rules for the negative fragment.
         there are two possible injections.],
     ),
 
-    ..content(follow_command, [Follow the indirection, binding the stack behind the pointer to $x$]),
-    ..content(exists_elim_command, [Match the existentially quantified term $z$ to access the actual term $x$]),
+    ..content(
+      follow_command,
+      [Follow the indirection, binding the stack behind the indirection to $x$],
+    ),
+    ..content(
+      exists_elim_command,
+      [Match the existentially quantified variable $z$ to access the actual value $x$],
+    ),
     ..content(
       static_call_command,
-      [Call the static function $z$ with the term $t$ as argument. Note that the environment does not need to be empty when calling static functions],
+      [Call the static function $z$ with the value $t$ as argument. Note that the environment does not need to be empty when calling static functions],
     ),
 
-    ..content(stack_call_command, [Call the stack closure $z$ with the term $t$ as argument]),
-    ..content(linear_call_command, [Call the linear closure $z$ with the term $t$ as argument]),
+    ..content(
+      stack_call_command,
+      [Call the stack closure $z$ with the value $t$ as argument],
+    ),
+    ..content(
+      linear_call_command,
+      [Call the linear closure $z$ with the value $t$ as argument],
+    ),
   ),
 ) <typing_negative_fragment>
 
@@ -184,3 +219,37 @@ The juxtaposition of the negative and positive fragments create an elegant
 picture. For every value $v$, a corresponding command exists for how to destruct
 an environment of $v$. Variables are not explicitly destructed; they are consumed
 on use.
+
+In @id_function we show how we can use the aforementioned rules to give the typing proof the identity function specialised to the monomorphic type $A: known$.
+
+#figure(
+  caption: [The type proof for the identity function specialised to $A$.],
+  prooftree(rule(
+    $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
+    rule(
+      $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
+      rule(
+        $dot, t: A, z: ~A tack "call"^~z(t)$,
+        rule($dot, t: A tack t : A$, name: [_var_]),
+        name: [$#math.italic[call]^~$],
+      ),
+      name: [_pair_],
+    ),
+    name: [_static function_],
+  )),
+) <id_function>
+
+In @id_type we derive the proof for the type, to ensure that the type is kind correct.
+
+#figure(
+  caption: [The kind proof for the type of the identity function],
+  prooftree(rule($*(A times.circle ~A) : known$, rule(
+    $(A times.circle ~A) : omega$,
+    $A: known$,
+    rule($~A: omega$, $A: known$),
+  ))),
+) <id_type>
+
+The kinding rules and typing rules provide a structured way of constructing
+correct programs. When creating the compiler for #ln we can leverage these rules to construct the
+kindchecker and typechecker.
