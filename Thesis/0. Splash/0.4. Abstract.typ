@@ -9,16 +9,16 @@
 // exclusively uses continuation passing style. The implementation presented in
 // this paper is compiled to x86-64.
 
-Functional programming has a rich and studied history. In functional programming, large problems can be
-described by the composition of smaller building blocks. Despite the benefits
-of functional programming it has struggled to find its way into system-level programming.
-
-Linear logic, and in turn linear type systems impose the restriction that
-variables must be used exactly once. By leveraging this restriction, functional
-programming languages can be used in system-level programming without sacrificing performance.
+Functional programming has a rich and studied history. In functional
+programming, large problems can be described by the composition of smaller
+building blocks. Despite its benefits, functional programming has struggled to
+find its way into system-level programming.
+By leveraging the restrictions linear types impose, functional programming
+languages can be applied to system-level programming without sacrificing
+performance.
 
 This thesis presents #ln, a system-level functional programming language that
-leverages polarised linear logic, a variant of linear logic. We describe
-a series of transformations to turn #ln into a language that is assembly code
-compatible. Additionally, we present a compilation scheme, a mapping from types
-to memory, and an application binary interface (ABI).
+is based a variant of linear logic. We give the typing and kinding rules for #ln before describing
+a series of transformations to turn #ln into a language that is easily
+translated into assembly code. Additionally, we present the compilation scheme,
+the mapping from types to memory, and the application binary interface (ABI).
