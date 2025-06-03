@@ -30,7 +30,7 @@
   - How accurate is IP.LSH.DBSCAN compared to DBSCAN?
 
 
-- The benchmarks you have presented seem to have been done 
+- The accuracy benchmarks you have presented seem to have been done 
   on dataset 4. Did you test it on the other datasets,
   and if so, what were the results?
 
