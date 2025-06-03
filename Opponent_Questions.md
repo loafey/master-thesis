@@ -9,7 +9,7 @@
 - How do you determine what are good values for $k$? (page 31)
 - Is the number of clusters "generated" determined by the algorithm or a pre-determined value?
 - Why is DBSCAN in the toolchain - it seems to be inferior to IP.LSH.DBSCAN
-- Why must you copy data in DBSCAN?
+- IP.LSH.DBSCAN mentions pointers and references as an advantage. Is this not possible in DBSCAN?
 - Why does IP.LSH.DBSCAN process high dimensional data much better?
 
 - Throughout the thesis you discuss the problems of high 
