@@ -25,3 +25,6 @@
   and IP.LSH.DBSCAN you do not specify the average
   accuracy. What was the distribution of the results?
 
+- The benchmarks you have presented seem to have been done 
+  on dataset 4. Did you test it on the other datasets,
+  and if so, what were the results.
