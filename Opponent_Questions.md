@@ -11,8 +11,9 @@
 - Why is DBSCAN in the toolchain - it seems to be inferior to IP.LSH.DBSCAN
 - IP.LSH.DBSCAN mentions pointers and references as an advantage. Is this not possible in DBSCAN?
 - Why does IP.LSH.DBSCAN process high dimensional data much better?
+- What is the "red flag" heuristics
 
-- Throughout the thesis you discuss the problems of high 
+- Throughout the thesis you discuss the problems of high
   dimensionality, specifically regarding your 96-dimension vector.
   From our understand you have two dimensions: time and consumption,
   so how and when are these vectors converted to 96d space?
