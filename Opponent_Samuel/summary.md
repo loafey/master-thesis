@@ -307,13 +307,69 @@ CLUE separates feature engineering to clustering.
 Data is normalized as to avoid large numbers dominating the clustering process.
 
 # 5 Evaluation
+## 5.1 Evaluation Methodology
 Evaluates performance metrics and quality assessment techniques and application-specific
 validation methods.
-## 5.1 Evaluation Methodology
 ### 5.1.1 Technical Performance Metrics
-### 5.1.2 Application Speciﬁc Validation of CLUE
+To test performance and latency the following tests are done:
+- _Component-level microbenchmarks_: The performance of individual  
+  Clustering components and distance calculations is isolated for 
+  comparative evaluation
+
+- _End-to-end CLUE macrobenchmarks_: Total execution time, including
+  data preparation, clustering, and output writing, is recorded to 
+  evaluate overall workflow latency.
+
+- _Speedup factor_: Execution time ratios between baseline (DBSCAN) and
+  optimized implementations (IP.LSH.DBSCAN) across various   
+  parallelization settings are computed.
+
+Macro/micro benchmarks is not a commonly used term, and
+these names are used for two Android app benchmark suites.
+
+To test the accuracy of the clustering the following things are done:
+- _External validation_: When ground truth labels are available, the 
+  Adjusted Rand Index measures clustering accuracy. This is done by 
+  comparing resulting clustering labels with the true labels provided 
+  by the ground truth.
+
+- _Comparative accuracy_: Clustering outcomes from IP.LSH.DBSCAN is 
+  compared against DBSCAN, highlighting the tradeoff between 
+  execution time and accuracy.
+
+- _Parameter sensitivity_: The sensitivity of clustering outcomes to 
+  variations in parameters is assessed, serving to validate the robustness of the parameter finding strategy.
+
+The scalability of CLUE is also measured:
+- _Dataset size scaling_: Performance changes are measured
+  as data points increase.
+
+- _Dimensionality scaling_: Vector dimensionality varies from
+  24 to 96 to observe performance shifts.
+
+- _Resource scaling_: Sequential and parallel performance is compared 
+  across a range of thread counts.
+
+### 5.1.2 Application Specific Validation of CLUE
+The practical value of a clustering approach is evaluated
+through the method _Pattern Discovery Assessment_.
 
 ## 5.2 Experimental Setup
+Tests are ran on a powerful server-grade PC.
+Tests used four datasets:
+- _Dataset 1_: Hourly consumption data from 7500 s-m business customers.
+  24 dimension data points.
+- _Dataset 2_: Same customers as Dataset 1 but 15-minute intervals 
+  instead. 96 dimension data points.
+- _Dataset 3_: Synthetic 50,000 data point dataset.
+  Each data point is a 96-dimensional data. The dataset
+  was generated with 7 distinct consumption patterns.
+- _Dataset 4_: Synthetic 10,000 data point dataset.
+  Same rules as Dataset 3 but with an additional consumption pattern.
+  This new consumption pattern is far more spread out
+  and challenging to pinpoint.
+
+  
 
 ## 5.3 Core Algorithm Performance Evaluation
 ### 5.3.1 Computational Efficiency Comparison

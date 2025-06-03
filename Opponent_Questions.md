@@ -11,4 +11,13 @@
 - Why must you copy data in DBSCAN?
 - How is the curse of dimensionality not a huge problem? Expand please...
 
+- Throughout the thesis you discuss the problems of high 
+  dimensionality, specifically regarding your 96-dimension vector.
+  From our understand you have two dimensions: time and consumption,
+  so how and when are these vectors converted to 96d space?
+
 - Examiner and supervisor same person??
+
+# More nitpick questions
+- What is a micro/macro benchmark?
+  Google yields results about two Android app benchmarking suites.
