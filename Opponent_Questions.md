@@ -12,6 +12,8 @@
 - IP.LSH.DBSCAN mentions pointers and references as an advantage. Is this not possible in DBSCAN?
 - Why does IP.LSH.DBSCAN process high dimensional data much better?
 - What is the "red flag" heuristics
+- How do you pick a good configuration in general?
+    - How do you pick a good configuration for the domain GBG Energi work in?
 
 - Throughout the thesis you discuss the problems of high
   dimensionality, specifically regarding your 96-dimension vector.
@@ -27,4 +29,4 @@
 
 - The benchmarks you have presented seem to have been done 
   on dataset 4. Did you test it on the other datasets,
-  and if so, what were the results.
+  and if so, what were the results?
