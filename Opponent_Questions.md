@@ -22,4 +22,5 @@
 
 - In the benchmarks comparing the accuracy between DBSCAN
   and IP.LSH.DBSCAN you do not specify the average
-  accuracy. What was the average accuracy?
+  accuracy. What was the distribution of the results?
+
