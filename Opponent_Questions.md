@@ -21,3 +21,8 @@
 # More nitpick questions
 - What is a micro/macro benchmark?
   Google yields results about two Android app benchmarking suites.
+
+
+- In the benchmarks comparing the accuracy between DBSCAN
+  and IP.LSH.DBSCAN you do not specify the average
+  accuracy. What was the average accuracy?
