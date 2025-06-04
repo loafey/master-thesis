@@ -24,7 +24,17 @@ use that memory for things such as interrupts or exceptions.
 This is similar in concept to GCC's split stacks, which lets threads share
 a fragmented stack, leading to less allocations.
 
-Another place
+Another feature that can be added is to add an option allowing dis-contiguous,
+similarly to GCC's split stack option. Newly allocated stacks start out as
+small, and as the stacks start being filled, a new stack is allocated (either on
+the heap, or on the system stack) and linked to the old stack.
+This would allow stacks to be small, but grow in size dynamically if need be.
+Implementing this would place some requirements on the push and pop push semantics
+however, because we would need to keep track of
+the stack size while the program is running, and allocate more memory if we need it.
+This could have an impact on performance, and should ideally be
+as fast as possible. For programs that do not allocate a large number of stacks, which
+all differ in sizes, this would probably not be a benefit.
 
 === Register allocation
 When optimizing the generated code, one important technique is utilizing the
