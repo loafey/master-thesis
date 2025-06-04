@@ -22,61 +22,64 @@ The #ln version uses the compiler defined functions `__dup__` and `__eq__`.
 `__dup__` has the type signature $*(int times.circle ~(int times.circle int))$,
 which means it takes a tuple containing the integer to duplicate, and a continuation that takes the
 two new integers as argument.
-`__eq__` has type signature $*(int times.circle int times.circle ~(fatone plus.circle fatone))$. 
+`__eq__` has type signature $*(int times.circle int times.circle ~(fatone plus.circle fatone))$.
 This function takes two integers to check for equality, and a continuation that takes the result as argument.
 The value `inl ()` represents true and the value `inr ()` represents false.
 
-#figure(caption: [Fibonacci in #ln], block(
-  breakable: false,
-  fancyTable(
-    columns: (1.2fr, 1fr),
-    [A #ln version:],
-    [A recursive version made in C:],
-    table.cell(
-      colspan: 1,
-      ```haskell
-      fib : *(int ⊗ ~int) =
-        \n,k ->
-          __dup__(n,      \n,n'    ->
-          __eq__((n', 0), \is_zero ->
-          case is_zero of {
-            inl () ->
-              __dup__(n,      \n,n'   ->
-              __eq__((n', 1), \is_one ->
-              case is_one of {
-                inl () ->
-                  __dup__(n, \n,m ->
-                  fib((n-1), \n   ->
-                  fib((m-2), \m   ->
-                  k(n+m))));
-                inr () -> k(n);
-              }));
-            inr () -> k(n);
-          }));
-      ```,
-    ),
+#figure(
+  caption: [Fibonacci in #ln],
+  block(
+    breakable: false,
+    fancyTable(
+      columns: (1.2fr, 1fr),
+      [A #ln version:],
+      [A recursive version made in C:],
+      table.cell(
+        colspan: 1,
+        ```haskell
+        fib : *(int ⊗ ~int) =
+          \n,k ->
+            __dup__(n,      \n,n'    ->
+            __eq__((n', 0), \is_zero ->
+            case is_zero of {
+              inl () ->
+                __dup__(n,      \n,n'   ->
+                __eq__((n', 1), \is_one ->
+                case is_one of {
+                  inl () ->
+                    __dup__(n, \n,m ->
+                    fib((n-1), \n   ->
+                    fib((m-2), \m   ->
+                    k(n+m))));
+                  inr () -> k(n);
+                }));
+              inr () -> k(n);
+            }));
+        ```,
+      ),
 
-    ```c
-    long fib(long m) {
-      if (m == 0 || m == 1) {
-        return m;
+      ```c
+      long fib(long m) {
+        if (m == 0 || m == 1) {
+          return m;
+        }
+        long a = fib(m - 1);
+        long b = fib(m - 2);
+        return a + b;
       }
-      long a = fib(m - 1);
-      long b = fib(m - 2);
-      return a + b;
-    }
-    ```,
-    // table.cell(colspan: 2, [Haskell]),
-    // table.cell(
-    //   colspan: 2,
-    //   ```haskell
-    //   fib :: Int -> Int
-    //   fib 0 = 0
-    //   fib 1 = 1
-    //   fib n = fib (n - 1) + fib (n - 2)
-    //   ```,
+      ```,
+      // table.cell(colspan: 2, [Haskell]),
+      // table.cell(
+      //   colspan: 2,
+      //   ```haskell
+      //   fib :: Int -> Int
+      //   fib 0 = 0
+      //   fib 1 = 1
+      //   fib n = fib (n - 1) + fib (n - 2)
+      //   ```,
+    ),
   ),
-)) <fibonacci_ln>
+) <fibonacci_ln>
 
 
 === Benchmarks
@@ -197,11 +200,12 @@ As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
 large gap between the version written in #ln and the version written in C.
 Each input was measured 100 times.
 The C version was compiled using GCC with O0 and O3.
-However, while the #ln version is around one order of magniture slower than the unoptimized C verison,
+However, while the #ln version is around one order of magnitude
+slower than the unoptimized C version,
 the growth in execution time is a constant factor between all three programs.
 
 This can be observed even more clearly if we overlap the benchmarks over
-each other, and then we can see that the unoptimized C version grows
+each other. We can see that the unoptimized C version grows
 the same way as the #ln version, while the optimized C version is slightly
 more efficient.
 #figure(caption: [Benchmarks from @fibbo-benchmarks overlapped], overlap)
