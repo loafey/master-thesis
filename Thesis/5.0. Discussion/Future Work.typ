@@ -162,7 +162,8 @@ While the language currently contains sum and product types
 types with named fields or constructors would be
 useful for more complex types. It would also be required for recursive
 types such as trees or linked lists.
-The array is also a very useful data structure for efficiently allocating contiguous memory.
+Having access to contiguous data types such as the array is also a very useful thing
+when contiguous memory is wanted.
 
 // It would also be beneficial to have access to contiguous data types
 // such as arrays. In the paper "Linear types can Change the World" @LinearTypeswadler1990linear
