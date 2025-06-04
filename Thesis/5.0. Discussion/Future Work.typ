@@ -32,9 +32,11 @@ This would allow stacks to be small, but grow in size dynamically if need be.
 Implementing this would place some requirements on the push and pop push semantics
 however, because we would need to keep track of
 the stack size while the program is running, and allocate more memory if we need it.
-This could have an impact on performance, and should ideally be
-as fast as possible. For programs that do not allocate a large number of stacks, which
-all differ in sizes, this would probably not be a benefit.
+This book keeping could have an impact on performance, and should ideally be
+as fast as possible. Overall, this option would effectively trade a little
+bit of performance for potentially more effective memory usage.
+// For programs that do not allocate a large number of stacks, which
+// all differ a lot in allocation sizes, this would probably not be a benefit.
 
 === Register allocation
 When optimizing the generated code, one important technique is utilizing the
