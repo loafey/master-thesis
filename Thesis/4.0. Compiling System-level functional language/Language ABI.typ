@@ -251,7 +251,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
     f(type: "tag", 8, `$777`), f(type: "cons", 8, `1`),
   )
-  Observe here that the tag is put on the right most position, i.e at the top of the stack,
+  Observe here that the tag is put on the right-most position, i.e. at the top of the stack,
   and that the tag is 8 bytes.
 
   Almost the same goes for product-types, so for a value such as `(1, 2)` we simply put them after one another:
@@ -272,7 +272,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   As can be seen no information outside of the actual values is stored.
 
   Similar alignment should be done when storing variables on the system stack,
-  but this is not enforced by this ABI, as the system stack is
+  but this is not enforced by this ABI, because the system stack is
   not used when passing variables.
 
   In @mappingMemToType we have seen more complicated memory mappings of types, specifically
