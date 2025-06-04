@@ -53,13 +53,13 @@ are the only time #ln strays from the strict continuation based style.
 
 === Mapping types to memory<mappingMemToType>
 An important part of any ABI is specifying how types are represented.
-The following chapter specifies the memory representation of types in #ln, and 
+The following chapter specifies the memory representation of types in #ln, and
 of how many physical registers are needed to store them. Keep in mind that while the ABI
 does not utilize physical registers at the moment, this may change in the future, hence why
 we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
-of unknown length, used to represent a stack. Although we write $A + #sym.infinity$ 
+of unknown length, used to represent a stack. Although we write $A + #sym.infinity$
 to be explicit, it can be seen as $#sym.infinity$ in memory.
 In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
 a `Word` is 8 bytes. A more detailed explanation of #sym.infinity can be found
@@ -113,7 +113,7 @@ in @MemoryAlignment.
     $\ quad quad #reg($A$) + #reg($B$)$,
     $\ quad quad #mem($A$) + #mem($B$)$,
   ),
-  eq([Sum-type \ $ $ ], $A plus.circle B: omega$, $2$, $#`Word` + #sym.infinity$),
+  eq([Sum-type \ $$ ], $A plus.circle B: omega$, $2$, $#`Word` + #sym.infinity$),
   eq(
     [Sum-type],
     $A plus.circle B: known$,
@@ -137,7 +137,7 @@ The memory specification of integer is the following:
 #eq([Integer], $int$, 1, `Word`)
 
 
-=== Memory alignment<MemoryAlignment>
+=== Memory alignment & Stack layout<MemoryAlignment>
 At the time of writing, #ln does not contain that many different types,
 and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
@@ -147,8 +147,8 @@ Both of these are simply the size of a word, and
 they can always fit in a register, and thus never need to be split up across multiple
 registers when working with them.
 
-Integers are currently also simple, as they are also the size of a word.
-This may however change in the future as it is useful to have access to
+Integers are currently also simple, because they are also the size of a word.
+This may however change in the future because it is useful to have access to
 integers of different sizes, especially so when working in a systems-level language.
 When integers of different sizes are introduced, memory alignment
 needs to be taken into consideration.
@@ -216,8 +216,8 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     pop and push instructions which exists in most instruction sets.
 
     Notice here that we are also padding after the 4 byte integer.
-    A pop/push should always be able to expect that it is currently
-    aligned, and this is done to minimize the amount of instructions
+    A pop/push should always be able to expect that the pointer to the stack is currently
+    correctly aligned, and this is done to minimize the amount of instructions
     needed when interacting with the stack. If a function is called through FFI
     for instance, it has no way of knowing if the stack pointer
     is currently aligned, unless it explicitly checks the current
@@ -275,7 +275,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   but this is not enforced by this ABI, as the system stack is
   not used when passing variables.
 
-  In @mappingMemToType we have seen more complicated memory mappings of types, specifically 
+  In @mappingMemToType we have seen more complicated memory mappings of types, specifically
   mappings involving #sym.infinity. Take $A times.circle B: omega$ for
   instance, whose memory usage is calculated as: $#mem($A$) + #sym.infinity$.
   Here $A$ is a type with kind
