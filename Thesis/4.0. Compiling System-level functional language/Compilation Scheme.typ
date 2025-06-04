@@ -3,10 +3,10 @@
 
 
 == Compilation Scheme
-As can be seen in the @SlflChapter chapter every aspect of #ln
+As can be seen in @TypesAndValues, every aspect of #ln
 is based on a set of judgements, split into positive and negative fragments.
 
-These judgements can thankfully be translated to x86-64 assembly in a
+These judgements can by design be translated to x86-64 assembly in a
 straightforward manner. They are first translated into "pseudo" instructions which can
 then be translated into x86-64.
 
@@ -142,13 +142,14 @@ and in @operand_table we explain the operands used in the compilation scheme.
       $#sym.rho\(x)$, [Appropriate list of pseudo registers for type of $x$],
       `SP`, [`%R15`],
       `SSP`, [`%R14`],
-      `VAL_1[VAL_2]`, [`VAL_2(%VAL_1)`],
-      `[VAL]`, [`0(%VAL)`],
+      `[VAL]`, [`0(VAL)`],
     ),
     caption: [
-      Translations between pseudo operands and x86 operands.
+      Translations between pseudo and x86 operands.
       SP stands for Stack Pointer, and points to the top of the current stack.
       SSP stands for Save Stack Pointer and is used to backup SP.
+      `%R14` and `%R15` are physical x86-64 registers,
+      and `0(VAL)` means that we are interacting with the memory address stored in `VAL`.
     ],
   ) <operand_table>
 ]
