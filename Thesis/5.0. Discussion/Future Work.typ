@@ -9,8 +9,8 @@ listed in no particular order.
 
 === Compiler interface for creating stacks
 In the current implementation of #ln, all stacks are heap-allocated. This can
-lead to unnecessary overhead, and can be a blockage for using the language on
-more restricted platforms such as embedded devices. To alleviate this, giving
+lead to unnecessary overhead, and can be a hindrance for using the language on
+more restricted platforms such as embedded devices. To mitigate this, giving
 the developer the option to allocate stacks on the system stack would work
 (maybe as a compiler flag or as a linked library).
 
