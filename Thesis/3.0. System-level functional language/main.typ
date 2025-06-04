@@ -6,7 +6,7 @@
 
 The intended use of #ln is as a compiler intermediate representation for
 functional languages, similar to that of GHC Core @jones1993glasgow.
-#ln diverges from GHC Core and most functional language intermediate representations in
+#ln differs from GHC Core and most functional language intermediate representations in
 that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
 inspiration from linear types and intuitionistic linear logic @lafont1988linear.
@@ -18,14 +18,22 @@ the language looks. The grammar of #ln is depicted in @slfl_grammar.
 
 #figure(caption: [Grammar of #ln], align(left, complete_grammar))<slfl_grammar>
 
-Before describing the grammar, we will show an example of the function swap:
+Take this top-level function (_Definition_) as an example:
 $
   & "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
-  & quad = lambda((x,y), k) -> k((y,x));                            \
-                                                                    \
-  & "main" : *~(A times.circle B)                                   \
-  & quad = lambda k -> "swap"((b,a), k);                            \
+  & quad = lambda((x,y), k) -> k((y,x));
 $
+$"swap"$ here can be broken up into three parts:
+- The name: $"swap"$
+- The type: $*((B times.circle A) times.circle ~(A times.circle B))$
+- The value: $lambda((x,y), k) -> k((y,x))$
+
+$"swap"$ takes two arguments: a tuple $(B times.circle A)$
+and a continuation function $~(A times.circle B)$.
+The first argument, the tuple, is pattern matched on,
+exposing the variables $x$ and $y$.
+The second argument, $k$, is the continuation function.
+
 
 A module consists of a list of definitions, where a definition is a top-level
 function. A definition consists of a name, a type, and
@@ -57,9 +65,7 @@ At the core of #ln is the kind system. Where values have types, types have
 kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
 ($known$).
 
-#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(
-  true,
-)))<KindRules>
+#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
 
@@ -224,30 +230,37 @@ In @id_function we show how we can use the aforementioned rules to give the typi
 
 #figure(
   caption: [The type proof for the identity function specialised to $A$.],
-  prooftree(rule(
-    $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
+  prooftree(
     rule(
-      $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
+      $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
       rule(
-        $dot, t: A, z: ~A tack "call"^~z(t)$,
-        rule($dot, t: A tack t : A$, name: [_var_]),
-        name: [$#math.italic[call]^~$],
+        $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
+        rule(
+          $dot, t: A, z: ~A tack "call"^~z(t)$,
+          rule($dot, t: A tack t : A$, name: [_var_]),
+          name: [$#math.italic[call]^~$],
+        ),
+        name: [_pair_],
       ),
-      name: [_pair_],
+      name: [_static function_],
     ),
-    name: [_static function_],
-  )),
+  ),
 ) <id_function>
 
 In @id_type we derive the proof for the type, to ensure that the type is kind correct.
 
 #figure(
   caption: [The kind proof for the type of the identity function],
-  prooftree(rule($*(A times.circle ~A) : known$, rule(
-    $(A times.circle ~A) : omega$,
-    $A: known$,
-    rule($~A: omega$, $A: known$),
-  ))),
+  prooftree(
+    rule(
+      $*(A times.circle ~A) : known$,
+      rule(
+        $(A times.circle ~A) : omega$,
+        $A: known$,
+        rule($~A: omega$, $A: known$),
+      ),
+    ),
+  ),
 ) <id_type>
 
 The kinding rules and typing rules provide a structured way of constructing
