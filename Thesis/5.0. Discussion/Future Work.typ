@@ -59,8 +59,9 @@ represents the arguments passed to it.
 === Foreign Function Interface
 Similarly to system calls, proper support for Foreign Function Interfaces (FFI)
 would permit the language to interact with software outside.
-A prime example of this would be libraries written in other languages,
-or even libraries written in #ln. Just like system calls, FFI is currently
+A prime example of this would be libraries written in other languages
+/*, or even libraries written in #ln*/.
+Just like system calls, FFI is currently
 used under the hood for printing and the likes using libc, but this is not
 exposed to a user of the language.
 
@@ -72,11 +73,11 @@ Consider the fibonacci function where we do not use `__dup__`:
 fib : *(int ⊗ ~int)
   = \(n,k) -> __eq__((n,0), \res -> case res of {
     case res of {
-        inl () -> k(0); 
-        inr () ->       
+        inl () -> k(0);
+        inr () ->
           __eq__((n,0), \res -> case res of {
-            inl () -> k(1); 
-            inr () ->       
+            inl () -> k(1);
+            inr () ->
               fib((n-1, \r1 ->
               fib((n-2, \r2 -> k(r1 + r2)))))
           })
@@ -86,15 +87,15 @@ fib : *(int ⊗ ~int)
 
 This function does not compile sadly, because the variable `n` is used 4 times,
 and due to linearity one may only use it once!
-To combat this issue we would want to introduce exponentials.
+To address this issue we would want to introduce exponentials.
 
 Exponentials would let a user reuse a value multiple times opening up
 for some much needed expressiveness. Take Fibonacci again with syntax for
 duplicating exponential variables and reading exponential variables. The variable $z$ has type $!A$
 
 #indent[
-- $"let" a + b = z$: the environment is extended with $a: !A$ and $b: !A$
-- $"let" !z_1 = z$: the environment is extended with $z_1: A$.
+  - $"let" a + b = z$: the environment is extended with $a: !A$ and $b: !A$
+  - $"let" !z_1 = z$: the environment is extended with $z_1: A$.
 ]
 
 The first extension corresponds to the Duplicate rule in @linear_rules, and the
@@ -111,7 +112,7 @@ We would also need syntax for Promote and Discard, but we leave that to the read
         __eq__((z2, 0), \res -> case res of {
           inl () -> k(0);
           inr () ->
-            let n2 + o1 = n1; 
+            let n2 + o1 = n1;
             let !o2 = o1;
             __eq__((o2, 1), \res -> {
               inl () -> k(1);
