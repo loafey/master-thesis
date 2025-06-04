@@ -1,11 +1,11 @@
 #import "../Prelude.typ": *
 == Continuation-passing Style <cps>
-_Continuation-passing style_ (CPS) is a style where control is passed
+_Continuation-passing style_ (CPS) is a programming style where control is passed
 explicitly via continuation functions rather than returning values.
 Intuitively, we can think of continuations as functions that capture "the rest
 of the program".
 
-Continuations have seen successful use in many compilers for strict languages,
+Continuations have been successfully used in many compilers for strict languages,
 for example by:
 Appel @appel2007compiling, Fradet and Métayer @fradet1991compilation,
 and Kelsey and Hudak @kelsey1989realistic.
@@ -55,12 +55,11 @@ evaluation order is determined by the order of the function calls.
   left,
   [
 
-    + $"bar"(x, lambda y. "foo"(x, lambda z. k(y+z)))$
-    + $"foo"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
+    + $lambda k. "bar"(x, lambda y. "foo"(x, lambda z. k(y+z)))$
+    + $lambda k. "foo"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
 
-    In the first one, because the second argument of bar is in normal-form
-    #footnote[A term is in normal-form if it cannot be evaluated any further],
-    the only possible execution order is to evaluate $"bar"(x,...)$.
-    Conversely, in the second one $"foo"(x,...)$ has to be evaluated first, for the same reason.
-  ],
+    In (1), bar is called first in the closure binding $k$, and all other
+    function calls are in subsequent closures. Only a single function call can be
+    made per closure. This can been seen in the grammar of commands in #ln (see @grammar_ln).
+],
 )

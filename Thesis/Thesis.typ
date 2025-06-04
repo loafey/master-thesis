@@ -86,4 +86,4 @@ In this document there are #total-words words in total.
 #include "6.0. Conclusion/main.typ"
 #pagebreak()
 <end>
-#bibliography(title: "References", "bib.bib")
+#bibliography(title: "References", "bib.bib", style: "apa")

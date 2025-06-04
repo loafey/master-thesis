@@ -48,29 +48,25 @@
   linebreak()
 }
 
-#let complete_grammar = box(
-  inset: 7pt,
-  stroke: black + 0.1pt,
-  [
-    _Value_
-    #values
-    #dbl_linkbreak()
-    _Command_
-    #commands
-    #dbl_linkbreak()
-    _Pattern_
-    #pat
-    #dbl_linkbreak()
-    _Type_
-    #type
-    #dbl_linkbreak()
-    _Definition_
-    #def
-    #dbl_linkbreak()
-    _Module_
-    #module
-  ],
-)
+#let complete_grammar = box(inset: 7pt, stroke: black + 0.1pt, [
+  _Value_
+  #values
+  #dbl_linkbreak()
+  _Command_
+  #commands
+  #dbl_linkbreak()
+  _Pattern_
+  #pat
+  #dbl_linkbreak()
+  _Type_
+  #type
+  #dbl_linkbreak()
+  _Definition_
+  #def
+  #dbl_linkbreak()
+  _Module_
+  #module
+])
 
 #let pair_value = judge(
   $Gamma tack t: A quad Delta tack u: B$,
@@ -79,7 +75,7 @@
 )
 
 #let linear_closure_value = judge(
-  $Gamma, x: A tack c$,
+  $Gamma : known , x: A tack c$,
   $Gamma tack lambda^not x. c : not A$,
   note: "linear closure",
 )
@@ -90,7 +86,7 @@
   note: "static function",
 )
 #let stack_closure_value = judge(
-  $Gamma, x: A tack c$,
+  $Gamma: omega, x: A tack c$,
   $Gamma tack lambda^~x. c: ~A$,
   note: "stack closure",
 )
@@ -253,17 +249,18 @@
   judge($$, $alpha : omega$, note: [type var])
 }
 
+#let empty_known = { judge($$, $#math.bold[0] : known$, note: [empty]) }
 
-#let bottom = { judge($$, $#math.bold[0] : known$, note: [empty]) }
+#let empty_omega = { judge($$, $#math.bold[0] : omega$, note: [empty]) }
 
 #let kind_judgements(include_text) = {
   grid(
     columns: (1fr, 1fr, 1fr),
     row-gutter: 16pt,
-    emptystack, unit, bottom,
-    product_dynamic, product_constant, sum_dynamic,
-    sum_constant, dynamic_closure, static_closure,
-    linear_closure, linear_ptr, existential_constant,
-    existential_dynamic, type_variable,
+    emptystack, empty_omega, empty_known,
+    unit, product_dynamic, product_constant,
+    sum_dynamic, sum_constant, dynamic_closure,
+    static_closure, linear_closure, linear_ptr,
+    existential_constant, existential_dynamic, type_variable,
   )
 }

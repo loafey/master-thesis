@@ -41,14 +41,14 @@ polymorphic types, and finish with linear types.
 
 Simply typed lambda calculus was first introduced by Church to avoid the
 paradoxical use of the untyped lambda calculus @church1940formulation. It
-consists of two worlds: the type world and the term world. The two worlds
-correspond to logic and computation, respectively. The syntax for #stlc is
-shown in @stlc_syntax. The symbol T is used to denote monomorphic types.
+consists of separate syntactic categories: the category of types and the category of terms. The two categories
+correspond to types and computation, respectively. The syntax for #stlc is
+shown in @stlc_syntax. The symbol $T$ is used to denote base types.
 
 #figure(
   caption: [Syntax for #stlc.],
   $
-    & #math.italic[Types] A "::=" A -> A | T            \
+    & #math.italic[Types] sigma, tau "::=" sigma -> tau | T \
     & #math.italic[Terms] e "::=" x | e e | lambda x. e \
   $,
 )<stlc_syntax>
@@ -56,16 +56,16 @@ shown in @stlc_syntax. The symbol T is used to denote monomorphic types.
 To ensure that terms in #stlc are well-typed, we define a relation between terms
 and types. The typing relation uses the syntax $Gamma tack e: sigma$, which
 says that in context $Gamma$, term $e$ has type $sigma$. The context $Gamma$ is
-a mapping from free variables to types. $Gamma, (x : A)$ is the context that
-extends $Gamma$ by associating the variable $x$ with $A$. The typing rules for
+a mapping from free variables to types. $Gamma, x : sigma$ is the context that
+extends $Gamma$ by associating the variable $x$ with $sigma$. The typing rules for
 #stlc are shown in @stlc_typing.
 
 #figure(caption: [Typing rules for #stlc], lc)<stlc_typing>
 
 The first rule, Var, says that $x : sigma$ is a term if the context $Gamma$ contains the variable $x : sigma$. 
 The rule Abs, short for abstraction, also commonly
-called lambda says that if the term $e : tau$ can be deduced in the context $Gamma$ extended with $x: sigma$, then in the context $Gamma$ the term 
-$(lambda x : sigma. space e) : sigma -> tau$ is valid. 
+called \"lambda\" says that if the term $e : tau$ can be deduced in an arbitrary context $Gamma$ extended with $x: sigma$, then in the context $Gamma$ the term 
+$(lambda x : sigma. space e)$ has type $sigma -> tau$.
 The last rule, App, short for
 application says that if in the context $Gamma$ we have $e_1 : sigma -> tau$
 and $e_2 : tau$ then in the context $Gamma$ the term $e_1 e_2$ has type $tau$.
@@ -73,7 +73,7 @@ and $e_2 : tau$ then in the context $Gamma$ the term $e_1 e_2$ has type $tau$.
 === Polymorphic Lambda Calculus
 
 System F is a typed lambda calculus that introduces universal quantification
-over types @girard1972systemf. It was first discovered by logician Girard in
+over types @girard1972systemf. It was independently discovered by logician Girard in
 1972 (System F) and in 1974 by computer scientist Reynolds (Polymorphic lambda
 calculus). 
 
@@ -88,7 +88,7 @@ $
 Where in #stlc variables range over terms and lambdas have binders for terms,
 System F additionally introduces variables ranging over types as well as
 binders for types. The context $Gamma$ is no longer only a mapping from
-variables to monomorphic types, it also includes type variables. Shown in @SystemF_rules
+variables to types, it also includes type variables. Shown in @SystemF_rules
 are the rules for type abstraction and type application.
 
 #figure(
@@ -98,8 +98,7 @@ are the rules for type abstraction and type application.
 
 The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
 The proof tree for the identity function
-applied to the variable $y$ with monomorphic type $A$ can be seen in @id_proof. We assume that $y : A in
-Gamma$.
+applied to the variable $y$ with the type $A$ can be seen in @id_proof.
 
 
 #let id_proof = prooftree(
@@ -123,7 +122,7 @@ Gamma$.
 
 #figure(caption: [The identity function], flex(id_proof)) <id_proof>
 
-We will use the meta symbol $#metaid$ to refer to the identity function constructed in @id_proof to keep it concise.
+We will use the meta-symbol $#metaid$ to refer to the identity function constructed in @id_proof to keep it concise.
 
 #figure(caption: [Applying the identity function to the variable $y$ with type $A$], flex(id_app_proof))
 
@@ -163,6 +162,12 @@ the context contains only the variable $x: A$. The arrow $lollipop$ is used inst
 How would we derive terms that use a variable twice, or perhaps a term that does not use a variable?
 Linear logic, and in turn linear types, solves this issue using _exponentials_.
 Exponentials introduce an explicit way to duplicate and discard variables.
+The function $! : "Context" -> "Context"$ is defined by:
+$ 
+  !(Gamma, x: sigma) & = (!Gamma, x: !sigma) \
+  !(dot) & = dot
+$
+
 The rules for exponentials are shown in @exponential_rules.
 
 #let exponential_rules = flex(
@@ -173,7 +178,7 @@ The rules for exponentials are shown in @exponential_rules.
 )
 
 #figure(
-  caption: [Context and term rules for exponentials. $!Gamma$ represents a sequence $!A_1,..., !A_n$],
+  caption: [Context and term rules for exponentials.],
   exponential_rules,
 )<exponential_rules>
 
@@ -203,4 +208,4 @@ is show in @const_term.
 ) <const_term>
 
 Linear types does not entirely prohibit the duplication and discarding of
-variables, but rather makes it explicit. 
+variables, but rather make it explicit. 

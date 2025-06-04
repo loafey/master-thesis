@@ -7,9 +7,10 @@ A language with linearity allows a developer to write software without the
 worries of mismanaging things such as memory and files.
 While there are benefits to linearity, not many languages have opted to implement it.
 This concept is most commonly found in functional programming, but one thing
-functional languages commonly do not contain is system-level programming.
+functional languages commonly do not support is system-level programming.
 
-This thesis introduces a new system-level functional programming language, #ln, which tries to fill this void.
+This thesis introduces a new system-level functional programming language, #ln,
+which tries to fill this void.
 
 
 #include "Background.typ"

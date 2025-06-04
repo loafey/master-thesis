@@ -12,6 +12,8 @@ _immutable_ data structures, as opposed to _mutable_ data structures. The
 former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
 
+#todo[Talk about f $compose$ g eliminating intermediate structure]
+
 Girard's linear logic @girard1987linear
 is a refinement of classical and intuitionistic logic, where, rather than
 propositions being truth statements, they represent _resources_, meaning

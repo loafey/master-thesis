@@ -11,7 +11,7 @@ that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
 inspiration from linear types and intuitionistic linear logic @lafont1988linear.
 
-== Grammar
+== Grammar <grammar_ln>
 
 Before going into details on #ln it can be helpful to get an overview of how
 the language looks. The grammar of #ln is depicted in @slfl_grammar.
@@ -38,17 +38,18 @@ The second argument, $k$, is the continuation function.
 A module consists of a list of definitions, where a definition is a top-level
 function. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
-piece. Commands come into play in the bodies of lambdas. Commands consist of
+aspect. Commands come into play in the bodies of lambdas. Commands consist of
 let-bindings, case-expressions, or function calls. Note that the only way to
-terminate a sequence of commands is by a function call $z(v)$. This ensures
-that #ln is written in continuation-passing style.
+terminate a sequence of commands is by a function call $z(v)$. This means
+#ln programs are written in continuation-passing style.
 
 == Kinds & types <kind_and_types>
 
-#ln is based on a variant of polarised linear logic @laurent2002etude. It is essentially Lafont's
-intuitionistic linear logic @lafont1988linear, where $A lollipop B$ is replaced
-by $not A$. Intuitively, we can think of $not A$ as $A -> bot$, or from a programmer's perspective: a function
-that takes $A$ as argument and terminates with no value, like in @cps.
+#ln is based on a variant of polarised linear logic @laurent2002etude. It is
+essentially Lafont's linear logic @lafont1988linear, where $A lollipop B$ is
+replaced by $not A$. Intuitively, we can think of $not A$ as $A lollipop bot$,
+or from a programmer's perspective: a function that takes $A$ as argument and
+terminates with no value, like in @cps.
 
 #let pll_types = {
   $A, B : : = & fatone | fatzero | x | not A | A times.circle B | A plus.circle B | exists x. A | circle | square A | *A | ~A$
@@ -62,24 +63,27 @@ These are: _empty stack_
 The latter two are variants of negation ($not$).
 
 At the core of #ln is the kind system. Where values have types, types have
-kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_
-($known$).
+kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_ $omega$
+represents a region of memory of unknown length, with extra reserved space to
+store arbitrarily sized data.
 
 #figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
+
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
 
 #indent[
+  + There is no sub-kinding; if a type with kind $omega$ is expected, then a type with kind $known$ is not allowed, and vice versa.
   + It is forbidden to construct a pair of two stacks
   + The kinds in a sum type must match
-  + Type variables are stacks, which means they cannot be used for polymorphism
+  + Type variables are always stacks, which means they cannot be used directly for haskell-style polymorphism
     (see @PointerClosureConversion).
 ]
 
 Each negation enables one of three programming styles: goto ($*$) , procedural
 ($~$), and higher-order ($not$).
 
-The first, goto, is the most primitive. It can be considered as a one-way
+The goto style is the most primitive. It can be considered as a one-way
 transfer of control. Consider the function $f : *(A times.circle *B times.circle circle)$.
 From $f$ we can call the continuation $*B$, which is
 just a static function pointer, and because it is only a static function
@@ -87,43 +91,50 @@ pointer, it can not capture any state. The state that $*B$ manipulates is
 exactly the stack $B$, and it is passed by $f$.
 
 The second style, procedural, enables exactly what its name suggests: procedures.
-The type signature $f : *(A times.circle ~B)$ now exactly corresponds to the
+The type signature $f : *(A times.circle ~B)$ exactly corresponds to the
 C function signature $B space f(A space a)$. The type $~B$ corresponds to
 a stack that accepts $B$ as a return value to continue with. This stack can
-capture arbitrary state of kind $omega$. Because of the kinding rules of $*$
+store an arbitrary state of kind $omega$. Because of the kinding rules of $*$
 and $times.circle$, only a single stack can be passed to a static function.
 
 Finally we have higher-order programming, which
-is not possible with $*$ and $~$. The type $*(A times.circle ~B
+is not possible with $*$ and $~$ alone. The type $*(A times.circle ~B
   times.circle ~C)$ is ill-kinded, and $*(A times.circle *B times.circle ~C)$
 would not work either because $*B$ can not capture state.
 To enable higher-order programming we introduce the _linear closure_.
-The linear closure can capture arbitrary state and produces an
-environment with a known size (remember the kinding rule).
+The linear closure can capture arbitrary state and produces a type with a known size (remember the kinding rule).
 Now we can write the higher-order function: $*(A times.circle not B times.circle ~C)$.
 In @Transformations we explain how closures are transformed to static functions
 and explicit stack environments.
 
-Finally, there is no sub-kinding in #ln\; if a type with kind $omega$
-is expected, then a type with kind $known$ is not allowed, and vice versa.
-
 == Types & values<TypesAndValues>
 
-#ln consists of two fragments:
+#ln programs consist of two syntactic fragments:
 
 #indent[
-  - _Positive fragment_ describes how things are created. When we talk about
+  - The _Positive fragment_ describes how values are created. When we talk about
     values we refer to the positive fragment.
-  - _Negative fragment_: describes how to consume environments of values. The
+  - The _Negative fragment_: describes how to consume environments of values. The
     negative fragment can also be referred to as commands.
 ]
 
-Values and commands are given the form $Gamma tack v : A$ and $Gamma tack c$.
-Values have a right side type ($v: A$) to symbolize construction. Conversely, commands do not have a right
-side type, to symbolize consumption.
-Because the rules for values have a right side type, they are read in
+The typing rules for values and commands are given the form $Gamma tack v : A$ and $Gamma tack c$, respectively.
+Values have a right-side type ($v: A$) to symbolize construction. Conversely, commands do not have a right-side type, to symbolize consumption.
+Because the rules for values have a right-side type, they are read in
 a top-to-bottom fashion. The rules for commands are read in a bottom-to-top
 fashion.
+
+Kinds are also introduced to the environment $Gamma$. @kinds_env shows the rules for the environment.
+
+#figure(caption: [], flex(prooftree(rule($dot : known$,$$)), prooftree(rule(
+  $(Gamma, x: A) : omega$,
+  $Gamma: omega$,
+  $A : known$,
+)), prooftree(rule($(dot, x: A) : omega$, $A : omega$)))) <kinds_env>
+
+When the environment has kind $omega$, we know that it contains exactly one
+stack. Conversely, when the environment has kind $known$, the environment does
+not contain any stacks.
 
 The typing rules for the positive fragment are depicted in
 @typing_positive_fragment, while @typing_negative_fragment shows the typing
@@ -142,7 +153,7 @@ rules for the negative fragment.
     ),
     ..content(
       var_value,
-      [Because the environment must be exactly $x: A$, every variable has to be used exactly once.],
+      [All variables must be used exactly once.],
     ),
     ..content(unit_value, [The unit value. The environment must be empty]),
     ..content(
@@ -162,11 +173,11 @@ rules for the negative fragment.
     ),
     ..content(
       stack_closure_value,
-      [Create a stack closure. It can capture free variables, which means the environment does not have to be empty.],
+      [Create a stack closure, which can capture free variables. The environment must be a stack.],
     ),
     ..content(
       linear_closure_value,
-      [Create a linear closure. It can capture free variables, which means the environment does not have to be empty.],
+      [Create a linear closure, which can capture free variables, The environment must not contain a stack.],
     )
   ),
 )<typing_positive_fragment>
@@ -226,7 +237,7 @@ picture. For every value $v$, a corresponding command exists for how to destruct
 an environment of $v$. Variables are not explicitly destructed; they are consumed
 on use.
 
-In @id_function we show how we can use the aforementioned rules to give the typing proof the identity function specialised to the monomorphic type $A: known$.
+In @id_function we show how we can use the aforementioned rules to give the typing proof the identity function specialised to the type $A: known$.
 
 #figure(
   caption: [The type proof for the identity function specialised to $A$.],

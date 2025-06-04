@@ -7,7 +7,7 @@ At this stage #ln is still a logic. How do we bridge the gap between
 logic and machine? This section goes into the necessary transformations to turn
 #ln into a language that can be represented in an assembly language.
 
-#ln consists of three intermediate steps: linear closure conversion, stack
+The first three phases of the #ln compiler are: linear closure conversion, stack
 selection, and pointer closure conversion. The first step eliminates linear
 closures, the second step ensures that each closure contains at most one stack to execute
 on, and the third transformation, pointer closure conversion, replaces each
@@ -20,14 +20,12 @@ stack closure by an explicit pair of static function and environment.
 // call stack. This phase introduces explicit call stacks.) The starting point
 // is: □(∼ 𝐴)
 
-It is critical for first-order programs to identify the call stack, that is,
-the point where a procedure should return control when finishing execution. In
-#ln, rather than returning control it is about where a procedure should continue when finishing
-execution. The first step in this
-process is making pointers to stacks explicit.
+It is critical for first-order programs to identify the call stack, i.e.
+where a procedure should return control when finishing execution. The
+first step in this process is making pointers to stacks explicit.
 
 The linear closure conversion phase transforms $not A$ to $square (~A)$, making
-the pointer explicit. Values are transformed in the following manner:
+the pointer explicit. Closure values are transformed in the following manner:
 $ (lambda^not x. c): not A => square (lambda^~ x. c): square (~A) $ It is
 important not to forget the negative fragment as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
@@ -46,7 +44,8 @@ prepared. The reason we can not guarantee that there is _exactly one_ stack
 prepared is because stacks have not been made explicit yet. If we consider the
 following program, where $f : *A$ is defined: $ lambda^~ x. f(x) : space ~A $
 It is not possible to introduce a stack to this closure without also
-transforming the type. In @PointerClosureConversion we will show the necessary transformations to make stacks explicit, and how to introduce new stacks.
+transforming the type. In @PointerClosureConversion we will show the necessary
+transformations to make stacks explicit, and how to introduce new stacks.
 
 Consider the following program:
 $ lambda (f,k). space k(lambda y. space f(y)) : *(not A times.circle ~not A) $
@@ -74,8 +73,8 @@ $
 === Pointer Closure Conversion <PointerClosureConversion>
 
 The goal of the pointer closure conversion is to make the structure of stacks
-explicit, replacing a stack closure by an explicit pair of static function
-pointer and environment. At the assembly level the concept of procedures and
+explicit, replacing a stack closure by an explicit pair of a static function
+pointer and an environment. At the assembly level the concept of procedures and
 closures do not exist, there are only jumps (gotos) and labels.
 
 The representation for $*A$ is straightforward; it is a label. Calling
