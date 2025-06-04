@@ -5,7 +5,8 @@
 - Why is DBSCAN the reference standard? If the goal was to benchmark IP.LSH.DBSCAN 
   sure, but the goal of the project is to: 
         "The primary objective is to develop an understanding of Göteborg Energi’s diverse customer base through clustering techniques"
-    - Did you consider alternative density based clustering algorithms?
+
+- Did you consider any alternative density based clustering algorithms?
 
 - How do you determine what are good values for $k$ om K-Distance 
   Plot Analysis?
@@ -29,10 +30,19 @@
   - Why is DBSCAN in the toolchain - it seems to be inferior to IP.LSH.DBSCAN
   - How accurate is IP.LSH.DBSCAN compared to DBSCAN?
 
-
 - The accuracy benchmarks you have presented seem to have been done 
   on dataset 4. Did you test it on the other datasets,
   and if so, what were the results?
 
 - IP.LSH.DBSCAN mentions pointers and references as an advantage. Is this not 
   possible in DBSCAN?
+
+# Live
+- In the report you talk about 96 dimensional vectors, but you could also argue that you have 2.
+- Consumption over time. How come you treat this as a 96 dimensional vector as opposed to a 2 
+- dimensional vector.
+
+  How do you determine the best combination of parameters? Bruteforce of parameters.¨
+  What is the multi-metric evaulation, -- and does the same combination work well with DBSCAN
+
+  You mention that DBSCAN is good for accuracy but the Rand Index is low
