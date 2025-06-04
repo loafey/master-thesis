@@ -284,12 +284,12 @@
         Split the environment into two disjoint lists of pseudo registers. The
         environment $x$ is the environment $s_0$ and $y$ is $s_1$. The invariant states that the size of $s_0$ and $s_1$ are determined by the size of the types $A$ and $B$],
       $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
-      = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[invariant:] |s_0| = "sizeof"(A); |s_1| = "sizeof"(B)$,
+      = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$) \ quad #math.italic[such that:] |s_0| = "sizeof"(A); |s_1| = "sizeof"(B)$,
     ),
 
     cell2(
       [Unit elimination],
-      [Because the unit value does not exist at runtime, the matching exists only to ensure linearity.],
+      [Because the unit value does not exist at runtime, the matching exists is a no-op.],
       $#scheme_neg($"let" () = z^known; c$)_(rho,z |-> [])
       = #code_box($#sem[c]_rho$)$,
     ),
