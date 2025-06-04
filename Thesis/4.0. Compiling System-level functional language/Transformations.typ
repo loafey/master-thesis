@@ -153,7 +153,7 @@ $
 $
 
 Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$
-after closure conversion, the second, and third row are necessary to access the
+after closure conversion, the second, and third rows are necessary to access the
 static function $g : *(A times.circle gamma)$. The same process is repeated
 inside the argument of $g$. Also, note how $f'$ is the environment inside $g$
 now.
