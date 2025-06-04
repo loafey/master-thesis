@@ -19,7 +19,7 @@ The compilation scheme consists of three functions:
 
 We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragments.
 If we use $alpha$ in-place of $omega$ and $known$, then the definition
-should exist for both kinds.
+exists for both kinds.
 The function $rho$ is a mapping from variables to a list of pseudo registers.
 The syntax $rho, x |-> s_n$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
 If we instead write $rho, x |-> [r_0, ..., r_n]$ then $x$ maps to the list containing $r_0, ..., r_n$.

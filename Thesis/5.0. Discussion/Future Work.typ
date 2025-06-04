@@ -21,6 +21,10 @@ _above_ the programs singular stack frame (remember: the stack grows downwards).
 This is important because accessing memory below the stack pointer is considered
 undefined behavior on a lot of platforms because hardware or an OS may potentially
 use that memory for things such as interrupts or exceptions.
+This is similar in concept to GCC's split stacks, which lets threads share
+a fragmented stack, leading to less allocations.
+
+Another place
 
 === Register allocation
 When optimizing the generated code, one important technique is utilizing the
