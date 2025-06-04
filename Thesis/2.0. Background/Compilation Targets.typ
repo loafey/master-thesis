@@ -5,13 +5,13 @@ When you are compiling your language you have to pick a target to compile it to.
 Unless you are directly targeting machine code, most of the time
 you want a higher level compilation target.
 
-There are a lot of different choices for this task, 
+There are a lot of different choices for this task,
 some commons examples are: LLVM IR @lattner2004llvm, Cranelift @Cranelift and
 GNU's GIMPLE @Gimple. These languages are what is known as intermediate
 representations (IR), and they are all targeted by different compilers. They remove
 the need for the compilers to directly target CPU specific machine code or
 assembly. Most of the time these IRs are also cross platform, making portability easier to achieve.
-Because the intermediate representations are higher level 
+Because the intermediate representations are higher level
 than assembly languages are, they trade-off explicit control over assembly code
 in favor of abstractions.
 
@@ -28,18 +28,18 @@ are tailored after CPU specific instruction sets. Personal computers and servers
 commonly use the instruction set x86-64, which is an extension that was created
 in 2000 based on the already popular instruction set x86 @x86WhitePaper.
 
-When you directly target assembly languages portability suffers. You not only
+When you directly target assembly languages, portability suffers. You not only
 have to target different assembly languages for different CPU architectures,
 you will also have to cater to the operating system you are targeting. For
 instance, on a unix-like operating system, you can almost always rely on an
 implementation of the C Standard Library (libc), or system calls if direct
 communication with the operating system is needed. This does not apply to
 operating systems such as Windows however, where you instead have to depend on
-the provided system libraries to interact with the rest of the system. 
+the provided system libraries to interact with the rest of the system.
 
 On Windows libc availability is not a guarantee, and because they do not have
 a stable API, it is _strongly_ recommended to avoid using system calls
-directly. Due to reasons such as this, the simple act of printing may look
+directly. Due to reasons such as this, the simple act of printing to stdout may look
 wildly different depending on the operating system, even though they may use
 the same assembly language. This is something you have to consider with most
 IRs as well, but it can be alleviated with sufficient abstractions.
