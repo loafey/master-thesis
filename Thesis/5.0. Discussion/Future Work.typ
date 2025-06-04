@@ -25,8 +25,9 @@ use that memory for things such as interrupts or exceptions.
 === Register allocation
 When optimizing the generated code, one important technique is utilizing the
 physical registers for variable allocation. If one were to implement this
-naively, it would suffice with putting the first few variables of a function
-into registers, and the rest on the system stack. This would however not
+naively, it would suffice to put the first few variables of a function
+into registers, and the rest on the system stack.
+This would however not
 necessarily suffice for functions where there are more variables
 than available physical registers. In this case it would be more efficient to analyze the usage of variables,
 and prioritize them based on the order they are used.
@@ -35,7 +36,7 @@ and prioritize them based on the order they are used.
 // declared later on in a register as opposed to one declared early. #todo[review sentence]
 
 Doing this efficiently can prove difficult because the compiler has to minimize
-the amount of spilling needed, and this has in fact been proven to be
+the amount of register spilling needed, and this has in fact been proven to be
 NP-complete @RegisterAllocationbouchez2006register. This was not implemented for #ln because it was
 deemed an optimization that, while interesting, was not something we would have time to
 implement properly.
@@ -43,7 +44,7 @@ implement properly.
 === System Calls
 Due to #ln being a system-level language, it may be useful to have the ability
 to directly make system calls to interact with the operating system.
-This allow for the possibility of not relying on, for example, libc,
+This allows for the possibility of not relying on, for example, libc,
 because the behavior one would need from libc could be re-implemented
 in the language. This would in theory make the language more portable,
 because it would be easier to port it to systems where libc might not be available.
