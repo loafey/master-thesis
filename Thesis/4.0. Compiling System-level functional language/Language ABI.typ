@@ -117,8 +117,7 @@ does not utilize physical registers at the moment, this may change in the future
 we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
-of unknown length, used to represent a stack. Although we write $A + #sym.infinity$
-to be explicit, it can be seen as $#sym.infinity$ in memory.
+of unknown length, and it is used to represent a stack.
 In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
 a `Word` is 8 bytes. A more detailed explanation of #sym.infinity can be found
 in @MemoryAlignment.
