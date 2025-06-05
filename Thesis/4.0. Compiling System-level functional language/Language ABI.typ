@@ -2,7 +2,7 @@
 
 == Language ABI <languageAbiChapter>
 As with any language, one should define an application binary Interface (ABI).
-#ln defines it's own datatype allocation strategy and calling convention.
+#ln defines its own datatype allocation strategy and calling convention.
 As said before in @CompilingCompilationTarget, #ln only uses one stack frame during
 normal execution which is used for variable storage and register spilling.
 This stack frame is located on the stack given by the operating system, which will be referred
@@ -13,8 +13,8 @@ This stack usage is similar in nature to the Java Virtual Machine @JavaOracle or
 WebAssembly @WASMhaas2017bringing, which also makes heavy use of stacks
 and virtual registers stored on the system stack.
 
-It is worth to noting that this specification is not final, as it is with
-most languages, and may be subject to change in the future if need be!
+// It is worth noting that this specification is not final, as it is with
+// most languages, and may be subject to change in the future if need be!
 
 === Function calls
 When functions are called these are the pre-conditions that must be fulfilled:
@@ -29,20 +29,20 @@ When functions are called these are the pre-conditions that must be fulfilled:
   - The bottom of the stack contains the start pointer of the stack.
 ]
 
-At any given moment only one stack is in use, which means that while
+At any given moment only one stack is used to execute upon, which means that while
 other stacks can be allocated and freed, and variables can only be pushed on the
-current one. Mutating or reading other stacks is undefined behavior.
+current one. Mutating or reading data on other stacks is undefined behavior,
+outside of higher order functions.#todo[se över]
 
-All functions in #ln are called through jumps(with some discrepancies
+All functions in #ln are called through jump(with some discrepancies
 for top-level functions and FFI). This is implemented by passing around all
 functions as values on the stack.
-Top-level functions however work differently, and works in a somewhat similar manner
-to how functions work in most other languages. There is one major difference however.
-A top-level function does not actually execute the function,
-and it instead pushes a code pointer onto the current stack
-and returns. This code pointer points to the actual function which can then be popped
-and called when need be.
-In this manner top-level functions act much more like constants.
+Top-level functions however work differently, and act
+more like constants do in most other languages.
+
+A top-level function is not actually generated as a function, and it is instead
+a static constant which contains a code pointer to the actual function.
+This code pointer can then be copied and pushed onto the stack, and called when need be.
 
 When FFI calls occur, such as calling a libc function like `printf`,
 this function will allocate a stack frame on top of the single stack frame, and execute like
