@@ -23,24 +23,30 @@ stack closure by an explicit pair of static function and environment.
 It is critical for first-order programs to identify the call stack, i.e.
 where a procedure should return control when finishing execution. The
 first step in this process is making pointers to stacks explicit.
-
-The linear closure conversion phase transforms $not A$ to $square (~A)$, making
-the pointer to the stack explicit. Closure values are transformed in the following manner:
+We do this by transforming types and closure values in the following manner:
 
 #grid(
   columns: (1fr, 2fr),
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
-  $(lambda^not x. c): not A $,
-  $square (lambda^~ x. c): square (~A) $,
+  $not A$, $square~A$,
+  $lambda^not x. c$, $square lambda^~ x. c$,
 )
 
 It is important not to forget the negative fragment as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
-have to follow the indirection to access the closure. If we have the call
-$f(x)$ with $f : not A$ and $x : A$. After conversion the call would look like
-this: $"let" square g = f; g(x)$. Because the type $not A$ is transformed
+have to follow the indirection to access the closure. 
+
+#grid(
+  columns: (1fr, 2fr),
+  stroke: black + 0.1pt,
+  inset: 10pt,
+  [Source], [Target],
+  $f(x)$, $"let" square g = f; g(x)$,
+)
+
+Because the type $not A$ is transformed
 to $square ~A$, the type checker should allow $square ~A$ where $not A$ is
 expected.
 
@@ -57,7 +63,7 @@ It is important for every stack closure ($~A$) to identify a single unique stack
 it can execute on. The stack selection phase selects a single unique stack for every
 closure if at least one stack exists, ensuring that every closure has _at most_ one stack
 prepared. The reason we can not guarantee that there is _exactly one_ stack
-prepared is because stacks have not been made explicit yet. 
+prepared is because stacks have not been made explicit yet.
 In @PointerClosureConversion we will show the necessary transformations to make
 stacks explicit, and how to introduce new stacks.
 
@@ -70,7 +76,7 @@ $
   : *(square ~ A times.circle ~(square~A))
 $
 
-Because $k$ has type $~(square~A)$, its environment must be a stack. 
+Because $k$ has type $~(square~A)$, its environment must be a stack.
 The issue is that the only variable that is a stack is $f'$, but it cannot be
 the chosen stack because bound variables are stored on the stack. The chosen
 stack must be a variable that is bound outside the closure, or an explicit
@@ -89,7 +95,7 @@ $
 // f' : ~A
 // k : ~(~#A)
 
-Now $lambda y. f'(y) : $ contains exactly the stack $f'$.
+Now $lambda y. f'(y) :$ contains exactly the stack $f'$.
 
 === Pointer Closure Conversion <PointerClosureConversion>
 
@@ -118,12 +124,15 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
-  $lambda^~ . c : space ~A$,
-  $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$) : exists gamma. *(A times.circle gamma) times.circle gamma$,
+  $~A$, $exists gamma. *(A times.circle gamma) times.circle gamma$,
+  $lambda^~ . c$,
+  $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
 )
 $Gamma$ represents the free variables in the closure.
 $times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$
-If $Gamma$ has kind $known$, then $"pairsvars"$ must construct a newstack ($circle$).
+If $Gamma$ has kind $known$, then $"pairsvars"$ must construct a newstack
+($circle$). For example: if $Gamma = dot, A: known, B: known$, then the output
+of $"pairsvars"$ will be $A times.circle B times.circle circle$.
 $"unpairAll"$ is a macro that inverts this procedure.
 
 Because the closures are converted, the corresponding commands must also be
@@ -161,16 +170,16 @@ the following:
 
 */
 $
-  lambda^*(f,k). & "let" square f' = f; \
-  & "let" angled(alpha, k') = k; \
-  & "let" g, rho_1 = k'; & \
-  & g(square #angled(
-      $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
-      $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
-        & & & "let" h,rho_4 = x; & \
-        & & & h(y, rho_4), f')$,
-    )
-    , rho_1)
+  lambda^*(f,k). & "let" square f' = f;           \
+                 & "let" angled(alpha, k') = k;   \
+                 & "let" g, rho_1 = k';         & \
+                 & g(square #angled(
+                       $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
+                       $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
+                         & & & "let" h,rho_4 = x; & \
+                         & & & h(y, rho_4), f')$,
+                     )
+                     , rho_1)
 $
 
 Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$
