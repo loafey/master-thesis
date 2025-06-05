@@ -217,7 +217,7 @@ rules for the negative fragment.
     ),
     ..content(
       exists_elim_command,
-      [Match the existentially quantified variable $z$ to access the actual value $x$],
+      [Match the existentially quantified variable $z$ to access the value $x$],
     ),
     ..content(
       static_call_command,
