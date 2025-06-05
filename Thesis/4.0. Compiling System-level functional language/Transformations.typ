@@ -26,7 +26,7 @@ first step in this process is making pointers to stacks explicit.
 We do this by transforming types and closure values in the following manner:
 
 #grid(
-  columns: (1fr, 2fr),
+  columns: (1fr, 1fr),
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
@@ -39,7 +39,7 @@ a function with type $not A$, which after conversion has type $square ~A$, we
 have to follow the indirection to access the closure. 
 
 #grid(
-  columns: (1fr, 2fr),
+  columns: (1fr, 1fr),
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
