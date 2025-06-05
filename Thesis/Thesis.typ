@@ -54,10 +54,10 @@
 #set text(font: "New Computer Modern", size: 12pt)
 #set par(justify: true)
 
-#import "@preview/wordometer:0.1.4": word-count, total-words
-#show: word-count
+// #import "@preview/wordometer:0.1.4": word-count, total-words
+// #show: word-count
 
-In this document there are #total-words words in total.
+// In this document there are #total-words words in total.
 
 
 #include "0. Splash/main.typ"
