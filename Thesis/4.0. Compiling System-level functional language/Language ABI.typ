@@ -174,7 +174,7 @@ in @MemoryAlignment.
     $\ quad quad #reg($A$) + #reg($B$)$,
     $\ quad quad #mem($A$) + #mem($B$)$,
   ),
-  eq([Sum-type \ $$ ], $A plus.circle B: omega$, $2$, $#`Word` + #sym.infinity$),
+  eq([Sum-type \ $$ ], $A plus.circle B: omega$, $1$, $#`Word` + #sym.infinity$),
   eq(
     [Sum-type],
     $A plus.circle B: known$,
