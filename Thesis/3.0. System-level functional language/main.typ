@@ -67,7 +67,9 @@ kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_ $omega$
 represents a region of memory of unknown length, with extra reserved space to
 store arbitrarily sized data.
 
-#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
+#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(
+  true,
+)))<KindRules>
 
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
@@ -126,15 +128,18 @@ fashion.
 
 Kinds are also introduced to the environment $Gamma$. @kinds_env shows the rules for the environment.
 
-#figure(caption: [], flex(prooftree(rule($dot : known$,$$)), prooftree(rule(
-  $(Gamma, x: A) : omega$,
-  $Gamma: omega$,
-  $A : known$,
-)), prooftree(rule($(dot, x: A) : omega$, $A : omega$)))) <kinds_env>
+#figure(caption: [Kinding rules for environments.], flex(
+  prooftree(rule($dot : known$, $$)),
+  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
+  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
+  prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
+)) <kinds_env>
 
-When the environment has kind $omega$, we know that it contains exactly one
-stack. Conversely, when the environment has kind $known$, the environment does
-not contain any stacks.
+The empty environment is of known size. If the environment is of known size,
+then extending it with a stack makes it have unknown size. The last two rules
+state that we allowed to extend any environment with things of known size.
+The kinding rules allow at most one stack in the environment. This will be
+critical when we perform closure conversion in @Transformations.
 
 The typing rules for the positive fragment are depicted in
 @typing_positive_fragment, while @typing_negative_fragment shows the typing
@@ -151,10 +156,7 @@ rules for the negative fragment.
       newstack_value,
       [Newstack is a primitive for creating an empty stack],
     ),
-    ..content(
-      var_value,
-      [All variables must be used exactly once.],
-    ),
+    ..content(var_value, [All variables must be used exactly once.]),
     ..content(unit_value, [The unit value. The environment must be empty]),
     ..content(
       pair_value,
@@ -241,37 +243,30 @@ In @id_function we show how we can use the aforementioned rules to give the typi
 
 #figure(
   caption: [The type proof for the identity function specialised to $A$.],
-  prooftree(
+  prooftree(rule(
+    $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
     rule(
-      $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
+      $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
       rule(
-        $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
-        rule(
-          $dot, t: A, z: ~A tack "call"^~z(t)$,
-          rule($dot, t: A tack t : A$, name: [_var_]),
-          name: [$#math.italic[call]^~$],
-        ),
-        name: [_pair_],
+        $dot, t: A, z: ~A tack "call"^~z(t)$,
+        rule($dot, t: A tack t : A$, name: [_var_]),
+        name: [$#math.italic[call]^~$],
       ),
-      name: [_static function_],
+      name: [_pair_],
     ),
-  ),
+    name: [_static function_],
+  )),
 ) <id_function>
 
 In @id_type we derive the proof for the type, to ensure that the type is kind correct.
 
 #figure(
   caption: [The kind proof for the type of the identity function],
-  prooftree(
-    rule(
-      $*(A times.circle ~A) : known$,
-      rule(
-        $(A times.circle ~A) : omega$,
-        $A: known$,
-        rule($~A: omega$, $A: known$),
-      ),
-    ),
-  ),
+  prooftree(rule($*(A times.circle ~A) : known$, rule(
+    $(A times.circle ~A) : omega$,
+    $A: known$,
+    rule($~A: omega$, $A: known$),
+  ))),
 ) <id_type>
 
 The kinding rules and typing rules provide a structured way of constructing
