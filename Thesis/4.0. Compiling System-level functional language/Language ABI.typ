@@ -47,12 +47,12 @@ and virtual registers stored on the system stack.
 === Function calls
 When functions are called these are the pre-conditions that must be fulfilled:
 #indent[
-  - Register `R15`(`SP`) is set to an address which points to a valid stack.
-  - The address in `R15`(`SP`) must be a multiple of 8 (4 on a 32 bit system).
+  - Register `R15`is set to an address which points to a valid stack.
+  - The address in `R15` must be a multiple of 8 (4 on a 32 bit system).
   - The stack size should be big enough for all variables in the function.
   - All expected arguments exist on the stack.
   - All arguments are properly aligned.
-  - The bottom of the stack contains the start pointer of the stack.
+  - The bottom of the stack contains a pointer to the start of the stack.
   - The stack grows downwards.
 ]
 
@@ -60,7 +60,7 @@ The reason stacks in #ln grow downwards is because
 system stacks on most architectures also grow downwards.
 This allows an implementation of
 the language to allocate a stack on the system stack if need be,
-and use the built in pop and push instructions,
+and in turn use the built in pop and push instructions,
 which exists in most instruction sets.
 
 When allocating new stacks, the first value on the stack must be the pointer
@@ -103,8 +103,8 @@ This code pointer can then be copied and pushed onto the stack, and called when 
 
 When FFI calls occur, such as calling a libc function like `printf`,
 this function will allocate a stack frame on top of the single stack frame, and execute like
-it would normally do. The result will then be written into a fitting register
-or variable on the system stack, or it will be pushed onto the current stack.
+it would normally do. The result will then be written into fitting pseudo-registers,
+or it will be pushed onto the current stack.
 This and along with top-level functions,
 are the only time #ln strays from the strict continuation based style.
 
