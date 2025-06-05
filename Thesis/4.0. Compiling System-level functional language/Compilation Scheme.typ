@@ -51,7 +51,8 @@ To ensure correctness and consistency of the compilation scheme, we specify
 pre- and post-conditions for each compilation function:
 
 Before calling $#scheme_pos($v$)^omega$, SP can be used
-freely. After the call, SP points to $v$. $#scheme_pos($v$)^known$ requires
+freely. After the call, SP points to $v$.
+$#scheme_pos($v$)^known$ (note the change in kind) requires
 that SP points to a valid stack before being called. After being called, $v$ is
 pushed on the stack pointed to by SP. Finally, we have $#scheme_neg($v$)$. It
 has no additional pre-conditions, only the post-condition that the program is terminated.

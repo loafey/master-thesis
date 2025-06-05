@@ -81,7 +81,7 @@ as the process deallocating a stack does not need to know the size of said stack
     table(
       columns: rep(len, 1fr),
       ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
-      f(type: "sp", 8, align(center, `start pointer`)), f(8, align(center, `free space...`)),
+      f(type: "sp", 8, align(center, `start pointer`)), f(8, align(center, `Free space...`)),
     ),
   ),
 )
