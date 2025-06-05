@@ -21,16 +21,16 @@ We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragme
 If we use $alpha$ in-place of $omega$ and $known$, then the definition
 exists for both kinds.
 The function $rho$ is a mapping from variables to a list of pseudo registers.
-The syntax $rho, x |-> s_n$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
+The syntax $rho, Y$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
 If we instead write $rho, x |-> [r_0, ..., r_n]$ then $x$ maps to the list containing $r_0, ..., r_n$.
 Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail, and
 finally, $s_0 ++ s_1$ means the concatenation of the lists $s_0$ and $s_1$.
 
-We denote a variable $z^omega$ or $z^known$ in the negative fragment as
+We annotate a variable $z^omega$ or $z^known$ in the negative fragment as
 a reminder of the kind of the type of the variable.
 
-A pseudo register is a physical register or a location on the
-stack. Formally, $rho$ can be seen as the function: $rho : Gamma -> "List"("Reg")$.
+A pseudo register is a physical register, or a location on the
+stack. Formally, $rho$ can be seen as a function $rho : Gamma -> "List"("Reg")$.
 The range of $rho$ is a list of pseudo registers because not all values
 can be stored in one physical register.
 
@@ -41,11 +41,15 @@ only at compile time.
 To ensure correctness and consistency of the compilation scheme, we specify
 pre- and post-conditions for each compilation function:
 
-Before calling $#scheme_pos($v$)^omega$, the stack pointer (SP) can be used
+In the compilation scheme, two explicit registers are used: the stack pointer (SP)
+and the stack save pointer (SSP). SP points to a stack on which
+we can pop and push, and SSP is used to temporarily backup SP.
+
+Before calling $#scheme_pos($v$)^omega$, SP can be used
 freely. After the call, SP points to $v$. $#scheme_pos($v$)^known$ requires
 that SP points to a valid stack before being called. After being called, $v$ is
 pushed on the stack pointed to by SP. Finally, we have $#scheme_neg($v$)$. It
-has no pre-conditions, only the post-condition that the program is terminated.
+has no addtional pre-conditions, only the post-condition that the program is terminated.
 
 The translation between pseudo instructions and x86-64 assembly can be seen in @translation_table,
 and in @operand_table we explain the operands used in the compilation scheme.
@@ -147,7 +151,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
     caption: [
       Translations between pseudo and x86 operands.
       SP stands for Stack Pointer, and points to the top of the current stack.
-      SSP stands for Save Stack Pointer and is used to backup SP.
+      SSP stands for Stack Save Pointer and is used to backup SP.
       `%R14` and `%R15` are physical x86-64 registers,
       and `0(VAL)` means that we are interacting with the memory address stored in `VAL`.
     ],
