@@ -13,7 +13,7 @@ Additionally, the thesis presented the application binary interface (ABI) for in
 The chapter detailed the pre-conditions for function calls and how memory is structured.
 
 Finally, the thesis ended by presenting an example of a program written
-in #ln, a simple benchmark for context, and several future extensions
+in #ln, a simple benchmark for context, and proposed several future extensions
 and optimizations to refine and improve the language.
 
 
