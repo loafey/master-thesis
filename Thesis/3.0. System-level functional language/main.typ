@@ -141,7 +141,7 @@ The kinding rules allow at most one stack in the environment. This will be
 critical when we perform closure conversion in @Transformations.
 
 The typing rules for the positive fragment are depicted in
-@typing_positive_fragment, while @typing_negative_fragment shows the typing
+@typing_positive_fragment, and @typing_negative_fragment shows the typing
 rules for the negative fragment.
 
 #show figure: set block(breakable: true)
