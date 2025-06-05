@@ -7,7 +7,7 @@ As can be seen in @TypesAndValues, every aspect of #ln
 is based on a set of rules, split into positive and negative fragments.
 
 These rules can by design be translated to x86-64 assembly in a
-straightforward manner. They are first translated into "pseudo" instructions which can
+straightforward manner. They are first translated into \"pseudo\" instructions which can
 then be translated into x86-64.
 
 The compilation scheme consists of three functions:
