@@ -89,7 +89,7 @@ as a stack's size does not have to be known at compile time.
 // At any given moment only one stack is used to execute upon, which means that while
 // other stacks can be allocated and freed, and variables can only be pushed on the
 // current one. Mutating or reading data on other stacks is undefined behavior,
-// outside of higher order functions.#todo[se över]
+// outside of higher order functions.
 
 All functions in #ln are called through jump(with some discrepancies
 for top-level functions and FFI). This is implemented by passing around all
@@ -111,9 +111,11 @@ are the only time #ln strays from the strict continuation based style.
 === Mapping types to memory<mappingMemToType>
 An important part of any ABI is specifying how types are represented.
 The following chapter specifies the memory representation of types in #ln, and
-the number of physical registers needed to store them. Keep in mind that while the ABI
-does not utilize physical registers at the moment, this may change in the future, hence why
-we define the needed amount of physical registers.
+the number of physical registers needed to store them.
+// Keep in mind that while the ABI
+// does not utilize physical registers for memory mappings,
+// this may change in the future, hence why
+// we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
 of unknown length, and it is used to represent a stack.
