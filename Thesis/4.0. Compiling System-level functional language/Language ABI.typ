@@ -1,5 +1,34 @@
 #import "../Prelude.typ": *
 
+
+#let rep(int, val) = {
+  let res = ()
+  for value in range(0, int) {
+    (val,) + res
+  }
+  res
+}
+
+#let start = 45
+#let len = 16
+#let f(type: "normal", size, body) = table.cell(
+  fill: if type == "pad" {
+    rgb("#edf064")
+  } else if type == "sp" {
+    rgb("#ff7bcc")
+  } else if type == "inf" {
+    orange
+  } else if type == "tag" {
+    lime
+  } else if type == "cons" {
+    aqua
+  } else {
+    none
+  },
+  colspan: size,
+  body,
+)
+
 == Language ABI <languageAbiChapter>
 As with any language, one should define an application binary Interface (ABI).
 #ln defines its own datatype allocation strategy and calling convention.
@@ -22,12 +51,41 @@ When functions are called these are the pre-conditions that must be fulfilled:
   - Register `R15`(`SP`) is set to an address which points to a valid stack.
   - The address in `R15`(`SP`) must be a multiple of 8 (4 on a 32 bit system).
   - The stack size should be big enough for all variables in the function.
-  - When the stack is empty, the origin pointer for the stack should be equal to
-    the address subtracted with the stack's size.
   - All expected arguments exist on the stack.
   - All arguments are properly aligned.
   - The bottom of the stack contains the start pointer of the stack.
+  - The stack grows downwards.
 ]
+
+The reason stacks in #ln grow downwards is because
+system stacks on most architectures also grow downwards.
+This allows an implementation of
+the language to allocate a stack on the system stack if need be,
+and use the built in pop and push instructions,
+which exists in most instruction sets.
+
+When allocating new stacks, the first value on the stack must be the pointer
+which points to the start of the stack. Because stacks grow downward
+their pointers need to be offset by their size on allocation,
+but this creates a problem since we can not deallocate using this updated pointer.
+To alleviate this,
+the original pointer is placed on the stack, which can then be popped
+when the stack is empty and `freestack` is called.
+#text(green)[
+  This also opens up for stacks to be allocated at differing sizes,
+  as stack's size does not have to be known at compile time.]#todo[se över]
+
+#figure(
+  caption: [An empty stack only containing the start pointer.],
+  block(
+    breakable: false,
+    table(
+      columns: rep(len, 1fr),
+      ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+      f(type: "sp", 8, align(center, `start pointer`)), f(8, align(center, `free space...`)),
+    ),
+  ),
+)
 
 At any given moment only one stack is used to execute upon, which means that while
 other stacks can be allocated and freed, and variables can only be pushed on the
@@ -137,7 +195,7 @@ The memory specification of integer is the following:
 #eq([Integer], $int$, 1, `Word`)
 
 
-=== Memory alignment & Stack layout<MemoryAlignment>
+=== Memory alignment<MemoryAlignment>
 At the time of writing, #ln does not contain that many different types,
 and currently it is limited to integers, function pointers, stack pointers,
 and product- and sum-types.
@@ -157,35 +215,8 @@ When pushing values of different sizes to the stack, alignment needs to be consi
 Take this stack that just contains a 16 bit integer with the value `42`.
 
 #[
-  #let f(type: "normal", size, body) = table.cell(
-    fill: if type == "pad" {
-      rgb("#edf064")
-    } else if type == "sp" {
-      rgb("#ff7bcc")
-    } else if type == "inf" {
-      orange
-    } else if type == "tag" {
-      lime
-    } else if type == "cons" {
-      aqua
-    } else {
-      none
-    },
-    colspan: size,
-    body,
-  )
-
-  #let rep(int, val) = {
-    let res = ()
-    for value in range(0, int) {
-      (val,) + res
-    }
-    res
-  }
   #let b(content) = box(stroke: black, width: 100%, inset: 6pt, content)
   #set table.cell(align: center)
-  #let len = 16
-  #let start = 45
 
   #table(
     columns: rep(len, 1fr),
@@ -208,12 +239,6 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     2 bytes here for a 4 byte integer, because 4 is divisible by 2.
     The reason this is done is to both to simplify the compilation process,
     and to simplify the needed code for any given pop and push.
-
-    Also, as can bee seen in the illustrations, the addresses grow downwards.
-    System stacks on most architectures grow downwards, and the dynamic stacks
-    in #ln simulate this as well. This is done to allow an implementation of
-    the language to use the system stack if need be, and use the built in
-    pop and push instructions which exists in most instruction sets.
 
     Notice here that we are also padding after the 4 byte integer.
     A pop/push should always be able to expect that the pointer to the stack is currently
@@ -295,20 +320,20 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   Without $A$, $B$ could potentially be empty, or it could be huge, but we cannot know
   from the types alone.
 
-  When allocating new stacks the first value on the stack must be the pointer
-  which points to the start of the stack. As said earlier, stacks grow downwards,
-  and thus their pointers need to be offset by their size on allocation.
-  This however creates a problem because we can not deallocate using this updated pointer,
-  we need to instead use the original pointer. To combat this
-  the original pointer is placed on the stack, which can then be popped
-  when the stack is empty and `freestack` is called.
-  #block(
-    breakable: false,
-    table(
-      columns: rep(len, 1fr),
-      ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
-      f(type: "sp", 8, `start pointer`), f(8, `...`),
-    ),
-  )
+  // When allocating new stacks the first value on the stack must be the pointer
+  // which points to the start of the stack. As said earlier, stacks grow downwards,
+  // and thus their pointers need to be offset by their size on allocation.
+  // This however creates a problem because we can not deallocate using this updated pointer,
+  // we need to instead use the original pointer. To combat this
+  // the original pointer is placed on the stack, which can then be popped
+  // when the stack is empty and `freestack` is called.
+  // #block(
+  //   breakable: false,
+  //   table(
+  //     columns: rep(len, 1fr),
+  //     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+  //     f(type: "sp", 8, `start pointer`), f(8, `...`),
+  //   ),
+  // )
 ]
 
