@@ -243,7 +243,7 @@ on use.
 In @id_function we show how we can use the aforementioned rules to give the typing proof for the identity function specialised to the type $A: known$ in #ln.
 
 #figure(
-  caption: [The type proof for the identity function specialised to $A$.],
+  caption: [The typing proof for the identity function specialised to $A$ in #ln.],
   prooftree(rule(
     $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
     rule(
