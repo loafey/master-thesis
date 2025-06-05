@@ -229,8 +229,7 @@
       [Generate a unique label $l_1$. Under $l_1$, let $r_1$ be the next
         available pseudo register, then set it to $sp$ and compile the command
         $c$. Finally, push $l_1$ on the stack. $l_1$ and the block can be thought
-        of as creating a procedure in a C-like language, and thus, we must be
-        careful about nesting.],
+        of as creating a procedure in a C-like language.],
       $#scheme_pos($lambda^* x. c$)^known_[] =
       &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
