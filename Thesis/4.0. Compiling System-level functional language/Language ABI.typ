@@ -257,7 +257,7 @@ Take this stack that just contains a 16-bit integer with the value `42`.
     to be divisible by 4, and so on and so forth. While x86-64 allows
     unaligned memory interactions for some instructions, this is often heavily
     discouraged because it can potentially harm performance, because it can
-    require more clock cycles, and cache friendliness of the values being interacted with.
+    require more clock cycles, and hurt the cache friendliness of the values being interacted with.
   ]
 
   The memory layout for product- and sum-types is also relatively simple.
