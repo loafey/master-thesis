@@ -240,7 +240,7 @@ picture. For every value $v$, a corresponding command exists for how to destruct
 an environment of $v$. Variables are not explicitly destructed; they are consumed
 on use.
 
-In @id_function we show how we can use the aforementioned rules to give the typing proof the identity function specialised to the type $A: known$.
+In @id_function we show how we can use the aforementioned rules to give the typing proof for the identity function specialised to the type $A: known$ in #ln.
 
 #figure(
   caption: [The type proof for the identity function specialised to $A$.],
