@@ -166,7 +166,7 @@ rules for the negative fragment.
     ),
     ..content(inj_left_value, [Constructing the left value of a sum type]),
     ..content(inj_right_value, [Constructing the right value of a sum type]),
-    ..content(linear_pointer_value, [Making an indirection]),
+    ..content(linear_pointer_value, [Making an indirection to a stack]),
     ..content(
       exists_intro_value,
       [Existentially quantifying the term $t : A$ with the type variable $alpha$],
