@@ -136,7 +136,7 @@ Kinds are also introduced to the environment $Gamma$. @kinds_env shows the rules
 
 The empty environment is of known size. If the environment is of known size,
 then extending it with a stack makes it have unknown size. The last two rules
-state that we allowed to extend any environment with things of known size.
+state that we are allowed to extend any environment with things of known size.
 The kinding rules allow at most one stack in the environment. This will be
 critical when we perform closure conversion in @Transformations.
 
