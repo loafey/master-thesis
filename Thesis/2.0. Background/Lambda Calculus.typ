@@ -35,13 +35,13 @@
 This section aims to remind the reader of the lambda calculus and some of its
 variants. We assume familiarity with the untyped lambda calculus and typing rules.
 We will introduce the simply typed lambda calculus, then extending it with
-polymorphic types, and finish with linear types.
+polymorphic types, and end by introducing linear types.
 
 === Simply Typed Lambda Calculus <stlc>
 
-Simply typed lambda calculus was first introduced by Church to avoid the
+Simply typed lambda calculus was first introduced by Alonzo Church to avoid the
 paradoxical use of the untyped lambda calculus @church1940formulation. It
-consists of separate syntactic categories: the category of types and the category of terms. The two categories
+consists of two separate syntactic categories: the category of types and the category of terms. The two categories
 correspond to types and computation, respectively. The syntax for #stlc is
 shown in @stlc_syntax. The symbol $T$ is used to denote base types.
 
@@ -49,13 +49,13 @@ shown in @stlc_syntax. The symbol $T$ is used to denote base types.
   caption: [Syntax for #stlc.],
   $
     & #math.italic[Types] sigma, tau "::=" sigma -> tau | T \
-    & #math.italic[Terms] e "::=" x | e e | lambda x. e \
+    & #math.italic[Terms] e_1, e_2 "::=" x | e_1 e_2 | lambda x. e_1 \
   $,
 )<stlc_syntax>
 
 To ensure that terms in #stlc are well-typed, we define a relation between terms
 and types. The typing relation uses the syntax $Gamma tack e: sigma$, which
-says that in environment $Gamma$, term $e$ has type $sigma$. The environment $Gamma$ is
+says that in environment $Gamma$, the term $e$ has type $sigma$. The environment $Gamma$ is
 a mapping from free variables to types. $Gamma, x : sigma$ is the environment that
 extends $Gamma$ by associating the variable $x$ with $sigma$. The typing rules for
 #stlc are shown in @stlc_typing.
@@ -64,7 +64,7 @@ extends $Gamma$ by associating the variable $x$ with $sigma$. The typing rules f
 
 The first rule, Var, says that $x : sigma$ is a term if the environment $Gamma$ contains the variable $x : sigma$. 
 The rule Abs, short for abstraction, also commonly
-called \"lambda\" says that if the term $e : tau$ can be deduced in an arbitrary environment $Gamma$ extended with $x: sigma$, then in the environment $Gamma$ the term 
+called \"lambda\" says that if the term $e : tau$ can be deduced in the environment $Gamma$ extended with $x: sigma$, then in the environment $Gamma$ the term 
 $(lambda x : sigma. space e)$ has type $sigma -> tau$.
 The last rule, App, short for
 application says that if in the environment $Gamma$ we have $e_1 : sigma -> tau$
@@ -78,7 +78,7 @@ over types @girard1972systemf. It was independently discovered by logician Girar
 calculus). 
 
 We extend the simply typed lambda calculus grammar with type variables ($alpha$) and universal
-quantification ($forall$). The grammar of terms is also extended with type abstraction and type application.
+quantification ($forall$). The grammar of terms is also extended with type abstraction ($Lambda alpha. e$) and type application ($e[A]$).
 
 $
   & #math.italic[Types] A "::=" A -> A | T | alpha | forall alpha. A \
@@ -97,8 +97,8 @@ are the rules for type abstraction and type application.
 ) <SystemF_rules>
 
 The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
-The proof tree for the identity function
-applied to the variable $y$ with the type $A$ can be seen in @id_proof.
+In the polymorphic lambda calculus we can implement the identity function. The proof for the identity function and the identity function
+applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply_proof.
 
 
 #let id_proof = prooftree(
@@ -124,7 +124,7 @@ applied to the variable $y$ with the type $A$ can be seen in @id_proof.
 
 We will use the meta-symbol $#metaid$ to refer to the identity function constructed in @id_proof to keep it concise.
 
-#figure(caption: [Applying the identity function to the variable $y$ with type $A$], flex(id_app_proof))
+#figure(caption: [Applying the identity function to the variable $y$ with type $A$], flex(id_app_proof)) <id_apply_proof>
 
 === Linear types <LinearTypes>
 
@@ -160,7 +160,7 @@ the environment contains only the variable $x: A$. The arrow $lollipop$ is used 
 )<linear_rules>
 
 How would we derive terms that use a variable twice, or perhaps a term that does not use a variable?
-Linear logic, and in turn linear types, solves this issue using _exponentials_.
+Linear logic, and in turn linear types, solves this using _exponentials_.
 Exponentials introduce an explicit way to duplicate and discard variables.
 The rules for exponentials are shown in @exponential_rules.
 
