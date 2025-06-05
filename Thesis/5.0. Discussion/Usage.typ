@@ -1,19 +1,15 @@
 #import "../Prelude.typ": *
 
 == Usage<Fibbo>
-Fibonacci is not the most the most interesting program,
+Fibonacci is not the most interesting program,
 but from the standpoint of linearity it is _somewhat_ interesting, because
 it requires the reuse of variables:
 
-#align(
-  center,
-  grid(
-    row-gutter: 10pt,
-    $F_n = F_(n - 1) + F_(n - 2)$,
-    $F_0 = 0$,
-    $F_1 = 1$,
-  ),
-)
+$
+  & F(0) = 0\
+  & F(1) = 1\
+  & F(n) = F (n - 1) + F (n - 2)
+$
 
 @fibonacci_ln contains two different implementations of the fibonacci function: one in Lithium,
 and a recursive one in C.
