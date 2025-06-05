@@ -36,7 +36,7 @@ We do this by transforming types and closure values in the following manner:
 
 It is important not to forget the negative fragment as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
-have to follow the indirection to access the closure. 
+have to follow the indirection to access the closure.
 
 #grid(
   columns: (1fr, 1fr),
@@ -72,7 +72,7 @@ $ lambda (f,k). space k(lambda y. space f(y)) : *(not A times.circle ~not A) $
 
 After making the pointers to stacks explicit we end up with the following program:
 $
-  lambda (f,k). space "let" k(square lambda y. "let" square f' = f; space f'(y))
+  lambda (f,k). space k(square lambda y. "let" square f' = f; space f'(y))
   : *(square ~ A times.circle ~(square~A))
 $
 
@@ -125,8 +125,7 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
   inset: 10pt,
   [Source], [Target],
   $~A$, $exists gamma. *(A times.circle gamma) times.circle gamma$,
-  $lambda^~ . c$,
-  $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
+  $lambda^~ . c$, $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
 )
 $Gamma$ represents the free variables in the closure.
 $times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$
@@ -169,16 +168,16 @@ the following:
 
 */
 $
-  lambda^*(f,k). & "let" square f' = f;           \
-                 & "let" angled(alpha, k') = k;   \
-                 & "let" g, rho_1 = k';         & \
-                 & g(square #angled(
-                       $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
-                       $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
-                         & & & "let" h,rho_4 = x; & \
-                         & & & h(y, rho_4), f')$,
-                     )
-                     , rho_1)
+  lambda^*(f,k). & "let" square f' = f; \
+  & "let" angled(alpha, k') = k; \
+  & "let" g, rho_1 = k'; & \
+  & g(square #angled(
+      $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
+      $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
+        & & & "let" h,rho_4 = x; & \
+        & & & h(y, rho_4), f')$,
+    )
+    , rho_1)
 $
 
 Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$
