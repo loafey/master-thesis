@@ -232,7 +232,7 @@
         of as creating a procedure in a C-like language, and thus, we must be
         careful about nesting.],
       $#scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r_1 = "next"([], #math.italic("ptr"))$), $r_1 = s p$, $""^-#sem[c]_(x |-> [r_1])$) \
+      &#code_block($l_1$, meta($"let" r_1 = "next"([], #math.italic("ptr"))$), $r_1 = s p$, $""^-#sem[c]_(x |-> r_1)$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
 
