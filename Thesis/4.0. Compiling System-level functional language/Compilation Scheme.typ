@@ -161,8 +161,6 @@ and in @operand_table we explain the operands used in the compilation scheme.
     ),
     caption: [
       Translations between pseudo and x86 operands.
-      SP stands for Stack Pointer, and points to the top of the current stack.
-      SSP stands for Stack Save Pointer and is used to backup SP.
       `%R14` and `%R15` are physical x86-64 registers,
       and `0(VAL)` means that we are interacting with the memory address stored in `VAL`.
     ],
