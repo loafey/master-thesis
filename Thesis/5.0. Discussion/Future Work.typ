@@ -31,8 +31,8 @@ the heap, or on the system stack) and linked to the old stack.
 This would allow stacks to be small, but grow in size dynamically if need be.
 Implementing this would place some requirements on the push and pop push semantics
 however, because we would need to keep track of
-the stack size while the program is running, and allocate more memory if we need it.
-This book keeping could have an impact on performance, and should ideally be
+the stack size while the program is running, and allocate more memory if need be.
+This bookkeeping could have an impact on performance, and should ideally be
 as fast as possible. Overall, this option would effectively trade a little
 bit of performance for potentially more effective memory usage.
 // For programs that do not allocate a large number of stacks, which
@@ -171,7 +171,7 @@ Rewriting the fibonacci function with this operator would result in:
 )
 
 Because exponentials create more than one reference to memory, we would need
-automatic de-allocation, or we risk leaking memory. This could be solved using
+automatic deallocation, or we risk leaking memory. This could be solved using
 reference counting or garbage collection.
 
 === Data Types<DataTypes>
@@ -191,7 +191,7 @@ when contiguous memory is wanted.
 // the type is recursive. A simple free would not suffice for these @LinearTypeswadler1990linear.
 
 In other immutable languages such as Haskell, data is copied when
-you operate on it. Take this Haskell function for example: 
+you operate on it. Take this Haskell function for example:
 ```asm
 plus1 :: [Int] -> [Int]
 plus1 xs = map (+1) xs
