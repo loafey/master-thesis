@@ -26,8 +26,8 @@ If we instead write $rho, x |-> [r_0, ..., r_n]$ then $x$ maps to the list conta
 Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail, and
 finally, $s_0 ++ s_1$ means the concatenation of the lists $s_0$ and $s_1$.
 
-We annotate a variable $z^omega$ or $z^known$ in the negative fragment as
-a reminder of the kind of the type of the variable.
+We annotate a variable $z^omega$ or $z^known$ in the negative fragment
+with the kind of the type of the variable.
 
 A pseudo register is a physical register, or a location on the
 stack. Formally, $rho$ can be seen as a function $rho : Gamma -> "List"("Reg")$.
