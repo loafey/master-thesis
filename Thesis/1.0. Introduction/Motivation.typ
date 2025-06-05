@@ -12,7 +12,13 @@ _immutable_ data structures, as opposed to _mutable_ data structures. The
 former requires copying, and subsequently a form of automatic memory
 management, at least for convenience, whereas the latter can be modified in place.
 
-#todo[Talk about f $compose$ g eliminating intermediate structure]
+A popular and effective optimization for functional languages is _fusion_
+@gill1993short. Fusion aims to remove intermediate data structures, improving
+performance and reducing memory usage. However, it can be difficult to predict
+whether fusion is effective for arbitrary compositions. Linear types provide
+a framework for fusion where, rather than letting a compiler decide
+heuristically whether fusion ends up duplicating or sharing work, it is
+specified by the types of the composed functions @bernardy2016composable.
 
 Girard's linear logic @girard1987linear
 is a refinement of classical and intuitionistic logic, where, rather than
