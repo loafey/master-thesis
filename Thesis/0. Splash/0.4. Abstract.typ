@@ -20,5 +20,5 @@ performance.
 This thesis presents #ln, a system-level functional programming language that
 is based a variant of linear logic. We give the typing and kinding rules for #ln before describing
 a series of transformations to turn #ln into a language that is easily
-translated into assembly code. Additionally, we present the compilation scheme,
-the mapping from types to memory, and the application binary interface (ABI).
+translated into assembly code. Additionally, we present a compilation scheme,
+a mapping from types to memory, and the application binary interface (ABI).
