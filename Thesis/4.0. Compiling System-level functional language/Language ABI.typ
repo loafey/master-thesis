@@ -48,7 +48,7 @@ and virtual registers stored on the system stack.
 When functions are called these are the pre-conditions that must be fulfilled:
 #indent[
   - Register `R15`is set to an address which points to a valid stack.
-  - The address in `R15` must be a multiple of 8 (4 on a 32 bit system).
+  - The address in `R15` must be a multiple of 8 (4 on a 32-bit system).
   - The stack size should be big enough for all variables in the function.
   - All expected arguments exist on the stack.
   - All arguments are properly aligned.
@@ -213,7 +213,7 @@ When integers of different sizes are introduced, memory alignment
 needs to be taken into consideration.
 
 When pushing values of different sizes to the stack, alignment needs to be considered.
-Take this stack that just contains a 16 bit integer with the value `42`.
+Take this stack that just contains a 16-bit integer with the value `42`.
 
 #[
   #let b(content) = box(stroke: black, width: 100%, inset: 6pt, content)
@@ -226,7 +226,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   )
 
   #[
-    Now if we want to push another value, say a 32 bit integer with the value `777`,
+    Now if we want to push another value, say a 32-bit integer with the value `777`,
     we need to pad it so the value is placed on an address which is divisible by its size.
   ]
   #table(
