@@ -192,7 +192,7 @@ x-axis represents the input to the fibonacci function. Note that the y-axis grow
   )
 })
 
-As can be seen in the benchmarks in @fibbo-benchmarks there is quite a
+As can be seen in the benchmark in @fibbo-benchmarks there is quite a
 large gap between the version written in #ln and the version written in C.
 Each input was measured 100 times.
 The C version was compiled using GCC with O0 and O3.
@@ -200,11 +200,11 @@ However, while the #ln version is around one order of magnitude
 slower than the unoptimized C version,
 the growth in execution time is a constant factor between all three programs.
 
-This can be observed even more clearly if we overlap the benchmarks over
+This can be observed even more clearly if we overlap the results over
 each other. We can see that the unoptimized C version grows
 the same way as the #ln version, while the optimized C version is slightly
 more efficient.
-#figure(caption: [Benchmarks from @fibbo-benchmarks overlapped], overlap)
+#figure(caption: [Benchmark from @fibbo-benchmarks with results overlapped.], overlap)
 
 The performance difference we can see @fibbo-benchmarks
 can be attributed to several factors but the two most significant ones
