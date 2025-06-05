@@ -75,7 +75,7 @@
 )
 
 #let linear_closure_value = judge(
-  $Gamma : known , x: A tack c$,
+  $(Gamma , x: A) : known tack c$,
   $Gamma tack lambda^not x. c : not A$,
   note: "linear closure",
 )
@@ -86,7 +86,7 @@
   note: "static function",
 )
 #let stack_closure_value = judge(
-  $Gamma: omega, x: A tack c$,
+  $(Gamma , x: A) : omega tack c$,
   $Gamma tack lambda^~x. c: ~A$,
   note: "stack closure",
 )

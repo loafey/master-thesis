@@ -3,9 +3,9 @@
 
 == Transformations <Transformations>
 
-At this stage #ln is still a logic. How do we bridge the gap between
-logic and machine? This section goes into the necessary transformations to turn
-#ln into a language that can be represented in an assembly language.
+At this stage #ln is still a calculus. How do we bridge the gap between
+calculus and machine? This section goes into the necessary transformations to turn
+#ln into a language that can be transformed to an assembly language.
 
 The first three phases of the #ln compiler are: linear closure conversion, stack
 selection, and pointer closure conversion. The first step eliminates linear
@@ -25,27 +25,41 @@ where a procedure should return control when finishing execution. The
 first step in this process is making pointers to stacks explicit.
 
 The linear closure conversion phase transforms $not A$ to $square (~A)$, making
-the pointer explicit. Closure values are transformed in the following manner:
-$ (lambda^not x. c): not A => square (lambda^~ x. c): square (~A) $ It is
-important not to forget the negative fragment as well. Before calling
+the pointer to the stack explicit. Closure values are transformed in the following manner:
+
+#grid(
+  columns: (1fr, 2fr),
+  stroke: black + 0.1pt,
+  inset: 10pt,
+  [Source], [Target],
+  $(lambda^not x. c): not A $,
+  $square (lambda^~ x. c): square (~A) $,
+)
+
+It is important not to forget the negative fragment as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
 have to follow the indirection to access the closure. If we have the call
 $f(x)$ with $f : not A$ and $x : A$. After conversion the call would look like
-this: $"let" square g = f; g(x)$. Lastly, because the type $not A$ is transformed
+this: $"let" square g = f; g(x)$. Because the type $not A$ is transformed
 to $square ~A$, the type checker should allow $square ~A$ where $not A$ is
 expected.
+
+In the typing rules in @TypesAndValues, we have seen that linear closures
+require the environment $Gamma$ to have kind $known$, which means $Gamma$ does
+not contain a stack. However, because linear closures are transformed to stack
+closures behind linear pointers, the environment for stack closures end up
+being ill-kinded. In the next section (@StackSelection) we present
+a transformation that corrects this.
 
 === Stack Selection <StackSelection>
 
 It is important for every stack closure ($~A$) to identify a single unique stack that
-it can execute on. Stack selection selects a single unique stack for every
+it can execute on. The stack selection phase selects a single unique stack for every
 closure if at least one stack exists, ensuring that every closure has _at most_ one stack
 prepared. The reason we can not guarantee that there is _exactly one_ stack
-prepared is because stacks have not been made explicit yet. If we consider the
-following program, where $f : *A$ is defined: $ lambda^~ x. f(x) : space ~A $
-It is not possible to introduce a stack to this closure without also
-transforming the type. In @PointerClosureConversion we will show the necessary
-transformations to make stacks explicit, and how to introduce new stacks.
+prepared is because stacks have not been made explicit yet. 
+In @PointerClosureConversion we will show the necessary transformations to make
+stacks explicit, and how to introduce new stacks.
 
 Consider the following program:
 $ lambda (f,k). space k(lambda y. space f(y)) : *(not A times.circle ~not A) $
@@ -56,10 +70,11 @@ $
   : *(square ~ A times.circle ~(square~A))
 $
 
-Because $k$ has type $~(square~A)$, its environment must be a stack. The issue is that the
-only variable that is a stack is $f'$, but it cannot be the chosen stack because
-bound variables are stored on the stack. The chosen stack must be a variable
-that is bound outside the closure, or an explicit newstack.
+Because $k$ has type $~(square~A)$, its environment must be a stack. 
+The issue is that the only variable that is a stack is $f'$, but it cannot be
+the chosen stack because bound variables are stored on the stack. The chosen
+stack must be a variable that is bound outside the closure, or an explicit
+newstack.
 
 Stack selection moves the $"let" square f' = f$ out of the closure, making $f'$
 free in the closure, and selecting it as the stack.
@@ -69,6 +84,12 @@ $
   lambda (f,k). space "let" square f' = f; space k(lambda y. space f'(y))
   : *(square ~ A times.circle ~(square~A))
 $
+
+// f : #~A
+// f' : ~A
+// k : ~(~#A)
+
+Now $lambda y. f'(y) : $ contains exactly the stack $f'$.
 
 === Pointer Closure Conversion <PointerClosureConversion>
 
@@ -97,12 +118,13 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
-  $lambda^~ . c : ~A$,
-  $#angled($times.circle.big Gamma$, $(lambda^* (x, rho) . "unpairAll"(rho); c, "pairvars"(Gamma))$)$,
+  $lambda^~ . c : space ~A$,
+  $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$) : exists gamma. *(A times.circle gamma) times.circle gamma$,
 )
 $Gamma$ represents the free variables in the closure.
 $times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$
-The function pairvars needs to construct a newstack $(circle)$ when $Gamma$ does not contain a stack.
+If $Gamma$ has kind $known$, then $"pairsvars"$ must construct a newstack ($circle$).
+$"unpairAll"$ is a macro that inverts this procedure.
 
 Because the closures are converted, the corresponding commands must also be
 transformed to match. Fortunately, the transformation is straightforward:
@@ -125,7 +147,7 @@ $
   : *(square ~ A times.circle ~(square~A))
 $
 
-Because $f'$ is a stack, and a free variable in $lambda y. f'(y)$, pairvars
+Because $f'$ is a stack, and a free variable in $lambda y. f'(y)$, $"pairvars"$
 does not need to construct a newstack. Transforming the program would yield
 the following:
 
