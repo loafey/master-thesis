@@ -7,7 +7,7 @@ of the program".
 
 Continuations have been successfully used in many compilers for strict languages,
 for example by:
-Appel @appel2007compiling, Fradet and Métayer @fradet1991compilation,
+Appel @appel2007compiling, Fradet and Le Métayer @fradet1991compilation,
 and Kelsey and Hudak @kelsey1989realistic.
 Additionally, in the Spineless Tagless G-Machine, the abstract
 machine of the Glasgow Haskell Compiler (GHC), continuations are used to manage thunks, function
@@ -61,5 +61,5 @@ evaluation order is determined by the order of the function calls.
     In (1), bar is called first in the closure binding $k$, and all other
     function calls are in subsequent closures. Only a single function call can be
     made per closure. This can been seen in the grammar of commands in #ln (see @grammar_ln).
-],
+  ],
 )
