@@ -172,7 +172,7 @@ Rewriting the fibonacci function with this operator would result in:
 
 Because exponentials create more than one reference to memory, we would need
 automatic deallocation, or we risk leaking memory. This could be solved using
-reference counting or garbage collection.
+reference counting, garbage collection or any other alternative.
 
 === Data Types<DataTypes>
 While the language currently contains sum and product types
