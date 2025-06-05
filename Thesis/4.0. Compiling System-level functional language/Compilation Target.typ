@@ -44,7 +44,7 @@ The single stack frame is used for variable storage and register spilling
   Register spilling means backing up a register
   on the stack, freeing the register temporarily.
 ],
-and it's size is determined at compile time and can vary between functions.
+and its size is determined at compile time and can vary between functions.
 This size is based on the amount of variables used by the function,
 and does not account for register spilling because pushing and popping updates
 stack frame size dynamically.
