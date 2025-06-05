@@ -125,7 +125,8 @@ Values have a right-side type ($v: A$) to symbolize construction. Conversely, co
 Because the rules for values have a right-side type, they are read 
 top-to-bottom. The rules for commands are read bottom-to-top.
 
-Kinds are also introduced to the environment $Gamma$. @kinds_env shows the rules for the environment.
+Kinds are also introduced to the environment $Gamma$. @kinds_env shows the
+rules for the environment.
 
 #figure(caption: [Kinding rules for environments.], flex(
   prooftree(rule($dot : known$, $$)),
@@ -139,6 +140,7 @@ then extending it with a stack makes it have unknown size. The last two rules
 state that we are allowed to extend any environment with things of known size.
 The kinding rules allow at most one stack in the environment. This will be
 critical when we perform closure conversion in @Transformations.
+If we omit the kind from the environment, then either kind is allowed.
 
 The typing rules for the positive fragment are depicted in
 @typing_positive_fragment, and @typing_negative_fragment shows the typing
