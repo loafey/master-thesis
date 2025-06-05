@@ -24,7 +24,7 @@ use that memory for things such as interrupts or exceptions.
 This is similar in concept to GCC's split stacks, which lets threads share
 a fragmented stack, leading to less allocations.
 
-Another feature that can be added is to add an option allowing dis-contiguous,
+Another feature that can be added is to add an option allowing discontiguous stacks,
 similarly to GCC's split stack option. Newly allocated stacks start out as
 small, and as the stacks start being filled, a new stack is allocated (either on
 the heap, or on the system stack) and linked to the old stack.
