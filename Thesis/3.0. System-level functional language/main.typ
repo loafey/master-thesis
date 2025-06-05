@@ -114,9 +114,9 @@ and explicit stack environments.
 #ln programs consist of two syntactic fragments:
 
 #indent[
-  - The _Positive fragment_ describes how values are created. When we talk about
+  - The _positive fragment_ describes how values are created. When we talk about
     values we refer to the positive fragment.
-  - The _Negative fragment_: describes how to consume environments of values. The
+  - The _negative fragment_: describes how to consume environments of values. The
     negative fragment can also be referred to as commands.
 ]
 
