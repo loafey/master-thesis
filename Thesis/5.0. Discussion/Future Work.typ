@@ -152,21 +152,24 @@ If we were to introduce some syntax sugar, for example a `*` operator that combi
 we could simplify the term: `let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)`
 to: `k(*n + *n)`.
 Rewriting the fibonacci function with this operator would result in:
-```hs
-fib : *(!int ⊗ ~int)
-  = \(n,k) ->
-    case *n == 0 of {
-      inl () -> k(0);
-      inr () ->
-        case *n == 1 of {
-          inl () -> k(1);
-          inr () ->
-            fib((*n - 1, \r1 ->
-            fib((*n - 2, \r2 ->
-            k(r1 + r2)))))
-        }
-    }
-```
+#block(
+  breakable: false,
+  ```hs
+  fib : *(!int ⊗ ~int)
+    = \(n,k) ->
+      case *n == 0 of {
+        inl () -> k(0);
+        inr () ->
+          case *n == 1 of {
+            inl () -> k(1);
+            inr () ->
+              fib((*n - 1, \r1 ->
+              fib((*n - 2, \r2 ->
+              k(r1 + r2)))))
+          }
+      }
+  ```,
+)
 
 Because exponentials create more than one reference to memory, we would need
 automatic de-allocation, or we risk leaking memory. This could be solved using
