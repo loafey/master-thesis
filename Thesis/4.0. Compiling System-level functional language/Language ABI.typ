@@ -86,10 +86,10 @@ as a stack's size does not have to be known at compile time.
   ),
 )
 
-At any given moment only one stack is used to execute upon, which means that while
-other stacks can be allocated and freed, and variables can only be pushed on the
-current one. Mutating or reading data on other stacks is undefined behavior,
-outside of higher order functions.#todo[se över]
+// At any given moment only one stack is used to execute upon, which means that while
+// other stacks can be allocated and freed, and variables can only be pushed on the
+// current one. Mutating or reading data on other stacks is undefined behavior,
+// outside of higher order functions.#todo[se över]
 
 All functions in #ln are called through jump(with some discrepancies
 for top-level functions and FFI). This is implemented by passing around all
