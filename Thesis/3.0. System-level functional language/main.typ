@@ -73,10 +73,10 @@ reserved to store known sized data.
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
 
 #indent[
-  + There is no sub-kinding; if a type with kind $omega$ is expected, then a type with kind $known$ is not allowed, and vice versa.
-  + It is forbidden to construct a pair of two stacks
-  + The kinds in a sum type must match
-  + Type variables are always stacks, which means they cannot be used directly for haskell-style polymorphism
+  - There is no sub-kinding; if a type with kind $omega$ is expected, then a type with kind $known$ is not allowed, and vice versa.
+  - It is forbidden to construct a pair of two stacks
+  - The kinds in a sum type must match
+  - Type variables are always stacks, which means they cannot be used directly for Haskell-style polymorphism
     (see @PointerClosureConversion why type variables must have kind $omega$).
 ]
 
