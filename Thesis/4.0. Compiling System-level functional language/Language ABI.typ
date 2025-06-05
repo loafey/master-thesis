@@ -71,9 +71,8 @@ but this creates a problem since we can not deallocate using this updated pointe
 To alleviate this,
 the original pointer is placed on the stack, which can then be popped
 when the stack is empty and `freestack` is called.
-#text(green)[
-  This also opens up for stacks to be allocated at differing sizes,
-  as a stack's size does not have to be known at compile time.]#todo[se över]
+This also opens up for stacks to be allocated at differing sizes,
+as a stack's size does not have to be known at compile time.
 
 #figure(
   caption: [An empty stack only containing the start pointer.],
