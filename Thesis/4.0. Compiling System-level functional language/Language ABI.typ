@@ -222,7 +222,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
   #table(
     columns: rep(len, 1fr),
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
-    f(type: "tag", 2, `$42`), f(14, [...]),
+    f(type: "tag", 2, `$42`), f(14, `Free space...`),
   )
 
   #[
@@ -293,7 +293,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
     f(type: "tag", 8, `$1`), f(type: "tag", 8, `$2`),
     ..range(0x1d, 0x2d).rev().map(a => raw(str(a, base: 16))),
-    f(type: "tag", 8, `$3`), f(8, [...]),
+    f(type: "tag", 8, `$3`), f(8, `Free space...`),
   )
   As can be seen no information outside of the actual values is stored.
 
