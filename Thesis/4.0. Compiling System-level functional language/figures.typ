@@ -310,7 +310,7 @@
     cell2(
       [Stack deallocation],
       [
-        Deallocate the stack $r_0$, then compile the command $c$.],
+        Deallocate the stack $r_0$.],
       $#scheme_neg($"freestack" z^omega; c$)_(rho, z |-> [r_0])
       = #code_box($"free"(r_0)$, $#sem[c]_rho$)$,
     ),
