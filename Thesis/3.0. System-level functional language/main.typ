@@ -57,15 +57,15 @@ terminates with no value, like in @cps.
 // \
 // #align(center, pll_types)
 
-There are four new constructs in #ln that extend intuitionistic linear logic.
+There are four new constructs in #ln that extend linear logic.
 These are: _empty stack_
-($circle$), _linear pointer_ ($square$), _static closure_ ($~$), and _static function_ ($*$).
+($circle$), _linear pointer_ ($square$), _stack closure_ ($~$), and _static function_ ($*$).
 The latter two are variants of negation ($not$).
 
 At the core of #ln is the kind system. Where values have types, types have
-kinds. The two kinds in #ln are _stack_ ($omega$) and _known length_ $omega$
-represents a region of memory of unknown length, with extra reserved space to
-store arbitrarily sized data.
+kinds. The two kinds in #ln are _stack_ ($omega$) and _known size_. 
+$omega$ represents a region of memory of unknown size, with extra reserved
+space to store known sized data.
 
 #figure(caption: [Kinding rules in #ln], align(center, kind_judgements(
   true,
@@ -79,7 +79,7 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
   + It is forbidden to construct a pair of two stacks
   + The kinds in a sum type must match
   + Type variables are always stacks, which means they cannot be used directly for haskell-style polymorphism
-    (see @PointerClosureConversion).
+    (see @PointerClosureConversion why type variables must have kind $omega$).
 ]
 
 Each negation enables one of three programming styles: goto ($*$) , procedural
