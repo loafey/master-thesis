@@ -259,7 +259,7 @@ Take this stack that just contains a 16 bit integer with the value `42`.
     it needs to be stored on an address divisible by 8, if its 4 bytes, the address needs
     to be divisible by 4, and so on and so forth. While x86-64 allows
     unaligned memory interactions for some instructions, this is often heavily
-    discouraged because it can potentially harm performance, as it can
+    discouraged because it can potentially harm performance, because it can
     require more clock cycles, and cache friendliness of the values being interacted with.
   ]
 
