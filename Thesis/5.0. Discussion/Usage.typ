@@ -82,7 +82,7 @@ The value `inl ()` represents true and the value `inr ()` represents false.
 ) <fibonacci_ln>
 
 
-=== Benchmarks
+=== Benchmark
 #import "@preview/cetz:0.3.4": canvas, draw
 #import "@preview/cetz-plot:0.1.1": plot, chart
 
