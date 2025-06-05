@@ -182,8 +182,6 @@ in @MemoryAlignment.
     $#`Word` \ quad quad + max(mem(A), mem(B))$,
   ),
   eq([Static function], $*A: known$, 1, `Word`),
-  eq([Linear closure], $not A: known$, 1, `Word`),
-  eq([Stack\ closure], $~A: omega$, 1, sym.infinity),
   eq([Linear pointer], $square A: known$, 1, `Word`),
   eq([Empty stack], $circle: omega$, 1, sym.infinity),
   eq([Unit\ $$], $fatone: known$, 0, 0),
