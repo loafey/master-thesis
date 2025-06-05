@@ -91,7 +91,7 @@ as the process deallocating a stack does not need to know the size of said stack
 // outside of higher order functions.
 
 All functions in #ln are called through jump(with some discrepancies
-for top-level functions and FFI). This is implemented by passing around all
+for FFI). This is implemented by passing around all
 functions as values on the stack, and popping them and jumping to them when
 applicable.
 Top-level functions work differently however, and act
