@@ -118,14 +118,14 @@ the number of physical registers needed to store them.
 // we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
-of unknown size, and it is used to represent a stack.
+of unknown size, and it is used to represent a stack (see @MemoryAlignment for a more detailed explanation).
 In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
 a `Word` is often considered to be 8 bytes.
 
-A combination such as $#`Word` + #sym.infinity$ can be seen as a stack of
-unknown length, but know we have at least a `Word` on top of it.
-A more detailed explanation of #sym.infinity can be found
-in @MemoryAlignment.
+// A combination such as $#`Word` + #sym.infinity$ can be seen as a stack of
+// unknown length, but know we have at least a `Word` on top of it.
+// A more detailed explanation of #sym.infinity can be found
+// in @MemoryAlignment.
 
 
 #let fatone = math.bold[1]
