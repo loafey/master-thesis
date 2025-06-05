@@ -104,7 +104,7 @@ is not possible with $*$ and $~$ alone. The type $*(A times.circle ~B
   times.circle ~C)$ is ill-kinded, and $*(A times.circle *B times.circle ~C)$
 would not work either because $*B$ can not capture state.
 To enable higher-order programming we introduce the _linear closure_.
-The linear closure can capture arbitrary state and produces a type with a known size (remember the kinding rule).
+The linear closure can capture arbitrary state and produces a type with a known size.
 Now we can write the higher-order function: $*(A times.circle not B times.circle ~C)$.
 In @Transformations we explain how closures are transformed to static functions
 and explicit stack environments.

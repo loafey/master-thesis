@@ -119,7 +119,7 @@ the number of physical registers needed to store them.
 // we define the needed amount of physical registers.
 
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
-of unknown length, and it is used to represent a stack.
+of unknown size, and it is used to represent a stack.
 In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
 a `Word` is 8 bytes.
 
