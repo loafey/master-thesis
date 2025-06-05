@@ -16,7 +16,7 @@ inspiration from linear types and intuitionistic linear logic @lafont1988linear.
 Before going into details on #ln it can be helpful to get an overview of how
 the language looks. The grammar of #ln is depicted in @slfl_grammar.
 
-#figure(caption: [Grammar of #ln], align(left, complete_grammar))<slfl_grammar>
+#figure(caption: [Grammar of #ln.], align(left, complete_grammar))<slfl_grammar>
 
 Take this top-level function (_Definition_) as an example:
 $
@@ -67,7 +67,7 @@ kinds. The two kinds in #ln are _stack_ ($omega$) and _known size_.
 $omega$ represents a region of memory of unknown size, with extra space
 reserved to store known sized data.
 
-#figure(caption: [Kinding rules in #ln], align(center, kind_judgements(true)))<KindRules>
+#figure(caption: [Kinding rules in #ln.], align(center, kind_judgements(true)))<KindRules>
 
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
@@ -150,7 +150,7 @@ rules for the negative fragment.
 #show figure: set block(breakable: true)
 #let content = (a, b) => ("", a, block(breakable: false, b), "")
 #figure(
-  caption: [Typing rules for the positive fragment of #ln],
+  caption: [Typing rules for the positive fragment of #ln.],
   grid(
     inset: (bottom: 15pt),
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
@@ -189,7 +189,7 @@ rules for the negative fragment.
 \
 
 #figure(
-  caption: [Typing rules for the negative fragment of #ln],
+  caption: [Typing rules for the negative fragment of #ln.],
   grid(
     inset: (bottom: 15pt),
     columns: (0.1fr, 1.5fr, 1fr, 0.1fr),
@@ -265,7 +265,7 @@ In @id_function we show how we can use the aforementioned rules to give the typi
 In @id_type we derive the proof for the type, to ensure that the type is kind correct.
 
 #figure(
-  caption: [The kind proof for the type of the identity function],
+  caption: [The kind proof for the type of the identity function.],
   prooftree(
     rule(
       $*(A times.circle ~A) : known$,

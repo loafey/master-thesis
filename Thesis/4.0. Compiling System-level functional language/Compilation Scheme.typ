@@ -26,11 +26,11 @@ If we instead write $rho, (x |-> [r_0, ..., r_n])$ then $x$ maps to the list con
 Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail, and
 $s_0 ++ s_1$ means the concatenation of the lists $s_0$ and $s_1$.
 Lastly, the number of registers $rho$ maps the variable $x$ to must be exactly
-$#sem[$Gamma(x)$]^("R")$, i.e $|rho(x)| = #sem[$Gamma(x)$]^"R"$. 
+$#sem[$Gamma(x)$]^("R")$, i.e $|rho(x)| = #sem[$Gamma(x)$]^"R"$.
 
 The function $#sem[$A$]^("R")$ is a mapping from a type $A$ to the number of registers needed to store a value $v$ with type $A$.
 The definition for it can be found in
-@mappingMemToType. 
+@mappingMemToType.
 
 We annotate a variable $z^omega$ or $z^known$ in the negative fragment
 to indicate the kind of the type of the variable.
@@ -171,11 +171,11 @@ and in @operand_table we explain the operands used in the compilation scheme.
 #show figure: set block(breakable: true)
 
 #figure(
-  caption: [Compilation scheme for the positive fragment of #ln],
+  caption: [Compilation scheme for the positive fragment of #ln.],
   positive_compilation_scheme,
 ) <compscheme_positive>
 #figure(
-  caption: [Compilation scheme for the negative fragment of #ln],
+  caption: [Compilation scheme for the negative fragment of #ln.],
   negative_compilation_scheme,
 ) <compscheme_negative>
 

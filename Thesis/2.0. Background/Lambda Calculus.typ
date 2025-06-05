@@ -7,16 +7,20 @@
   prooftree(rule($Gamma, x : sigma tack x: sigma$, $$, name: "Var")),
   [],
 
-  prooftree(rule(
-    $Gamma tack lambda x:sigma. space e : sigma -> tau$,
-    $Gamma, x:sigma tack e: tau$,
-    name: "Abs",
-  )),
-  prooftree(rule(
-    $Gamma tack e_1 e_2: tau$,
-    $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
-    name: "App",
-  )),
+  prooftree(
+    rule(
+      $Gamma tack lambda x:sigma. space e : sigma -> tau$,
+      $Gamma, x:sigma tack e: tau$,
+      name: "Abs",
+    ),
+  ),
+  prooftree(
+    rule(
+      $Gamma tack e_1 e_2: tau$,
+      $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
+      name: "App",
+    ),
+  ),
 )
 
 #let tapp = rule(
@@ -60,11 +64,11 @@ a mapping from free variables to types. $Gamma, x : sigma$ is the environment th
 extends $Gamma$ by associating the variable $x$ with $sigma$. If a dot ($dot$) is used in place of $Gamma$ then the environment is empty. The typing rules for
 #stlc are shown in @stlc_typing.
 
-#figure(caption: [Typing rules for #stlc], lc)<stlc_typing>
+#figure(caption: [Typing rules for #stlc.], lc)<stlc_typing>
 
-The first rule, Var, says that $x : sigma$ is a term if the environment $Gamma$ contains the variable $x : sigma$. 
+The first rule, Var, says that $x : sigma$ is a term if the environment $Gamma$ contains the variable $x : sigma$.
 The rule Abs, short for abstraction, also commonly
-called \"lambda\" says that if the term $e : tau$ can be deduced in the environment $Gamma$ extended with $x: sigma$, then in the environment $Gamma$ the term 
+called \"lambda\" says that if the term $e : tau$ can be deduced in the environment $Gamma$ extended with $x: sigma$, then in the environment $Gamma$ the term
 $(lambda x : sigma. space e)$ has type $sigma -> tau$.
 The last rule, App, short for
 application says that if in the environment $Gamma$ we have $e_1 : sigma -> tau$
@@ -75,7 +79,7 @@ and $e_2 : tau$ then in the environment $Gamma$ the term $e_1 e_2$ has type $tau
 System F is a typed lambda calculus that introduces universal quantification
 over types @girard1972systemf. It was independently discovered by logician Girard in
 1972 (System F) and in 1974 by computer scientist Reynolds (Polymorphic lambda
-calculus). 
+calculus).
 
 We extend the simply typed lambda calculus grammar with type variables ($alpha$) and universal
 quantification ($forall$). The grammar of terms is also extended with type abstraction ($Lambda alpha. e$) and type application ($e[A]$).
@@ -92,7 +96,7 @@ variables to types, it also includes type variables. Shown in @SystemF_rules
 are the rules for type abstraction and type application.
 
 #figure(
-  caption: [Type abstraction and type application rules in System F],
+  caption: [Type abstraction and type application rules in System F.],
   flex(prooftree(tabs), prooftree(tapp)),
 ) <SystemF_rules>
 
@@ -104,27 +108,38 @@ applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply
 #let id_proof = prooftree(
   rule(
     $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
-    rule($Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$, rule(
-      $Gamma, alpha, x : alpha tack x : alpha$,
-      $$,
-    )),
+    rule(
+      $Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$,
+      rule(
+        $Gamma, alpha, x : alpha tack x : alpha$,
+        $$,
+      ),
+    ),
   ),
 )
 #let metaid = math.bold[id]
-#let id_app_proof = prooftree(rule(
-  $Gamma tack #metaid\[A] space y : A$,
-  rule($Gamma tack #metaid\[A] : A -> A$, rule(
-    $Gamma tack #metaid : forall alpha. alpha -> alpha$,
-    $$,
-  )),
-  rule($Gamma tack y : A$, $y : A in Gamma$),
-))
+#let id_app_proof = prooftree(
+  rule(
+    $Gamma tack #metaid\[A] space y : A$,
+    rule(
+      $Gamma tack #metaid\[A] : A -> A$,
+      rule(
+        $Gamma tack #metaid : forall alpha. alpha -> alpha$,
+        $$,
+      ),
+    ),
+    rule($Gamma tack y : A$, $y : A in Gamma$),
+  ),
+)
 
-#figure(caption: [The identity function], flex(id_proof)) <id_proof>
+#figure(caption: [The identity function.], flex(id_proof)) <id_proof>
 
 We will use the meta-symbol $#metaid$ to refer to the identity function constructed in @id_proof to keep it concise.
 
-#figure(caption: [Applying the identity function to the variable $y$ with type $A$], flex(id_app_proof)) <id_apply_proof>
+#figure(
+  caption: [Applying the identity function to the variable $y$ with type $A$.],
+  flex(id_app_proof),
+) <id_apply_proof>
 
 === Linear types <LinearTypes>
 
@@ -137,24 +152,28 @@ This means the typing rules App and Var in @stlc_typing are no longer valid.
 The typing rules for a linear type system are shown in @linear_rules. Note how the
 environments for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
 not share any variables. Similarly, the rule for Var, differs from its simply typed variant, which now requires that
-the environment contains only the variable $x: A$. The arrow $lollipop$ is used instead of $->$ to denote linearity. 
+the environment contains only the variable $x: A$. The arrow $lollipop$ is used instead of $->$ to denote linearity.
 
-#let linear_app = prooftree(rule(
-  name: "App",
-  $Gamma, Delta tack e_1 e_2 : tau$,
-  $Gamma tack e_1 : sigma lollipop tau$,
-  $Delta tack e_2 : sigma$,
-))
+#let linear_app = prooftree(
+  rule(
+    name: "App",
+    $Gamma, Delta tack e_1 e_2 : tau$,
+    $Gamma tack e_1 : sigma lollipop tau$,
+    $Delta tack e_2 : sigma$,
+  ),
+)
 
-#let linear_abs = prooftree(rule(
-  name: "Abs",
-  $Gamma tack lambda x. e : sigma lollipop tau$,
-  $Gamma, x: sigma tack e : tau$,
-))
+#let linear_abs = prooftree(
+  rule(
+    name: "Abs",
+    $Gamma tack lambda x. e : sigma lollipop tau$,
+    $Gamma, x: sigma tack e : tau$,
+  ),
+)
 #let linear_var = prooftree(rule(name: "Var", $dot, x: sigma tack x: sigma$))
 
 #figure(
-  caption: [Typing rules for App, Abs, and Var in a linear type system],
+  caption: [Typing rules for App, Abs, and Var in a linear type system.],
   flex(linear_app, linear_abs, linear_var),
 )<linear_rules>
 
@@ -176,35 +195,38 @@ The rules for exponentials are shown in @exponential_rules.
 )<exponential_rules>
 
 The function $!\_ : "Environment" -> "Environment"$, called \"bang\", is defined by:
-$ 
+$
   !(Gamma, x: sigma) & = (!Gamma, x: !sigma) \
   !(dot) & = dot
 $
 Note that \"bang\" is both a type constructor ($!A$) and a function on environments ($!Gamma$).
 Because Derelict, Discard, and Duplicate manipulate the left-side of the
-turnstyle, they are read bottom-to-top. The Promote rule manipulates the right-side 
-of the turnstyle, and is read top-to-bottom. 
+turnstyle, they are read bottom-to-top. The Promote rule manipulates the right-side
+of the turnstyle, and is read top-to-bottom.
 Syntactically we leave the terms for derelict, discard, and duplicate silent,
-i.e. no explicit syntax is used to derelict, discard, and duplicate variables. 
+i.e. no explicit syntax is used to derelict, discard, and duplicate variables.
 Now we can create a derivation for the term $lambda x. lambda y. y : !tau
 lollipop sigma lollipop sigma$ that discards the variable $x$. The derivation
 is show in @const_term.
 
 #figure(
-  caption: [Derivation of a linearly typed term that discards the variable $x$],
-  prooftree(rule(
-    name: [Abs],
-    $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,
+  caption: [Derivation of a linearly typed term that discards the variable $x$.],
+  prooftree(
     rule(
-      name: [Discard],
-      $dot, x : !B tack lambda y. y : A lollipop A$,
-      rule(name: [Abs],
-        $dot tack lambda y. y : A lollipop A$,
-        rule(name: [Var], $dot, y : A tack y : A$),
+      name: [Abs],
+      $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,
+      rule(
+        name: [Discard],
+        $dot, x : !B tack lambda y. y : A lollipop A$,
+        rule(
+          name: [Abs],
+          $dot tack lambda y. y : A lollipop A$,
+          rule(name: [Var], $dot, y : A tack y : A$),
+        ),
       ),
     ),
-  )),
+  ),
 ) <const_term>
 
 Linear types does not entirely prohibit the duplication and discarding of
-variables, but rather make it explicit. 
+variables, but rather make it explicit.

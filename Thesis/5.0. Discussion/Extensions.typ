@@ -5,22 +5,7 @@ needed to construct programs, but not all.
 To alleviate with the construction of software the standard library introduces two functions
 which are needed when writing more advanced programs.
 
-// #figure(
-// ```hs
-// inc : *((int ⊕ int) ⊗ ~int)
-// = \(n,k) -> case n of {
-// inl x -> k(x+1);
-// inr x -> k(x+2);
-// };
-//
-// main : *~int
-//  = \e -> inc((inl 2, e));
-// ```,
-// caption: [
-// Simple arithmetic and pattern matching on a sum type\ (`int ⊕ int`)
-// ],
-// )
-//
+
 First we have the equality function, which takes in two integers and returns a value of
 type `() ⊕ ()` (acts as a boolean) which can be pattern matched on.
 ```hs

@@ -23,7 +23,7 @@ This function takes two integers to check for equality, and a continuation that 
 The value `inl ()` represents true and the value `inr ()` represents false.
 
 #figure(
-  caption: [Fibonacci in #ln],
+  caption: [Fibonacci in #ln.],
   block(
     breakable: false,
     fancyTable(
@@ -134,7 +134,7 @@ x-axis represents the input to the fibonacci function. Note that the y-axis grow
 #figure(
   caption: [
     Benchmark comparing the average time needed to calculate the
-    Fibonacci numbers 30 to 40 in the two different
+    fibonacci numbers 30 to 40 in the two different
     implementations.
   ],
   [#canvas(
