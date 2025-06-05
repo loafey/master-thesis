@@ -30,8 +30,7 @@
 )
 
 == Language ABI <languageAbiChapter>
-As with any language, one should define an application binary Interface (ABI).
-#ln defines its own datatype allocation strategy and calling convention.
+As with any language, one should define an application binary Interface (ABI), and in turn a calling convention.
 As said before in @CompilingCompilationTarget, #ln only uses one stack frame during
 normal execution which is used for variable storage and register spilling.
 This stack frame is located on the stack given by the operating system, which will be referred
