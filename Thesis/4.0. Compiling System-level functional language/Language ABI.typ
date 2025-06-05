@@ -241,7 +241,6 @@ Take this stack that just contains a 16-bit integer with the value `42`.
     The reason this is done is to both to simplify the compilation process,
     and to simplify the needed code for any given pop and push.
 
-    Notice here that we are also padding after the 4 byte integer.
     A pop/push should always be able to expect that the pointer to the stack is currently
     correctly aligned, and this is done to minimize the amount of instructions
     needed when interacting with the stack. If a function is called through FFI
