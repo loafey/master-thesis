@@ -93,8 +93,9 @@ as the process deallocating a stack does not need to know the size of said stack
 
 All functions in #ln are called through jump(with some discrepancies
 for top-level functions and FFI). This is implemented by passing around all
-functions as values on the stack.
-Top-level functions however work differently, and act
+functions as values on the stack, and popping them and jumping to them when
+applicable.
+Top-level functions work differently however, and act
 more like constants do in most other languages.
 
 A top-level function is not actually generated as a function, and it is instead
