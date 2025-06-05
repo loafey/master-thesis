@@ -198,7 +198,7 @@ Each input was measured 100 times.
 The C version was compiled using GCC with O0 and O3.
 However, while the #ln version is around one order of magnitude
 slower than the unoptimized C version,
-the growth in execution time is a constant factor between all three programs.
+the growth in execution time is a almost constant factor between all three programs.
 
 This can be observed even more clearly if we overlap the results over
 each other. We can see that the unoptimized C version grows
