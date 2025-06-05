@@ -42,7 +42,7 @@ and the size of the type $t$. The meta instruction exists only at compile time.
 
 In the compilation scheme, two explicit registers are used: the stack pointer (SP)
 and the stack save pointer (SSP). SP points to a stack on which
-we can pop and push, and SSP is used to temporarily backup SP.
+we can pop and push, and SSP is used to temporarily back up SP.
 
 To ensure correctness and consistency of the compilation scheme, we specify
 pre- and post-conditions for each compilation function:
@@ -51,7 +51,7 @@ Before calling $#scheme_pos($v$)^omega$, SP can be used
 freely. After the call, SP points to $v$. $#scheme_pos($v$)^known$ requires
 that SP points to a valid stack before being called. After being called, $v$ is
 pushed on the stack pointed to by SP. Finally, we have $#scheme_neg($v$)$. It
-has no addtional pre-conditions, only the post-condition that the program is terminated.
+has no additional pre-conditions, only the post-condition that the program is terminated.
 
 The translation between pseudo instructions and x86-64 assembly can be seen in @translation_table,
 and in @operand_table we explain the operands used in the compilation scheme.
