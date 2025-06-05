@@ -40,15 +40,16 @@ stack. Formally, $rho$ can be seen as a function $rho : Gamma -> "List"("Reg")$.
 The range of $rho$ is a list of pseudo registers because not all values
 can be stored in one physical register.
 
+In the compilation scheme, two explicit physical registers are used: the stack pointer (SP)
+and the stack save pointer (SSP). SP points to a stack on which
+we can pop and push, and SSP is used to temporarily back up SP.
+
 The scheme also contains the meta instruction: $\""let" r = "next"(rho, t)\"$,
 where $"next"$ has the type $"List"("Reg") -> "Type" -> "List"("Reg")$,
 which allocates the list $r$ of fresh pseudo-registers.
 The pseudo-registers chosen depends on which pseudo registers are used in $rho$,
 and the size of the type $t$. The meta instruction exists only at compile time.
 
-In the compilation scheme, two explicit registers are used: the stack pointer (SP)
-and the stack save pointer (SSP). SP points to a stack on which
-we can pop and push, and SSP is used to temporarily back up SP.
 
 To ensure correctness and consistency of the compilation scheme, we specify
 pre- and post-conditions for each compilation function:
