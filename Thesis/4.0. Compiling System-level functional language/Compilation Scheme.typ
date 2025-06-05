@@ -25,6 +25,9 @@ The syntax $rho, (x |-> s_n)$ means the context $rho$ is extended with $x$ mappi
 If we instead write $rho, (x |-> [r_0, ..., r_n])$ then $x$ maps to the list containing $r_0, ..., r_n$.
 Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail, and
 finally, $s_0 ++ s_1$ means the concatenation of the lists $s_0$ and $s_1$.
+Lastly, the number of registers $rho$ maps to a variable $x$ must be exactly
+$#sem[$Gamma(x)$]^("R")$. The definition for $#sem[$\_$]^("R")$ is found in
+@mappingMemToType. $#sem[$\_$]^("R")$ is a mapping from a type $A$ to the number of registers needed to store a value $v$ with type $A$.
 
 We annotate a variable $z^omega$ or $z^known$ in the negative fragment
 with the kind of the type of the variable.
