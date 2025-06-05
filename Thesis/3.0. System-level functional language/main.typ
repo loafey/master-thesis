@@ -51,11 +51,11 @@ replaced by $not A$. Intuitively, we can think of $not A$ as $A lollipop bot$,
 or from a programmer's perspective: a function that takes $A$ as argument and
 terminates with no value, like in @cps.
 
-#let pll_types = {
-  $A, B : : = & fatone | fatzero | x | not A | A times.circle B | A plus.circle B | exists x. A | circle | square A | *A | ~A$
-}
-\
-#align(center, pll_types)
+// #let pll_types = {
+//   $A, B : : = & fatone | fatzero | x | not A | A times.circle B | A plus.circle B | exists x. A | circle | square A | *A | ~A$
+// }
+// \
+// #align(center, pll_types)
 
 There are four new constructs in #ln that extend intuitionistic linear logic.
 These are: _empty stack_
