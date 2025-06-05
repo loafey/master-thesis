@@ -122,9 +122,8 @@ and explicit stack environments.
 
 The typing rules for values and commands are given the form $Gamma tack v : A$ and $Gamma tack c$, respectively.
 Values have a right-side type ($v: A$) to symbolize construction. Conversely, commands do not have a right-side type, to symbolize consumption.
-Because the rules for values have a right-side type, they are read in
-a top-to-bottom fashion. The rules for commands are read in a bottom-to-top
-fashion.
+Because the rules for values have a right-side type, they are read 
+top-to-bottom. The rules for commands are read bottom-to-top.
 
 Kinds are also introduced to the environment $Gamma$. @kinds_env shows the rules for the environment.
 
