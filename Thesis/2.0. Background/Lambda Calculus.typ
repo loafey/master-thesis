@@ -55,20 +55,20 @@ shown in @stlc_syntax. The symbol $T$ is used to denote base types.
 
 To ensure that terms in #stlc are well-typed, we define a relation between terms
 and types. The typing relation uses the syntax $Gamma tack e: sigma$, which
-says that in context $Gamma$, term $e$ has type $sigma$. The context $Gamma$ is
-a mapping from free variables to types. $Gamma, x : sigma$ is the context that
+says that in environment $Gamma$, term $e$ has type $sigma$. The environment $Gamma$ is
+a mapping from free variables to types. $Gamma, x : sigma$ is the environment that
 extends $Gamma$ by associating the variable $x$ with $sigma$. The typing rules for
 #stlc are shown in @stlc_typing.
 
 #figure(caption: [Typing rules for #stlc], lc)<stlc_typing>
 
-The first rule, Var, says that $x : sigma$ is a term if the context $Gamma$ contains the variable $x : sigma$. 
+The first rule, Var, says that $x : sigma$ is a term if the environment $Gamma$ contains the variable $x : sigma$. 
 The rule Abs, short for abstraction, also commonly
-called \"lambda\" says that if the term $e : tau$ can be deduced in an arbitrary context $Gamma$ extended with $x: sigma$, then in the context $Gamma$ the term 
+called \"lambda\" says that if the term $e : tau$ can be deduced in an arbitrary environment $Gamma$ extended with $x: sigma$, then in the environment $Gamma$ the term 
 $(lambda x : sigma. space e)$ has type $sigma -> tau$.
 The last rule, App, short for
-application says that if in the context $Gamma$ we have $e_1 : sigma -> tau$
-and $e_2 : tau$ then in the context $Gamma$ the term $e_1 e_2$ has type $tau$.
+application says that if in the environment $Gamma$ we have $e_1 : sigma -> tau$
+and $e_2 : tau$ then in the environment $Gamma$ the term $e_1 e_2$ has type $tau$.
 
 === Polymorphic Lambda Calculus
 
@@ -87,7 +87,7 @@ $
 
 Where in #stlc variables range over terms and lambdas have binders for terms,
 System F additionally introduces variables ranging over types as well as
-binders for types. The context $Gamma$ is no longer only a mapping from
+binders for types. The environment $Gamma$ is no longer only a mapping from
 variables to types, it also includes type variables. Shown in @SystemF_rules
 are the rules for type abstraction and type application.
 
@@ -136,9 +136,9 @@ This means the typing rules App and Var in @stlc_typing are no longer valid.
 
 
 The typing rules for a linear type system are shown in @linear_rules. Note how the
-contexts for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
+environments for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
 not share any variables. Similarly, the rule for Var, differs from its simply typed variant, which now requires that
-the context contains only the variable $x: A$. The arrow $lollipop$ is used instead of $->$ to denote linearity. 
+the environment contains only the variable $x: A$. The arrow $lollipop$ is used instead of $->$ to denote linearity. 
 
 #let linear_app = prooftree(rule(
   name: "App",
@@ -162,12 +162,6 @@ the context contains only the variable $x: A$. The arrow $lollipop$ is used inst
 How would we derive terms that use a variable twice, or perhaps a term that does not use a variable?
 Linear logic, and in turn linear types, solves this issue using _exponentials_.
 Exponentials introduce an explicit way to duplicate and discard variables.
-The function $! : "Context" -> "Context"$ is defined by:
-$ 
-  !(Gamma, x: sigma) & = (!Gamma, x: !sigma) \
-  !(dot) & = dot
-$
-
 The rules for exponentials are shown in @exponential_rules.
 
 #let exponential_rules = flex(
@@ -182,9 +176,15 @@ The rules for exponentials are shown in @exponential_rules.
   exponential_rules,
 )<exponential_rules>
 
-Because the Derelict, Discard, and Duplicate manipulate the left side of the
-turnstyle, they are read bottom-to-top. The Promote rule manipulates the right
-side of the turnstyle, and is read top-to-bottom. 
+The function $!\_ : "Environment" -> "Environment"$, called \"bang\", is defined by:
+$ 
+  !(Gamma, x: sigma) & = (!Gamma, x: !sigma) \
+  !(dot) & = dot
+$
+Note that \"bang\" is both a type constructor ($!A$) and a function on environments ($!Gamma$).
+Because Derelict, Discard, and Duplicate manipulate the left-side of the
+turnstyle, they are read bottom-to-top. The Promote rule manipulates the right-side 
+of the turnstyle, and is read top-to-bottom. 
 Syntactically we leave the terms for derelict, discard, and duplicate silent,
 i.e. no explicit syntax is used to derelict, discard, and duplicate variables. 
 Now we can create a derivation for the term $lambda x. lambda y. y : !tau
