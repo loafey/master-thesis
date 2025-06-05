@@ -28,7 +28,7 @@ models the problems of shared and mutable data, both of which are of critical
 importance in system-level programming. In linear logic, the uses of weakening
 and contraction are carefully controlled, which in a programming language
 setting means variables must be used exactly once.
-Because the use of resources is carefully controlled, mutable data structures can be used in a safe way.
+Because the use of resources is carefully controlled, mutable data structures can be used safely.
 
 The goal for #ln is not only to be used as a system-level level language, but
 also as an intermediate compilation target for (linear) functional programming
