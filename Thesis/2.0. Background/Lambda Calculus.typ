@@ -57,7 +57,7 @@ To ensure that terms in #stlc are well-typed, we define a relation between terms
 and types. The typing relation uses the syntax $Gamma tack e: sigma$, which
 says that in environment $Gamma$, the term $e$ has type $sigma$. The environment $Gamma$ is
 a mapping from free variables to types. $Gamma, x : sigma$ is the environment that
-extends $Gamma$ by associating the variable $x$ with $sigma$. The typing rules for
+extends $Gamma$ by associating the variable $x$ with $sigma$. If a dot ($dot$) is used in place of $Gamma$ then the environment is empty. The typing rules for
 #stlc are shown in @stlc_typing.
 
 #figure(caption: [Typing rules for #stlc], lc)<stlc_typing>
@@ -133,7 +133,6 @@ once_. This means the typing relation $Gamma tack e : sigma$ no longer only
 requires that the set of variables in $e$ are a subset of $Gamma$, but rather
 that the set of variables in $e$ is $Gamma$.
 This means the typing rules App and Var in @stlc_typing are no longer valid.
-
 
 The typing rules for a linear type system are shown in @linear_rules. Note how the
 environments for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
