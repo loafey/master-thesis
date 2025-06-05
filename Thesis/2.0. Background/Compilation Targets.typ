@@ -12,7 +12,7 @@ representations (IR), and they are all targeted by different compilers. They rem
 the need for the compilers to directly target CPU specific machine code or
 assembly. Most of the time these IRs are also cross platform, making portability easier to achieve.
 Because the intermediate representations are higher level
-than assembly languages are, they trade-off explicit control over assembly code
+than assembly languages are, they trade-off explicit control
 in favor of abstractions.
 
 Depending on the source language you are compiling, an IR
