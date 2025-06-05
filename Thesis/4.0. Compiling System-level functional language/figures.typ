@@ -289,7 +289,7 @@
 
     cell2(
       [Unit elimination],
-      [Because the unit value does not exist at runtime, the matching exists is a no-op.],
+      [Because the unit value does not exist at runtime, the matching is a no-op.],
       $#scheme_neg($"let" () = z^known; c$)_(rho,z |-> [])
       = #code_box($#sem[c]_rho$)$,
     ),
