@@ -30,7 +30,7 @@ $#sem[$Gamma(x)$]^("R")$. The definition for $#sem[$\_$]^("R")$ is found in
 @mappingMemToType. $#sem[$\_$]^("R")$ is a mapping from a type $A$ to the number of registers needed to store a value $v$ with type $A$.
 
 We annotate a variable $z^omega$ or $z^known$ in the negative fragment
-with the kind of the type of the variable.
+to indicate the kind of the type of the variable.
 
 A pseudo register is a physical register, or a location on the
 stack. Formally, $rho$ can be seen as a function $rho : Gamma -> "List"("Reg")$.
