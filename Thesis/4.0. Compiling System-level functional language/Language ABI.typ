@@ -208,7 +208,7 @@ registers when working with them.
 
 Integers are currently also simple, because they are also the size of a word.
 This may however change in the future because it is useful to have access to
-integers of different sizes, especially so when working in a systems-level language.
+integers of different sizes, especially when working in a system-level context.
 When integers of different sizes are introduced, memory alignment
 needs to be taken into consideration.
 
