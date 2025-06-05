@@ -72,7 +72,7 @@ To alleviate this,
 the original pointer is placed on the stack, which can then be popped
 when the stack is empty and `freestack` is called.
 This also opens up for stacks to be allocated at differing sizes,
-as a stack's size does not have to be known at compile time.
+as the process deallocating a stack does not need to know the size of said stack.
 
 #figure(
   caption: [An empty stack only containing the start pointer.],
