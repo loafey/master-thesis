@@ -120,7 +120,7 @@ the number of physical registers needed to store them.
 In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
 of unknown size, and it is used to represent a stack.
 In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
-a `Word` is 8 bytes.
+a `Word` is often considered to be 8 bytes.
 
 A combination such as $#`Word` + #sym.infinity$ can be seen as a stack of
 unknown length, but know we have at least a `Word` on top of it.
