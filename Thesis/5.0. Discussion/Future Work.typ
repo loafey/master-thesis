@@ -76,8 +76,7 @@ represents the arguments passed to it.
 === Foreign Function Interface
 Similarly to system calls, proper support for Foreign Function Interfaces (FFI)
 would permit the language to interact with software outside.
-A prime example of this would be libraries written in other languages
-/*, or even libraries written in #ln*/.
+A prime example of this would be libraries written in other languages.
 Just like system calls, FFI is currently
 used under the hood for printing and the likes using libc, but this is not
 exposed to a user of the language.
@@ -192,7 +191,8 @@ when contiguous memory is wanted.
 // the type is recursive. A simple free would not suffice for these @LinearTypeswadler1990linear.
 
 In other immutable languages such as Haskell, data is copied when
-you operate on it. Take this function for example: ```asm
+you operate on it. Take this Haskell function for example: 
+```asm
 plus1 :: [Int] -> [Int]
 plus1 xs = map (+1) xs
 ```
