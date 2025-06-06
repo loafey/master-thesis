@@ -2,7 +2,7 @@
 
 == Background <Background>
 System-level programming is the act of developing software that interacts directly with a computer's
-hardware or providing foundational services to other software.
+hardware or provides foundational services to other software.
 We will define system-level programming as Wikipedia @wiki:Systems_programming defines it:
 
 #indent[
