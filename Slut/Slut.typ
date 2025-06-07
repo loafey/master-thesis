@@ -20,6 +20,7 @@
 
 #include "Intro/main.typ"
 #include "Background/main.typ"
+#include "Computers/main.typ"
 #include "Language/main.typ"
 #include "Compilation/main.typ"
 #include "Demonstration/main.typ"
