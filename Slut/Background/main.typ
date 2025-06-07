@@ -12,15 +12,23 @@ Berätta hur vi vill förbättra detta ur syftet av funktionella språk
 
 #pagebreak()
 
-#let program = ```
-PUSH $1
+#let program = i => {
+  let string = "PUSH $1
 PUSH $2
 PUSH $3
 POP  %AX
 MOV  -0x10(%BP), %BX
 ADD  %AX, %BX
-PUSH %BX
-```;
+PUSH %BX"
+  let newString = ""
+  let count = 0
+  for line in string.split("\n") {
+    let pre = if count == i { "➙ " } else { "  " }
+    newString += pre + line + "\n"
+    count += 1
+  }
+  raw(lang: "asm", newString)
+};
 #let regs = (a, b) => [AX = #a,\ BX = #b];
 #(pre.anim)(
   [
@@ -31,7 +39,7 @@ PUSH %BX
   (
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(-1),
       regs(0, 0),
       drawStack(
         ..([$S P \& B P ->$], [_empty_], [`0x30`]),
@@ -42,7 +50,18 @@ PUSH %BX
     ),
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(0),
+      regs(0, 0),
+      drawStack(
+        ..([$S P \& B P ->$], [_empty_], [`0x30`]),
+        ..([], [_empty_], [`0x20`]),
+        ..([], [_empty_], [`0x10`]),
+        ..([], [_empty_], [`0x00`]),
+      ),
+    ),
+    grid(
+      columns: (1fr, 1fr, 1fr),
+      program(1),
       regs(0, 0),
       drawStack(
         ..([$B P ->$], [`$1`], [`0x30`]),
@@ -53,7 +72,7 @@ PUSH %BX
     ),
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(2),
       regs(0, 0),
       drawStack(
         ..([$B P ->$], [`$1`], [`0x30`]),
@@ -64,7 +83,7 @@ PUSH %BX
     ),
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(3),
       regs(0, 0),
       drawStack(
         ..([$B P ->$], [`$1`], [`0x30`]),
@@ -75,7 +94,7 @@ PUSH %BX
     ),
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(4),
       regs(`$3`, 0),
       drawStack(
         ..([$B P ->$], [`$1`], [`0x30`]),
@@ -86,7 +105,7 @@ PUSH %BX
     ),
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(5),
       regs(`$3`, `$2`),
       drawStack(
         ..([$B P ->$], [`$1`], [`0x30`]),
@@ -97,7 +116,7 @@ PUSH %BX
     ),
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(6),
       regs(`$3`, `$5`),
       drawStack(
         ..([$B P ->$], [`$1`], [`0x30`]),
@@ -108,7 +127,7 @@ PUSH %BX
     ),
     grid(
       columns: (1fr, 1fr, 1fr),
-      program,
+      program(7),
       regs(`$3`, `$5`),
       drawStack(
         ..([$B P ->$], [`$1`], [`0x30`]),
