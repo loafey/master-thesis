@@ -171,6 +171,7 @@
 
 #let known = "\u{2776}"
 
+#let exportable = true
 #let pre = (
   anim: (base, slides) => {
     for s in slides {
@@ -182,24 +183,32 @@
   },
   bullets: (base, bullets, first: false, numbered: false, spacing: 1.5em, indent: 1.5em) => {
     let concat = ()
-    if first {
+    if first and not exportable {
       base
       pagebreak()
+    }
+    set list(spacing: spacing, indent: indent)
+    set enum(spacing: spacing, indent: indent)
+    let func = if numbered {
+      enum
+    } else {
+      list
     }
     for b in bullets {
       concat.push(b)
 
-      base
-      linebreak()
-      set list(spacing: spacing, indent: indent)
-      set enum(spacing: spacing, indent: indent)
-      let func = if numbered {
-        enum
-      } else {
-        list
+      if exportable {
+        continue
       }
+      base
       func(..concat)
+      linebreak()
+
       pagebreak()
+    }
+    if exportable {
+      base
+      func(..concat)
     }
   },
 )
