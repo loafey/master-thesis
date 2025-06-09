@@ -171,7 +171,7 @@
 
 #let known = "\u{2776}"
 
-#let exportable = true
+#let exportable = false
 #let pre = (
   anim: (base, slides) => {
     for s in slides {
