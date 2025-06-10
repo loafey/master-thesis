@@ -12,11 +12,12 @@ This assembly language is then easily translated into x86-64
   let bottom = if c == none { ([], []) } else {
     (
       align(right + horizon, block(inset: 10pt, [Compilation rule:])),
-      c,
+      align(left + horizon, c),
     )
   }
   grid(
     columns: (1fr, 1fr),
+    rows: (1fr, 0.6fr),
     row-gutter: 10pt,
     a, b,
     ..bottom
