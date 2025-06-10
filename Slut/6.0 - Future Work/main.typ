@@ -62,12 +62,17 @@ Incredibly useful in a lot of programs.
 #pagebreak()
 With some syntax sugar would could make this pretty nice!
 
+#table(
+  columns: (auto, 1fr, auto),
+  stroke: rgb("00000009"),
+  raw(lang: "haskell", "k(*n + *n)"),
+  align(center, $=$),
+  raw(lang: "haskell", "let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)"),
+)
 #align(center)[
-  #raw(lang: "haskell", "let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)")
 
-  $arrow.b$
 
-  #raw(lang: "haskell", "k(*n + *n)")]
+]
 #{
   set text(size: 10pt)
   ```hs
