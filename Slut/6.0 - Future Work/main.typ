@@ -68,10 +68,7 @@ With some syntax sugar would could make this pretty nice!
   align(center, $=$),
   raw(lang: "haskell", "let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)"),
 )
-#align(center)[
-
-
-]
+We also use a `==` operator to remove which would hide `__eq__`.
 #{
   set text(size: 10pt)
   ```hs
