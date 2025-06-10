@@ -12,7 +12,7 @@
   $x$,
   $()$,
   "newstack",
-  $lambda p. space c$,
+  $lambda x. space c$,
   $#math.italic("inl") v$,
   $#math.italic("inr") v$,
   $square v$,
