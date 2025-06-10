@@ -164,9 +164,9 @@ Rewriting the fibonacci function with this operator would result in:
             inr () ->
               fib((*n - 1, \r1 ->
               fib((*n - 2, \r2 ->
-              k(r1 + r2)))))
-          }
-      }
+              k(r1 + r2)))));
+          };
+      };
   ```,
 )
 
