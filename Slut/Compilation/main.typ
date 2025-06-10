@@ -269,9 +269,7 @@ This assembly language is then easily translated into x86-64
         $"main_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
-        space space space push_sp (#```asm
-          e
-          ```)\
+        space space sp = r\
         space space #```asm
         ``` #sem(```asm
         inl 42
@@ -308,9 +306,7 @@ This assembly language is then easily translated into x86-64
         $"main_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
-        space space space push_sp (#```asm
-          e
-          ```)\
+        space space sp = r\
         space space #```asm
         ``` #sem(```asm
         inl 42
@@ -349,9 +345,7 @@ This assembly language is then easily translated into x86-64
         $"main_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
-        space space space push_sp (#```asm
-          e
-          ```)\
+        space space sp = r\
         space space #```asm
         ``` #sem(```asm
         42
@@ -400,9 +394,7 @@ This assembly language is then easily translated into x86-64
     $"main_inner":$,
     $space space \""let" r = "next"([],p t r)\"$,
     $space space space r = sp$,
-    $space space space push_sp (#```asm
-      e
-      ```)$,
+    $space space sp = r$,
     $space space space push_sp (\$42)$,
     $space space space push_sp (0)$,
     $space space jmp r_0$,
