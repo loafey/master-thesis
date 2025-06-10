@@ -633,6 +633,7 @@ For function calls some requirements are needed:
   - All expected arguments exist on the stack.
   - The bottom of the stack contains a pointer to the start of the stack.
   - The stack grows downwards.
+
   - And a few more ...
 ]
 
