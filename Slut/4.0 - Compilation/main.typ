@@ -6,15 +6,18 @@ Lithium uses a compilation scheme, based on the negative/positive fragments in t
 
 These compilation schemes compile the language into a pseudo assembly language.
 
-This assembly language is then easily translated into x86-64
+This assembly language is then easily translated into x86-64, which
+in turn can be compiled into machine code!
+
+
 == Compilation Scheme
-The language consists of negative and positive fragments:
+
 #table(
   columns: (1fr, 1fr),
   align: horizon,
   inset: 7pt,
-  table.cell(fill: rgb("0000001f"))[Positive],
-  table.cell(fill: rgb("0000001f"))[Negative],
+  table.cell(fill: rgb("0000001f"), align: center)[*Positive Fragment*],
+  table.cell(fill: rgb("0000001f"), align: center)[*Negative Fragment*],
   $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
   #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
   $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
@@ -24,7 +27,7 @@ The language consists of negative and positive fragments:
   &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
   & #code_box($push_(s p)(l_1)$)$,
   $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-  #code_box($&#sem[$v$]^omega_(rho)$, $&jmp "inc"$)$,
+  #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
 
   table.cell(colspan: 2, align: center, [And a few more...]),
 )
@@ -143,7 +146,7 @@ The language consists of negative and positive fragments:
       ],
 
       $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-      #code_box($&#sem[$v$]^omega_(rho)$, $&jmp "inc"$)$,
+      #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
     ),
     sch(
       $#```asm
@@ -171,7 +174,7 @@ The language consists of negative and positive fragments:
       ],
 
       $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-      #code_box($&#sem[$v$]^omega_(rho)$, $&jmp "inc"$)$,
+      #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
     ),
     sch(
       $#```asm
