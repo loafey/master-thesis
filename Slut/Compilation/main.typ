@@ -8,6 +8,9 @@ These compilation schemes compile the language into a pseudo assembly language.
 
 This assembly language is then easily translated into x86-64
 == Compilation scheme
+#bigTodo[lägg till saker här]
+
+== Compilation Scheme Example
 #let sch = (a, b, c) => {
   let bottom = if c == none { ([], []) } else {
     (
@@ -390,5 +393,81 @@ This assembly language is then easily translated into x86-64
   ),
 )
 
-== Compilation scheme example
-blahblahblah!
+#let mathCode(i) = {
+  set par(spacing: 13pt)
+  let code = (
+    $"main":$,
+    $space space push_sp ("main_inner")$,
+    $$,
+    $"main_inner":$,
+    $space space \""let" r = "next"([],p t r)\"$,
+    $space space space r = sp$,
+    $space space space push_sp (#```asm
+      e
+      ```)$,
+    $space space space push_sp (\$42)$,
+    $space space space push_sp (0)$,
+    $space space jmp r_0$,
+  )
+  if i == -1 {
+    for l in code {
+      l
+      v(-1pt)
+    }
+  } else {
+    let ind = 0
+    for l in code {
+      if ind == i { block(stroke: blue, outset: 4pt, l) } else { l }
+      v(-1pt)
+      ind += 1
+    }
+  }
+}
+
+== Pseudo $->$ x86-64
+#let sch(i, c) = grid(
+  columns: (1fr, 1fr),
+  mathCode(i), c,
+)
+#(pre.anim)(
+  [],
+  (
+    sch(
+      -1,
+      ```asm
+      ```,
+    ),
+    sch(
+      0,
+      ```asm
+      main:
+      ```,
+    ),
+    sch(
+      1,
+      ```asm
+      main:
+        .quad main_inner
+      ```,
+    ),
+    sch(
+      3,
+      ```asm
+      main:
+        .quad main_inner
+
+      main_inner:
+      ```,
+    ),
+    sch(
+      5,
+      ```asm
+      main:
+        .quad main_inner
+
+      main_inner:
+
+      ```,
+    ),
+  ),
+)
