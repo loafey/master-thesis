@@ -90,5 +90,5 @@ With some syntax sugar would could make this pretty nice!
       };
   ```
 }
-Might look similar to `__dup__` but the idea is that this should work for any type,
+Might look similar to `__dup__` but the idea is that this should work for any exponential type,
 not just int!
