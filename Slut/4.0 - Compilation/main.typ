@@ -72,13 +72,13 @@ in turn can be compiled into machine code!
   table.cell(fill: rgb("0000001f"), align: center)[*Negative Fragment*],
   $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
   #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
-  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$) _(rho, z |-> s_0 ++ s_1)
+  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
   = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$)$,
 
   $#scheme_pos($lambda^* x. c$)^known_[] =
-  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
+  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
   & #code_box($push_(s p)(l_1)$)$,
-  $#scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+  $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
   #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
 
   table.cell(colspan: 2, align: center, [And a few more...]),
@@ -147,7 +147,7 @@ in turn can be compiled into machine code!
       ```)$,
       none,
       $#scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
+      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
     sch(
@@ -166,12 +166,12 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space ""^-#sem(```asm
         inc ((inl 42, e))
-        ```) _("inc" -> ["inc"],e |-> r)\
+        ```)_("inc" -> ["inc"],e |-> r)\
         \ $
       ],
 
       $\ \ #scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
+      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
     sch(
@@ -193,11 +193,11 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space ""^-#sem(```asm
         inc ((inl 42, e))
-        ```) _("inc" -> ["inc"], e |-> r)\
+        ```)_("inc" -> ["inc"], e |-> r)\
         \ $
       ],
 
-      $\ \ #scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+      $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
       #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
     ),
     sch(
@@ -225,7 +225,7 @@ in turn can be compiled into machine code!
 
       ],
 
-      $\ \ #scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+      $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
       #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
     ),
     sch(
@@ -491,7 +491,7 @@ in turn can be compiled into machine code!
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space sp = r\
-        space space space ""^+#sem[```asm 42```] _[]^known \
+        space space space ""^+#sem[```asm 42```]_[]^known \
         space space space push_sp (0)\
         space space jmp "inc"\ $
       ],
@@ -563,115 +563,136 @@ in turn can be compiled into machine code!
   }
 }
 
+
+== Application Binary Interface (ABI)
+This defines how functions are called and how memory should be represented.
+
+For function calls some requirements are needed:
+#indent[
+  - Register `R15` is set to an address which points to a valid stack.
+  - All expected arguments exist on the stack.
+  - The stack grows downwards.
+
+  - And a few more ...
+]
+
+We also define how memory is alignment, how values are pushed on stacks
+in order to keep them aligned, and how top level functions work etc...
+
+Unlike most languages, top level functions are constants that contain the actual function pointers!
+
 == Pseudo $->$ x86-64
 #let sch(i, c) = grid(
   columns: (1fr, 1fr),
   mathCode(i), c,
 )
-#(pre.anim)([], (
-  sch(
-    -1,
-    ```asm
-    ```,
-  ),
-  sch(
-    0,
-    ```asm
-    main:
-    ```,
-  ),
-  sch(
-    1,
-    ```asm
-    main:
-      .quad main_inner
-    ```,
-  ),
-  sch(
-    3,
-    ```asm
-    main:
-      .quad main_inner
+#(pre.anim)(
+  [],
+  (
+    sch(
+      -1,
+      ```asm
+      ```,
+    ),
+    sch(
+      0,
+      ```asm
+      main:
+      ```,
+    ),
+    sch(
+      1,
+      ```asm
+      main:
+        .quad main_inner
+      ```,
+    ),
+    sch(
+      3,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-    ```,
-  ),
-  sch(
-    4,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+      ```,
+    ),
+    sch(
+      4,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-    ```,
-  ),
-  sch(
-    5,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+      ```,
+    ),
+    sch(
+      5,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %R15, -8(%RBP)
-    ```,
-  ),
-  sch(
-    6,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %R15, -8(%RBP)
+      ```,
+    ),
+    sch(
+      6,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %R15, -8(%RBP)
-      movq -8(%RBP), %R15
-    ```,
-  ),
-  sch(
-    7,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
+      ```,
+    ),
+    sch(
+      7,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %R15, -8(%RBP)
-      movq -8(%RBP), %R15
-      subq 8, %R15
-      movq $42, 0(%R15)
-    ```,
-  ),
-  sch(
-    8,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
+        subq 8, %R15
+        movq $42, 0(%R15)
+      ```,
+    ),
+    sch(
+      8,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %R15, -8(%RBP)
-      movq -8(%RBP), %R15
-      subq 8, %R15
-      movq $42, 0(%R15)
-      subq 8, %R15
-      movq $0, 0(%R15)
-    ```,
-  ),
-  sch(
-    9,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
+        subq 8, %R15
+        movq $42, 0(%R15)
+        subq 8, %R15
+        movq $0, 0(%R15)
+      ```,
+    ),
+    sch(
+      9,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %R15, -8(%RBP)
-      movq -8(%RBP), %R15
-      subq 8, %R15
-      movq $42, 0(%R15)
-      subq 8, %R15
-      movq $0, 0(%R15)
-      movq inc(%RIP), %RAX
-      jmp *%RAX
-    ```,
+      main_inner:
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
+        subq 8, %R15
+        movq $42, 0(%R15)
+        subq 8, %R15
+        movq $0, 0(%R15)
+        movq inc(%RIP), %RAX
+        jmp *%RAX
+      ```,
+    ),
   ),
-))
+)
 
 == Application Binary Interface (ABI)
 This defines how functions are called and how memory should be represented.

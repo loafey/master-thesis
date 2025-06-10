@@ -5,13 +5,11 @@
 We have presented #ln:
 
 #indent[
-  - How it is transformed to machine ready code
-
   - How the code is translated into assembly code in multiple steps
 
-  - Some aspects of it's transformation
+  - Demonstrated that the language is usable
 
-  - Some future work
+  - Some future work that needs to be done
 ]
 
 We hope this language goes somewhere, but in any case, a solid enough base
