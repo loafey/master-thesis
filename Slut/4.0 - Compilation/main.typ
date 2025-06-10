@@ -17,13 +17,13 @@ The language consists of negative and positive fragments:
   table.cell(fill: rgb("0000001f"))[Negative],
   $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
   #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
-  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$) _(rho, z |-> s_0 ++ s_1)
+  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
   = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$)$,
 
   $#scheme_pos($lambda^* x. c$)^known_[] =
-  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
+  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
   & #code_box($push_(s p)(l_1)$)$,
-  $#scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+  $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
   #code_box($&#sem[$v$]^omega_(rho)$, $&jmp "inc"$)$,
 
   table.cell(colspan: 2, align: center, [And a few more...]),
@@ -92,7 +92,7 @@ The language consists of negative and positive fragments:
       ```)$,
       none,
       $#scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
+      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
     sch(
@@ -116,7 +116,7 @@ The language consists of negative and positive fragments:
       ],
 
       $\ \ #scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
+      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
     sch(
@@ -142,7 +142,7 @@ The language consists of negative and positive fragments:
         \ $
       ],
 
-      $\ \ #scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+      $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp "inc"$)$,
     ),
     sch(
@@ -170,7 +170,7 @@ The language consists of negative and positive fragments:
 
       ],
 
-      $\ \ #scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+      $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
       #code_box($&#sem[$v$]^omega_(rho)$, $&jmp "inc"$)$,
     ),
     sch(
@@ -189,7 +189,8 @@ The language consists of negative and positive fragments:
         ```asm
         (inl 42, e)
         ```,
-      )#```asm
+      )
+      #```asm
       )
       ```$,
       [
@@ -439,9 +440,8 @@ The language consists of negative and positive fragments:
         space space space push_sp (0)\
         space space jmp "inc"\ $
       ],
-      $#scheme_pos[$42$]^known_[] = #code_box[$"push"_(s p)(42)$]$
+      $#scheme_pos[$42$]^known_[] = #code_box[$"push"_(s p)(42)$]$,
     ),
-
     sch(
       $#```asm
       main : *~int
@@ -513,110 +513,113 @@ The language consists of negative and positive fragments:
   columns: (1fr, 1fr),
   mathCode(i), c,
 )
-#(pre.anim)([], (
-  sch(
-    -1,
-    ```asm
-    ```,
-  ),
-  sch(
-    0,
-    ```asm
-    main:
-    ```,
-  ),
-  sch(
-    1,
-    ```asm
-    main:
-      .quad main_inner
-    ```,
-  ),
-  sch(
-    3,
-    ```asm
-    main:
-      .quad main_inner
+#(pre.anim)(
+  [],
+  (
+    sch(
+      -1,
+      ```asm
+      ```,
+    ),
+    sch(
+      0,
+      ```asm
+      main:
+      ```,
+    ),
+    sch(
+      1,
+      ```asm
+      main:
+        .quad main_inner
+      ```,
+    ),
+    sch(
+      3,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-    ```,
-  ),
-  sch(
-    4,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+      ```,
+    ),
+    sch(
+      4,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-    ```,
-  ),
-  sch(
-    5,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+      ```,
+    ),
+    sch(
+      5,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %RSP, -8(%RBP)
-    ```,
-  ),
-  sch(
-    6,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %RSP, -8(%RBP)
+      ```,
+    ),
+    sch(
+      6,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %RSP, -8(%RBP)
-      movq -8(%RBP), %RSP
-    ```,
-  ),
-  sch(
-    7,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+      ```,
+    ),
+    sch(
+      7,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %RSP, -8(%RBP)
-      movq -8(%RBP), %RSP
-      subq 8, %RSP
-      movq $42, 0(%RSP)
-    ```,
-  ),
-  sch(
-    8,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+        subq 8, %RSP
+        movq $42, 0(%RSP)
+      ```,
+    ),
+    sch(
+      8,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %RSP, -8(%RBP)
-      movq -8(%RBP), %RSP
-      subq 8, %RSP
-      movq $42, 0(%RSP)
-      subq 8, %RSP
-      movq $0, 0(%RSP)
-    ```,
-  ),
-  sch(
-    9,
-    ```asm
-    main:
-      .quad main_inner
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+        subq 8, %RSP
+        movq $42, 0(%RSP)
+        subq 8, %RSP
+        movq $0, 0(%RSP)
+      ```,
+    ),
+    sch(
+      9,
+      ```asm
+      main:
+        .quad main_inner
 
-    main_inner:
-      movq %RSP, -8(%RBP)
-      movq -8(%RBP), %RSP
-      subq 8, %RSP
-      movq $42, 0(%RSP)
-      subq 8, %RSP
-      movq $0, 0(%RSP)
-      movq inc(%RIP), %RAX
-      jmp *%RAX
-    ```,
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+        subq 8, %RSP
+        movq $42, 0(%RSP)
+        subq 8, %RSP
+        movq $0, 0(%RSP)
+        movq inc(%RIP), %RAX
+        jmp *%RAX
+      ```,
+    ),
   ),
-))
+)
 
 == Application Binary Interface (ABI)
 This defines how functions are called and how memory should be represented.
