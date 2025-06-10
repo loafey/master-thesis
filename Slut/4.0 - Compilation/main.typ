@@ -700,18 +700,3 @@ Unlike most languages, top level functions are constants that contain the actual
   ),
 )
 
-== Application Binary Interface (ABI)
-This defines how functions are called and how memory should be represented.
-
-For function calls some requirements are needed:
-#indent[
-  - Register `R15` is set to an address which points to a valid stack.
-  - All expected arguments exist on the stack.
-  - The bottom of the stack contains a pointer to the start of the stack.
-  - The stack grows downwards.
-
-  - And a few more ...
-]
-
-We also define how memory is alignment, and how values are pushed on stacks
-in order to keep them aligned.
