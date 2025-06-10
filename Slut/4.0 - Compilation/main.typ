@@ -603,15 +603,21 @@ Unlike most languages, top level functions are constants that contain the actual
     sch(
       1,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      ```,
+    ),
+    sch(
+      -1,
+      ```asm
+      main: .quad main_inner
+      inc:  .quad inc_inner
       ```,
     ),
     sch(
       3,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      inc:  .quad inc_inner
 
       main_inner:
       ```,
@@ -619,8 +625,8 @@ Unlike most languages, top level functions are constants that contain the actual
     sch(
       4,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      inc:  .quad inc_inner
 
       main_inner:
       ```,
@@ -628,8 +634,8 @@ Unlike most languages, top level functions are constants that contain the actual
     sch(
       5,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      inc:  .quad inc_inner
 
       main_inner:
         movq %R15, -8(%RBP)
@@ -638,8 +644,8 @@ Unlike most languages, top level functions are constants that contain the actual
     sch(
       6,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      inc:  .quad inc_inner
 
       main_inner:
         movq %R15, -8(%RBP)
@@ -649,8 +655,8 @@ Unlike most languages, top level functions are constants that contain the actual
     sch(
       7,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      inc:  .quad inc_inner
 
       main_inner:
         movq %R15, -8(%RBP)
@@ -662,8 +668,8 @@ Unlike most languages, top level functions are constants that contain the actual
     sch(
       8,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      inc:  .quad inc_inner
 
       main_inner:
         movq %R15, -8(%RBP)
@@ -677,8 +683,8 @@ Unlike most languages, top level functions are constants that contain the actual
     sch(
       9,
       ```asm
-      main:
-        .quad main_inner
+      main: .quad main_inner
+      inc:  .quad inc_inner
 
       main_inner:
         movq %R15, -8(%RBP)
