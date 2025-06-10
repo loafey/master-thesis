@@ -103,7 +103,7 @@ The language consists of negative and positive fragments:
       \e -> inc ((inl 42, e))
       ```)$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -130,7 +130,7 @@ The language consists of negative and positive fragments:
       inc ((inl 42, e))
       ```)$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -156,7 +156,7 @@ The language consists of negative and positive fragments:
       inc ((inl 42, e))
       ```)$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -194,7 +194,7 @@ The language consists of negative and positive fragments:
       )
       ```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -238,7 +238,7 @@ The language consists of negative and positive fragments:
       ))
       ```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -277,7 +277,7 @@ The language consists of negative and positive fragments:
         ```,
       )#```asm ))```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -313,7 +313,7 @@ The language consists of negative and positive fragments:
         ```,
       )#```asm ))```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -350,7 +350,7 @@ The language consists of negative and positive fragments:
       , e))
       ```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -389,7 +389,7 @@ The language consists of negative and positive fragments:
       , e))
       ```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -429,7 +429,7 @@ The language consists of negative and positive fragments:
       , e))
       ```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -463,7 +463,7 @@ The language consists of negative and positive fragments:
       , e))
       ```$,
       [
-        $"main": \ space space push_sp ("main_inner")$
+        $"main": \ space space "global" "main_inner"$
         #linebreak()
         #linebreak()
         $"main_inner": \
@@ -483,7 +483,7 @@ The language consists of negative and positive fragments:
   set par(spacing: 13pt)
   let code = (
     $"main":$,
-    $space space push_sp ("main_inner")$,
+    $space space "global" "main_inner"$,
     $$,
     $"main_inner":$,
     $space space \""let" r = "next"([],p t r)\"$,
@@ -559,7 +559,7 @@ The language consists of negative and positive fragments:
         .quad main_inner
 
       main_inner:
-        movq %RSP, -8(%RBP)
+        movq %R15, -8(%RBP)
       ```,
     ),
     sch(
@@ -569,8 +569,8 @@ The language consists of negative and positive fragments:
         .quad main_inner
 
       main_inner:
-        movq %RSP, -8(%RBP)
-        movq -8(%RBP), %RSP
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
       ```,
     ),
     sch(
@@ -580,10 +580,10 @@ The language consists of negative and positive fragments:
         .quad main_inner
 
       main_inner:
-        movq %RSP, -8(%RBP)
-        movq -8(%RBP), %RSP
-        subq 8, %RSP
-        movq $42, 0(%RSP)
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
+        subq 8, %R15
+        movq $42, 0(%R15)
       ```,
     ),
     sch(
@@ -593,12 +593,12 @@ The language consists of negative and positive fragments:
         .quad main_inner
 
       main_inner:
-        movq %RSP, -8(%RBP)
-        movq -8(%RBP), %RSP
-        subq 8, %RSP
-        movq $42, 0(%RSP)
-        subq 8, %RSP
-        movq $0, 0(%RSP)
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
+        subq 8, %R15
+        movq $42, 0(%R15)
+        subq 8, %R15
+        movq $0, 0(%R15)
       ```,
     ),
     sch(
@@ -608,12 +608,12 @@ The language consists of negative and positive fragments:
         .quad main_inner
 
       main_inner:
-        movq %RSP, -8(%RBP)
-        movq -8(%RBP), %RSP
-        subq 8, %RSP
-        movq $42, 0(%RSP)
-        subq 8, %RSP
-        movq $0, 0(%RSP)
+        movq %R15, -8(%RBP)
+        movq -8(%RBP), %R15
+        subq 8, %R15
+        movq $42, 0(%R15)
+        subq 8, %R15
+        movq $0, 0(%R15)
         movq inc(%RIP), %RAX
         jmp *%RAX
       ```,
