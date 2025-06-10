@@ -71,10 +71,10 @@ This assembly language is then easily translated into x86-64
       #block(stroke: blue, outset: 4pt, ```asm
       \e -> inc ((inl 42, e))
       ```)$,
+      none,
       $#scheme_pos($lambda^* x. c$)^known_[] =
       &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
-      none,
     ),
     sch(
       $#```asm
@@ -450,13 +450,12 @@ This assembly language is then easily translated into x86-64
       ```,
     ),
     sch(
-      5,
+      4,
       ```asm
       main:
         .quad main_inner
 
       main_inner:
-
       ```,
     ),
   ),
