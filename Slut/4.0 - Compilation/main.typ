@@ -7,8 +7,26 @@ Lithium uses a compilation scheme, based on the negative/positive fragments in t
 These compilation schemes compile the language into a pseudo assembly language.
 
 This assembly language is then easily translated into x86-64
-== Compilation scheme
-#bigTodo[lägg till saker här]
+== Compilation Scheme
+The language consists of negative and positive fragments:
+#table(
+  columns: (1fr, 1fr),
+  align: horizon,
+  inset: 7pt,
+  table.cell(fill: rgb("0000001f"))[Positive], table.cell(fill: rgb("0000001f"))[Negative],
+  $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
+  #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
+  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
+  = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$)$,
+
+  $#scheme_pos($lambda^* x. c$)^known_[] =
+  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
+  & #code_box($push_(s p)(l_1)$)$,
+  $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
+  #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
+
+  table.cell(colspan: 2, align: center, [And a few more...])
+)
 
 == Compilation Scheme Example
 #let sch = (a, b, c) => {
@@ -526,3 +544,18 @@ This assembly language is then easily translated into x86-64
     ),
   ),
 )
+
+== Application Binary Interface (ABI)
+This defines how functions are called and how memory should be represented.
+
+For function calls some requirements are needed:
+#indent[
+  - Register `R15` is set to an address which points to a valid stack.
+  - All expected arguments exist on the stack.
+  - The bottom of the stack contains a pointer to the start of the stack.
+  - The stack grows downwards.
+  - And a few more ...
+]
+
+We also define how memory is alignmend, and how values are pushed on stacks
+in order to keep them aligned.
