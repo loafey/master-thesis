@@ -1,6 +1,58 @@
 #import "../Prelude.typ": *
 
 = Compilation
+
+== Transformations
+
+#indent[
+  - $*$ is a label
+
+  - What about $~$ and $not$ ?
+
+  - Three transformations
+    - Linear closure conversion
+    - Stack selection
+    - Pointer closure conversion
+]
+
+== Transformations
+
+=== Linear closure conversion
+
+Goal: make pointers to stacks explicit
+
+#grid(
+  columns: (1fr, 1fr),
+  stroke: black + 0.1pt,
+  inset: 10pt,
+  [Source], [Target],
+  $not A$, $square~A$,
+  $lambda^not x. c$, $square lambda^~ x. c$,
+  $f(x)$, $"let" square g = f; g(x)$,
+  $
+    "apply" : & *(#text(fill: red, $not$) (A times.circle #text(fill: red, $not$) B) times.circle A times.circle ~B) \
+    = lambda x. & "let" f, y = x; \
+    & "let" a,k = y; \
+    & #text(fill: red, $f$) (a, square k); \
+  $,
+  $
+    "apply" : & *(#text(fill: green.darken(20%), $square~$) (A times.circle #text(fill: green.darken(20%), $square~$) B) times.circle A times.circle ~B) \
+    = lambda x. & "let" f, y = x; \
+    & "let" a,k = y; \
+    & #text(fill: green.darken(20%), $"let" square g = f;$) \
+    & #text(fill: green.darken(20%), $g$) (a, square k); \
+  $,
+)
+
+== Transformations
+
+=== Stack selection
+
+#bigTodo[Continue here]
+$"exit" : *(int times.circle circle)$
+
+$"foo" : *(int times.circle not int)$
+
 == Compilation
 Lithium uses a compilation scheme, based on the negative/positive fragments in the language.
 
@@ -20,14 +72,14 @@ in turn can be compiled into machine code!
   table.cell(fill: rgb("0000001f"), align: center)[*Negative Fragment*],
   $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
   #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
-  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
+  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$) _(rho, z |-> s_0 ++ s_1)
   = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$)$,
 
   $#scheme_pos($lambda^* x. c$)^known_[] =
-  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
+  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
   & #code_box($push_(s p)(l_1)$)$,
-  $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-  #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
+  $#scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+  #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
 
   table.cell(colspan: 2, align: center, [And a few more...]),
 )
@@ -95,7 +147,7 @@ in turn can be compiled into machine code!
       ```)$,
       none,
       $#scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
+      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
     sch(
@@ -114,12 +166,12 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space ""^-#sem(```asm
         inc ((inl 42, e))
-        ```)_("inc" -> ["inc"],e |-> r)\
+        ```) _("inc" -> ["inc"],e |-> r)\
         \ $
       ],
 
       $\ \ #scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
+      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c] _(x |-> r)$) \
       & #code_box($push_(s p)(l_1)$)$,
     ),
     sch(
@@ -141,12 +193,12 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space ""^-#sem(```asm
         inc ((inl 42, e))
-        ```)_("inc" -> ["inc"], e |-> r)\
+        ```) _("inc" -> ["inc"], e |-> r)\
         \ $
       ],
 
-      $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-      #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
+      $\ \ #scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+      #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
     ),
     sch(
       $#```asm
@@ -173,8 +225,8 @@ in turn can be compiled into machine code!
 
       ],
 
-      $\ \ #scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-      #code_box($&#sem[$v$]^omega_(rho)$, $&jmp r_0$)$,
+      $\ \ #scheme_neg($"call" z^known (v)$) _(rho, z |-> [r_0]) =
+      #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
     ),
     sch(
       $#```asm
@@ -439,7 +491,7 @@ in turn can be compiled into machine code!
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space sp = r\
-        space space space ""^+#sem[```asm 42```]_[]^known \
+        space space space ""^+#sem[```asm 42```] _[]^known \
         space space space push_sp (0)\
         space space jmp "inc"\ $
       ],
@@ -516,113 +568,110 @@ in turn can be compiled into machine code!
   columns: (1fr, 1fr),
   mathCode(i), c,
 )
-#(pre.anim)(
-  [],
-  (
-    sch(
-      -1,
-      ```asm
-      ```,
-    ),
-    sch(
-      0,
-      ```asm
-      main:
-      ```,
-    ),
-    sch(
-      1,
-      ```asm
-      main:
-        .quad main_inner
-      ```,
-    ),
-    sch(
-      3,
-      ```asm
-      main:
-        .quad main_inner
-
-      main_inner:
-      ```,
-    ),
-    sch(
-      4,
-      ```asm
-      main:
-        .quad main_inner
-
-      main_inner:
-      ```,
-    ),
-    sch(
-      5,
-      ```asm
-      main:
-        .quad main_inner
-
-      main_inner:
-        movq %R15, -8(%RBP)
-      ```,
-    ),
-    sch(
-      6,
-      ```asm
-      main:
-        .quad main_inner
-
-      main_inner:
-        movq %R15, -8(%RBP)
-        movq -8(%RBP), %R15
-      ```,
-    ),
-    sch(
-      7,
-      ```asm
-      main:
-        .quad main_inner
-
-      main_inner:
-        movq %R15, -8(%RBP)
-        movq -8(%RBP), %R15
-        subq 8, %R15
-        movq $42, 0(%R15)
-      ```,
-    ),
-    sch(
-      8,
-      ```asm
-      main:
-        .quad main_inner
-
-      main_inner:
-        movq %R15, -8(%RBP)
-        movq -8(%RBP), %R15
-        subq 8, %R15
-        movq $42, 0(%R15)
-        subq 8, %R15
-        movq $0, 0(%R15)
-      ```,
-    ),
-    sch(
-      9,
-      ```asm
-      main:
-        .quad main_inner
-
-      main_inner:
-        movq %R15, -8(%RBP)
-        movq -8(%RBP), %R15
-        subq 8, %R15
-        movq $42, 0(%R15)
-        subq 8, %R15
-        movq $0, 0(%R15)
-        movq inc(%RIP), %RAX
-        jmp *%RAX
-      ```,
-    ),
+#(pre.anim)([], (
+  sch(
+    -1,
+    ```asm
+    ```,
   ),
-)
+  sch(
+    0,
+    ```asm
+    main:
+    ```,
+  ),
+  sch(
+    1,
+    ```asm
+    main:
+      .quad main_inner
+    ```,
+  ),
+  sch(
+    3,
+    ```asm
+    main:
+      .quad main_inner
+
+    main_inner:
+    ```,
+  ),
+  sch(
+    4,
+    ```asm
+    main:
+      .quad main_inner
+
+    main_inner:
+    ```,
+  ),
+  sch(
+    5,
+    ```asm
+    main:
+      .quad main_inner
+
+    main_inner:
+      movq %R15, -8(%RBP)
+    ```,
+  ),
+  sch(
+    6,
+    ```asm
+    main:
+      .quad main_inner
+
+    main_inner:
+      movq %R15, -8(%RBP)
+      movq -8(%RBP), %R15
+    ```,
+  ),
+  sch(
+    7,
+    ```asm
+    main:
+      .quad main_inner
+
+    main_inner:
+      movq %R15, -8(%RBP)
+      movq -8(%RBP), %R15
+      subq 8, %R15
+      movq $42, 0(%R15)
+    ```,
+  ),
+  sch(
+    8,
+    ```asm
+    main:
+      .quad main_inner
+
+    main_inner:
+      movq %R15, -8(%RBP)
+      movq -8(%RBP), %R15
+      subq 8, %R15
+      movq $42, 0(%R15)
+      subq 8, %R15
+      movq $0, 0(%R15)
+    ```,
+  ),
+  sch(
+    9,
+    ```asm
+    main:
+      .quad main_inner
+
+    main_inner:
+      movq %R15, -8(%RBP)
+      movq -8(%RBP), %R15
+      subq 8, %R15
+      movq $42, 0(%R15)
+      subq 8, %R15
+      movq $0, 0(%R15)
+      movq inc(%RIP), %RAX
+      jmp *%RAX
+    ```,
+  ),
+))
 
 == Application Binary Interface (ABI)
 This defines how functions are called and how memory should be represented.
