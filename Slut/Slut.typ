@@ -18,8 +18,8 @@
   thesis idea as well as his enthusiastic involvement, support, and guidance throughout the project.
 ]
 
-#include "Intro/main.typ"
-#include "Background/main.typ"
-#include "Language/main.typ"
-#include "Compilation/main.typ"
-#include "Demonstration/main.typ"
+#include "1.0 - Intro/main.typ"
+#include "2.0 - Background/main.typ"
+#include "3.0 - Language/main.typ"
+#include "4.0 - Compilation/main.typ"
+#include "5.0 - Demonstration/main.typ"
