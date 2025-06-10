@@ -230,7 +230,7 @@ This assembly language is then easily translated into x86-64
         space space #```asm
         ``` #sem(```asm
         e
-        ```)_rho\
+        ```)_(e |-> r)\
         space space #```asm
         ``` #sem(```asm
         inl 42
@@ -350,7 +350,7 @@ This assembly language is then easily translated into x86-64
         ``` #sem(```asm
         42
         ```)_sigma\
-        space space space push_sp (0)\
+        space space space push_sp (\$0)\
         space space jmp r_0\ $
 
       ],
@@ -377,7 +377,7 @@ This assembly language is then easily translated into x86-64
         space space space r = sp\
         space space sp = r\
         space space space push_sp (\$42) \
-        space space space push_sp (0)\
+        space space space push_sp (\$0)\
         space space jmp r_0\ $
       ],
       none,
@@ -456,6 +456,72 @@ This assembly language is then easily translated into x86-64
         .quad main_inner
 
       main_inner:
+      ```,
+    ),
+    sch(
+      5,
+      ```asm
+      main:
+        .quad main_inner
+
+      main_inner:
+        movq %RSP, -8(%RBP)
+      ```,
+    ),
+    sch(
+      6,
+      ```asm
+      main:
+        .quad main_inner
+
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+      ```,
+    ),
+    sch(
+      7,
+      ```asm
+      main:
+        .quad main_inner
+
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+        subq 8, %RSP
+        movq $42, 0(%RSP)
+      ```,
+    ),
+    sch(
+      8,
+      ```asm
+      main:
+        .quad main_inner
+
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+        subq 8, %RSP
+        movq $42, 0(%RSP)
+        subq 8, %RSP
+        movq $0, 0(%RSP)
+      ```,
+    ),
+    sch(
+      9,
+      ```asm
+      main:
+        .quad main_inner
+
+      main_inner:
+        movq %RSP, -8(%RBP)
+        movq -8(%RBP), %RSP
+        subq 8, %RSP
+        movq $42, 0(%RSP)
+        subq 8, %RSP
+        movq $0, 0(%RSP)
+        movq inc(%RIP), %RAX
+        jmp *%RAX
       ```,
     ),
   ),
