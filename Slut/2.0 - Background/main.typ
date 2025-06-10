@@ -8,17 +8,13 @@
   b => {
     if b {
       indent[
-        - Normal: variables can be used however many times #text(fill: red, $square.filled$) #text(fill: green, $square.filled$) #text(fill: blue, $square.filled$)
+        - Normal: variables can be used however many times #text(fill: green, $square.filled$) #text(fill: blue, $square.filled$)
 
-        - Affine: variables must be used at most once #text(fill: red, $square.filled$) #text(fill: green, $square.filled$)
-
-        - Linear: variables must be used exactly once #text(fill: red, $square.filled$)
+        - Linear: variables must be used exactly once #text(fill: green, $square.filled$)
       ]
     } else {
       indent[
         - Normal: variables can be used however many times
-
-        - Affine: variables must be used at most once
 
         - Linear: variables must be used exactly once
       ]
@@ -27,12 +23,12 @@
   {
     align(center, grid(
       columns: (1fr, 1fr, 1fr),
-      text(fill: red, prooftree(rule(
+      text(fill: green, prooftree(rule(
         $Gamma,x,y tack e$,
         $Gamma, y, x tack e$,
         name: [_Exchange_],
       ))),
-      text(fill: green, prooftree(rule(
+      text(fill: blue, prooftree(rule(
         $Gamma,x tack e$,
         $Gamma tack e$,
         name: [_Weakening_],
@@ -47,8 +43,6 @@
   {
     indent[
       - Normal: Haskell, C, Java
-
-      - Affine: Clean, Rust
 
       - Linear: Linear Haskell, #ln
     ]
@@ -72,16 +66,12 @@
 
 #indent[
   - Normal style: return values
-    - $
-        & id : forall a. space a -> a \
-        & id = lambda x. space x
-      $
+    - $A -> B$
 
-  - Continuation-Passing Style: pass a \"continuation\" as argument
-    - $& id : forall a. space a -> (a -> bot) -> bot \
-      & id = lambda x. lambda k. space k space x$
+  - Continuation-Passing Style: pass a continuation as argument
+    - $A -> (B -> bot) -> bot$
 
-    - $a -> bot$ = \"function that terminates with no value\"
+    - $B -> bot$ = function with $B$ as argument, that terminates with no value
 ]
 
 - A single function call per closure
@@ -98,23 +88,21 @@
   inset: 1em,
   [Normal:],
 
-  [CPS],
+  [CPS:],
 
   ```hs
-  product [] = 1
-  product (x:xs) = x * product xs
+  sum :: [Int] -> Int
+  sum [] = 0
+  sum (x:xs) = x + sum xs
   ```,
 
   ```hs
-  product [] k = k 1
-  product (x:xs) k =
-    product xs (\r -> k(x * r))
+  sum :: [Int] -> (Int -> r) -> r
+  sum [] k = k 0
+  sum (x:xs) k = 
+    sum xs (\r -> k (x + r))
   ```,
 ))
-
-
-
-
 
 == Continuation-Passing Style (CPS)
 
@@ -135,18 +123,21 @@
 
   CPS:
 
-#box(inset: 5pt, stroke: 1pt, 
+#grid(columns: (1fr,1fr), 
+box(inset: 5pt, stroke: 1pt, 
   ```hs
-  foo x k = bar x (\y -> 
-            baz x (\z -> 
-            k (y + z)))
+  foo x k = 
+    bar x (\y -> 
+      baz x (\z -> 
+        k (y + z)))
   ```
-)
+),
 
-#box(inset: 5pt, stroke: 1pt, 
+box(inset: 5pt, stroke: 1pt, 
   ```hs
-  foo x k = baz x (\z -> 
-            bar x (\y -> 
-            k (y + z)))
+  foo x k = 
+    baz x (\z -> 
+      bar x (\y -> 
+        k (y + z)))
   ```
-)
+))
