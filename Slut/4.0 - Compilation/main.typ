@@ -629,6 +629,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
+        # r = -8(%RBB)
       ```,
     ),
     sch(
@@ -638,6 +639,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
+        # r = -8(%RBB)
         movq %R15, -8(%RBP)
       ```,
     ),
@@ -648,6 +650,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
+        # r = -8(%RBB)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
       ```,
@@ -659,6 +662,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
+        # r = -8(%RBB)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
         subq 8, %R15
@@ -672,6 +676,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
+        # r = -8(%RBB)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
         subq 8, %R15
@@ -687,6 +692,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
+        # r = -8(%RBB)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
         subq 8, %R15
