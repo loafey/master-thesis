@@ -32,7 +32,7 @@
     "swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
      = lambda x. & "let" y, k = x;                                     \
                  & "let" a,b = y;                                      \
-                 & k(b,a)
+                 & k(b,a)                                              \
   $,
 )
 
@@ -106,17 +106,17 @@ The environment of free variables has a kind
 
 === Grammar
 \
-$A,B & ::= fatzero & #[empty] \
-& space | fatone & #[unit] \
-& space | circle & #[empty stack] \
-& space | alpha & #[type variable] \
-& space | not A & #[linear closure] \
-& space | ~ A & #[stack closure] \
-& space | * A & #[static function] \
-& space | square A & #[linear pointer] \
-& space | A times.circle B & #[product] \
-& space | A plus.circle B & #[sum] \
-& space | exists alpha. A & #[exists] \ $
+$A,B & ::= fatzero              &           #[empty] \
+    & space | fatone           &            #[unit] \
+    & space | circle           &     #[empty stack] \
+    & space | alpha            &   #[type variable] \
+    & space | not A            &  #[linear closure] \
+    & space | ~ A              &   #[stack closure] \
+    & space | * A              & #[static function] \
+    & space | square A         &  #[linear pointer] \
+    & space | A times.circle B &         #[product] \
+    & space | A plus.circle B  &             #[sum] \
+    & space | exists alpha. A  &          #[exists] \ $
 
 == Types
 
@@ -176,6 +176,8 @@ $A,B & ::= fatzero & #[empty] \
   - Empty environment has known size
 
   - At most stack in an environment
+
+  - Kind omitted = either allowed
 ]
 
 == Values & commands
@@ -200,9 +202,10 @@ If the following hold:
 
 then:
 
-$Gamma, Delta tack (t,u) : A times.circle B$ = \" $(t,u)$ has type $A times.circle B$ in the environment $Gamma,Delta$\"
+$Gamma, Delta tack (t,u) : A times.circle B$ = \" the pair $(t,u)$ has type $A times.circle B$ in the combined environment $Gamma,Delta$\"
 
-$Gamma$ and $Delta$ must be disjoint.
+
+$Gamma$ and $Delta$ are disjoint.
 
 == Values & commands
 === Values
@@ -216,52 +219,104 @@ $Gamma$ and $Delta$ must be disjoint.
 
 == Values & commands
 
-=== Functions and closures
-
-#grid(
-  columns: (1fr, 1fr),
-  indent[
-    - $*A$ -- _static function_
-
-    - $~A$ -- _stack closure_
-
-    - $not A$ -- _linear closure_
-  ],
+#let with_closures(ix, b, extend: none) = {
+  let arr = (static_function_value, stack_closure_value, linear_closure_value)
+  let one = none
+  let two = none
+  let three = none
+  if ix == "all" {
+    one = arr.at(0)
+    two = arr.at(1)
+    three = arr.at(2)
+  }
+  if ix.contains("static") { one = arr.at(0) }
+  if ix.contains("stack") { one = arr.at(1) }
+  if ix.contains("linear") { one = arr.at(2) }
   grid(
-    columns: (
-      1fr
-    ), inset: 10pt, static_function_value,
-    stack_closure_value,
-    linear_closure_value,
-  ),
-)
+    columns: (1fr, 1fr),
+    b,
+    grid(
+      columns: (
+        1fr
+      ), inset: 10pt,
+      one, two, three, extend
+    ),
+  )
+}
 
-#indent[
-  - $*A$ = goto programming
+#with_closures("all")[
+  #indent[
+    === Functions and closures
 
-  - $~A$ = procedural programming
+    $*A$ = goto programming
 
-  - $not A$ = higher-order programming
+    $~A$ = procedural programming
+
+    $not A$ = higher-order programming
+  ]
 ]
+
 
 == Values & commands
 
-=== Goto programming
-#indent[
-  - $*A$ is a label
-  - Can not capture state
+#with_closures("static")[
+
+  #indent[
+    === Goto programming
+
+    - $*A$ is a label
+
+    - Can not capture state
+
+    - State of $*A$ is exactly the stack $A$
+  ]
 ]
 
-=== Procedural programming
+== Values & commands
+#with_closures(
+  "stack",
+  extend: $#prooftree(rule($*A : known$, $A : omega$)) quad #prooftree(rule(
+    $A times.circle B : omega$,
+    $A : known$,
+    $B : omega$,
+  )) quad #prooftree(rule(
+    $A times.circle B : known$,
+    $A : known$,
+    $B : known$,
+  ))$,
+)[
+  #indent[
+    === Procedural programming
 
-#indent[
-  - Can capture state
-  - $*(A times.circle ~B)$ corresponds to C function signature $B space (A space a)$
+    - Can capture state
+      - Must be a stack ($omega$)
+
+    - Single stack per static function ($*$)
+      - Kind rules for $*$ and $times.circle$
+
+    - $*(A times.circle ~B)$ corresponds to C function signature $B space (A space a)$
+  ]
 ]
 
-=== Higher-order programming
+== Values & commands
+#with_closures("linear")[
+  #indent[
+    === Higher-order programming
+    - $*(A times.circle *B times.circle ~C)$
+      - $*B$ can not capture state
 
-#indent[
-  - $*(A times.circle *B times.circle ~C)$
-  - $*(A times.circle ~B times.circle ~C)$
+    - $*(A times.circle ~B times.circle ~C)$
+      - ill-kinded
+
+    - Can not capture stack state
+  ]
+
+  Now we can do higher-order programming!
+
+  $
+      "apply" : & *(not (A times.circle not B) times.circle A times.circle ~B) \
+    = lambda x. & "let" f, y = x;                                              \
+                & "let" a,k = y;                                               \
+                & f(a, square k);                                              \
+  $
 ]
