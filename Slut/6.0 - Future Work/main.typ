@@ -10,13 +10,13 @@ Some features we would like to see are:
 #indent[
   - Control over how, and where stacks are allocated
   - Register allocation
-  - Interface for system calls
+  - Interface for making system calls
   - Interface for Foreign Function Interface
   - Exponentials
   - Data types
   - A project using #ln as a compilation target
 
-  - Probably a lot more that we don't know about yet!
+  - Probably a lot more that we don't know about yet...
 ]
 
 
@@ -27,11 +27,8 @@ Optimization technique to utilize physical registers for variables.
 uses registers to keep track of the current stack, temporary registers
 for calculations and for FFI.
 
-Could lead to performance improvements!
-Can be hard to implement efficiently however!
-
-#bigTodo[add more here]
-
+Could lead to performance improvements,
+but can be hard to implement efficiently however!
 
 == Exponentials
 Allows a variable to be used more than once!
