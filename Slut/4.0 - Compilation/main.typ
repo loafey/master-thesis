@@ -637,5 +637,5 @@ For function calls some requirements are needed:
   - And a few more ...
 ]
 
-We also define how memory is alignmend, and how values are pushed on stacks
+We also define how memory is alignment, and how values are pushed on stacks
 in order to keep them aligned.
