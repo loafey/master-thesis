@@ -1,6 +1,5 @@
 #import "../Prelude.typ": *
 
-= Future Work
 
 == Future Work
 We have produced a solid base, but a lot of work is still there to be made...
