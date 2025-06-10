@@ -153,9 +153,16 @@ $A,B & ::= fatzero & #[empty] \
 == Typing environment
 
 === Grammar
-$Gamma ::= dot | Gamma, (x : t)$
+#indent[
+  $Gamma ::= dot | Gamma, x : A$
+]
 
-\
+#indent[
+  - $Gamma$ is a mapping from free variables to types
+
+  - $Gamma, x : A$ means: environment $Gamma$ extended with $x : A$
+]
+
 
 === Kind rules
 #align(center, flex(
@@ -165,10 +172,96 @@ $Gamma ::= dot | Gamma, (x : t)$
   prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
 )) <kinds_env>
 
-- Empty environment has known size
+#indent[
+  - Empty environment has known size
 
-- At most stack in an environment
+  - At most stack in an environment
+]
 
 == Values & commands
 
-#align(center + horizon, positive(true))
+=== How to read
+
+\
+
+$#prooftree(rule(
+  $Gamma,
+  Delta tack (t,u) : A times.circle B$,
+  $Gamma tack t: A$,
+  $Delta tack u : B$,
+))$
+
+\
+If the following hold:
+
++ $Gamma tack t : A$ = \" $t$ has type $A$ in the environment $Gamma$\"
+
++ $Delta tack u : B$ = \" $u$ has type $B$ in the environment $Delta$\"
+
+then:
+
+$Gamma, Delta tack (t,u) : A times.circle B$ = \" $(t,u)$ has type $A times.circle B$ in the environment $Gamma,Delta$\"
+
+$Gamma$ and $Delta$ must be disjoint.
+
+== Values & commands
+=== Values
+#align(center + horizon, positive(none))
+
+== Values & commands
+
+=== Commands
+
+#align(center + horizon, negative(none))
+
+== Values & commands
+
+=== Functions and closures
+
+#grid(
+  columns: (1fr, 1fr),
+  indent[
+    - $*A$ -- _static function_
+
+    - $~A$ -- _stack closure_
+
+    - $not A$ -- _linear closure_
+  ],
+  grid(
+    columns: (
+      1fr
+    ), inset: 10pt, static_function_value,
+    stack_closure_value,
+    linear_closure_value,
+  ),
+)
+
+#indent[
+  - $*A$ = goto programming
+
+  - $~A$ = procedural programming
+
+  - $not A$ = higher-order programming
+]
+
+== Values & commands
+
+=== Goto programming
+#indent[
+  - $*A$ is a label
+  - Can not capture state
+]
+
+=== Procedural programming
+
+#indent[
+  - Can capture state
+  - $*(A times.circle ~B)$ corresponds to C function signature $B space (A space a)$
+]
+
+=== Higher-order programming
+
+#indent[
+  - $*(A times.circle *B times.circle ~C)$
+  - $*(A times.circle ~B times.circle ~C)$
+]
