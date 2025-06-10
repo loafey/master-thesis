@@ -14,9 +14,8 @@
     - Compilation Scheme
     - ABI
   - Future Work
-    - Exponentials
-    - Data types
     - Register Allocation
+    - Exponentials
     - Many more...
 ]
 
