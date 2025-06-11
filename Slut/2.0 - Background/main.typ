@@ -1,66 +1,27 @@
 #import "../Prelude.typ": *
 
 = Background
-// Lite för lågnivå och
-// #include "Comp.typ"
-
-#let linear_types = (
-  b => {
-    if b {
-      indent[
-        - Normal: variables can be used however many times #text(fill: green, $square.filled$) #text(fill: blue, $square.filled$)
-
-        - Linear: variables must be used exactly once #text(fill: green, $square.filled$)
-      ]
-    } else {
-      indent[
-        - Normal: variables can be used however many times
-
-        - Linear: variables must be used exactly once
-      ]
-    }
-  },
-  {
-    align(center, grid(
-      columns: (1fr, 1fr, 1fr),
-      text(fill: green, prooftree(rule(
-        $Gamma,x,y tack e$,
-        $Gamma, y, x tack e$,
-        name: [_Exchange_],
-      ))),
-      text(fill: blue, prooftree(rule(
-        $Gamma,x tack e$,
-        $Gamma tack e$,
-        name: [_Weakening_],
-      ))),
-      text(fill: blue, prooftree(rule(
-        $Gamma,x tack e$,
-        $Gamma, x, x tack e$,
-        name: [_Contraction_],
-      ))),
-    ))
-  },
-  {
-    indent[
-      - Normal: Haskell, C, Java
-
-      - Linear: Linear Haskell, Austral
-    ]
-  },
-)
-== Linear Types
-
-#linear_types.at(0)(false)
-
-== Linear Types
-#linear_types.at(0)(true)
-#linear_types.at(1)
 
 == Linear Types
 
-#linear_types.at(0)(true)
-#linear_types.at(1)
-#linear_types.at(2)
+#indent[
+  - Normal: variables can be used however many times
+
+  - Linear: variables must be used exactly once
+
+  #align(center, grid(
+    columns: (1fr, 1fr, 1fr),
+    prooftree(rule($Gamma,x tack e$, $Gamma tack e$, name: [_Weakening_])),
+    prooftree(
+      rule($Gamma,x tack e$, $Gamma, x, x tack e$, name: [_Contraction_]),
+    ),
+  ))
+  - Normal: Haskell, C, Java
+
+  - Linear: Linear Haskell, Austral
+
+]
+
 
 == Continuation-Passing Style (CPS)
 
@@ -74,7 +35,7 @@
     - $B -> bot$ = function with $B$ as argument, that terminates with no value
 ]
 
-- A single function call per closure
+- Exactly one function call per closure
 
 
 == Continuation-Passing Style (CPS)
@@ -99,7 +60,7 @@
   ```hs
   sum :: [Int] -> (Int -> r) -> r
   sum [] k = k 0
-  sum (x:xs) k = 
+  sum (x:xs) k =
     sum xs (\r -> k (x + r))
   ```,
 ))
@@ -108,36 +69,44 @@
 
 === Benefits
 
-  2. #underline[Evaluation order determined syntactically]
+2. #underline[Evaluation order determined syntactically]
 
-  Normal:
+Normal:
 
-#box(inset: 5pt, stroke: 1pt,
+#box(
+  inset: 5pt,
+  stroke: 1pt,
   ```hs
   foo x = let y = bar x
           let z = baz x
            in x + y
 
-  ```
+  ```,
 )
 
-  CPS:
+CPS:
 
-#grid(columns: (1fr,1fr), 
-box(inset: 5pt, stroke: 1pt, 
-  ```hs
-  foo x k = 
-    bar x (\y -> 
-      baz x (\z -> 
-        k (y + z)))
-  ```
-),
+#grid(
+  columns: (1fr, 1fr),
+  box(
+    inset: 5pt,
+    stroke: 1pt,
+    ```hs
+    foo x k =
+      bar x (\y ->
+        baz x (\z ->
+          k (y + z)))
+    ```,
+  ),
 
-box(inset: 5pt, stroke: 1pt, 
-  ```hs
-  foo x k = 
-    baz x (\z -> 
-      bar x (\y -> 
-        k (y + z)))
-  ```
-))
+  box(
+    inset: 5pt,
+    stroke: 1pt,
+    ```hs
+    foo x k =
+      baz x (\z ->
+        bar x (\y ->
+          k (y + z)))
+    ```,
+  ),
+)

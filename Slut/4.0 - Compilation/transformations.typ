@@ -8,18 +8,18 @@
   - A calculus
     - How to transform to assembly?
 
-  - $*$ is a label
+  - $*A$ corresponds to a label
     - What about $~$ and $not$ ?
 
   - Three transformations
-    - #text(fill: blue.darken(40%), [Linear closure conversion])
-    - #text(fill: blue.darken(40%), [Stack selection])
-    - #text(fill: blue.darken(40%), [Pointer closure conversion])
+    + #text(fill: blue.darken(40%), [Linear closure conversion])
+    + #text(fill: blue.darken(40%), [Stack selection])
+    + #text(fill: blue.darken(40%), [Pointer closure conversion])
 ]
 
 == Transformations
 
-=== Linear closure conversion
+=== 1. Linear closure conversion
 
 Goal: make pointers to stacks explicit
 
@@ -44,7 +44,7 @@ Goal: make pointers to stacks explicit
 #let hl_gr(x) = text(fill: green.darken(20%), x)
 #let hl_re(x) = text(fill: red, x)
 
-=== Stack selection
+=== 2. Stack selection
 
 Goal: identify a unique stack for every stack closure
 
@@ -62,7 +62,7 @@ Problem:
   - $Gamma : known$
 
 == Transformations
-=== Stack selection
+=== 2. Stack selection
 
 Goal: identify a unique stack for every stack closure
 
@@ -83,7 +83,7 @@ Solution: move the \"unboxing\" out of the closure
 )
 
 == Transformations
-=== Stack selection
+=== 2. Stack selection
 
 #indent[
   Can not always find a unique stack:
@@ -97,7 +97,7 @@ Solution: move the \"unboxing\" out of the closure
 Impossible to find stack for the closure
 
 == Transformations
-=== Pointer closure conversion
+=== 3. Pointer closure conversion
 Goal: make the structure of stacks explicit
 
 How: convert stack closure to a pair of a static function and an environment.
@@ -130,7 +130,7 @@ How: convert stack closure to a pair of a static function and an environment.
 )
 
 == Transformations
-=== Pointer closure conversion
+=== 3. Pointer closure conversion
 
 $Gamma = dot, x : A, y : B, z : C$
 

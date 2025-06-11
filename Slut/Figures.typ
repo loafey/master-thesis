@@ -96,7 +96,7 @@
   note: "linear pointer",
 )
 #let var_value = judge($$, $dot, x : A tack x: A$, note: "var")
-#let newstack_value = judge($$, $tack "newstack": circle$, note: "newstack")
+#let newstack_value = judge($$, $dot tack "newstack": circle$, note: "newstack")
 #let inj_left_value = judge(
   $Gamma tack t: A$,
   $Gamma tack "inl" t: A plus.circle B$,

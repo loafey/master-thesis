@@ -277,10 +277,13 @@ $A,B & ::= circle & #[empty stack] \
     - Can not capture stack state
   ]
 
-  Now we can do higher-order programming!
 
-  \ 
+  Because $not A : known$ we can do higher-order programming!
 
-  #block(stroke: 0.1pt + black, inset: 10pt, $"foo" : & *(not A times.circle ~ not A) \
-  = & lambda x. "let" f,k = x; k(lambda y. f (y))$)
+  #block(
+    stroke: 0.1pt + black,
+    inset: 10pt,
+    $"foo" : & *(not A times.circle ~ not A) \
+    = & lambda x. "let" f,k = x; k(lambda y. f (y))$,
+  )
 ]
