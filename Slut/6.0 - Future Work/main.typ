@@ -23,8 +23,7 @@ Some features we would like to see are:
 Optimization technique to utilize physical registers for variables.
 
 #ln currently uses the system-stack for all variables, and only
-uses registers to keep track of the current stack, temporary registers
-for calculations and for FFI.
+uses registers to keep track of the current stack, calculations and for FFI/SysCalls.
 
 Could lead to performance improvements,
 but can be hard to implement efficiently however!
@@ -58,20 +57,20 @@ Adds:
         let n1 + z1 = n; -- duplicate as a pattern, not addition
         let !z2 = z1;
         __eq__((z2, 0), \res -> case res of {
-          inl () -> k(0);
-          inr () ->
+          inl () ->
             let n2 + o1 = n1;
             let !o2 = o1;
             __eq__((o2, 1), \res -> {
-              inl () -> k(1);
-              inr () ->
+              inl () ->
                 let n3 + p = n2;
                 let !n3 = n3;
                 let !n4 = p;
                 fib((n3 - 1, \r1 ->
                 fib((n4 - 2, \r2 ->
                 k(r1 + r2)))));
+              inr () -> k(1);
             });
+          inr () -> k(0);
         });
   ```
 }
@@ -91,15 +90,15 @@ With some syntax sugar would could make this pretty nice!
   fib : *(!int ⊗ ~int)
     = \(n,k) ->
       __eq__((*n, 0), \res -> case res of {
-        inl () -> k(0);
-        inr () ->
+        inl () ->
           __eq__((*n, 1), \res -> case res of {
-            inl () -> k(1);
-            inr () ->
+            inl () ->
               fib((*n - 1, \r1 ->
               fib((*n - 2, \r2 ->
               k(r1 + r2)))));
+            inr () -> k(1);
           });
+        inr () -> k(0);
       });
   ```
 }
