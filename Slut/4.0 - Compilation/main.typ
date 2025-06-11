@@ -58,7 +58,6 @@ The language has two different concepts of stacks!
 )
 Works very similarly to JVM/WASM!
 
-Only ever uses one stack frame due to tail-call optimizations!
 
 
 == Compilation Scheme
@@ -153,9 +152,9 @@ Only ever uses one stack frame due to tail-call optimizations!
       \e -> inc ((42, e));
       ```)$,
       none,
-      $#scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
-      & #code_box($l_2 : "global" l_1$)$,
+      $& #code_box($l_1 : "global" l_2$)\
+      #scheme_pos($lambda^* x. c$)^known_[] =
+      & #code_block($l_2$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$)$,
     ),
     sch(
       $#```asm
@@ -177,9 +176,9 @@ Only ever uses one stack frame due to tail-call optimizations!
         \ $
       ],
 
-      $\ \ #scheme_pos($lambda^* x. c$)^known_[] =
-      &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
-      & #code_box($l_2 : "global" l_1$)$,
+      $& #code_box($l_1 : "global" l_2$)\
+      #scheme_pos($lambda^* x. c$)^known_[] =
+      & #code_block($l_2$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$)$,
     ),
     sch(
       $#```asm
