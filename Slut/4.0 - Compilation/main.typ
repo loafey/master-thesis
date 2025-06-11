@@ -86,6 +86,10 @@ Only ever uses one stack frame due to tail-call optimizations!
   table.cell(colspan: 2, align: center, [And a few more...]),
 )
 
+$rho, sigma$ = environment of mapping from variable to register\
+$omega, fatone$ = kind
+
+
 == Compilation Scheme Example
 #let sch = (a, b, c) => {
   let bottom = if c == none { ([], []) } else {
@@ -109,21 +113,32 @@ Only ever uses one stack frame due to tail-call optimizations!
       inc : *(int ⊗ ~int)
         = ...;
       ```
+
       ```asm
       func : *~int
         = \e -> inc((42, e));
       ```
     ],
+    [```asm
+      inc : *(int ⊗ (∃γ. (int ⊗ γ) ⊗ γ))
+        = ...;
+      ```
+
+      ```asm
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
+        = \e -> inc((42, e));
+      ```
+    ],
     [
       ```asm
-      inc : *(int) ⊗ ~int)
+      inc : *(int ⊗ (∃γ. (int ⊗ γ) ⊗ γ))
         = ...;
       ```
       #block(
         stroke: blue,
         outset: 4pt,
         ```asm
-        func : *~int
+        func : *(∃γ. (int ⊗ γ) ⊗ γ)
           = \e -> inc((42, e));
         ```,
       )
@@ -133,7 +148,7 @@ Only ever uses one stack frame due to tail-call optimizations!
         stroke: blue,
         outset: 4pt,
         ```asm
-        func : *~int
+        func : *(∃γ. (int ⊗ γ) ⊗ γ)
           = \e -> inc((42, e));
         ```,
       ),
@@ -142,7 +157,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #block(stroke: blue, outset: 4pt, ```asm
       \e -> inc ((42, e));
@@ -154,7 +169,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #block(stroke: blue, outset: 4pt, ```asm
       \e -> inc ((42, e));
@@ -178,7 +193,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -204,7 +219,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -232,7 +247,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -270,7 +285,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -318,7 +333,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -354,7 +369,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -388,7 +403,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -421,7 +436,7 @@ Only ever uses one stack frame due to tail-call optimizations!
     ),
     sch(
       $#```asm
-      func : *~int
+      func : *(∃γ. (int ⊗ γ) ⊗ γ)
       ``` \ space space #`= `
       #```asm
       \e ->
