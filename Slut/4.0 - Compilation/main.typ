@@ -59,7 +59,7 @@ in turn can be compiled into machine code!
         = ...;
       ```
       ```asm
-      main : *~int
+      func : *~int
         = \e -> inc((inl 42, e));
       ```
     ],
@@ -72,7 +72,7 @@ in turn can be compiled into machine code!
         stroke: blue,
         outset: 4pt,
         ```asm
-        main : *~int
+        func : *~int
           = \e -> inc((inl 42, e));
         ```,
       )
@@ -82,7 +82,7 @@ in turn can be compiled into machine code!
         stroke: blue,
         outset: 4pt,
         ```asm
-        main : *~int
+        func : *~int
           = \e -> inc((inl 42, e));
         ```,
       ),
@@ -91,7 +91,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #block(stroke: blue, outset: 4pt, ```asm
       \e -> inc ((inl 42, e))
@@ -103,16 +103,16 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #block(stroke: blue, outset: 4pt, ```asm
       \e -> inc ((inl 42, e))
       ```)$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space ""^-#sem(```asm
@@ -127,7 +127,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -136,10 +136,10 @@ in turn can be compiled into machine code!
       inc ((inl 42, e))
       ```)$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space ""^-#sem(```asm
@@ -153,7 +153,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -162,10 +162,10 @@ in turn can be compiled into machine code!
       inc ((inl 42, e))
       ```)$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space #```asm
@@ -181,7 +181,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -200,10 +200,10 @@ in turn can be compiled into machine code!
       )
       ```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space #```asm
@@ -219,7 +219,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -244,10 +244,10 @@ in turn can be compiled into machine code!
       ))
       ```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space #```asm
@@ -267,7 +267,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -283,10 +283,10 @@ in turn can be compiled into machine code!
         ```,
       )#```asm ))```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp \
         space space space space ""^+#sem(```asm
@@ -303,7 +303,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -319,10 +319,10 @@ in turn can be compiled into machine code!
         ```,
       )#```asm ))```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp \
         space space sp = r \
@@ -337,7 +337,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -356,10 +356,10 @@ in turn can be compiled into machine code!
       , e))
       ```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space sp = r\
@@ -376,7 +376,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -395,10 +395,10 @@ in turn can be compiled into machine code!
       , e))
       ```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space sp = r\
@@ -416,7 +416,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -435,10 +435,10 @@ in turn can be compiled into machine code!
       , e))
       ```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space sp = r\
@@ -450,7 +450,7 @@ in turn can be compiled into machine code!
     ),
     sch(
       $#```asm
-      main : *~int
+      func : *~int
       ``` \ space space #`= `
       #```asm
       \e ->
@@ -469,10 +469,10 @@ in turn can be compiled into machine code!
       , e))
       ```$,
       [
-        $"main": \ space space "global" "main_inner"$
+        $"func": \ space space "global" "func_inner"$
         #linebreak()
         #linebreak()
-        $"main_inner": \
+        $"func_inner": \
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space sp = r\
@@ -488,10 +488,10 @@ in turn can be compiled into machine code!
 #let mathCode(i) = {
   set par(spacing: 13pt)
   let code = (
-    $"main":$,
-    $space space "global" "main_inner"$,
+    $"func":$,
+    $space space "global" "func_inner"$,
     $$,
-    $"main_inner":$,
+    $"func_inner":$,
     $space space \""let" r = "next"([],p t r)\"$,
     $space space space r = sp$,
     $space space sp = r$,
@@ -584,48 +584,48 @@ but due to tail-call optimizations we only ever use one!
     sch(
       0,
       ```asm
-      main:
+      func:
       ```,
     ),
     sch(
       1,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       ```,
     ),
     sch(
       -1,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
       ```,
     ),
     sch(
       3,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
 
-      main_inner:
+      func_inner:
       ```,
     ),
     sch(
       4,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
 
-      main_inner:
+      func_inner:
         # r = -8(%RBP)
       ```,
     ),
     sch(
       5,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
 
-      main_inner:
+      func_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
       ```,
@@ -633,10 +633,10 @@ but due to tail-call optimizations we only ever use one!
     sch(
       6,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
 
-      main_inner:
+      func_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
 
@@ -646,10 +646,10 @@ but due to tail-call optimizations we only ever use one!
     sch(
       7,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
 
-      main_inner:
+      func_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
 
@@ -662,10 +662,10 @@ but due to tail-call optimizations we only ever use one!
     sch(
       8,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
 
-      main_inner:
+      func_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
 
@@ -681,10 +681,10 @@ but due to tail-call optimizations we only ever use one!
     sch(
       9,
       ```asm
-      main: .quad main_inner
+      func: .quad func_inner
       inc:  .quad inc_inner
 
-      main_inner:
+      func_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
 
