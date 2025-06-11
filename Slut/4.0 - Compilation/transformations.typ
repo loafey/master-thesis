@@ -17,8 +17,10 @@
     + #text(fill: blue.darken(40%), [Pointer closure conversion])
 ]
 
-== Transformations
+#let hl_gr(x) = text(fill: green.darken(20%), x)
+#let hl_re(x) = text(fill: red, x)
 
+== Transformations
 === 1. Linear closure conversion
 
 Goal: make pointers to stacks explicit
@@ -32,18 +34,14 @@ Goal: make pointers to stacks explicit
   [Value], $lambda^not x. c$, $square lambda^~ x. c$,
   [Command], $f(x)$, $"let" square g = f; g(x)$,
   [Example],
-  $"foo" : *(not & A times.circle ~ not A) \
-  = lambda x. & "let" f,k = x; & \ & k(lambda y. f (y))$,
+  $"foo" : *(#hl_re($not$) & A times.circle ~ #hl_re($not$) A) \
+  = lambda x. & "let" f,k = x; & \ & k(lambda y. #hl_re($f$) (y))$,
 
-  $"foo" : *(square & ~ A times.circle ~ (square ~ A)) \
-  = lambda x. & "let" f,k = x; \ & k(lambda y. "let" square g = f; g(y))$,
+  $"foo" : *(#hl_gr($square & ~$) A times.circle ~ (#hl_gr($square ~$) A)) \
+  = lambda x. & "let" f,k = x; \ & k(lambda y. #hl_gr($"let" square g = f; g$) (y))$,
 )
 
 == Transformations
-
-#let hl_gr(x) = text(fill: green.darken(20%), x)
-#let hl_re(x) = text(fill: red, x)
-
 === 2. Stack selection
 
 Goal: identify a unique stack for every stack closure
@@ -158,7 +156,7 @@ Now $not$ and $~$ are eliminated!
   $"foo" : *(square (exists & gamma_1. *(A times.circle gamma_1) times.circle gamma_1) times.circle (exists gamma_2. (square (exists gamma_3. (A times.circle gamma_3) times.circle gamma_3) times.circle gamma_2) times.circle gamma_2)) \
   = lambda x. & "let" a,b = x; \
   & "let" square c = a; \
-  & "let" @t, d = b; \
+  & "let" angle.l t, d angle.r = b; \
   & "let" e,f = d; \
-  & e(square angle.l exists gamma . *(A times.circle gamma) times.circle gamma, (lambda g. "let" h,i = g; \ & quad quad quad quad quad quad quad quad quad quad quad quad "let" @t, j = i; \ & quad quad quad quad quad quad quad quad quad quad quad quad"let" k, l = j; \ & quad quad quad quad quad quad quad quad quad quad quad quad k(h,l)) angle.r, f)$,
+  & e(square angle.l exists gamma . *(A times.circle gamma) times.circle gamma, (lambda g. "let" h,i = g; \ & quad quad quad quad quad quad quad quad quad quad quad quad "let" angle.l t, j angle.r = i; \ & quad quad quad quad quad quad quad quad quad quad quad quad"let" k, l = j; \ & quad quad quad quad quad quad quad quad quad quad quad quad k(h,l)) angle.r, f)$,
 )
