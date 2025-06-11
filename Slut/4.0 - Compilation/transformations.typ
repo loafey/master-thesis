@@ -48,14 +48,18 @@ Goal: make pointers to stacks explicit
 
 Goal: identify a unique stack for every stack closure
 
-#block(stroke: black + 0.1pt, inset: 10pt, $"foo" : *(square& ~A times.circle ~ (square~ A)) \
-= lambda x. & "let" f,k = x; \ & k(square lambda y. "let" square g = f; g (y))$)
+#block(
+  stroke: black + 0.1pt,
+  inset: 10pt,
+  $"foo" : *(square& ~A times.circle ~ (square~ A)) \
+  = lambda x. & "let" f,k = x; \ & k(square lambda y. "let" square g = f; g (y))$,
+)
 
-Problem: 
-  - Environment for $not A$ must be $known$
-  - Environment for $~ A$ must be $omega$
-    - $Gamma = dot, f : square ~A$
-    - $Gamma : known$
+Problem:
+- Environment for $not A$ must be $known$
+- Environment for $~ A$ must be $omega$
+  - $Gamma = dot, f : square ~A$
+  - $Gamma : known$
 
 == Transformations
 === Stack selection
@@ -66,14 +70,16 @@ Goal: identify a unique stack for every stack closure
   stroke: black + 0.1pt,
   inset: 10pt,
   $"foo" : *(square& ~A times.circle ~ (square~ A)) \
-  = lambda x. & "let" f,k = x; \ & k(square lambda y. #hl_re($"let" square g = f; $) g(y))$,
+  = lambda x. & "let" f,k = x; \ & k(square lambda y. #hl_re($"let" square g = f;$) g(y))$,
 )
 
 Solution: move the \"unboxing\" out of the closure
 
-#block(stroke: 0.1pt + black, inset: 10pt,
+#block(
+  stroke: 0.1pt + black,
+  inset: 10pt,
   $"foo" : *(square& ~A times.circle ~ (square~ A)) \
-  = lambda x. & "let" f,k = x; \ & #hl_gr($"let" square g = f;$) \ &k(square lambda y. g(y))$
+  = lambda x. & "let" f,k = x; \ & #hl_gr($"let" square g = f;$) \ &k(square lambda y. g(y))$,
 )
 
 == Transformations
@@ -139,3 +145,20 @@ $"unpairAll"(rho); c = & "let" x, rho_1 = rho; \
 & c$
 
 Now $not$ and $~$ are eliminated!
+
+== Transformations
+
+#grid(
+  columns: (1fr),
+  stroke: 0.1pt + black,
+  inset: 10pt,
+  $"foo" : *(square& ~A times.circle ~ (square~ A)) \
+  = lambda x. & "let" f,k = x; \ & "let" square g = f; \ &k(square lambda y. g(y))$,
+
+  $"foo" : *(square (exists & gamma_1. *(A times.circle gamma_1) times.circle gamma_1) times.circle (exists gamma_2. (square (exists gamma_3. (A times.circle gamma_3) times.circle gamma_3) times.circle gamma_2) times.circle gamma_2)) \
+  = lambda x. & "let" a,b = x; \
+  & "let" square c = a; \
+  & "let" @t, d = b; \
+  & "let" e,f = d; \
+  & e(square angle.l exists gamma . *(A times.circle gamma) times.circle gamma, (lambda g. "let" h,i = g; \ & quad quad quad quad quad quad quad quad quad quad quad quad "let" @t, j = i; \ & quad quad quad quad quad quad quad quad quad quad quad quad"let" k, l = j; \ & quad quad quad quad quad quad quad quad quad quad quad quad k(h,l)) angle.r, f)$,
+)
