@@ -72,8 +72,8 @@ Only ever uses one stack frame due to tail-call optimizations!
   inset: 7pt,
   table.cell(fill: rgb("0000001f"), align: center)[*Positive Fragment*],
   table.cell(fill: rgb("0000001f"), align: center)[*Negative Fragment*],
-  $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
-  #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
+  $#scheme_pos($(v_1,v_2)$)^omega_(rho,sigma) =
+  #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
   $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 ++ s_1)
   = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$)$,
 
