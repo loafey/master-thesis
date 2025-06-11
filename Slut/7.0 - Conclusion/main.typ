@@ -1,6 +1,6 @@
 #import "../Prelude.typ": *
 
-== Outroduction
+== Conclusion
 
 We have presented #ln:
 
