@@ -516,7 +516,7 @@ in turn can be compiled into machine code!
 }
 
 
-== Application Binary Interface (ABI)
+== Application Binary Interface -- ABI
 This defines how functions are called and how memory should be represented.
 
 For function calls some requirements are needed:
@@ -528,10 +528,46 @@ For function calls some requirements are needed:
   - And a few more ...
 ]
 
-We also define how memory is alignment, how values are pushed on stacks
-in order to keep them aligned, and how top level functions work etc...
+Some other requirements:
 
-Unlike most languages, top level functions are constants that contain the actual function pointers!
+#indent[
+  - Proper memory alignment.
+  - How to interact with the stack.
+
+  - How top-level functions work\
+    (they are actually constants that contain the actual function pointer
+    #emoji.face.flush
+    #emoji.excl
+    )
+]
+
+== Application Binary Interface -- System Stack
+The language has two different concepts of stacks!
+#let top(a) = table.cell(align: center, fill: rgb("0000001F"), a)
+#table(
+  columns: (1fr, 1fr),
+  top[System-Stack], top[Stack],
+  drawStack(
+    ..([`%RBP` $->$], [$v_1$], [`0x30`]),
+    ..([], [$v_2$], [`0x20`]),
+    ..([`%RSP` $->$], [$v_3$], [`0x10`]),
+  ),
+  drawStack(
+    ..([], [$a_2$], [`0xF0`]),
+    ..([], [$a_1$], [`0xE0`]),
+    ..([`%R15` $->$], [$t_1$], [`0xD0`]),
+  ),
+
+  [Used for "infinite" registers.],
+  [
+    Used for argument passing, capturing, and calculations.
+  ],
+)
+Works very similarly to the setups in stack machines, such as the JVM
+or a WASM interpreter!
+
+In most other languages the system-stack would contain multiple stack frames,
+but due to tail-call optimizations we only ever use one!
 
 == Pseudo $->$ x86-64
 #let sch(i, c) = grid(
@@ -581,7 +617,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
-        # r = -8(%RBB)
+        # r = -8(%RBP)
       ```,
     ),
     sch(
@@ -591,7 +627,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
-        # r = -8(%RBB)
+        # r = -8(%RBP)
         movq %R15, -8(%RBP)
       ```,
     ),
@@ -602,7 +638,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
-        # r = -8(%RBB)
+        # r = -8(%RBP)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
       ```,
@@ -614,7 +650,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
-        # r = -8(%RBB)
+        # r = -8(%RBP)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
         subq 8, %R15
@@ -628,7 +664,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
-        # r = -8(%RBB)
+        # r = -8(%RBP)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
         subq 8, %R15
@@ -644,7 +680,7 @@ Unlike most languages, top level functions are constants that contain the actual
       inc:  .quad inc_inner
 
       main_inner:
-        # r = -8(%RBB)
+        # r = -8(%RBP)
         movq %R15, -8(%RBP)
         movq -8(%RBP), %R15
         subq 8, %R15
