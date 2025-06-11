@@ -5,13 +5,11 @@
 #include "transformations.typ"
 
 == Compilation
-Lithium uses a compilation scheme, based on the negative/positive fragments in the language.
+#ln uses a compilation for the fragments!
 
+This turns the language into a pseudo assembly language.
 
-These compilation schemes compile the language into a pseudo assembly language.
-
-This assembly language is then easily translated into x86-64, which
-in turn can be compiled into machine code!
+This assembly language is then easily translated into x86-64 assembly!
 
 == Application Binary Interface -- ABI
 This defines how functions are called and how memory should be represented.
