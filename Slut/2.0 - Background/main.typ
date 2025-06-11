@@ -44,7 +44,7 @@
     indent[
       - Normal: Haskell, C, Java
 
-      - Linear: Linear Haskell, #ln
+      - Linear: Linear Haskell, Austral
     ]
   },
 )
