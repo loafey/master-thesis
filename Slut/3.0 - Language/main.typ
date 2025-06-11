@@ -208,12 +208,12 @@ $Gamma, Delta tack (t,u) : A times.circle B$ = \" the pair $(t,u)$ has type $A t
 $Gamma$ and $Delta$ are disjoint.
 
 == Values & commands
-=== Values
+=== Values: Positive fragment
 #align(center + horizon, positive(none))
 
 == Values & commands
 
-=== Commands
+=== Commands: Negative fragment
 
 #align(center + horizon, negative(none))
 

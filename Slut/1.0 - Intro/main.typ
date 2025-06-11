@@ -3,8 +3,9 @@
 == Abstract
 
 #indent[
-  - Linear types
-  - Continuation-passing style
+  - Background 
+    - Linear types
+    - Continuation-passing style
   - #ln
     - Kinds
     - Types
@@ -16,7 +17,7 @@
   - Future Work
     - Register Allocation
     - Exponentials
-    - Many more...
+    - More...
 ]
 
 // == What is #ln

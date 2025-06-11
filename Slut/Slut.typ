@@ -24,4 +24,4 @@
 #include "4.0 - Compilation/main.typ"
 #include "5.0 - Demonstration/main.typ"
 #include "6.0 - Future Work/main.typ"
-#include "7.0 - Outro/main.typ"
+#include "7.0 - Conclusion/main.typ"

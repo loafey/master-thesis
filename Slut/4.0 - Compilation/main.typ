@@ -1,9 +1,8 @@
 #import "../Prelude.typ": *
 
-= Compilation
+= Compiling #ln
 
 #include "transformations.typ"
-
 
 == Compilation
 Lithium uses a compilation scheme, based on the negative/positive fragments in the language.
