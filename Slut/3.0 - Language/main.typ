@@ -262,7 +262,7 @@ $Gamma$ and $Delta$ are disjoint.
 #with_closures("static")[
 
   #indent[
-    === Goto programming
+    === Goto programming: $*A$
 
     - $*A$ is a label
 
@@ -286,7 +286,7 @@ $Gamma$ and $Delta$ are disjoint.
   ))$,
 )[
   #indent[
-    === Procedural programming
+    === Procedural programming: $~A$
 
     - Can capture state
       - Must be a stack ($omega$)
@@ -301,7 +301,7 @@ $Gamma$ and $Delta$ are disjoint.
 == Values & commands
 #with_closures("linear")[
   #indent[
-    === Higher-order programming
+    === Higher-order programming: $not A$
     - $*(A times.circle *B times.circle ~C)$
       - $*B$ can not capture state
 
