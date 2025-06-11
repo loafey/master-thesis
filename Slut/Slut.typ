@@ -12,6 +12,8 @@
   title-color: none,
 )
 
+#set page(numbering: none, footer: none)
+
 ==
 #align(center + horizon)[
   We would like to thank our supervisor Jean-Philippe Bernardy for his
