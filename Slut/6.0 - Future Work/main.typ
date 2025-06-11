@@ -33,6 +33,23 @@ but can be hard to implement efficiently however!
 Allows a variable to be used more than once!
 Incredibly useful in a lot of programs.
 
+Adds:
+
+#indent[
+  - Exponential types: #raw(lang: "haskell", "!int") as opposed to just #raw(lang: "haskell", "int")
+
+  - Contraction: #raw(lang: "haskell", "let b + c = a;")\
+    where: `a :: !A` $space->space$ `b, c :: !A`
+
+    i.e. reference duplication
+
+  - Derelict: #raw(lang: "haskell", "let !d = b;")\
+    where: `b :: !A` $space->space$ `d :: A`
+
+    i.e. dereferencing
+]
+#pagebreak()
+
 #{
   set text(size: 10pt)
   ```hs
