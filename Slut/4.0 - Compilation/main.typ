@@ -7,6 +7,7 @@
 == Compilation
 Lithium uses a compilation scheme, based on the negative/positive fragments in the language.
 
+
 These compilation schemes compile the language into a pseudo assembly language.
 
 This assembly language is then easily translated into x86-64, which
@@ -58,12 +59,9 @@ The language has two different concepts of stacks!
     Used for argument passing, capturing, and calculations.
   ],
 )
-Works very similarly to the setups in stack machines, such as the JVM
-or a WASM interpreter!
+Works very similarly to JVM/WASM!
 
-In most other languages the system-stack would contain multiple stack frames,
-but due to tail-call optimizations we only ever use one!
-
+Only ever uses one stack frame due to tail-call optimizations!
 
 
 == Compilation Scheme
