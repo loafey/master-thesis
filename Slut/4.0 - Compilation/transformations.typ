@@ -24,26 +24,19 @@
 Goal: make pointers to stacks explicit
 
 #grid(
-  columns: (1fr, 1fr),
+  columns: (0.5fr, 1fr, 1.3fr),
   stroke: black + 0.1pt,
   inset: 10pt,
-  [Source], [Target],
-  $not A$, $square~A$,
-  $lambda^not x. c$, $square lambda^~ x. c$,
-  $f(x)$, $"let" square g = f; g(x)$,
-  $
-    "apply" : & *(#text(fill: red, $not$) (A times.circle #text(fill: red, $not$) B) times.circle A times.circle ~B) \
-    = lambda x. & "let" f, y = x; \
-    & "let" a,k = y; \
-    & #text(fill: red, $f$) (a, square k); \
-  $,
-  $
-    "apply" : & *(#text(fill: green.darken(20%), $square~$) (A times.circle #text(fill: green.darken(20%), $square~$) B) times.circle A times.circle ~B) \
-    = lambda x. & "let" f, y = x; \
-    & "let" a,k = y; \
-    & #text(fill: green.darken(20%), $"let" square g = f;$) \
-    & #text(fill: green.darken(20%), $g$) (a, square k); \
-  $,
+  [], [Source], [Target],
+  [Type], $not A$, $square~A$,
+  [Value], $lambda^not x. c$, $square lambda^~ x. c$,
+  [Command], $f(x)$, $"let" square g = f; g(x)$,
+  [Example],
+  $"foo" : *(not & A times.circle ~ not A) \
+  = lambda x. & "let" f,k = x; & \ & k(lambda y. f (y))$,
+
+  $"foo" : *(square & ~ A times.circle ~ (square ~ A)) \
+  = lambda x. & "let" f,k = x; \ & k(lambda y. "let" square g = f; g(y))$,
 )
 
 == Transformations
@@ -55,76 +48,40 @@ Goal: make pointers to stacks explicit
 
 Goal: identify a unique stack for every stack closure
 
-#grid(
-  columns: (1fr, 1fr),
-  stroke: black + 0.1pt,
-  inset: 10pt,
-  [Source], [After linear closure conversion],
-  $"foo" : & *(#hl_re($not$) A times.circle ~ #hl_re($not$) A) \
-  = & lambda x. "let" f,k = x; k(lambda y. #hl_re($f$) (y))$,
+#block(stroke: black + 0.1pt, inset: 10pt, $"foo" : *(square& ~A times.circle ~ (square~ A)) \
+= lambda x. & "let" f,k = x; \ & k(square lambda y. "let" square g = f; g (y))$)
 
-  $"foo" : *(#hl_gr($square& ~$)A times.circle ~ (#hl_gr($square~$) A)) \
-  = lambda x. & "let" f,k = x; \ & k(#hl_gr($square$) lambda y. #hl_gr($"let" square g = f; g$) (y))$,
-)
+Problem: 
+  - Environment for $not A$ must be $known$
+  - Environment for $~ A$ must be $omega$
+    - $Gamma = dot, f : square ~A$
+    - $Gamma : known$
 
 == Transformations
 === Stack selection
 
 Goal: identify a unique stack for every stack closure
 
-#grid(
-  columns: (1fr, 1fr),
+#block(
   stroke: black + 0.1pt,
   inset: 10pt,
-  [Source], [After linear closure conversion],
-  $"foo" : & *(#hl_re($not$) A times.circle ~ #hl_re($not$) A) \
-  = & lambda x. "let" f,k = x; k(lambda y. #hl_re($f$) (y))$,
-
-  $"foo" : *(#hl_gr($square& ~$)A times.circle ~ (#hl_gr($square~$) A)) \
-  = lambda x. & "let" f,k = x; \ & k(#hl_gr($square$) #block(inset: 3pt, stroke: 1pt, $lambda y. #hl_gr($"let" square g = f; g$) (y)$))$,
-)
-
-#grid(
-  columns: (1fr, 1fr),
-
-  indent[
-    - Problem: Bad environment in the closure
-      - $Gamma = dot, f : square ~A$
-      - $Gamma : known$
-  ],
-  stack_closure_value,
-)
-
-== Transformations
-=== Stack selection
-
-Goal: identify a unique stack for every stack closure
-
-#grid(
-  columns: (1fr, 1fr),
-  stroke: black + 0.1pt,
-  inset: 10pt,
-  [Source], [After linear closure conversion],
-  $"foo" : & *(#hl_re($not$) A times.circle ~ #hl_re($not$) A) \
-  = & lambda x. "let" f,k = x; k(lambda y. #hl_re($f$) (y))$,
-
-  $"foo" : *(#hl_gr($square& ~$)A times.circle ~ (#hl_gr($square~$) A)) \
-  = lambda x. & "let" f,k = x; \ & k(#hl_gr($square$) #block(inset: 3pt, stroke: 1pt, $lambda y. #hl_gr($"let" square g = f; g$) (y)$))$,
+  $"foo" : *(square& ~A times.circle ~ (square~ A)) \
+  = lambda x. & "let" f,k = x; \ & k(square lambda y. #hl_re($"let" square g = f; $) g(y))$,
 )
 
 Solution: move the \"unboxing\" out of the closure
 
-#indent[
+#block(stroke: 0.1pt + black, inset: 10pt,
   $"foo" : *(square& ~A times.circle ~ (square~ A)) \
-  = lambda x. & "let" f,k = x; \ & "let" square g = f; \ &k(square lambda y. g (y))$
-]
+  = lambda x. & "let" f,k = x; \ & #hl_gr($"let" square g = f;$) \ &k(square lambda y. g(y))$
+)
 
 == Transformations
 === Stack selection
 
 #indent[
-  - Can not always find a unique stack
-  \
+  Can not always find a unique stack:
+
   $& "bar" : *(A times.circle circle) \ & "baz" : *(~not A) = lambda k. k(lambda y. "bar"(y, newstack))$
 ]
 

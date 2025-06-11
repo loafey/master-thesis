@@ -5,41 +5,22 @@
 
 == Grammar
 
-#let complete_grammar = [
-  _Value_
-  #values
-  #dbl_linkbreak()
-  _Command_
-  #commands
-  #dbl_linkbreak()
-  _Pattern_
-  #pat
-  #dbl_linkbreak()
-  _Type_
-  #type
-  #dbl_linkbreak()
-  _Definition_
-  #def
-]
+_Values_: $v, v' : : = x | lambda x. c | newstack | (v, v') | square v | ...$
 
-#complete_grammar
+\
+_Commands_: $c : : = z(a) | "let" p = x; c$
 
-== Grammar
+\
+$"swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
+= lambda x. & "let" y, k = x; \
+& "let" a,b = y; \
+& k(b,a)$
 
-#align(
-  center + horizon,
-  $
-    "swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
-     = lambda x. & "let" y, k = x;                                     \
-                 & "let" a,b = y;                                      \
-                 & k(b,a)                                              \
-  $,
-)
 
 == Kinds
 
 #let frame(stroke) = (x, y) => (
-  if x == 1 { none } else if y == 6 or y == 0 or y == 1 or y == 2 {
+  if x == 1 { none } else if y == 6 or y == 7 or y == 0 or y == 1 or y == 2 {
     none
   } else if y == 5 {
     (
@@ -48,7 +29,7 @@
       left: stroke,
       right: stroke,
     )
-  } else if y == 7 {
+  } else if y == 7 or y == 8 {
     (
       top: (dash: "dashed", join: "round"),
       bottom: stroke,
@@ -81,7 +62,6 @@
       $omega space lr(\{ #v(17em)) #table(
         stroke: frame(rgb("000")),
         columns: (10em, 10em),
-        fill: (x, y) => { if y == 8 and x == 0 { black } else { none } },
         rows: (2em, 2em, 2em, 2em, 2em, 2em, 2em, 2em, 0.5em),
         inset: 0pt,
         gutter: 0pt,
@@ -92,31 +72,26 @@
         [#align(center + horizon, $known$)], [],
         [#align(center + horizon, $known$)], [],
         [], [],
-        [#align(center + horizon, $known$)], [],
+        [], [],
         [], [$space <- omega$],
       )$,
     )],
 )
 
-Every type has one of the two kinds
-
-The environment of free variables has a kind
+- Every type has one of the two kinds
 
 == Types
 
 === Grammar
 \
-$A,B & ::= fatzero              &           #[empty] \
-    & space | fatone           &            #[unit] \
-    & space | circle           &     #[empty stack] \
-    & space | alpha            &   #[type variable] \
-    & space | not A            &  #[linear closure] \
-    & space | ~ A              &   #[stack closure] \
-    & space | * A              & #[static function] \
-    & space | square A         &  #[linear pointer] \
-    & space | A times.circle B &         #[product] \
-    & space | A plus.circle B  &             #[sum] \
-    & space | exists alpha. A  &          #[exists] \ $
+$A,B & ::= circle & #[empty stack] \
+& space | alpha & #[type variable] \
+& space | not A & #[linear closure] \
+& space | ~ A & #[stack closure] \
+& space | * A & #[static function] \
+& space | square A & #[linear pointer] \
+& space | A times.circle B & #[product] \
+& space | exists alpha. A & #[exists] \ $
 
 == Types
 
@@ -138,17 +113,9 @@ $A,B & ::= fatzero              &           #[empty] \
 
 #align(center + horizon, kind_judgements)
 
-#grid(
-  columns: (1fr, 1fr),
-  [
-    - Sums must have matching kinds
-    - No pairs of stacks
-  ],
-  [
-    - Type variables are stacks (no Haskell-style polymorphism)
-    - No subkinding
-  ],
-)
+- No pairs of stacks
+- Type variables are stacks
+- No subkinding
 
 == Typing environment
 
@@ -168,8 +135,7 @@ $A,B & ::= fatzero              &           #[empty] \
 #align(center, flex(
   prooftree(rule($dot : known$, $$)),
   prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
-  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
-  prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
+  prooftree(rule($(Gamma, x: A)$, $Gamma$, $A : known$)),
 )) <kinds_env>
 
 #indent[
@@ -177,45 +143,43 @@ $A,B & ::= fatzero              &           #[empty] \
 
   - At most stack in an environment
 
+  - Environment has a kind
+
   - Kind omitted = either allowed
 ]
 
 == Values & commands
-
-=== How to read
-
-\
-
-$#prooftree(rule(
-  $Gamma,
-  Delta tack (t,u) : A times.circle B$,
-  $Gamma tack t: A$,
-  $Delta tack u : B$,
-))$
-
-\
-If the following hold:
-
-+ $Gamma tack t : A$ = \" $t$ has type $A$ in the environment $Gamma$\"
-
-+ $Delta tack u : B$ = \" $u$ has type $B$ in the environment $Delta$\"
-
-then:
-
-$Gamma, Delta tack (t,u) : A times.circle B$ = \" the pair $(t,u)$ has type $A times.circle B$ in the combined environment $Gamma,Delta$\"
-
-
-$Gamma$ and $Delta$ are disjoint.
-
-== Values & commands
 === Values: Positive fragment
-#align(center + horizon, positive(none))
+\
+#grid(
+  align: left,
+  columns: (1fr, 1fr),
+  row-gutter: 16pt,
+  var_value, newstack_value,
+  linear_pointer_value, exists_intro_value,
+  pair_value, linear_closure_value,
+  static_function_value, stack_closure_value,
+)
 
 == Values & commands
 
 === Commands: Negative fragment
+\
 
-#align(center + horizon, negative(none))
+#grid(
+  align: left,
+  columns: (1fr, 1fr),
+  row-gutter: 16pt,
+  judge(
+    $Gamma tack t: A$,
+    $Gamma, z: (not A | ~A | *A) tack "call" z(t)$,
+    note: $#math.italic[call]$,
+  ),
+  freestack_command,
+
+  pair_command, exists_elim_command,
+  follow_command,
+)
 
 == Values & commands
 
@@ -259,10 +223,12 @@ $Gamma$ and $Delta$ are disjoint.
 
 == Values & commands
 
-#with_closures("static")[
+#with_closures("static", extend: prooftree(rule($*A : known$, $A : omega$)))[
 
   #indent[
-    === Goto programming: $*A$
+    === Static function: $*A$
+
+    - Goto programming
 
     - $*A$ is a label
 
@@ -279,14 +245,12 @@ $Gamma$ and $Delta$ are disjoint.
     $A times.circle B : omega$,
     $A : known$,
     $B : omega$,
-  )) quad #prooftree(rule(
-    $A times.circle B : known$,
-    $A : known$,
-    $B : known$,
   ))$,
 )[
   #indent[
-    === Procedural programming: $~A$
+    === Stack closure: $~A$
+
+    - Procedural programming
 
     - Can capture state
       - Must be a stack ($omega$)
@@ -301,7 +265,9 @@ $Gamma$ and $Delta$ are disjoint.
 == Values & commands
 #with_closures("linear")[
   #indent[
-    === Higher-order programming: $not A$
+    === Linear closure: $not A$
+    - Higher-order programming
+
     - $*(A times.circle *B times.circle ~C)$
       - $*B$ can not capture state
 
@@ -313,10 +279,8 @@ $Gamma$ and $Delta$ are disjoint.
 
   Now we can do higher-order programming!
 
-  $
-      "apply" : & *(not (A times.circle not B) times.circle A times.circle ~B) \
-    = lambda x. & "let" f, y = x;                                              \
-                & "let" a,k = y;                                               \
-                & f(a, square k);                                              \
-  $
+  \ 
+
+  #block(stroke: 0.1pt + black, inset: 10pt, $"foo" : & *(not A times.circle ~ not A) \
+  = & lambda x. "let" f,k = x; k(lambda y. f (y))$)
 ]

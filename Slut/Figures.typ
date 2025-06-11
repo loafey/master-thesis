@@ -257,10 +257,9 @@
   grid(
     columns: (1fr, 1fr, 1fr),
     row-gutter: 16pt,
-    emptystack, empty_omega, empty_known,
-    unit, product_dynamic, product_constant,
-    sum_dynamic, sum_constant, dynamic_closure,
-    static_closure, linear_closure, linear_ptr,
-    existential_constant, existential_dynamic, type_variable,
+    existential_constant, existential_dynamic, emptystack,
+    product_dynamic, product_constant, linear_ptr,
+    static_closure, dynamic_closure, linear_closure,
+    type_variable,
   )
 }
