@@ -5,16 +5,23 @@
 
 == Grammar
 
-_Values_: $v, v' : : = x | lambda x. c | newstack | (v, v') | square v | ...$
+_Value_\
+$v, v' : : = x | lambda x. c | newstack | (v, v') | square v | ...$
 
-\
-_Commands_: $c : : = z(a) | "let" p = x; c$
+_Command_\
+$c : : = z(a) | "let" p = x; c | ...$
+
+_Pattern_\
+$p,p' : : = x | square p | (p,p') | angle.l x, p angle.r$
+
+_Type_\
+$A,B ::= circle | alpha | not A | ~ A | * A | square A | A times.circle B | exists alpha. A$
 
 \
 $"swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
-= lambda x. & "let" y, k = x; \
-& "let" a,b = y; \
-& k(b,a)$
+ = lambda x. & "let" y, k = x;                                     \
+             & "let" a,b = y;                                      \
+             & k(b,a)                                              \ $
 
 
 == Kinds
@@ -82,33 +89,6 @@ $"swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
 
 == Types
 
-=== Grammar
-\
-$A,B & ::= circle & #[empty stack] \
-& space | alpha & #[type variable] \
-& space | not A & #[linear closure] \
-& space | ~ A & #[stack closure] \
-& space | * A & #[static function] \
-& space | square A & #[linear pointer] \
-& space | A times.circle B & #[product] \
-& space | exists alpha. A & #[exists] \ $
-
-== Types
-
-// #align(
-//   center,
-//   $A,B & ::= fatzero | fatone
-//   | circle
-//   | alpha
-//   | not A
-//   | ~ A
-//   | * A
-//   | square A
-//   | A times.circle B
-//   | A plus.circle B
-//   | exists alpha. A$,
-// )
-
 === Kind rules
 
 #align(center + horizon, kind_judgements)
@@ -172,7 +152,7 @@ $A,B & ::= circle & #[empty stack] \
   row-gutter: 16pt,
   judge(
     $Gamma tack t: A$,
-    $Gamma, z: (not A | ~A | *A) tack "call" z(t)$,
+    $Gamma, z: (not A "or" ~A "or" *A) tack "call" z(t)$,
     note: $#math.italic[call]$,
   ),
   freestack_command,
@@ -217,6 +197,9 @@ $A,B & ::= circle & #[empty stack] \
     $~A$ = procedural programming
 
     $not A$ = higher-order programming
+
+    \
+    #stack(dir: ltr, $*A \ \ ~A \ \ not A$, $lr(#v(5em) \})$, $lr(#v(5em) A -> bot)$)
   ]
 ]
 
@@ -283,7 +266,7 @@ $A,B & ::= circle & #[empty stack] \
   #block(
     stroke: 0.1pt + black,
     inset: 10pt,
-    $"foo" : & *(not A times.circle ~ not A) \
-    = & lambda x. "let" f,k = x; k(lambda y. f (y))$,
+    $"foo" : & *(not A times.circle ~ not A)               \
+          = & lambda x. "let" f,k = x; k(lambda y. f (y)) \ $,
   )
 ]
