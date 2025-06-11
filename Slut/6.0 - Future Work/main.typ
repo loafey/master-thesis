@@ -68,23 +68,22 @@ With some syntax sugar would could make this pretty nice!
   align(center, $=$),
   raw(lang: "haskell", "let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)"),
 )
-We also use a `==` operator to remove which would hide `__eq__`.
 #{
   set text(size: 10pt)
   ```hs
   fib : *(!int ⊗ ~int)
     = \(n,k) ->
-      case *n == 0 of {
+      __eq__((*n, 0), \res -> case res of {
         inl () -> k(0);
         inr () ->
-          case *n == 1 of {
+          __eq__((*n, 1), \res -> case res of {
             inl () -> k(1);
             inr () ->
               fib((*n - 1, \r1 ->
               fib((*n - 2, \r2 ->
               k(r1 + r2)))));
-          };
-      };
+          });
+      });
   ```
 }
 Might look similar to `__dup__` but the idea is that this should work for any exponential type,
