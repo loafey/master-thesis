@@ -156,17 +156,17 @@ Rewriting the fibonacci function with this operator would result in:
   ```hs
   fib : *(!int ⊗ ~int)
     = \(n,k) ->
-      case *n == 0 of {
+      __eq__((*n, 0), \res -> case res of {
         inl () -> k(0);
         inr () ->
-          case *n == 1 of {
+          __eq__((*n, 1), \res -> case res of {
             inl () -> k(1);
             inr () ->
               fib((*n - 1, \r1 ->
               fib((*n - 2, \r2 ->
               k(r1 + r2)))));
-          };
-      };
+          });
+      });
   ```,
 )
 
