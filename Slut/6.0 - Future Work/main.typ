@@ -10,7 +10,7 @@ Some features we would like to see are:
   - Interface for making system calls
   - Exponentials
 
-  - And more...
+  - And a lot more!
 ]
 
 == Interface for System Calls
@@ -55,17 +55,13 @@ Incredibly useful in a lot of programs.
 Adds:
 
 #indent[
-  - Exponential types: #raw(lang: "haskell", "!int") as opposed to just #raw(lang: "haskell", "int")
+  - Exponential types: #raw(lang: "haskell", "!int") as opposed to just #raw(lang: "haskell", "int")#v(0.5cm)
 
-  - Contraction: #raw(lang: "haskell", "let b + c = a;")\
-    where: `a :: !A` $space->space$ `b, c :: !A`
+  - Reference duplication: #raw(lang: "haskell", "let b + c = a;")\
+    where: `a :: !A` $space->space$ `b, c :: !A`#v(0.5cm)
 
-    i.e. reference duplication
-
-  - Derelict: #raw(lang: "haskell", "let !d = b;")\
+  - Dereferencing: #raw(lang: "haskell", "let !d = b;")\
     where: `b :: !A` $space->space$ `d :: A`
-
-    i.e. dereferencing
 ]
 #pagebreak()
 
