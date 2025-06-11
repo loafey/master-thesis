@@ -64,35 +64,28 @@ Only ever uses one stack frame due to tail-call optimizations!
 
 == Compilation Scheme
 
-#table(
-  columns: (1fr, 1fr),
-  align: horizon,
-  inset: 7pt,
-  table.cell(fill: rgb("0000001f"), align: center)[*Positive Fragment*],
-  table.cell(fill: rgb("0000001f"), align: center)[*Negative Fragment*],
-  $#scheme_pos($(v_1,v_2)$)^omega_(rho,sigma) =
-  #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
-  $#scheme_neg($"let" x,y = z^known : A times.circle B; c$)_(rho, z |-> s_0 plus.double s_1)
-  = #code_box($#sem[c]^known_(rho, x |-> s_0, y |-> s_1)$)$,
-
-  $#scheme_pos($lambda^* x. c$)^known_[] =
-  &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
-  & #code_box($push_(s p)(l_1)$)$,
-  $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-  #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
-
-  table.cell(colspan: 2, align: center, [And a few more...]),
+#{
+  set text(size: 1.4em)
+  align(
+    center + horizon,
+    $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
+    #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
+  )
+}
+#align(
+  bottom,
+  [
+    $rho, sigma$ = environment of mapping from variable to register\
+    $omega, fatone$ = kind
+  ],
 )
-
-$rho, sigma$ = environment of mapping from variable to register\
-$omega, fatone$ = kind
 
 
 == Compilation Scheme Example
 #let sch = (a, b, c) => {
   let bottom = if c == none { ([], []) } else {
     (
-      align(right + horizon, block(inset: 10pt, [Compilation rule:])),
+      align(right + horizon, block(inset: 10pt, [Compilation scheme:])),
       align(left + horizon, c),
     )
   }
@@ -163,7 +156,7 @@ $omega, fatone$ = kind
       none,
       $#scheme_pos($lambda^* x. c$)^known_[] =
       &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
-      & #code_box($push_(s p)(l_1)$)$,
+      & #code_box($l_2 : "global" l_1$)$,
     ),
     sch(
       $#```asm
@@ -187,7 +180,7 @@ $omega, fatone$ = kind
 
       $\ \ #scheme_pos($lambda^* x. c$)^known_[] =
       &#code_block($l_1$, meta($"let" r = "next"([], #math.italic("ptr"))$), $r = s p$, $""^-#sem[c]_(x |-> r)$) \
-      & #code_box($push_(s p)(l_1)$)$,
+      & #code_box($l_2 : "global" l_1$)$,
     ),
     sch(
       $#```asm

@@ -35,6 +35,9 @@ In a system language it is nice to interact with the system.
       mov $60, %RAX
       mov $42, %RDI
       syscall
+
+      subq $8, %R15 ; push the result
+      movq %RAX, 0(%R15)
       ...
     ```],
 )
@@ -63,60 +66,60 @@ Adds:
   - Dereferencing: #raw(lang: "haskell", "let !d = b;")\
     where: `b :: !A` $space->space$ `d :: A`
 ]
-#pagebreak()
+// #pagebreak()
 
-#{
-  set text(size: 10pt)
-  ```hs
-  fib : *(!int ⊗ ~int)
-    = \(n,k) ->
-        let n1 + z1 = n; -- duplicate as a pattern, not addition
-        let !z2 = z1;
-        __eq__((z2, 0), \res -> case res of {
-          inl () ->
-            let n2 + o1 = n1;
-            let !o2 = o1;
-            __eq__((o2, 1), \res -> {
-              inl () ->
-                let n3 + p = n2;
-                let !n3 = n3;
-                let !n4 = p;
-                fib((n3 - 1, \r1 ->
-                fib((n4 - 2, \r2 ->
-                k(r1 + r2)))));
-              inr () -> k(1);
-            });
-          inr () -> k(0);
-        });
-  ```
-}
-#pagebreak()
-With some syntax sugar would could make this pretty nice!
+// #{
+//   set text(size: 10pt)
+//   ```hs
+//   fib : *(!int ⊗ ~int)
+//     = \(n,k) ->
+//         let n1 + z1 = n; -- duplicate as a pattern, not addition
+//         let !z2 = z1;
+//         __eq__((z2, 0), \res -> case res of {
+//           inl () ->
+//             let n2 + o1 = n1;
+//             let !o2 = o1;
+//             __eq__((o2, 1), \res -> {
+//               inl () ->
+//                 let n3 + p = n2;
+//                 let !n3 = n3;
+//                 let !n4 = p;
+//                 fib((n3 - 1, \r1 ->
+//                 fib((n4 - 2, \r2 ->
+//                 k(r1 + r2)))));
+//               inr () -> k(1);
+//             });
+//           inr () -> k(0);
+//         });
+//   ```
+// }
+// #pagebreak()
+// With some syntax sugar would could make this pretty nice!
 
-#table(
-  columns: (auto, 1fr, auto),
-  stroke: rgb("00000009"),
-  raw(lang: "haskell", "k(*n + *n)"),
-  align(center, $=$),
-  raw(lang: "haskell", "let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)"),
-)
-#{
-  set text(size: 10pt)
-  ```hs
-  fib : *(!int ⊗ ~int)
-    = \(n,k) ->
-      __eq__((*n, 0), \res -> case res of {
-        inl () ->
-          __eq__((*n, 1), \res -> case res of {
-            inl () ->
-              fib((*n - 1, \r1 ->
-              fib((*n - 2, \r2 ->
-              k(r1 + r2)))));
-            inr () -> k(1);
-          });
-        inr () -> k(0);
-      });
-  ```
-}
-Might look similar to `__dup__` but the idea is that this should work for any exponential type,
-not just int!
+// #table(
+//   columns: (auto, 1fr, auto),
+//   stroke: rgb("00000009"),
+//   raw(lang: "haskell", "k(*n + *n)"),
+//   align(center, $=$),
+//   raw(lang: "haskell", "let a + b = n; let !n1 = a; let !n2 = b; k(n1 + n2)"),
+// )
+// #{
+//   set text(size: 10pt)
+//   ```hs
+//   fib : *(!int ⊗ ~int)
+//     = \(n,k) ->
+//       __eq__((*n, 0), \res -> case res of {
+//         inl () ->
+//           __eq__((*n, 1), \res -> case res of {
+//             inl () ->
+//               fib((*n - 1, \r1 ->
+//               fib((*n - 2, \r2 ->
+//               k(r1 + r2)))));
+//             inr () -> k(1);
+//           });
+//         inr () -> k(0);
+//       });
+//   ```
+// }
+// Might look similar to `__dup__` but the idea is that this should work for any exponential type,
+// not just int!
