@@ -130,8 +130,8 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
 $Gamma$ represents the free variables in the closure.
 $times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$
 If $Gamma$ has kind $known$, then $"pairsvars"$ must construct a newstack
-($circle$). For example: if $Gamma = dot, A: known, B: known$, then the output
-of $"pairsvars"$ will be $A times.circle B times.circle circle$.
+($circle$). For example: if $Gamma = dot, x : A: known, y : B: known$, then the output
+of $"pairsvars"$ will be $(x, y, newstack)$.
 $"unpairAll"$ is a macro that inverts this procedure.
 
 Because the closures are converted, the corresponding commands must also be
