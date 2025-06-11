@@ -68,8 +68,8 @@ Only ever uses one stack frame due to tail-call optimizations!
   set text(size: 1.4em)
   align(
     center + horizon,
-    $#scheme_neg($"call" z^known (v)$)_(rho, z |-> [r_0]) =
-    #code_box($& #sem[$v$]^omega_(rho)$, $& jmp r_0$)$,
+    $#scheme_pos($(v_1,v_2)$)^known_(rho,sigma) =
+    #code_box($#sem[$v_2$]^known_rho$, $#sem[$v_1$]^known_sigma$)$,
   )
 }
 #align(
