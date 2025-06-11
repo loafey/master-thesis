@@ -5,11 +5,10 @@
 #include "transformations.typ"
 
 == Compilation
-#ln uses a compilation for the fragments!
+#ln uses a compilation scheme for the fragments!
 
-This turns the language into a pseudo assembly language.
-
-This assembly language is then easily translated into x86-64 assembly!
+This turns the language into a pseudo assembly language, which
+can then be translated into x86-64 assembly!
 
 == Application Binary Interface -- ABI
 This defines how functions are called and how memory should be represented.
@@ -76,7 +75,7 @@ Only ever uses one stack frame due to tail-call optimizations!
   bottom,
   [
     $rho, sigma$ = environment of mapping from variable to register\
-    $omega, fatone$ = kind
+    $omega, known$ = kind
   ],
 )
 
