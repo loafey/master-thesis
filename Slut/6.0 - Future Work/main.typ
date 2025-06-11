@@ -7,8 +7,6 @@ We have produced a solid base, but a lot of work is still there to be made...
 Some features we would like to see are:
 
 #indent[
-  - Control over how, and where stacks are allocated
-  - Interface for Foreign Function Interface
   - Interface for making system calls
   - Exponentials
 

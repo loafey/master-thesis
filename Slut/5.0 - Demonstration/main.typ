@@ -75,4 +75,5 @@ Currently sadly slower!
     },
   )
 })
-The y axis represents milliseconds, and x is the fibonnaci number we are evaluting.
+The y axis represents milliseconds in a logartihmic fashion,
+and x is the fibonnaci number we are evaluting.
