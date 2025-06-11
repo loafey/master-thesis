@@ -640,6 +640,7 @@ but due to tail-call optimizations we only ever use one!
       main_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
+
         movq -8(%RBP), %R15
       ```,
     ),
@@ -652,8 +653,10 @@ but due to tail-call optimizations we only ever use one!
       main_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
+
         movq -8(%RBP), %R15
-        subq 8, %R15
+
+        subq $8, %R15
         movq $42, 0(%R15)
       ```,
     ),
@@ -666,10 +669,13 @@ but due to tail-call optimizations we only ever use one!
       main_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
+
         movq -8(%RBP), %R15
-        subq 8, %R15
+
+        subq $8, %R15
         movq $42, 0(%R15)
-        subq 8, %R15
+
+        subq $8, %R15
         movq $0, 0(%R15)
       ```,
     ),
@@ -682,11 +688,15 @@ but due to tail-call optimizations we only ever use one!
       main_inner:
         # r = -8(%RBP)
         movq %R15, -8(%RBP)
+
         movq -8(%RBP), %R15
-        subq 8, %R15
+
+        subq $8, %R15
         movq $42, 0(%R15)
-        subq 8, %R15
+
+        subq $8, %R15
         movq $0, 0(%R15)
+
         movq inc(%RIP), %RAX
         jmp *%RAX
       ```,
