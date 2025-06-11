@@ -12,6 +12,59 @@ These compilation schemes compile the language into a pseudo assembly language.
 This assembly language is then easily translated into x86-64, which
 in turn can be compiled into machine code!
 
+== Application Binary Interface -- ABI
+This defines how functions are called and how memory should be represented.
+
+For function calls some requirements are needed:
+#indent[
+  - Register `%R15` (SP) is set to a pointer to a valid stack.
+  - All expected arguments exist on the stack.
+  - The stack grows downwards.
+
+  - ...
+]
+
+Some other requirements:
+
+#indent[
+  - Proper memory alignment.
+
+  - How top-level functions work\
+    (they are actually constants that contain the actual function pointer
+    #emoji.face.flush
+    #emoji.excl
+    )
+]
+
+== Application Binary Interface -- System Stack
+The language has two different concepts of stacks!
+#let top(a) = table.cell(align: center, fill: rgb("0000001F"), a)
+#table(
+  columns: (1fr, 1fr),
+  top[System-Stack], top[Dynamic Stack],
+  drawStack(
+    ..([`%RBP` $->$], [$v_1$], [`0x30`]),
+    ..([], [$v_2$], [`0x20`]),
+    ..([`%RSP` $->$], [$v_3$], [`0x10`]),
+  ),
+  drawStack(
+    ..([], [$a_2$], [`0xF0`]),
+    ..([], [$a_1$], [`0xE0`]),
+    ..([`%R15` $->$\ This is SP!!], [$t_1$], [`0xD0`]),
+  ),
+
+  [Used for "infinite" registers.],
+  [
+    Used for argument passing, capturing, and calculations.
+  ],
+)
+Works very similarly to the setups in stack machines, such as the JVM
+or a WASM interpreter!
+
+In most other languages the system-stack would contain multiple stack frames,
+but due to tail-call optimizations we only ever use one!
+
+
 
 == Compilation Scheme
 
@@ -55,17 +108,17 @@ in turn can be compiled into machine code!
   [],
   (
     [```asm
-      inc : *((int ⊕ int) ⊗ ~int)
+      inc : *(int ⊗ ~int)
         = ...;
       ```
       ```asm
       func : *~int
-        = \e -> inc((inl 42, e));
+        = \e -> inc((42, e));
       ```
     ],
     [
       ```asm
-      inc : *((int ⊕ int) ⊗ ~int)
+      inc : *(int) ⊗ ~int)
         = ...;
       ```
       #block(
@@ -73,7 +126,7 @@ in turn can be compiled into machine code!
         outset: 4pt,
         ```asm
         func : *~int
-          = \e -> inc((inl 42, e));
+          = \e -> inc((42, e));
         ```,
       )
     ],
@@ -83,7 +136,7 @@ in turn can be compiled into machine code!
         outset: 4pt,
         ```asm
         func : *~int
-          = \e -> inc((inl 42, e));
+          = \e -> inc((42, e));
         ```,
       ),
       none,
@@ -94,7 +147,7 @@ in turn can be compiled into machine code!
       func : *~int
       ``` \ space space #`= `
       #block(stroke: blue, outset: 4pt, ```asm
-      \e -> inc ((inl 42, e))
+      \e -> inc ((42, e));
       ```)$,
       none,
       $#scheme_pos($lambda^* x. c$)^known_[] =
@@ -106,7 +159,7 @@ in turn can be compiled into machine code!
       func : *~int
       ``` \ space space #`= `
       #block(stroke: blue, outset: 4pt, ```asm
-      \e -> inc ((inl 42, e))
+      \e -> inc ((42, e));
       ```)$,
       [
         $"func": \ space space "global" "func_inner"$
@@ -116,7 +169,7 @@ in turn can be compiled into machine code!
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space ""^-#sem(```asm
-        inc ((inl 42, e))
+        inc ((42, e))
         ```)_("inc" -> ["inc"],e |-> r)\
         \ $
       ],
@@ -133,8 +186,8 @@ in turn can be compiled into machine code!
       \e ->
       ```
       #block(stroke: blue, outset: 4pt, ```asm
-      inc ((inl 42, e))
-      ```)$,
+      inc ((42, e))
+      ```)#`;`$,
       [
         $"func": \ space space "global" "func_inner"$
         #linebreak()
@@ -143,7 +196,7 @@ in turn can be compiled into machine code!
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space ""^-#sem(```asm
-        inc ((inl 42, e))
+        inc ((42, e))
         ```)_("inc" -> ["inc"], e |-> r)\
         \ $
       ],
@@ -159,8 +212,8 @@ in turn can be compiled into machine code!
       \e ->
       ```
       #block(stroke: blue, outset: 4pt, ```asm
-      inc ((inl 42, e))
-      ```)$,
+      inc ((42, e))
+      ```)#`;`$,
       [
         $"func": \ space space "global" "func_inner"$
         #linebreak()
@@ -170,7 +223,7 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space #```asm
         ``` ""^+#sem(```asm
-        (inl 42, e)
+        (42, e)
         ```)^omega_(e -> r)\
         space space jmp "inc"\ $
 
@@ -193,11 +246,11 @@ in turn can be compiled into machine code!
         stroke: blue,
         outset: 4pt,
         ```asm
-        (inl 42, e)
+        (42, e)
         ```,
       )
       #```asm
-      )
+      );
       ```$,
       [
         $"func": \ space space "global" "func_inner"$
@@ -208,14 +261,14 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space #```asm
         ``` ""^+#sem(```asm
-        (inl 42, e)
+        (42, e)
         ```)^omega_(e -> r)\
         space space jmp "inc"\ $
 
       ],
 
       $#scheme_pos($(v_1,v_2)$)^omega_(rho,sigma) =
-      #code_box($#sem[$v_2$]^omega$, $#sem[$v_1$]^known_sigma$)$,
+      #code_box($#sem[$v_2$]^omega_rho$, $#sem[$v_1$]^known_sigma$)$,
     ),
     sch(
       $#```asm
@@ -231,7 +284,7 @@ in turn can be compiled into machine code!
         stroke: blue,
         outset: 2pt,
         ```asm
-        inl 42
+        42
         ```,
       )#`,`
       #block(
@@ -241,7 +294,7 @@ in turn can be compiled into machine code!
         e
         ```,
       )#```asm
-      ))
+      ));
       ```$,
       [
         $"func": \ space space "global" "func_inner"$
@@ -256,7 +309,7 @@ in turn can be compiled into machine code!
         ```)^omega_(e |-> r)\
         space space #```asm
         ``` ""^+#sem(```asm
-        inl 42
+        42
         ```)^known_[]\
         space space jmp "inc"\ $
 
@@ -273,7 +326,7 @@ in turn can be compiled into machine code!
       \e ->
       ```
       #```asm
-      inc((inl 42,
+      inc((42,
       ```
       #block(
         stroke: blue,
@@ -281,7 +334,7 @@ in turn can be compiled into machine code!
         ```asm
         e
         ```,
-      )#```asm ))```$,
+      )#```asm ));```$,
       [
         $"func": \ space space "global" "func_inner"$
         #linebreak()
@@ -294,7 +347,7 @@ in turn can be compiled into machine code!
         ```)^omega_(e|->r) \
         space space #```asm
         ``` ""^+#sem(```asm
-        inl 42
+        42
         ```)^known_[]\
         space space jmp "inc"\ $
       ],
@@ -309,7 +362,7 @@ in turn can be compiled into machine code!
       \e ->
       ```
       #```asm
-      inc((inl 42,
+      inc((42,
       ```
       #block(
         stroke: blue,
@@ -317,7 +370,7 @@ in turn can be compiled into machine code!
         ```asm
         e
         ```,
-      )#```asm ))```$,
+      )#```asm ));```$,
       [
         $"func": \ space space "global" "func_inner"$
         #linebreak()
@@ -328,7 +381,7 @@ in turn can be compiled into machine code!
         space space sp = r \
         space space #```asm
         ``` ""^+#sem(```asm
-        inl 42
+        42
         ```)^known_[]\
         space space jmp "inc"\ $
       ],
@@ -349,90 +402,11 @@ in turn can be compiled into machine code!
         stroke: blue,
         outset: 2pt,
         ```asm
-        inl 42
-        ```,
-      )
-      #```asm
-      , e))
-      ```$,
-      [
-        $"func": \ space space "global" "func_inner"$
-        #linebreak()
-        #linebreak()
-        $"func_inner": \
-        space space \""let" r = "next"([],p t r)\"\
-        space space space r = sp\
-        space space sp = r\
-        space space #```asm
-        ``` ""^+#sem(```asm
-        inl 42
-        ```)^known_[]\
-        space space jmp "inc"\ $
-
-      ],
-
-      $#scheme_pos($"inl" v_1$)^alpha_rho =
-      #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
-    ),
-    sch(
-      $#```asm
-      func : *~int
-      ``` \ space space #`= `
-      #```asm
-      \e ->
-      ```
-      #```asm
-      inc((
-      ```
-      #block(
-        stroke: blue,
-        outset: 2pt,
-        ```asm
-        inl 42
-        ```,
-      )
-      #```asm
-      , e))
-      ```$,
-      [
-        $"func": \ space space "global" "func_inner"$
-        #linebreak()
-        #linebreak()
-        $"func_inner": \
-        space space \""let" r = "next"([],p t r)\"\
-        space space space r = sp\
-        space space sp = r\
-        space space #```asm
-        ``` ""^+#sem(```asm
-        42
-        ```)^known_[]\
-        space space space push_sp (0)\
-        space space jmp "inc"\ $
-
-      ],
-
-      $#scheme_pos($"inl" v_1$)^alpha_rho =
-      #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
-    ),
-    sch(
-      $#```asm
-      func : *~int
-      ``` \ space space #`= `
-      #```asm
-      \e ->
-      ```
-      #```asm
-      inc((inl
-      ```
-      #block(
-        stroke: blue,
-        outset: 2pt,
-        ```asm
         42
         ```,
       )
       #```asm
-      , e))
+      , e));
       ```$,
       [
         $"func": \ space space "global" "func_inner"$
@@ -443,7 +417,6 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space sp = r\
         space space space ""^+#sem[```asm 42```]_[]^known \
-        space space space push_sp (0)\
         space space jmp "inc"\ $
       ],
       $#scheme_pos[$42$]^known_[] = #code_box[$"push"_(s p)(42)$]$,
@@ -456,17 +429,7 @@ in turn can be compiled into machine code!
       \e ->
       ```
       #```asm
-      inc((inl
-      ```
-      #block(
-        stroke: blue,
-        outset: 2pt,
-        ```asm
-        42
-        ```,
-      )
-      #```asm
-      , e))
+      inc((42, e));
       ```$,
       [
         $"func": \ space space "global" "func_inner"$
@@ -477,7 +440,6 @@ in turn can be compiled into machine code!
         space space space r = sp\
         space space sp = r\
         space space space push_sp (42) \
-        space space space push_sp (0)\
         space space jmp "inc"\ $
       ],
       none,
@@ -496,7 +458,6 @@ in turn can be compiled into machine code!
     $space space space r = sp$,
     $space space sp = r$,
     $space space space push_sp (\$42)$,
-    $space space space push_sp (0)$,
     $space space jmp "inc"$,
   )
   if i == -1 {
@@ -513,60 +474,6 @@ in turn can be compiled into machine code!
     }
   }
 }
-
-
-== Application Binary Interface -- ABI
-This defines how functions are called and how memory should be represented.
-
-For function calls some requirements are needed:
-#indent[
-  - Register `R15` is set to an address which points to a valid stack.
-  - All expected arguments exist on the stack.
-  - The stack grows downwards.
-
-  - And a few more ...
-]
-
-Some other requirements:
-
-#indent[
-  - Proper memory alignment.
-  - How to interact with the stack.
-
-  - How top-level functions work\
-    (they are actually constants that contain the actual function pointer
-    #emoji.face.flush
-    #emoji.excl
-    )
-]
-
-== Application Binary Interface -- System Stack
-The language has two different concepts of stacks!
-#let top(a) = table.cell(align: center, fill: rgb("0000001F"), a)
-#table(
-  columns: (1fr, 1fr),
-  top[System-Stack], top[Stack],
-  drawStack(
-    ..([`%RBP` $->$], [$v_1$], [`0x30`]),
-    ..([], [$v_2$], [`0x20`]),
-    ..([`%RSP` $->$], [$v_3$], [`0x10`]),
-  ),
-  drawStack(
-    ..([], [$a_2$], [`0xF0`]),
-    ..([], [$a_1$], [`0xE0`]),
-    ..([`%R15` $->$], [$t_1$], [`0xD0`]),
-  ),
-
-  [Used for "infinite" registers.],
-  [
-    Used for argument passing, capturing, and calculations.
-  ],
-)
-Works very similarly to the setups in stack machines, such as the JVM
-or a WASM interpreter!
-
-In most other languages the system-stack would contain multiple stack frames,
-but due to tail-call optimizations we only ever use one!
 
 == Pseudo $->$ x86-64
 #let sch(i, c) = grid(
@@ -673,28 +580,6 @@ but due to tail-call optimizations we only ever use one!
 
         subq $8, %R15
         movq $42, 0(%R15)
-
-        subq $8, %R15
-        movq $0, 0(%R15)
-      ```,
-    ),
-    sch(
-      9,
-      ```asm
-      func: .quad func_inner
-      inc:  .quad inc_inner
-
-      func_inner:
-        # r = -8(%RBP)
-        movq %R15, -8(%RBP)
-
-        movq -8(%RBP), %R15
-
-        subq $8, %R15
-        movq $42, 0(%R15)
-
-        subq $8, %R15
-        movq $0, 0(%R15)
 
         movq inc(%RIP), %RAX
         jmp *%RAX
