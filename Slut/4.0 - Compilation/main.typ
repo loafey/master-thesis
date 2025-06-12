@@ -48,7 +48,7 @@ The language has two different concepts of stacks!
   drawStack(
     ..([], [$a_2$], [`0xF0`]),
     ..([], [$a_1$], [`0xE0`]),
-    ..([`%R15` $->$\ This is SP!!], [$t_1$], [`0xD0`]),
+    ..([`%R15(SP)`$->$], [$t_1$], [`0xD0`]),
   ),
 
   [Used for "infinite" registers.],
