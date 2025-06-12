@@ -418,7 +418,7 @@ Works very similarly to JVM/WASM!
         space space \""let" r = "next"([],p t r)\"\
         space space space r = sp\
         space space sp = r\
-        space space space ""^+#sem[```asm 42```]_[]^known \
+        space space space space ""^+#sem[```asm 42```]_[]^known \
         space space jmp "inc"\ $
       ],
       $#scheme_pos[$42$]^known_[] = #code_box[$"push"_(s p)(42)$]$,
