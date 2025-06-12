@@ -236,13 +236,14 @@ $"swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
 
     - Procedural programming
 
+    - $*(A times.circle ~B)$ corresponds to C function signature $B space (A space a)$
+
     - Can capture state
       - Must be a stack ($omega$)
 
     - Single stack per static function ($*$)
       - Kind rules for $*$ and $times.circle$
 
-    - $*(A times.circle ~B)$ corresponds to C function signature $B space (A space a)$
   ]
 ]
 
