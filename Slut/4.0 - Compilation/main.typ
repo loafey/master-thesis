@@ -60,7 +60,7 @@ Works very similarly to JVM/WASM!
 
 
 
-== Compilation Scheme
+== Compilation Scheme - What is it?
 
 #{
   set text(size: 1.4em)
@@ -79,7 +79,7 @@ Works very similarly to JVM/WASM!
 )
 
 
-== Compilation Scheme Example
+== Compilation Scheme - Example
 #let sch = (a, b, c) => {
   let bottom = if c == none { ([], []) } else {
     (
