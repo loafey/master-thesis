@@ -6,7 +6,7 @@
 == Grammar
 
 _Value_\
-$v, v' : : = x | lambda x. c | newstack | (v, v') | square v | ...$
+$v, v' : : = x | lambda x. c | newstack | (v, v') | square v | angle.l A. v angle.r |...$
 
 _Command_\
 $c : : = z(a) | "let" p = x; c | ...$

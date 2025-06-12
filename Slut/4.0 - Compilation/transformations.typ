@@ -101,7 +101,7 @@ Goal: make the structure of stacks explicit
 How: convert stack closure to a pair of a static function and an environment.
 
 #grid(
-  columns: (1fr, 2fr),
+  columns: (1fr, 1.6fr),
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
@@ -147,7 +147,7 @@ Now $not$ and $~$ are eliminated!
 == Transformations
 
 #grid(
-  columns: (1fr),
+  columns: 1fr,
   stroke: 0.1pt + black,
   inset: 10pt,
   $"foo" : *(square& ~A times.circle ~ (square~ A)) \
