@@ -34,12 +34,12 @@ Some other requirements:
     )
 ]
 
-== Application Binary Interface -- System Stack
+== Application Binary Interface -- What are stacks?!
 The language has two different concepts of stacks!
 #let top(a) = table.cell(align: center, fill: rgb("0000001F"), a)
 #table(
   columns: (1fr, 1fr),
-  top[System-Stack], top[Dynamic Stack],
+  top[System-Stack], top[Stack],
   drawStack(
     ..([`%RBP` $->$], [$v_1$], [`0x30`]),
     ..([], [$v_2$], [`0x20`]),
