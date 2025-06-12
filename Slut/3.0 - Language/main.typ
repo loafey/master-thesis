@@ -12,10 +12,10 @@ _Command_\
 $c : : = z(a) | "let" p = x; c | ...$
 
 _Pattern_\
-$p,p' : : = x | square p | (p,p') | angle.l x, p angle.r$
+$p,p' : : = x | square p | (p,p') | angle.l x, p angle.r | ...$
 
 _Type_\
-$A,B ::= circle | alpha | not A | ~ A | * A | square A | A times.circle B | exists alpha. A$
+$A,B ::= circle | alpha | not A | ~ A | * A | square A | A times.circle B | exists alpha. A | ...$
 
 \
 $"swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
@@ -59,6 +59,8 @@ $"swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
 
     - $known$ is called _known size_
 
+    - Every type has one of the two kinds
+
 
   ],
   [
@@ -85,7 +87,6 @@ $"swap" : *(( & A times.circle B) times.circle ~(B times.circle A)) \
     )],
 )
 
-- Every type has one of the two kinds
 
 == Types
 

@@ -17,9 +17,6 @@
     - Compilation Scheme
   - Demonstration
   - Future Work
-    - System Calls
-    - Exponentials
-    - More...
 ]
 
 == Introduction
@@ -28,9 +25,15 @@
   - Referential transparency
   - Purity
   - Higher-order functions
+  - More...
   - Why Functional Programming Matters (Hughes, 1990)
 
 - Linear types 
-  - Mutability
+  - Mutation
   - Must free allocated memory
   - Must close opened files
+  - More...
+
+- Goal: 
+  - Intermediate representation for linear functional languages
+  - Ability to write #ln directly

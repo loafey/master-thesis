@@ -18,7 +18,7 @@
   ))
   - Normal: Haskell, C, Java
 
-  - Linear: Linear Haskell, Austral
+  - Linear: Linear Haskell, Idris2 (support)
 
 ]
 
