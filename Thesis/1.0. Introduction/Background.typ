@@ -1,6 +1,6 @@
 #import "../Prelude.typ": *
 
-== Background <Background>
+== Problem domain <Problem_domain>
 System-level programming is the act of developing software that interacts directly with a computer's
 hardware or provides foundational services to other software.
 We will define system-level programming as Wikipedia @wiki:Systems_programming defines it:

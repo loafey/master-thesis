@@ -1,5 +1,5 @@
 ## Table of Contents
-- [ ] How is 1.1 Background related to 2. Background? Perhaps specialise
+- [x] How is 1.1 Background related to 2. Background? Perhaps specialise
   one (or both) to technical background, context, problem domian,
   etc.
 
