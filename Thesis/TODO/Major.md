@@ -17,7 +17,7 @@
 
 - 1.2 Motivation
   - [ ] 1st sentence is a bit hard to read: mainly a long "list".
-  - [ ] "Although the merits of functional programming are evident
+  - [x] "Although the merits of functional programming are evident
     (Hughes, 1989), it is under represented for system-level
     programming": use "underrepresented" (one word) and replace
     "evident" by "well established".

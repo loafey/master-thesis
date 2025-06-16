@@ -3,7 +3,7 @@
 == Motivation
 Functional programming tends to emphasize _referential transparency_, _higher-order
 functions_, _algebraic type systems_, and _strong type systems_.
-Although the merits of functional programming are evident @hughes1989, 
+Although the merits of functional programming are well established @hughes1989, 
 it is underrepresented for system-level programming.
 Functional languages are rarely used in system-level programming due to their
 lack of predictable performance, which can be traced back the use of
