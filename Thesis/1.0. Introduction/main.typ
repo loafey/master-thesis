@@ -2,6 +2,11 @@
 #import "../Prelude.typ": ln
 
 = Introduction
+Static anaysis tools and systems have seen use in several compilers and
+programming languages. By relying on such tools and systems, programmers can
+ensure safety, performance, and also express intent. 
+In this thesis we leverage the system of linear types for all three purposes.
+
 The concept of linearity in programming languages is not a newly discovered one.
 A language with linearity allows a developer to write software without the
 worries of mismanaging things such as memory and files.

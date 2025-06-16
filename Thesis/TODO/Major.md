@@ -11,7 +11,7 @@
 - [ ] 5.2, on the other hand, has parhaps too many subsections
 
 ## 1 Intro
-- [ ] I feel the intro is a bit sudden - perhaps add a sentence or two
+- [x] I feel the intro is a bit sudden - perhaps add a sentence or two
   "zooming in" from the general audience (any CSE MSc student, for
   example) towards the topic.
 
