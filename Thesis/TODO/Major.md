@@ -33,7 +33,7 @@
 
 ## 2 Background
 - 2.1 Lambda calculus and linear types
-  - [ ] "... the set of variables in �� ...": this is not quite correct - I
+  - [x] "... the set of variables in �� ...": this is not quite correct - I
     think you mean "free variables"? But even in the linear case "the
     set of variables in �� is Γ" is a "type error" as you have
     presented contexts as lists of pairs, not sets.

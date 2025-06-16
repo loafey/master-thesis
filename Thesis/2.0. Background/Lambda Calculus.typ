@@ -101,7 +101,7 @@ are the rules for type abstraction and type application.
 ) <SystemF_rules>
 
 The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
-In the polymorphic lambda calculus we can implement the identity function. The proof for the identity function and the identity function
+In the polymorphic lambda calculus we can implement the identity function. The derivation for the identity function and the identity function
 applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply_proof.
 
 
@@ -145,8 +145,8 @@ We will use the meta-symbol $#metaid$ to refer to the identity function construc
 
 The core idea of a linear type system is that variables must be used _exactly
 once_. This means the typing relation $Gamma tack e : sigma$ no longer only
-requires that the set of variables in $e$ are a subset of $Gamma$, but rather
-that the set of variables in $e$ is $Gamma$.
+requires that the set of free variables in $e$ are a subset of $Gamma$, but rather
+that the set of free variables in $e$ are the set of variables in $Gamma$.
 This means the typing rules App and Var in @stlc_typing are no longer valid.
 
 The typing rules for a linear type system are shown in @linear_rules. Note how the
@@ -228,5 +228,5 @@ is show in @const_term.
   ),
 ) <const_term>
 
-Linear types does not entirely prohibit the duplication and discarding of
+Linear types do not entirely prohibit the duplication and discarding of
 variables, but rather make it explicit.
