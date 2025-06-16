@@ -27,8 +27,8 @@
     meets system-level coding" or even "Linear logic" instead of FP.
 
 - 1.3: Related work
-  - [ ] "A lot of research" - this sentence is too vague.
-  - [ ] This whole subsection is too narrow for a "related work" section.
+  - [x] "A lot of research" - this sentence is too vague.
+  - [x] This whole subsection is too narrow for a "related work" section.
     Rename or beef up significantly to 5-10 references.
 
 ## 2 Background
