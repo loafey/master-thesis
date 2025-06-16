@@ -241,10 +241,10 @@ picture. For every value $v$, a corresponding command exists for how to destruct
 an environment of $v$. Variables are not explicitly destructed; they are consumed
 on use.
 
-In @id_function we show how we can use the aforementioned rules to give the typing proof for the identity function specialised to the type $A: known$ in #ln.
+In @id_function we show how we can use the typing rules to give the typing derivation for the identity function specialised to the type $A: known$ in #ln.
 
 #figure(
-  caption: [The typing proof for the identity function specialised to $A$ in #ln.],
+  caption: [The typing derivation for the identity function specialised to $A$ in #ln.],
   prooftree(
     rule(
       $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
@@ -262,10 +262,10 @@ In @id_function we show how we can use the aforementioned rules to give the typi
   ),
 ) <id_function>
 
-In @id_type we derive the proof for the type, to ensure that the type is kind correct.
+In @id_type we derive the derivation for the type, to ensure that the type is kind correct.
 
 #figure(
-  caption: [The kind proof for the type of the identity function.],
+  caption: [The kind derivation for the type of the identity function on A.],
   prooftree(
     rule(
       $*(A times.circle ~A) : known$,

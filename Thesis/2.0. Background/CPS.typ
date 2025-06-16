@@ -35,8 +35,8 @@ Contrast it to the CPS version, where we use $a -> bot$ to denote a function tha
 )
 
 
-A natural question that comes to mind is why we want continuation-passing
-style? An immediate benefit of CPS is that every function call is a tail call,
+A natural question is: what are the advantages of using continuation-passing style?
+An immediate benefit of CPS is that every function call is a tail call,
 which ensures that tail call optimization (see @CompilingCompilationTarget) is
 always possible. Another benefit of CPS is that the order of evaluation is made
 explicit by the syntax. If we consider the following program written in normal

@@ -38,8 +38,8 @@
 
 This section aims to remind the reader of the lambda calculus and some of its
 variants. We assume familiarity with the untyped lambda calculus and typing rules.
-We will introduce the simply typed lambda calculus, then extending it with
-polymorphic types, and end by introducing linear types.
+We introduce the simply typed lambda calculus, extend it with
+polymorphic types, and introduce linear types.
 
 === Simply Typed Lambda Calculus <stlc>
 
