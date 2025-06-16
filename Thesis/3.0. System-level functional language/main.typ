@@ -107,7 +107,7 @@ Now we can write the higher-order function: $*(A times.circle not B times.circle
 In @Transformations we explain how closures are transformed to static functions
 and explicit stack environments.
 
-== Types & values<TypesAndValues>
+== Values & environments <TypesAndValues>
 
 #ln programs consist of two syntactic fragments:
 

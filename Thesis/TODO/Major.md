@@ -3,7 +3,7 @@
   one (or both) to technical background, context, problem domian,
   etc.
 
-- [ ] 3.2 + 3.3: These could also be a bit more informative: I would
+- [x] 3.2 + 3.3: These could also be a bit more informative: I would
   guess there are also different kinds of contexts, rules, etc.
 
 - [ ] 5.1.1 is a lonely subsection - I suggest you merge it into 5.1.
