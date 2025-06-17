@@ -45,11 +45,5 @@
 
 ## References
 
-- [ ] "Place, O. A., & Cleveland, S. x86-64 TM Technology White Paper.":
-  Strange. Assuming
-  https://people.computing.clemson.edu/~mark/464/x86-64_wp.pdf is the
-  reference you aim at, the first part: "Place, O. A." is the
-  (stangely abbreviated) street address: "One AMD Place", not an
-  author name. Cleveland is the author/editor/contact.
 
-- [ ] "Wikipedia. (2024, ). Systems programming": strange year "(2024, )"
+"Wikipedia. (2024, ). Systems programming": strange year "(2024, )"
