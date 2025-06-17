@@ -57,7 +57,7 @@ In the typing rules in @TypesAndValues, we have seen that linear closures
 require the environment $Gamma$ to have kind $known$, which means $Gamma$ does
 not contain a stack. However, because linear closures are transformed to stack
 closures behind linear pointers, the environment for stack closures end up
-being ill-kinded. In the next two sections (@StackSelection and @PointerClosureConversion) 
+being ill-kinded. In the next two sections (@StackSelection and @PointerClosureConversion)
 we explain how this is remedied.
 
 === Stack Selection <StackSelection>
@@ -129,14 +129,21 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
   inset: 10pt,
   [Source], [Target],
   $~A$, $exists gamma. *(A times.circle gamma) times.circle gamma$,
-  $lambda^~ . c$, $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
+  $lambda^~ . c$,
+  $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
 )
 $Gamma$ represents the free variables in the closure.
 $times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$.
 If $Gamma$ has kind $known$, then $"pairvars"$ must construct a newstack
 ($circle$). For example: if $Gamma = dot, x : A: known, y : B: known$, then the output
 of $"pairvars"$ will be $(x, y, newstack)$.
-$"unpairAll"$ is a macro that inverts this procedure.
+$"unpairAll"$ is a macro that inverts this procedure, i.e. if $rho
+= (x,y,newstack)$ then 
+$ 
+  "unpairAll"(rho) = 
+  & "let" x,rho_1 = rho; \
+  & "let" y,n s = rho_1;
+$
 
 Because the closures are converted, the corresponding commands must also be
 transformed to match. Fortunately, the transformation is straightforward:
@@ -172,16 +179,16 @@ following:
 
 */
 $
-  lambda^*(f,k). & "let" square f' = f; \
-  & "let" angled(alpha, k') = k; \
-  & "let" g, rho_1 = k'; & \
-  & g(square #angled(
-      $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
-      $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
-        & & & "let" h,rho_4 = x; & \
-        & & & h(y, rho_4), f')$,
-    )
-    , rho_1)
+  lambda^*(f,k). & "let" square f' = f;           \
+                 & "let" angled(alpha, k') = k;   \
+                 & "let" g, rho_1 = k';         & \
+                 & g(square #angled(
+                       $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
+                       $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
+                         & & & "let" h,rho_4 = x; & \
+                         & & & h(y, rho_4), f')$,
+                     )
+                     , rho_1)
 $
 
 Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$

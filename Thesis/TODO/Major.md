@@ -55,10 +55,7 @@
 ## 4 Compiling Lithium
 
 - 4.1 Transformations
-    - [ ] 4.1.3: Same here: I find this subsection very hard to penetrate. Examples:
     - [ ] "⟨○, (��∗ (��, ��1 ). freestack ��1 ; foo(��), ����������������)⟩" ??     
-  - [ ] How can "unpairAll" invert "this procdure" without taking Gamma as
-    an argument?
 
 ## References
 - [ ] "Bernardy, J.-P., Juan, V. L., & Svenningsson, J. (2016). Composable
