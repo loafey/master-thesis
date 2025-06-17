@@ -53,13 +53,6 @@
   - [ ] Fig. 14: strange page break (only caption on p17)
 
 ## 4 Compiling Lithium
-- [ ] I would like to understand the "compilation pipeline" a bit more
-  here before you delve into the different parts. Is 4.1 about a
-  source-to-source transformation within the calculus? The remark "At
-  this stage Lithium is still a calculus" makes it sound like you will
-  actually extend the language/calculus as you explain the
-  translation. Or do you mean that you will identify a "sublanguage"
-  within the full Lithium syntax? Please clarify.
 
 - 4.1 Transformations
   - [ ] "Because the type ¬�� is transformed ... the type checker should

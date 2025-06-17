@@ -13,6 +13,9 @@ closures, the second step ensures that each closure contains at most one stack t
 on, and the third transformation, pointer closure conversion, replaces each
 stack closure by an explicit pair of static function and environment.
 
+Although the transformations perform source-to-source transformations, only
+a subset of the full #ln syntax remains after pointer closure conversion.
+
 === Linear closure conversion
 
 // Linear closure conversion: this is about making the stack pointers explicit.
