@@ -7,16 +7,21 @@ At this stage #ln is still a calculus. How do we bridge the gap between
 calculus and machine? This section goes into the necessary transformations to turn
 #ln into a language that can be transformed to an assembly language.
 
-The first three phases of the #ln compiler are: linear closure conversion, stack
-selection, and pointer closure conversion. The first step eliminates linear
-closures, the second step ensures that each closure contains at most one stack to execute
-on, and the third transformation, pointer closure conversion, replaces each
-stack closure by an explicit pair of static function and environment.
+// The first three phases of the #ln compiler are: linear closure conversion, stack
+// selection, and pointer closure conversion. The first step eliminates linear
+// closures, the second step ensures that each closure contains at most one stack to execute
+// on, and the third transformation, pointer closure conversion, replaces each
+// stack closure by an explicit pair of static function and environment.
+
+The first three phases of the #ln compiler are: 
++ Linear closure conversion: makes pointers to stacks explicit (@LinearClosureConversion)
++ Stack selection: ensures that every stack closure contains at most one stack to execute on (@StackSelection)
++ Pointer closure conversion: replaces each stack closure by an explicit pair of a static function and environment (@PointerClosureConversion)
 
 Although the transformations perform source-to-source transformations, only
 a subset of the full #ln syntax remains after pointer closure conversion.
 
-=== Linear closure conversion
+=== Linear closure conversion <LinearClosureConversion>
 
 // Linear closure conversion: this is about making the stack pointers explicit.
 // (As we saw earlier, it is critical for 1st order programming to identify the

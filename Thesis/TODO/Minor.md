@@ -6,12 +6,9 @@
 - [ ] Even then (after the swap) the Curry-Howard text comes a bit
   suddenly (and with an usual formulation "the direct relation").
 
-
 - 2.2 Continuation-passing Style
   - [ ] "tail call": this enters a bit suddenly - perhaps introduce tail
     calls and evalution order earlier?
-
-
 
 
 ## 3. Lithium
@@ -28,7 +25,6 @@
     connected" the the only operand: instead of "∗ (�� ⊗ ∗ �� ⊗ ∼ ��)" I
     would like to see "∗(�� ⊗ ∗�� ⊗ ∼��)".
 
-
 - 3.3: Types & values
   - [ ] "Lithium programs consist of two syntactic fragments:": this start
     is a bit confusing given that you have already introduced them in
@@ -38,9 +34,6 @@
 
 ## 4 Compiling Lithium
 - 4.1 Transformations
-  - [ ] "The first three phases": I suggest you remake this paragraph into a
-    numbered list with "name + explanation + forward reference" for each
-    list item.
 
 - 4.2 Compilation Scheme
   - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
