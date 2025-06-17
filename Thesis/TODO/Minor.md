@@ -10,12 +10,6 @@
 - [ ] Even then (after the swap) the Curry-Howard text comes a bit
   suddenly (and with an usual formulation "the direct relation").
 
-- 2.1 Lambda calculus and linear types
-  - [ ] "the paradoxical use" is a bit confusing: I don't think having
-    non-terminating term-rewriting in the untyped calculus is
-    paradoxical (it works fine as a model of computation). It is when
-    you try to use the Curry-Howard correspondence to "translate"
-    non-terminating terms to proofs that you get (logical) paradoxes.
 
   - [ ] If "System F" and "the polymorphic lambda calculus" are introduced
     as synonyms, then stick to one name from then on. There is a bit

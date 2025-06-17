@@ -43,8 +43,8 @@ polymorphic types, and introduce linear types.
 
 === Simply Typed Lambda Calculus <stlc>
 
-Simply typed lambda calculus was first introduced by Alonzo Church to avoid the
-paradoxical use of the untyped lambda calculus @church1940formulation. It
+The simply typed lambda calculus was first introduced by Alonzo Church to avoid the
+paradoxical use of the untyped lambda calculus @church1940formulation as a proof system through the Curry-Howard correspondence. It
 consists of two separate syntactic categories: the category of types and the category of terms. The two categories
 correspond to types and computation, respectively. The syntax for #stlc is
 shown in @stlc_syntax. The symbol $T$ is used to denote base types.
