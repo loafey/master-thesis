@@ -6,9 +6,6 @@
 
 ## 4 Compiling Lithium
 - 4.1 Transformations
-  - [x] "It is important not to forget": I suggest you rephrase/shorten:
-    perhaps "The corresponding transformation of the negative fragment
-    ..."
   - [ ] "can not" := "cannot"
   - [ ] "… ⊗ ���� If Γ" := "… ⊗ ����. If Γ" (sentence-ending period missing)
   - [ ] "pairvars" (one use) or "pairsvars" (two uses)?- 4.2 Compilation Scheme
