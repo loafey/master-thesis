@@ -48,10 +48,6 @@
 
 ## 3. Lithium
 - 3.2 Kinds & types
-  - [ ] "It is forbidden to construct a pair of two stacks": I don't
-    understand what this means. I see that the rules requires the
-    first type in the pair type to be of kind "circle 1", but I lack
-    intuition for why of what that may entail.
 
   - [ ] "The goto style": I don't understand what "capture state" and "the
     state that *B manipulates" means. I'm not used to read odd "state
