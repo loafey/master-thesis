@@ -16,9 +16,6 @@
 
 ## 3. Lithium
 
-- 3.1
-  - [ ] "sequence of commands" is not accurate, it is more like a tree
-    (due to case) whose leaves all are calls.
 
 - 3.2 Kinds & types
   - [ ] "There are four new constructs in Lithium": add "on the type

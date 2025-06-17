@@ -40,8 +40,9 @@ command $c$, in this case a function call. $k$ corresponds to the $x$ in $x(v)$,
 A module consists of a list of definitions. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
 aspect. Commands come into play in the bodies of lambdas. Commands consist of
-let-bindings, case-expressions, or function calls. Note that the only way to
-terminate a sequence of commands is by a function call $x(v)$. This means
+let-bindings, case-commands, or function calls. 
+Commands take the shape of a tree, where we branch with the case-command, and the leaves are function calls.
+This means
 #ln programs are written in continuation-passing style.
 
 == Kinds & types <kind_and_types>
