@@ -6,7 +6,6 @@
 
 ## 4 Compiling Lithium
 - 4.1 Transformations
-  - [ ] 
   - [ ] "The syntax ��, (�� ↦ ���� )" := "The notation ��, (�� ↦ ���� )"
 
 - 4.2 Compilation Scheme
