@@ -23,7 +23,7 @@
 )
 
 #let x86withTailCall = figure(
-  caption: "Function call with tail call optimization",
+  caption: "Function call with tail-call optimization",
   grid(
     columns: (1fr, 1fr),
     stack(
@@ -48,7 +48,7 @@
 )
 
 #let x86withoutTailCall = figure(
-  caption: "Function call without tail call optimization",
+  caption: "Function call without tail-call optimization",
   grid(
     columns: (1fr, 1fr),
     stack(

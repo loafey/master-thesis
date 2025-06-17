@@ -6,7 +6,7 @@ When picking a compilation target there are always a lot of options, and for #ln
 x86-64 was picked. While choices like LLVM IR provide a lot of benefits to the developer
 in terms of development speed and convenience, one
 ultimately sacrifices some control over things like the calling convention and memory allocation.
-Due to #ln's CPS nature, tail call optimization is a must. Languages like LLVM IR, provide
+Due to #ln's CPS nature, tail-call optimization is a must. Languages like LLVM IR, provide
 tools and syntax for this, but a developer can not guarantee how the stack is handled when
 functions are called, nor how arguments are passed to these functions.
 For this explicit need of control x86-64 was determined to be a fitting choice.
