@@ -57,8 +57,8 @@ In the typing rules in @TypesAndValues, we have seen that linear closures
 require the environment $Gamma$ to have kind $known$, which means $Gamma$ does
 not contain a stack. However, because linear closures are transformed to stack
 closures behind linear pointers, the environment for stack closures end up
-being ill-kinded. In the next section (@StackSelection) we present
-a transformation that corrects this.
+being ill-kinded. In the next two sections (@StackSelection and @PointerClosureConversion) 
+we explain how this is remedied.
 
 === Stack Selection <StackSelection>
 
@@ -80,13 +80,14 @@ $
 $
 
 Because $k$ has type $~(square~A)$, its environment must be a stack.
-The issue is that the only variable that is a stack is $f'$, but it cannot be
-the chosen stack because bound variables are stored on the stack. The chosen
-stack must be a variable that is bound outside the closure, or an explicit
-newstack.
+The problem is that the environment is now ill-kinded.
+Fortunately, the variable $f' : square ~ A$ has kind $omega$, but it is
+bound inside the closure, which means the pointer to it must be stored on the stack.
+The stack that the closure identifies must be a variable that is bound outside
+the closure i.e. a free variable, or an explicit newstack.
 
-Stack selection moves the $"let" square f' = f$ out of the closure, making $f'$
-free in the closure, and selecting it as the stack.
+The stack selection phase moves the $"let" square f' = f$ out of the closure, making $f'$
+free in the closure, thus making it a valid option.
 
 The resulting program would end up being:
 $

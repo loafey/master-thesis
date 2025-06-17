@@ -55,14 +55,6 @@
 ## 4 Compiling Lithium
 
 - 4.1 Transformations
-  - [ ] "end up being ill-kinded" - the story-line seems a bit strange:
-    you say that 4.1.2 shows how to transform the types to keep them
-    well-kinded. But then the closures don't "end up being ill-kinded"
-    after all. Perhaps you meant to motivate why the 4.1.2
-    transormation is needed?
-
-  - [ ] 4.1.2: I don't get this part
-
   - [ ] 4.1.3: Same here: I find this subsection very hard to penetrate. Examples:
     - [ ] "The issue is that the only variable that is a stack is ��′, but
       it cannot be the chosen stack because bound variables are stored
