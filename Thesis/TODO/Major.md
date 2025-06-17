@@ -46,8 +46,6 @@
     consistent.
 
 ## 3. Lithium
-- 3.2 Kinds & types
-
 - 3.3: Types & values
   - [ ] Fig. 14: strange page break (only caption on p17)
 
