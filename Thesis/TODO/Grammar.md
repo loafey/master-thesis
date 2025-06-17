@@ -8,7 +8,6 @@
 - 4.3 Compilation target
   - [ ] style: "a developer can not guarantee", "gives us the ability", "a
     lot of": too informal / different in style from the rest.
-  - [ ] "like LLVM IR, provide" := "like LLVM IR provide"
 
 - 4.4. Language ABI
   - [ ] "jump(" := "jump ("
