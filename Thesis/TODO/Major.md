@@ -52,11 +52,6 @@
 - 3.3: Types & values
   - [ ] Fig. 14: strange page break (only caption on p17)
 
-## 4 Compiling Lithium
-
-- 4.1 Transformations
-    - [ ] "⟨○, (��∗ (��, ��1 ). freestack ��1 ; foo(��), ����������������)⟩" ??     
-
 ## References
 - [ ] "Bernardy, J.-P., Juan, V. L., & Svenningsson, J. (2016). Composable
   efficient array computations using linear types. Unpublished
