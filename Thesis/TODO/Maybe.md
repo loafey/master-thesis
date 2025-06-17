@@ -5,3 +5,10 @@
 
 - 2.2
   - [ ] Nice with some citations, but a bit assymmetric, given so few above.
+
+## 1 Intro
+- 1.2 Motivation
+  - [ ] There are parts here which seem to be the logic version of the
+    systems backgroud from 1.1.
+  - [ ] Perhaps restructure to have 1.1 "Context: Functional programming
+    meets system-level coding" or even "Linear logic" instead of FP.
