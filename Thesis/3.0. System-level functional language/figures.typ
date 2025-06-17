@@ -21,7 +21,7 @@
 )
 #let commands = grammar(
   [$c, c'$],
-  $z(v)$,
+  $x(v)$,
   $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
   $"let" p = v; c$,
 )

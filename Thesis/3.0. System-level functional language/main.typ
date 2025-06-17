@@ -40,7 +40,7 @@ function. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
 aspect. Commands come into play in the bodies of lambdas. Commands consist of
 let-bindings, case-expressions, or function calls. Note that the only way to
-terminate a sequence of commands is by a function call $z(v)$. This means
+terminate a sequence of commands is by a function call $x(v)$. This means
 #ln programs are written in continuation-passing style.
 
 == Kinds & types <kind_and_types>
