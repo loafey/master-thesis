@@ -1,57 +1,18 @@
 ## Table of Contents
-- [x] How is 1.1 Background related to 2. Background? Perhaps specialise
-  one (or both) to technical background, context, problem domian,
-  etc.
-
-- [x] 3.2 + 3.3: These could also be a bit more informative: I would
-  guess there are also different kinds of contexts, rules, etc.
 
 - [ ] 5.1.1 is a lonely subsection - I suggest you merge it into 5.1.
 
 - [ ] 5.2, on the other hand, has parhaps too many subsections
 
 ## 1 Intro
-- [x] I feel the intro is a bit sudden - perhaps add a sentence or two
-  "zooming in" from the general audience (any CSE MSc student, for
-  example) towards the topic.
-
 - 1.2 Motivation
   - [ ] 1st sentence is a bit hard to read: mainly a long "list".
-  - [x] "Although the merits of functional programming are evident
-    (Hughes, 1989), it is under represented for system-level
-    programming": use "underrepresented" (one word) and replace
-    "evident" by "well established".
   - [ ] There are parts here which seem to be the logic version of the
     systems backgroud from 1.1.
   - [ ] Perhaps restructure to have 1.1 "Context: Functional programming
     meets system-level coding" or even "Linear logic" instead of FP.
 
-- 1.3: Related work
-  - [x] "A lot of research" - this sentence is too vague.
-  - [x] This whole subsection is too narrow for a "related work" section.
-    Rename or beef up significantly to 5-10 references.
-
 ## 2 Background
-- 2.1 Lambda calculus and linear types
-  - [x] "... the set of variables in �� ...": this is not quite correct - I
-    think you mean "free variables"? But even in the linear case "the
-    set of variables in �� is Γ" is a "type error" as you have
-    presented contexts as lists of pairs, not sets.
-
-  - [x] The way Duplicate is used could use some explanation: it looks as
-    if something like this would be a valid typing derivation:
-
-      (Gamma, x:!A |- f x : A o-> A)   (y :! A |- y : A)
-     --------------------------------------------------- App
-      Gamma, x:!A, y :!A |- f x y : A
-     --------------  Duplicate
-      Gamma, x:!A |- f x y : A
-
-    But the "y" in the bottom is now "unbound"?
-
-- 2.2 Continuation-passing Style
-  - [x] Example: "id = ����.����. ��(��)" uses unbound "n".
-
 - 2.3 Comp Target
   - [ ] It is also a bit of a shift in direction - so far in 2.n you have
     introduced different theoretical topics, but here I think you
@@ -81,15 +42,6 @@
     "distraction" (and cut be cut / reduced).
 
 ## 3. Lithium
-- 3.1
-  - [x] What is "z" in "z(v)"? just a variable name (as x in Value)?
-  - [x] "where a definition is a top-level function": why restrict to
-    functions when the grammar allows any values?
-
-  - [x] Please use the swap example more in the explanations of the
-    grammar: that the lambda body is a command |k((y,x))|, that the
-    "z" in the command is a variable (here the continuation k), etc.
-
 - 3.2 Kinds & types
   - [ ] "It is forbidden to construct a pair of two stacks": I don't
     understand what this means. I see that the rules requires the
@@ -115,9 +67,6 @@
 - 3.3: Types & values
   - [ ] "the contexts Γ, Δ, must be disjoint" should not be a comment /
     explanation but a part of the requirements of the rule.
-
-  - [ ] "freestack z": This is the first mention of "freestack" - it is
-    not in the grammar in Fig. 9: Fix this.
 
   - [ ] Fig. 14: strange page break (only caption on p17)
 

@@ -24,6 +24,7 @@
   $x(v)$,
   $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
   $"let" p = v; c$,
+  $quad quad quad space "freestack" x; c$
 )
 #let pat = grammar($p$, $()$, $x$, $@t, y$, $p, p'$, $square p$)
 #let type = grammar(
