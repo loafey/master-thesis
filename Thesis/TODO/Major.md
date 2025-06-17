@@ -45,9 +45,6 @@
 
 ## References
 
-- [ ] "Nordmark, F. (2024). Towards a Practical Execution Model for
-  Functional Languages with Linear Types.": how to get? what is it?
-
 - [ ] "Place, O. A., & Cleveland, S. x86-64 TM Technology White Paper.":
   Strange. Assuming
   https://people.computing.clemson.edu/~mark/464/x86-64_wp.pdf is the
