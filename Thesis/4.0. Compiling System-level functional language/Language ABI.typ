@@ -110,7 +110,7 @@ are the only time #ln strays from the strict continuation based style.
 
 === Mapping types to memory<mappingMemToType>
 An important part of any ABI is specifying how types are represented.
-The following chapter specifies the memory representation of types in #ln, and
+The following table specifies the memory representation of types in #ln, and
 the number of physical registers needed to store them.
 // Keep in mind that while the ABI
 // does not utilize physical registers for memory mappings,
