@@ -185,7 +185,7 @@ The rules for exponentials are shown in @exponential_rules.
 #let exponential_rules = flex(
   prooftree(rule(name: [Derelict], $Gamma, x : !A tack e : B$, $Gamma, x : A tack e : B$)),
   prooftree(rule(name: [Discard], $Gamma, x : !A tack e : B$, $Gamma tack e : B$)),
-  prooftree(rule(name: [Duplicate], $Gamma, x : !A tack e : B$, $Gamma, x : !A, y : !A tack e : B$)),
+  prooftree(rule(name: [Duplicate], $Gamma, x : !A tack e : B$, $Gamma, x : !A, x : !A tack e : B$)),
   prooftree(rule(name: [Promote], $!Gamma tack e : !B$, $!Gamma tack e : B$)),
 )
 

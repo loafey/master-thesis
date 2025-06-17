@@ -38,7 +38,7 @@
     set of variables in �� is Γ" is a "type error" as you have
     presented contexts as lists of pairs, not sets.
 
-  - [ ] The way Duplicate is used could use some explanation: it looks as
+  - [x] The way Duplicate is used could use some explanation: it looks as
     if something like this would be a valid typing derivation:
 
       (Gamma, x:!A |- f x : A o-> A)   (y :! A |- y : A)
