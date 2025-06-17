@@ -6,7 +6,7 @@ Unless you are directly targeting machine code, most of the time
 you want a higher level compilation target.
 
 There are a lot of different choices for this task,
-some commons examples are: LLVM IR @lattner2004llvm, Cranelift @Cranelift and
+some common examples are: LLVM IR @lattner2004llvm, Cranelift @Cranelift and
 GNU's GIMPLE @Gimple. These languages are what is known as intermediate
 representations (IR), and they are all targeted by different compilers. They remove
 the need for the compilers to directly target CPU specific machine code or
