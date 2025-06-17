@@ -158,9 +158,9 @@ $
   : *(square ~ A times.circle ~(square~A))
 $
 
-Because $f'$ is a stack, and a free variable in $lambda y. f'(y)$, $"pairvars"$
-does not need to construct a newstack. Transforming the program would yield
-the following:
+Because the closure $lambda y. f'(y)$ contains the stack $f'$, $"pairvars"$
+does not need to construct a newstack. Transforming the program would yield the
+following:
 
 /*
 \ b,c -> let #d = b;
