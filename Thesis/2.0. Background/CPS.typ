@@ -59,7 +59,7 @@ evaluation order is determined by the order of the function calls.
     + $lambda k. "foo"(x, lambda z. "bar"(x, lambda y. k(y+z)))$
 
     In (1), bar is called first in the closure binding $k$, and all other
-    function calls are in subsequent closures. Only a single function call can be
-    made per closure. This can been seen in the grammar of commands in #ln (see @grammar_ln).
+    function calls are in subsequent closures. Programs written in CPS ensure there is a single function call
+    per closure. This can been seen in the grammar of commands in #ln (see @grammar_ln).
   ],
 )

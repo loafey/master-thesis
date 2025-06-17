@@ -11,10 +11,6 @@
   - [ ] "tail call": this enters a bit suddenly - perhaps introduce tail
     calls and evalution order earlier?
 
-  - [ ] "Only a single ... can been seen in the grammar of commands in
-    Lithium (see Section 3.1).": A bit hard to know (for the reader)
-    if "only a single" is a general property of CPS, or an additional
-    requirement that you impose in the grammar of Lithium.
 
 
 
