@@ -25,8 +25,6 @@
     connected" the the only operand: instead of "∗ (�� ⊗ ∗ �� ⊗ ∼ ��)" I
     would like to see "∗(�� ⊗ ∗�� ⊗ ∼��)".
 
-- 3.3: Types & values
-
 ## 4 Compiling Lithium
 - 4.1 Transformations
 
