@@ -142,13 +142,11 @@ and explicit stack environments.
 
 == Values & environments <TypesAndValues>
 
-#ln programs consist of two syntactic fragments:
+#ln programs consist of the two syntactic fragments:
 
 #indent[
-  - The _positive fragment_ describes how values are created. When we talk about
-    values we refer to the positive fragment.
-  - The _negative fragment_: describes how to consume environments of values. The
-    negative fragment can also be referred to as commands.
+  - The _positive fragment_ describes how values are created. Seen in the grammar of #ln in @grammar_ln as _Values_
+  - The _negative fragment_: describes how to consume environments of values. Seen in the grammar of #ln in @grammar_ln as _Commands_
 ]
 
 The typing rules for values and commands are given the form $Gamma tack v : A$ and $Gamma tack c$, respectively.

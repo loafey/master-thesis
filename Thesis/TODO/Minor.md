@@ -26,11 +26,6 @@
     would like to see "∗(�� ⊗ ∗�� ⊗ ∼��)".
 
 - 3.3: Types & values
-  - [ ] "Lithium programs consist of two syntactic fragments:": this start
-    is a bit confusing given that you have already introduced them in
-    Fig. 9 (under the syntactic categories Value, and Command). Unless
-    you mean something different, just refer back and introduce your
-    new synonyms (positive fragment for Value, etc.).
 
 ## 4 Compiling Lithium
 - 4.1 Transformations
