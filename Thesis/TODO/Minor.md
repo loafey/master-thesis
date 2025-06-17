@@ -6,9 +6,6 @@
 - [ ] Even then (after the swap) the Curry-Howard text comes a bit
   suddenly (and with an usual formulation "the direct relation").
 
-
-  - [ ] "The proof for the identity function": proof := type derivation?
-
   - [ ] "the meta-symbol ���� to refer to the identity function": For
     clarity, as it is so short, I suggest you inline the definition:
     "the meta-symbopl id = \A.\x:A.x ..."
