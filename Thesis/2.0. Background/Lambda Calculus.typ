@@ -7,20 +7,16 @@
   prooftree(rule($Gamma, x : sigma tack x: sigma$, $$, name: "Var")),
   [],
 
-  prooftree(
-    rule(
-      $Gamma tack lambda x:sigma. space e : sigma -> tau$,
-      $Gamma, x:sigma tack e: tau$,
-      name: "Abs",
-    ),
-  ),
-  prooftree(
-    rule(
-      $Gamma tack e_1 e_2: tau$,
-      $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
-      name: "App",
-    ),
-  ),
+  prooftree(rule(
+    $Gamma tack lambda x:sigma. space e : sigma -> tau$,
+    $Gamma, x:sigma tack e: tau$,
+    name: "Abs",
+  )),
+  prooftree(rule(
+    $Gamma tack e_1 e_2: tau$,
+    $Gamma tack e_1 : sigma -> tau quad Gamma tack e_2 : sigma$,
+    name: "App",
+  )),
 )
 
 #let tapp = rule(
@@ -52,7 +48,7 @@ shown in @stlc_syntax. The symbol $T$ is used to denote base types.
 #figure(
   caption: [Syntax for #stlc.],
   $
-    & #math.italic[Types] sigma, tau "::=" sigma -> tau | T \
+    & #math.italic[Types] sigma, tau "::=" sigma -> tau | T          \
     & #math.italic[Terms] e_1, e_2 "::=" x | e_1 e_2 | lambda x. e_1 \
   $,
 )<stlc_syntax>
@@ -85,8 +81,8 @@ We extend the simply typed lambda calculus grammar with type variables ($alpha$)
 quantification ($forall$). The grammar of terms is also extended with type abstraction ($Lambda alpha. e$) and type application ($e[A]$).
 
 $
-  & #math.italic[Types] A "::=" A -> A | T | alpha | forall alpha. A \
-  & #math.italic[Terms] e "::=" x | e e | lambda x. e | Lambda alpha. e | e[A]
+  & #math.italic[Types] A "::=" A -> A | T | alpha | forall alpha. A           \
+  & #math.italic[Terms] e "::=" x | e e | lambda x. e | Lambda alpha. e | e[A] \
 $
 
 Where in #stlc variables range over terms and lambdas have binders for terms,
@@ -102,39 +98,38 @@ are the rules for type abstraction and type application.
 
 The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
 In the polymorphic lambda calculus we can implement the identity function. The derivation for the identity function and the identity function
-applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply_proof.
+applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply_proof, respectively.
 
-
-#let id_proof = prooftree(
-  rule(
-    $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
-    rule(
-      $Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$,
-      rule(
-        $Gamma, alpha, x : alpha tack x : alpha$,
-        $$,
-      ),
-    ),
-  ),
+#let id_proof = rule(
+  $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
+  rule($Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$, rule(
+    $Gamma, alpha, x : alpha tack x : alpha$,
+    $$,
+  )),
 )
-#let metaid = math.bold[id]
+
+#let id_proof_tree = prooftree(id_proof)
 #let id_app_proof = prooftree(
   rule(
-    $Gamma tack #metaid\[A] space y : A$,
+    $Gamma tack Lambda alpha. space lambda x : alpha. space x space y : A$,
     rule(
-      $Gamma tack #metaid\[A] : A -> A$,
+      $Gamma tack Lambda alpha. space lambda x : alpha. space x : A -> A$,
       rule(
-        $Gamma tack #metaid : forall alpha. alpha -> alpha$,
-        $$,
+        $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
+        rule(
+          $Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$,
+          rule($Gamma, alpha, x : alpha tack x : alpha$),
+        ),
       ),
     ),
     rule($Gamma tack y : A$, $y : A in Gamma$),
   ),
 )
 
-#figure(caption: [Type derivation for the the polymorphic identity function.], flex(id_proof)) <id_proof>
-
-We will use the meta-symbol $#metaid$ to refer to the identity function constructed in @id_proof to keep it concise.
+#figure(
+  caption: [Type derivation for the the polymorphic identity function.],
+  flex(id_proof_tree),
+) <id_proof>
 
 #figure(
   caption: [Applying the identity function to the variable $y$ with type $A$.],
@@ -158,22 +153,18 @@ environments for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ m
 not share any variables. Similarly, the rule for Var, differs from its simply typed variant, which now requires that
 the environment contains only the variable $x: A$. The arrow $lollipop$ is used instead of $->$ to denote linearity.
 
-#let linear_app = prooftree(
-  rule(
-    name: "App",
-    $Gamma, Delta tack e_1 e_2 : tau$,
-    $Gamma tack e_1 : sigma lollipop tau$,
-    $Delta tack e_2 : sigma$,
-  ),
-)
+#let linear_app = prooftree(rule(
+  name: "App",
+  $Gamma, Delta tack e_1 e_2 : tau$,
+  $Gamma tack e_1 : sigma lollipop tau$,
+  $Delta tack e_2 : sigma$,
+))
 
-#let linear_abs = prooftree(
-  rule(
-    name: "Abs",
-    $Gamma tack lambda x. e : sigma lollipop tau$,
-    $Gamma, x: sigma tack e : tau$,
-  ),
-)
+#let linear_abs = prooftree(rule(
+  name: "Abs",
+  $Gamma tack lambda x. e : sigma lollipop tau$,
+  $Gamma, x: sigma tack e : tau$,
+))
 #let linear_var = prooftree(rule(name: "Var", $dot, x: sigma tack x: sigma$))
 
 #figure(
@@ -187,9 +178,21 @@ Exponentials introduce an explicit way to duplicate and discard variables.
 The rules for exponentials are shown in @exponential_rules.
 
 #let exponential_rules = flex(
-  prooftree(rule(name: [Derelict], $Gamma, x : !A tack e : B$, $Gamma, x : A tack e : B$)),
-  prooftree(rule(name: [Discard], $Gamma, x : !A tack e : B$, $Gamma tack e : B$)),
-  prooftree(rule(name: [Duplicate], $Gamma, x : !A tack e : B$, $Gamma, x : !A, x : !A tack e : B$)),
+  prooftree(rule(
+    name: [Derelict],
+    $Gamma, x : !A tack e : B$,
+    $Gamma, x : A tack e : B$,
+  )),
+  prooftree(rule(
+    name: [Discard],
+    $Gamma, x : !A tack e : B$,
+    $Gamma tack e : B$,
+  )),
+  prooftree(rule(
+    name: [Duplicate],
+    $Gamma, x : !A tack e : B$,
+    $Gamma, x : !A, x : !A tack e : B$,
+  )),
   prooftree(rule(name: [Promote], $!Gamma tack e : !B$, $!Gamma tack e : B$)),
 )
 
@@ -201,7 +204,7 @@ The rules for exponentials are shown in @exponential_rules.
 The function $!\_ : "Environment" -> "Environment"$, called \"bang\", is defined by:
 $
   !(Gamma, x: sigma) & = (!Gamma, x: !sigma) \
-  !(dot) & = dot
+              !(dot) & = dot                 \
 $
 Note that \"bang\" is both a type constructor ($!A$) and a function on environments ($!Gamma$).
 Because Derelict, Discard, and Duplicate manipulate the left-side of the
@@ -215,21 +218,15 @@ is show in @const_term.
 
 #figure(
   caption: [Derivation of a linearly typed term that discards the variable $x$.],
-  prooftree(
-    rule(
+  prooftree(rule(
+    name: [Abs],
+    $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,
+    rule(name: [Discard], $dot, x : !B tack lambda y. y : A lollipop A$, rule(
       name: [Abs],
-      $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,
-      rule(
-        name: [Discard],
-        $dot, x : !B tack lambda y. y : A lollipop A$,
-        rule(
-          name: [Abs],
-          $dot tack lambda y. y : A lollipop A$,
-          rule(name: [Var], $dot, y : A tack y : A$),
-        ),
-      ),
-    ),
-  ),
+      $dot tack lambda y. y : A lollipop A$,
+      rule(name: [Var], $dot, y : A tack y : A$),
+    )),
+  )),
 ) <const_term>
 
 Linear types do not entirely prohibit the duplication and discarding of
