@@ -5,9 +5,6 @@
     consistent.
 
 ## 4 Compiling Lithium
-- 4.2 Compilation Scheme
-  - [ ] 
-
 - 4.3 Compilation target
   - [ ] style: "a developer can not guarantee", "gives us the ability", "a
     lot of": too informal / different in style from the rest.
