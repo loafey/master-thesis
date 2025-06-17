@@ -7,9 +7,6 @@
   suddenly (and with an usual formulation "the direct relation").
 
 
-  - [ ] "The identity function" is a bit short as a Fig. caption. Perhaps
-    add "polymorphic" and "a type derivation for".
-
   - [ ] "The proof for the identity function": proof := type derivation?
 
   - [ ] "the meta-symbol ���� to refer to the identity function": For

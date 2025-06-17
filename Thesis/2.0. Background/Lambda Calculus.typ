@@ -132,7 +132,7 @@ applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply
   ),
 )
 
-#figure(caption: [The identity function.], flex(id_proof)) <id_proof>
+#figure(caption: [Type derivation for the the polymorphic identity function.], flex(id_proof)) <id_proof>
 
 We will use the meta-symbol $#metaid$ to refer to the identity function constructed in @id_proof to keep it concise.
 
