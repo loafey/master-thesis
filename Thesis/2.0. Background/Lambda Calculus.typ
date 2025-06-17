@@ -143,6 +143,10 @@ We will use the meta-symbol $#metaid$ to refer to the identity function construc
 
 === Linear types <LinearTypes>
 
+// Linear types come from linear logic, introduced by Girard in 1987 @girard1987linear.
+// In linear logic, a deduction is no longer an ever-expanding collection of
+// truths, but rather a way of manipulating resources that can not always be discarded our duplicated.
+
 The core idea of a linear type system is that variables must be used _exactly
 once_. This means the typing relation $Gamma tack e : sigma$ no longer only
 requires that the set of free variables in $e$ are a subset of $Gamma$, but rather

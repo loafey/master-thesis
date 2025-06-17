@@ -48,8 +48,6 @@
     different types).
 
 - 2.2 Continuation-passing Style
-  - [ ] Nice with some citations, but a bit assymmetric, given so few above.
-  
   - [ ] "tail call": this enters a bit suddenly - perhaps introduce tail
     calls and evalution order earlier?
 
