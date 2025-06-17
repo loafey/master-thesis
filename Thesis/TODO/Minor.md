@@ -135,7 +135,3 @@
   - [ ] The long figures look impressive, but I'm a bit worried about the
     "pattern matching" on things like "��,��↦[��0]": what happens if the
     list that z maps to is not a singleton list?
-
-- 4.3 Compilation target
-  - [ ] style: "a developer can not guarantee", "gives us the ability", "a
-    lot of": too informal / different in style from the rest.
