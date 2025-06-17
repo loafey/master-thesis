@@ -43,7 +43,3 @@
 - 3.3: Types & values
   - [ ] Fig. 14: strange page break (only caption on p17)
 
-## References
-
-
-"Wikipedia. (2024, ). Systems programming": strange year "(2024, )"
