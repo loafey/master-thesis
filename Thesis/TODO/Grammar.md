@@ -6,8 +6,6 @@
 
 ## 4 Compiling Lithium
 - 4.2 Compilation Scheme
-  - [ ] It is a bit confusing to introduce "The function ��", then say "the
-    context ��" in the next sentence.
   - [ ] "��0 + +��1" := "��0 ++ ��1" - probably should be \mathbin{{+}{+}} or
     something like that.
 

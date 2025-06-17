@@ -20,8 +20,8 @@ The compilation scheme consists of three functions:
 We prefix the functions with $""^+$ and $""^-$ to refer to the respective fragments.
 If we use $alpha$ in-place of $omega$ and $known$, then the definition
 exists for both kinds.
-The function $rho$ is a mapping from variables to a list of pseudo registers.
-The notation $rho, (x |-> s_n)$ means the context $rho$ is extended with $x$ mapping to the list $s_n$.
+The symbol $rho$ represents a mapping from variables to a list of pseudo registers.
+The syntax $rho, (x |-> s_n)$ means $rho$ is extended with $x$ mapping to the list $s_n$.
 If we instead write $rho, (x |-> [r_0, ..., r_n])$ then $x$ maps to the list containing $r_0, ..., r_n$.
 Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail, and
 $s_0 ++ s_1$ means the concatenation of the lists $s_0$ and $s_1$.
