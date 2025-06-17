@@ -5,9 +5,6 @@
     consistent.
 
 ## 4 Compiling Lithium
-- [ ] "something that can be": be more specific - perhaps "an intermediate
-  representations ..."
-
 - [ ] "application binary Interface" := "application binary interface"
 
 - 4.1 Transformations
