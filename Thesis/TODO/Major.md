@@ -38,7 +38,3 @@
   - [ ] 1st paragraph: style/tone: this is the first use of "you" in the
     whole thesis. I suggest you rephrase to keep the text more
     consistent.
-
-## 3. Lithium
-- 3.3: Types & values
-  - [ ] Fig. 14: strange page break (only caption on p17)
