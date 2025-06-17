@@ -1,7 +1,3 @@
-## Table of Contents
-- [ ] List of Figures
-  - A few seem to have a space in front of the caption: 16, 17, 22, 25.
-
 ## 1 Intro
 - [ ] "The concept of linearity in programming languages is not a newly
   discovered one.": Please formulate positively, and provide some

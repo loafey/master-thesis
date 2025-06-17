@@ -78,8 +78,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
     align: (x, y) => if (y == 0) { center } else { left },
   )
   #figure(
-    caption: [
-      Translations between pseudo and x86-64 instructions and operands.
+    caption: [Translations between pseudo and x86-64 instructions and operands.
       Observe that the x86-64 instructions may differ in the compiler due to
       optimizations or the memory size of a variable.
     ],
@@ -159,8 +158,7 @@ and in @operand_table we explain the operands used in the compilation scheme.
       `SSP`, [`%R14`],
       `[VAL]`, [`0(VAL)`],
     ),
-    caption: [
-      Translations between pseudo and x86 operands.
+    caption: [Translations between pseudo and x86 operands.
       `%R14` and `%R15` are physical x86-64 registers,
       and `0(VAL)` means that we are interacting with the memory address stored in `VAL`.
     ],

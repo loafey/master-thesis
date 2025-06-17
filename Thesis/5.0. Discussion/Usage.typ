@@ -132,8 +132,7 @@ The y-axis in the benchmark represents time measured in milliseconds, and the
 x-axis represents the input to the fibonacci function. Note that the y-axis grows logarithmically.
 
 #figure(
-  caption: [
-    Benchmark comparing the average time needed to calculate the
+  caption: [Benchmark comparing the average time needed to calculate the
     fibonacci numbers 30 to 40 in the two different
     implementations.
   ],

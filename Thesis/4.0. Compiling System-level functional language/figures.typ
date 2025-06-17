@@ -16,8 +16,7 @@
       [`0x30`],
     ),
   ),
-  caption: [
-    A stack frame containing the variables `a` and `b`,
+  caption: [A stack frame containing the variables `a` and `b`,
     and any register spilling will occur in address space `0x30` and below.
   ],
 )
