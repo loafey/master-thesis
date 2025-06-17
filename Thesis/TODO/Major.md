@@ -44,10 +44,6 @@
   - [ ] Fig. 14: strange page break (only caption on p17)
 
 ## References
-- [ ] "Bernardy, J.-P., Juan, V. L., & Svenningsson, J. (2016). Composable
-  efficient array computations using linear types. Unpublished
-  Draft.": where can the reader find it?
-
 - [ ] "Girard, J.-Y. (1972). Interprétation fonctionnelle et élimination
   des coupures de l'arithmétique d'ordre supérieur.": Unclear what it
   is (A PhD thesis) and how to get it (university, link, etc.)
