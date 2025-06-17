@@ -36,8 +36,8 @@ We annotate a variable $z^omega$ or $z^known$ in the negative fragment
 to indicate the kind of the type of the variable.
 
 A pseudo register is a physical register, or a location on the
-stack. Formally, $rho$ can be seen as a function $rho : Gamma -> "List"("Reg")$.
-The range of $rho$ is a set of a list of pseudo registers because not all values
+stack. Formally, $rho$ is a function $rho : "Var" -> "List"("Reg")$.
+The range of $rho$ is a set of a (possibly empty) list of pseudo registers because not all values
 can be stored in one physical register.
 
 In the compilation scheme, two explicit physical registers are used: the stack pointer (SP)

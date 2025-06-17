@@ -60,12 +60,6 @@
   - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
     what you are trying to say here. The transformations and
     compilation is not described in the rules of section 3.3.
-  - [ ] "Formally, �� can be seen as a function �� : Γ → List(Reg).": I
-    understand what you mean, but this does not "type check": Gamma is
-    a context, not a type. Also the combination of "Formally" and "can
-    be seen as" is odd. Perhaps: "rho : Var -> List(Reg)". Or
-    "rho_Gamma : dom(Gamma) -> List(Reg)". I'm also not sure if empty
-    lists are "allowed".
   - [ ] "that ��(��) is correctly loaded with values": perhaps "that the
     registers in ��(��) are correctly loaded with values"?
       - Also, what is "��" here? 
