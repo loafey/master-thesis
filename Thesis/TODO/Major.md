@@ -65,10 +65,6 @@
     but a datastructure does not "accept" anything as a "return
     value".
 
-  - [ ] "the higher-order function: ∗ (�� ⊗ ¬�� ⊗ ∼ ��)": I don't know _what_
-    higher order function you mean to write, or how this string of
-    symbols is supposed to represent it.
-
 - 3.3: Types & values
   - [ ] "the contexts Γ, Δ, must be disjoint" should not be a comment /
     explanation but a part of the requirements of the rule.

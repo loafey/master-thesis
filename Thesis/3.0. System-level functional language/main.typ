@@ -105,6 +105,7 @@ would not work either because $*B$ can not capture state.
 To enable higher-order programming we introduce the _linear closure_.
 The linear closure can capture arbitrary state and produces a type with a known size.
 Now we can write the higher-order function: $*(A times.circle not B times.circle ~C)$.
+The function is higher-order because it is passed the function $not B$ as an argument.
 In @Transformations we explain how closures are transformed to static functions
 and explicit stack environments.
 
