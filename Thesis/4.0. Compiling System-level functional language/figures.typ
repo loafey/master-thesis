@@ -225,7 +225,7 @@
     ),
     cell(
       [Static function],
-      [Generate a unique label $l_1$. Under $l_1$, let $r_1$ be the next
+      [Generate a unique label $l_1$. Under $l_1$, let $r$ be the next
         available pseudo register, then set it to $sp$ and compile the command
         $c$. Finally, push $l_1$ on the stack. $l_1$ and the block can be thought
         of as creating a procedure in a C-like language.],

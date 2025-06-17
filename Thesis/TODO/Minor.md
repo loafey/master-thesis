@@ -74,8 +74,6 @@
       - Also, what is "��" here? 
   - [ ] The boxes for "Right injection" and "Left injection" seem to be
     mixed up. (Right uses inl, Left uses inr on p24.)
-  - [ ] "Static function": the text in the box talks about r_1 but the
-    code uses r.
   - [ ] The long figures look impressive, but I'm a bit worried about the
     "pattern matching" on things like "��,��↦[��0]": what happens if the
     list that z maps to is not a singleton list?
