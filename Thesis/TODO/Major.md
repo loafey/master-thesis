@@ -55,10 +55,7 @@
 ## 4 Compiling Lithium
 
 - 4.1 Transformations
-  - [ ] 4.1.3: Same here: I find this subsection very hard to penetrate. Examples:
-    - [ ] "The issue is that the only variable that is a stack is ��′, but
-      it cannot be the chosen stack because bound variables are stored
-      on the stack." ??
+      - [ ] 4.1.3: Same here: I find this subsection very hard to penetrate. Examples:
     - [ ] "Because ��′ is a stack, and a free variable in ����.��′(��),
       pairvars does not need to construct a newstack." ??
     - [ ] "⟨○, (��∗ (��, ��1 ). freestack ��1 ; foo(��), ����������������)⟩" ??     
