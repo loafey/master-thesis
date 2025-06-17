@@ -82,8 +82,8 @@
 
 ## 3. Lithium
 - 3.1
-  - [ ] What is "z" in "z(v)"? just a variable name (as x in Value)?
-  - [ ] "where a definition is a top-level function": why restrict to
+  - [x] What is "z" in "z(v)"? just a variable name (as x in Value)?
+  - [x] "where a definition is a top-level function": why restrict to
     functions when the grammar allows any values?
 
   - [ ] Please use the swap example more in the explanations of the

@@ -35,8 +35,7 @@ exposing the variables $x$ and $y$.
 The second argument, $k$, is the continuation function.
 
 
-A module consists of a list of definitions, where a definition is a top-level
-function. A definition consists of a name, a type, and
+A module consists of a list of definitions. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
 aspect. Commands come into play in the bodies of lambdas. Commands consist of
 let-bindings, case-expressions, or function calls. Note that the only way to
