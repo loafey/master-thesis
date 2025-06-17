@@ -139,10 +139,3 @@
 - 4.3 Compilation target
   - [ ] style: "a developer can not guarantee", "gives us the ability", "a
     lot of": too informal / different in style from the rest.
-
-- 4.4. Language ABI
-  - [ ] "As with any language ... ABI": that is clearly not the case. Why
-    define an ABI for lambda calculus, or SQL, or HTML? Perhaps "any
-    system-level language"?
-
-
