@@ -5,6 +5,9 @@
 - [ ] 5.2, on the other hand, has parhaps too many subsections
 
 ## 1 Intro
+- [ ] "The concept of linearity in programming languages is not a newly
+  discovered one.": Please formulate positively, and provide some
+  evidence (citations).
 - 1.2 Motivation
   - [ ] There are parts here which seem to be the logic version of the
     systems backgroud from 1.1.

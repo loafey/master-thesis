@@ -1,8 +1,4 @@
 ## 1 Intro
-- [ ] "The concept of linearity in programming languages is not a newly
-  discovered one.": Please formulate positively, and provide some
-  evidence (citations).
-
 - [ ] "the worries of mis- ..." reformulate in a positive / more direct
   way: explain the two aspects: more restrictive type system -> more
   powerful laws, rewrites, correctness, efficiency or something in
