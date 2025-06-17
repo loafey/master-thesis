@@ -86,7 +86,7 @@
   - [x] "where a definition is a top-level function": why restrict to
     functions when the grammar allows any values?
 
-  - [ ] Please use the swap example more in the explanations of the
+  - [x] Please use the swap example more in the explanations of the
     grammar: that the lambda body is a command |k((y,x))|, that the
     "z" in the command is a variable (here the continuation k), etc.
 
