@@ -24,7 +24,7 @@ The symbol $rho$ represents a mapping from variables to a list of pseudo registe
 The notation $rho, (x |-> s_n)$ means $rho$ is extended with $x$ mapping to the list $s_n$.
 If we instead write $rho, (x |-> [r_0, ..., r_n])$ then $x$ maps to the list containing $r_0, ..., r_n$.
 Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as the head and $r s$ as the tail, and
-$s_0 ++ s_1$ means the concatenation of the lists $s_0$ and $s_1$.
+$s_0 plus.double s_1$ means the concatenation of the lists $s_0$ and $s_1$.
 Lastly, the number of registers $rho$ maps the variable $x$ to must be exactly
 $#sem[$Gamma(x)$]^("R")$, i.e $|rho(x)| = #sem[$Gamma(x)$]^"R"$.
 

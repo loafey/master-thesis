@@ -6,8 +6,7 @@
 
 ## 4 Compiling Lithium
 - 4.2 Compilation Scheme
-  - [ ] "��0 + +��1" := "��0 ++ ��1" - probably should be \mathbin{{+}{+}} or
-    something like that.
+  - [ ] 
 
 - 4.3 Compilation target
   - [ ] style: "a developer can not guarantee", "gives us the ability", "a
