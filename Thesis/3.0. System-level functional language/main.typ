@@ -11,7 +11,7 @@ that it prioritizes finer control over resources. This is achieved by departing
 from the lambda calculus and its natural deduction root, rather taking
 inspiration from linear types and intuitionistic linear logic @lafont1988linear.
 
-== Grammar <grammar_ln>
+== Surface syntax and grammar <grammar_ln>
 
 Before going into details on #ln it can be helpful to get an overview of how
 the language looks. The grammar of #ln is depicted in @slfl_grammar.
@@ -68,9 +68,7 @@ kinds. The two kinds in #ln are _stack_ ($omega$) and _known size_.
 $omega$ represents a region of memory of unknown size, with extra space
 reserved to store known sized data.
 
-#figure(caption: [Kinding rules in #ln.], align(center, kind_judgements(
-  true,
-)))<KindRules>
+#figure(caption: [Kinding rules in #ln.], align(center, kind_judgements(true)))<KindRules>
 
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
@@ -111,15 +109,15 @@ stack for $B$ can not be shown, because we do not know its shape.
 #figure(
   caption: [The stack representing $A times.circle *B times.circle circle$],
 
-    table(
-      stroke: black,
-      columns: 10em,
-      rows: (2em, 2em),
-      inset: 0pt,
-      gutter: 0pt,
-      [#align(center + horizon, $A$)],
-      [#align(center + horizon, $*B$)],
-    ),
+  table(
+    stroke: black,
+    columns: 10em,
+    rows: (2em, 2em),
+    inset: 0pt,
+    gutter: 0pt,
+    [#align(center + horizon, $A$)],
+    [#align(center + horizon, $*B$)],
+  ),
 ) <Stack>
 
 
@@ -160,12 +158,15 @@ top-to-bottom. The rules for commands are read bottom-to-top.
 Kinds are also introduced to the environment $Gamma$. @kinds_env shows the
 rules for the environment.
 
-#figure(caption: [Kinding rules for environments.], flex(
-  prooftree(rule($dot : known$, $$)),
-  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
-  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
-  prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
-)) <kinds_env>
+#figure(
+  caption: [Kinding rules for environments.],
+  flex(
+    prooftree(rule($dot : known$, $$)),
+    prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
+    prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
+    prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
+  ),
+) <kinds_env>
 
 The empty environment is of known size. If the environment is of known size,
 then extending it with a stack makes it have unknown size. The last two rules
@@ -276,30 +277,37 @@ In @id_function we show how we can use the typing rules to give the typing deriv
 
 #figure(
   caption: [The typing derivation for the identity function specialised to $A$ in #ln.],
-  prooftree(rule(
-    $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
+  prooftree(
     rule(
-      $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
+      $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
       rule(
-        $dot, t: A, z: ~A tack "call"^~z(t)$,
-        rule($dot, t: A tack t : A$, name: [_var_]),
-        name: [$#math.italic[call]^~$],
+        $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
+        rule(
+          $dot, t: A, z: ~A tack "call"^~z(t)$,
+          rule($dot, t: A tack t : A$, name: [_var_]),
+          name: [$#math.italic[call]^~$],
+        ),
+        name: [_pair_],
       ),
-      name: [_pair_],
+      name: [_static function_],
     ),
-    name: [_static function_],
-  )),
+  ),
 ) <id_function>
 
 In @id_type we derive the derivation for the type, to ensure that the type is kind correct.
 
 #figure(
   caption: [The kind derivation for the type of the identity function on A.],
-  prooftree(rule($*(A times.circle ~A) : known$, rule(
-    $(A times.circle ~A) : omega$,
-    $A: known$,
-    rule($~A: omega$, $A: known$),
-  ))),
+  prooftree(
+    rule(
+      $*(A times.circle ~A) : known$,
+      rule(
+        $(A times.circle ~A) : omega$,
+        $A: known$,
+        rule($~A: omega$, $A: known$),
+      ),
+    ),
+  ),
 ) <id_type>
 
 The kinding rules and typing rules provide a structured way of constructing

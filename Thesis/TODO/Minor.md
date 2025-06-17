@@ -1,6 +1,4 @@
 ## Table of Contents
-- [ ] 3.1 "Grammar" - a bit short: perhaps "Surface syntax and grammar"?
-  or "An overview of the syntax of Lithium" if that fits better, etc.
 - [ ] List of Figures
   - A few seem to have a space in front of the caption: 16, 17, 22, 25.
 
