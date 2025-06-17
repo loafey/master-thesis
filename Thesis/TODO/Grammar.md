@@ -6,7 +6,7 @@
 
 ## 4 Compiling Lithium
 - 4.1 Transformations
-  - [ ] "It is important not to forget": I suggest you rephrase/shorten:
+  - [x] "It is important not to forget": I suggest you rephrase/shorten:
     perhaps "The corresponding transformation of the negative fragment
     ..."
   - [ ] "can not" := "cannot"

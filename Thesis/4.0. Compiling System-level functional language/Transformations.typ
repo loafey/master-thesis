@@ -34,7 +34,7 @@ We do this by transforming types and closure values in the following manner:
   $lambda^not x. c$, $square lambda^~ x. c$,
 )
 
-It is important not to forget the negative fragment as well. Before calling
+We must not forget to transform the commands as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
 have to follow the indirection to access the closure.
 
