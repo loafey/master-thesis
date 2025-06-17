@@ -12,3 +12,8 @@
     systems backgroud from 1.1.
   - [ ] Perhaps restructure to have 1.1 "Context: Functional programming
     meets system-level coding" or even "Linear logic" instead of FP.
+
+
+  - [ ] The long figures look impressive, but I'm a bit worried about the
+    "pattern matching" on things like "��,��↦[��0]": what happens if the
+    list that z maps to is not a singleton list?

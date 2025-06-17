@@ -60,6 +60,3 @@
   - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
     what you are trying to say here. The transformations and
     compilation is not described in the rules of section 3.3.
-  - [ ] The long figures look impressive, but I'm a bit worried about the
-    "pattern matching" on things like "��,��↦[��0]": what happens if the
-    list that z maps to is not a singleton list?
