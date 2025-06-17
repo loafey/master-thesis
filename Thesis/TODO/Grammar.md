@@ -6,7 +6,6 @@
 
 ## 4 Compiling Lithium
 - 4.1 Transformations
-  - [ ] "can not" := "cannot"
   - [ ] "… ⊗ ���� If Γ" := "… ⊗ ����. If Γ" (sentence-ending period missing)
   - [ ] "pairvars" (one use) or "pairsvars" (two uses)?- 4.2 Compilation Scheme
   - [ ] "The syntax ��, (�� ↦ ���� )" := "The notation ��, (�� ↦ ���� )"
