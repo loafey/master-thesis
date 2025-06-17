@@ -283,7 +283,7 @@ In @id_function we show how we can use the typing rules to give the typing deriv
       rule(
         $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
         rule(
-          $dot, t: A, z: ~A tack "call"^~z(t)$,
+          $dot, t: A, z:space ~A tack "call"^~z(t)$,
           rule($dot, t: A tack t : A$, name: [_var_]),
           name: [$#math.italic[call]^~$],
         ),

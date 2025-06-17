@@ -24,7 +24,7 @@
   $x(v)$,
   $"case" v "of" { "inl" x -> c; "inr" y -> c'}$,
   $"let" p = v; c$,
-  $quad quad quad space "freestack" x; c$
+  $quad quad quad space "freestack" x; c$,
 )
 #let pat = grammar($p$, $()$, $x$, $@t, y$, $p, p'$, $square p$)
 #let type = grammar(
@@ -49,25 +49,29 @@
   linebreak()
 }
 
-#let complete_grammar = box(inset: 7pt, stroke: black + 0.1pt, [
-  _Value_
-  #values
-  #dbl_linkbreak()
-  _Command_
-  #commands
-  #dbl_linkbreak()
-  _Pattern_
-  #pat
-  #dbl_linkbreak()
-  _Type_
-  #type
-  #dbl_linkbreak()
-  _Definition_
-  #def
-  #dbl_linkbreak()
-  _Module_
-  #module
-])
+#let complete_grammar = box(
+  inset: 7pt,
+  stroke: black + 0.1pt,
+  [
+    _Value_
+    #values
+    #dbl_linkbreak()
+    _Command_
+    #commands
+    #dbl_linkbreak()
+    _Pattern_
+    #pat
+    #dbl_linkbreak()
+    _Type_
+    #type
+    #dbl_linkbreak()
+    _Definition_
+    #def
+    #dbl_linkbreak()
+    _Module_
+    #module
+  ],
+)
 
 #let pair_value = judge(
   $Gamma tack t: A quad Delta tack u: B$,
@@ -88,7 +92,7 @@
 )
 #let stack_closure_value = judge(
   $(Gamma , x: A) : omega tack c$,
-  $Gamma tack lambda^~x. c: ~A$,
+  $Gamma tack lambda^~x. c: space ~A$,
   note: "stack closure",
 )
 #let linear_pointer_value = judge(
@@ -131,7 +135,7 @@
 
 #let stack_call_command = judge(
   $Gamma tack t: A$,
-  $Gamma, z: ~A tack "call"^~ z(t)$,
+  $Gamma, z:space ~A tack "call"^~ z(t)$,
   note: $#math.italic[call]^~$,
 )
 

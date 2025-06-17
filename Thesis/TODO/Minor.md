@@ -94,8 +94,6 @@
 
   - [ ] Fig. 12: static function: make sure "*" and "A" are close together
 
-  - [ ] Fig. 12: stack closure ":~ A" := ": ~A" (and also in other places)
-
 ## 4 Compiling Lithium
 - 4.1 Transformations
   - [ ] "The first three phases": I suggest you remake this paragraph into a
