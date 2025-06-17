@@ -3,14 +3,9 @@
 ## 2 Background
 - [ ] the section heading could be more informative
 
-
 - [ ] Even then (after the swap) the Curry-Howard text comes a bit
   suddenly (and with an usual formulation "the direct relation").
 
-
-  - [ ] If "System F" and "the polymorphic lambda calculus" are introduced
-    as synonyms, then stick to one name from then on. There is a bit
-    of a mix now.
 
   - [ ] "The identity function" is a bit short as a Fig. caption. Perhaps
     add "polymorphic" and "a type derivation for".

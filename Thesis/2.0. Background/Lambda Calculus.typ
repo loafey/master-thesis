@@ -76,10 +76,10 @@ and $e_2 : tau$ then in the environment $Gamma$ the term $e_1 e_2$ has type $tau
 
 === Polymorphic Lambda Calculus
 
-System F is a typed lambda calculus that introduces universal quantification
+The polymorphic lambda calculus is a typed lambda calculus that introduces universal quantification
 over types @girard1972systemf. It was independently discovered by logician Girard in
-1972 (System F) and in 1974 by computer scientist Reynolds (Polymorphic lambda
-calculus).
+1972 as System F and in 1974 by computer scientist Reynolds as Polymorphic lambda
+calculus.
 
 We extend the simply typed lambda calculus grammar with type variables ($alpha$) and universal
 quantification ($forall$). The grammar of terms is also extended with type abstraction ($Lambda alpha. e$) and type application ($e[A]$).
@@ -90,13 +90,13 @@ $
 $
 
 Where in #stlc variables range over terms and lambdas have binders for terms,
-System F additionally introduces variables ranging over types as well as
+the polymorphic lambda calculus additionally introduces variables ranging over types as well as
 binders for types. The environment $Gamma$ is no longer only a mapping from
 variables to types, it also includes type variables. Shown in @SystemF_rules
 are the rules for type abstraction and type application.
 
 #figure(
-  caption: [Type abstraction and type application rules in System F.],
+  caption: [Type abstraction and type application rules in polymorphic lambda calculus.],
   flex(prooftree(tabs), prooftree(tapp)),
 ) <SystemF_rules>
 
