@@ -193,7 +193,7 @@ rules for the negative fragment.
     ..content(unit_value, [The unit value. The environment must be empty]),
     ..content(
       pair_value,
-      [Constructing a pair from the two values $u$ and $v$. Note that the contexts $Gamma, Delta$, must be disjoint],
+      [Constructing a pair from the two values $u$ and $v$. Note that the contexts $Gamma, Delta$, are disjoint],
     ),
     ..content(inj_left_value, [Constructing the left value of a sum type]),
     ..content(inj_right_value, [Constructing the right value of a sum type]),

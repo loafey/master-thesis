@@ -50,9 +50,6 @@
 - 3.2 Kinds & types
 
 - 3.3: Types & values
-  - [ ] "the contexts Γ, Δ, must be disjoint" should not be a comment /
-    explanation but a part of the requirements of the rule.
-
   - [ ] Fig. 14: strange page break (only caption on p17)
 
 ## 4 Compiling Lithium
