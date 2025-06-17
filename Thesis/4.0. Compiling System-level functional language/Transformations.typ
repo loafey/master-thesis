@@ -128,7 +128,7 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
   $lambda^~ . c$, $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
 )
 $Gamma$ represents the free variables in the closure.
-$times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$
+$times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$.
 If $Gamma$ has kind $known$, then $"pairsvars"$ must construct a newstack
 ($circle$). For example: if $Gamma = dot, x : A: known, y : B: known$, then the output
 of $"pairsvars"$ will be $(x, y, newstack)$.
