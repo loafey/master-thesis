@@ -3,7 +3,6 @@
   - [ ] 1st paragraph: style/tone: this is the first use of "you" in the
     whole thesis. I suggest you rephrase to keep the text more
     consistent.
-  - [ ] "some commons examples" typo
 
 ## 4 Compiling Lithium
 - [ ] "something that can be": be more specific - perhaps "an intermediate
