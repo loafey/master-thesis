@@ -12,9 +12,11 @@ is then left to the compiler of the IR.
 There are already a lot of choices when it comes to selecting an IR for a language,
 some examples including: LLVM IR @lattner2004llvm, Cranelift @Cranelift and
 GNU's GIMPLE @Gimple. Most of these
-tend to cater toward procedural languages, meaning that languages
+tend to cater toward procedural languages,
+following a traditional stack-frame based calling convention, meaning that languages
 that do not necessarily fit this mold, such as functional languages,
-can suffer in their representation.
+can potentially suffer.
+
 
 One of the the goals of #ln is to serve as an IR, but one specifically
 caters to linear functional programming languages.
@@ -31,16 +33,6 @@ caters to linear functional programming languages.
 // too much towards any specific CPU and/or operating system.
 // The job of actually compiling the resulting code to machine code or assembly code
 // is then left to the compiler of the IR.
-
-/// OLD
-
-// Depending on the requirements source language, these pre-existing IRs might not
-// necessarily hit all the requirements.
-// Many IRs are modeled for procedural languages, and expect
-// the source language to follow a traditional stack frame based calling convention,
-// which might not always be desired.
-// If the source language for instance requires tail-call optimizations,
-// which many functional languages do, an IR should ideally expose primitives for this.
 
 /// OLD
 
