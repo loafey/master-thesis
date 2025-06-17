@@ -68,6 +68,8 @@
     if "only a single" is a general property of CPS, or an additional
     requirement that you impose in the grammar of Lithium.
 
+
+
 ## 3. Lithium
 - [ ] "This is achieved by departing from the lambda calculus and its
   natural deduction root": the word "depart" has (at least) two
@@ -133,6 +135,10 @@
   - [ ] The long figures look impressive, but I'm a bit worried about the
     "pattern matching" on things like "��,��↦[��0]": what happens if the
     list that z maps to is not a singleton list?
+
+- 4.3 Compilation target
+  - [ ] style: "a developer can not guarantee", "gives us the ability", "a
+    lot of": too informal / different in style from the rest.
 
 - 4.4. Language ABI
   - [ ] "As with any language ... ABI": that is clearly not the case. Why

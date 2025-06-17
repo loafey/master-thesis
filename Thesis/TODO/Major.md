@@ -41,6 +41,11 @@
   - [ ] This carefully about what is a key message and what is a
     "distraction" (and cut be cut / reduced).
 
+- 2.3
+  - [ ] 1st paragraph: style/tone: this is the first use of "you" in the
+    whole thesis. I suggest you rephrase to keep the text more
+    consistent.
+
 ## 3. Lithium
 - 3.2 Kinds & types
   - [ ] "It is forbidden to construct a pair of two stacks": I don't
