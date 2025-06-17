@@ -145,10 +145,4 @@
     define an ABI for lambda calculus, or SQL, or HTML? Perhaps "any
     system-level language"?
 
-## 5
-- [ ] "there is quite a large gap": be more concrete - it looks like a
-  factor of around 40 at n=30.
-
-- [ ] clarify that the growth is exponential (for all versions), but also
-  give check if the growth rate is the same. Explain Fig 26.
 
