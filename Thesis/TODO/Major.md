@@ -60,11 +60,6 @@
     at the "kind level" in the reading, and have a hard time imagining
     pointers, gotos, etc.
 
-  - [ ] "a stack that accepts �� as a return value to continue with": I'm
-    lost here. I know what "stack" means normally as a datastructure,
-    but a datastructure does not "accept" anything as a "return
-    value".
-
 - 3.3: Types & values
   - [ ] "the contexts Γ, Δ, must be disjoint" should not be a comment /
     explanation but a part of the requirements of the rule.
