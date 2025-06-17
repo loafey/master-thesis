@@ -1,8 +1,3 @@
-## Table of Contents
-
-- [ ] 5.1.1 is a lonely subsection - I suggest you merge it into 5.1.
-
-- [ ] 5.2, on the other hand, has parhaps too many subsections
 
 
 ## 2 Background
@@ -38,3 +33,9 @@
   - [ ] 1st paragraph: style/tone: this is the first use of "you" in the
     whole thesis. I suggest you rephrase to keep the text more
     consistent.
+
+## 4 Compiling Lithium
+- 4.2 Compilation Scheme
+  - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
+    what you are trying to say here. The transformations and
+    compilation is not described in the rules of section 3.3.
