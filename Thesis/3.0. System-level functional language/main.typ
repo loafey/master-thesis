@@ -7,7 +7,7 @@
 The intended use of #ln is as a compiler intermediate representation for
 functional languages, similar to that of GHC Core @jones1993glasgow.
 #ln differs from GHC Core and most functional language intermediate representations in
-that it prioritizes finer control over resources. This is achieved by departing
+that it prioritizes finer control over resources. This is achieved by deviating
 from the lambda calculus and its natural deduction root, rather taking
 inspiration from linear types and intuitionistic linear logic @lafont1988linear.
 

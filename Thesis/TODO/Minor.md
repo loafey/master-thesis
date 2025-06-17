@@ -15,10 +15,6 @@
 
 
 ## 3. Lithium
-- [ ] "This is achieved by departing from the lambda calculus and its
-  natural deduction root": the word "depart" has (at least) two
-  meanings: "start" or "deviate". Please rephrase to make the meaning
-  more clear.
 
 - 3.1
   - [ ] "sequence of commands" is not accurate, it is more like a tree
