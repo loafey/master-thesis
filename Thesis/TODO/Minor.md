@@ -1,11 +1,5 @@
 ## 1 Intro
 
-- 1.1 Background 
-  - [ ] A bit strange heading and content: from the abstract I would
-    expect that there are two strands which meet in this work: linear
-    logic and systems programming. But this "1.1. Background" seems to
-    be about only one strand.
-
 ## 2 Background
 - [ ] the section heading could be more informative
 
