@@ -38,3 +38,36 @@
   - [x] "typing proof" := "typing derivation"
 
   - [x] Fig. 15: "identity function" := "identity function on A"
+
+## 4 Compiling Lithium
+- [ ] "something that can be": be more specific - perhaps "an intermediate
+  representations ..."
+
+- [ ] "application binary Interface" := "application binary interface"
+
+- 4.1 Transformations
+  - [ ] "It is important not to forget": I suggest you rephrase/shorten:
+    perhaps "The corresponding transformation of the negative fragment
+    ..."
+  - [ ] "can not" := "cannot"
+  - [ ] "… ⊗ ���� If Γ" := "… ⊗ ����. If Γ" (sentence-ending period missing)
+  - [ ] "pairvars" (one use) or "pairsvars" (two uses)?- 4.2 Compilation Scheme
+  - [ ] "The syntax ��, (�� ↦ ���� )" := "The notation ��, (�� ↦ ���� )"
+
+- 4.2 Compilation Scheme
+  - [ ] It is a bit confusing to introduce "The function ��", then say "the
+    context ��" in the next sentence.
+  - [ ] "��0 + +��1" := "��0 ++ ��1" - probably should be \mathbin{{+}{+}} or
+    something like that.
+
+- 4.3 Compilation target
+  - [ ] style: "a developer can not guarantee", "gives us the ability", "a
+    lot of": too informal / different in style from the rest.
+  - [ ] "like LLVM IR, provide" := "like LLVM IR provide"
+
+- 4.4. Language ABI
+  - [ ] "jump(" := "jump ("
+  - [ ] 4.4.2: "following chapter": "subsection" or "table"
+  - [ ] "⟦��⟧�� = ℕ": ? do you mean "⟦��⟧�� : ℕ"?
+  - [ ] "⟦��⟧M + ∞"?? ∞ is not in ℕ.
+  - [ ] (I had to start skimming here, after too many hours on reading.)

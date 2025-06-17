@@ -103,3 +103,49 @@
   - [ ] Fig. 12: static function: make sure "*" and "A" are close together
 
   - [ ] Fig. 12: stack closure ":~ A" := ": ~A" (and also in other places)
+
+## 4 Compiling Lithium
+- 4.1 Transformations
+  - [ ] "The first three phases": I suggest you remake this paragraph into a
+    numbered list with "name + explanation + forward reference" for each
+    list item.
+
+- 4.2 Compilation Scheme
+  - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
+    what you are trying to say here. The transformations and
+    compilation is not described in the rules of section 3.3.
+  - [ ] "Formally, �� can be seen as a function �� : Γ → List(Reg).": I
+    understand what you mean, but this does not "type check": Gamma is
+    a context, not a type. Also the combination of "Formally" and "can
+    be seen as" is odd. Perhaps: "rho : Var -> List(Reg)". Or
+    "rho_Gamma : dom(Gamma) -> List(Reg)". I'm also not sure if empty
+    lists are "allowed".
+  - [ ] "The range of �� is a list of pseudo registers": no. The range of a
+    function f : A->B is the _set_ of values of type B it can return.
+    Here a set of lists (of pseudo-registers).
+  - [ ] "that ��(��) is correctly loaded with values": perhaps "that the
+    registers in ��(��) are correctly loaded with values"?
+      - Also, what is "��" here? 
+  - [ ] The boxes for "Right injection" and "Left injection" seem to be
+    mixed up. (Right uses inl, Left uses inr on p24.)
+  - [ ] "Static function": the text in the box talks about r_1 but the
+    code uses r.
+  - [ ] The long figures look impressive, but I'm a bit worried about the
+    "pattern matching" on things like "��,��↦[��0]": what happens if the
+    list that z maps to is not a singleton list?
+
+- 4.4. Language ABI
+  - [ ] "As with any language ... ABI": that is clearly not the case. Why
+    define an ABI for lambda calculus, or SQL, or HTML? Perhaps "any
+    system-level language"?
+
+## 5
+- [ ] "there is quite a large gap": be more concrete - it looks like a
+  factor of around 40 at n=30.
+
+- [ ] clarify that the growth is exponential (for all versions), but also
+  give check if the growth rate is the same. Explain Fig 26.
+
+- [ ] It would be nice to see the corresponding comparison for a more
+  clever fibonacci with linear run time (in all the versions). Or is
+  that not possible in Lithium?

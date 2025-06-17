@@ -120,3 +120,62 @@
     not in the grammar in Fig. 9: Fix this.
 
   - [ ] Fig. 14: strange page break (only caption on p17)
+
+## 4 Compiling Lithium
+- [ ] I would like to understand the "compilation pipeline" a bit more
+  here before you delve into the different parts. Is 4.1 about a
+  source-to-source transformation within the calculus? The remark "At
+  this stage Lithium is still a calculus" makes it sound like you will
+  actually extend the language/calculus as you explain the
+  translation. Or do you mean that you will identify a "sublanguage"
+  within the full Lithium syntax? Please clarify.
+
+- 4.1 Transformations
+  - [ ] "Because the type ¬�� is transformed ... the type checker should
+    allow □ ∼ �� where ¬�� is expected": I don't see why this is the
+    case. You should be able to think about the language before and
+    after translation as two slightly different sublanguages, which
+    may require different typing rules, but allowing any mix of the
+    two seems "dangerous".
+
+  - [ ] "end up being ill-kinded" - the story-line seems a bit strange:
+    you say that 4.1.2 shows how to transform the types to keep them
+    well-kinded. But then the closures don't "end up being ill-kinded"
+    after all. Perhaps you meant to motivate why the 4.1.2
+    transormation is needed?
+
+  - [ ] 4.1.2: I don't get this part
+
+  - [ ] 4.1.3: Same here: I find this subsection very hard to penetrate. Examples:
+    - [ ] "The issue is that the only variable that is a stack is ��′, but
+      it cannot be the chosen stack because bound variables are stored
+      on the stack." ??
+    - [ ] "Because ��′ is a stack, and a free variable in ����.��′(��),
+      pairvars does not need to construct a newstack." ??
+    - [ ] "⟨○, (��∗ (��, ��1 ). freestack ��1 ; foo(��), ����������������)⟩" ??     
+  - [ ] How can "unpairAll" invert "this procdure" without taking Gamma as
+    an argument?
+
+## References
+- [ ] "Bernardy, J.-P., Juan, V. L., & Svenningsson, J. (2016). Composable
+  efficient array computations using linear types. Unpublished
+  Draft.": where can the reader find it?
+
+- [ ] "Girard, J.-Y. (1972). Interprétation fonctionnelle et élimination
+  des coupures de l'arithmétique d'ordre supérieur.": Unclear what it
+  is (A PhD thesis) and how to get it (university, link, etc.)
+
+- [ ] "Laurent, O. (2002). Etude de la polarisation en logique.": how to
+  get? what is it?
+
+- [ ] "Nordmark, F. (2024). Towards a Practical Execution Model for
+  Functional Languages with Linear Types.": how to get? what is it?
+
+- [ ] "Place, O. A., & Cleveland, S. x86-64 TM Technology White Paper.":
+  Strange. Assuming
+  https://people.computing.clemson.edu/~mark/464/x86-64_wp.pdf is the
+  reference you aim at, the first part: "Place, O. A." is the
+  (stangely abbreviated) street address: "One AMD Place", not an
+  author name. Cleveland is the author/editor/contact.
+
+- [ ] "Wikipedia. (2024, ). Systems programming": strange year "(2024, )"
