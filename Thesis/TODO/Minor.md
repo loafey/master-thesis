@@ -3,7 +3,6 @@
 ## 2 Background
 - [ ] the section heading could be more informative
 
-- [ ] I think the first two paragraphs should be swapped. 
 
 - [ ] It would be nice to state something about "prerequisites" (some
   familiarity with (untyped) lambda calculus?)
