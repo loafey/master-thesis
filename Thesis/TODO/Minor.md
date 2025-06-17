@@ -92,8 +92,6 @@
     you mean something different, just refer back and introduce your
     new synonyms (positive fragment for Value, etc.).
 
-  - [ ] Fig. 12: static function: make sure "*" and "A" are close together
-
 ## 4 Compiling Lithium
 - 4.1 Transformations
   - [ ] "The first three phases": I suggest you remake this paragraph into a
