@@ -190,7 +190,7 @@
     ),
 
     cell(
-      [Right injection],
+      [Left injection],
       [Compile $v_1$ and push the tag $0$ on the stack. The tag must be pushed
         after the compilation of $v_1$ because when $alpha = omega$, SP might not
         be a valid stack.],
@@ -198,7 +198,7 @@
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(0)$)$,
     ),
     cell(
-      [Left injection],
+      [Right injection],
       [Compile $v_1$ and push the tag $1$ on the stack.],
       $#scheme_pos($"inr" v_1$)^alpha_rho =
       #code_box($#sem[$v_1$]^alpha_rho$, $push_(s p)(1)$)$,
