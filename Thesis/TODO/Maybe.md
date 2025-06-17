@@ -3,8 +3,6 @@
   clever fibonacci with linear run time (in all the versions). Or is
   that not possible in Lithium?
 
-- 2.2
-  - [ ] Nice with some citations, but a bit assymmetric, given so few above.
 
 ## 1 Intro
 - 1.2 Motivation
