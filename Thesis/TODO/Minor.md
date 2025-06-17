@@ -60,9 +60,6 @@
   - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
     what you are trying to say here. The transformations and
     compilation is not described in the rules of section 3.3.
-  - [ ] "that ��(��) is correctly loaded with values": perhaps "that the
-    registers in ��(��) are correctly loaded with values"?
-      - Also, what is "��" here? 
   - [ ] The boxes for "Right injection" and "Left injection" seem to be
     mixed up. (Right uses inl, Left uses inr on p24.)
   - [ ] The long figures look impressive, but I'm a bit worried about the

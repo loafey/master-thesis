@@ -60,7 +60,7 @@ $#scheme_pos($v$)^known$ (note the change in kind) requires
 that SP points to a valid stack before being called. After being called, $v$ is
 pushed on the stack pointed to by SP. Finally, we have $#scheme_neg($v$)$. It
 has no additional pre-conditions, only the post-condition that the program is terminated.
-All three functions require that $rho(x)$ is correctly loaded with values.
+All three functions require that the register in $rho(x)$, where $x$ is the variable being consumed, are correctly loaded with values.
 
 The translation between pseudo instructions and x86-64 assembly can be seen in @translation_table,
 and in @operand_table we explain the operands used in the compilation scheme.
