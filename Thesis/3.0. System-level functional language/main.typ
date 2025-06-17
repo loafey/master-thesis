@@ -68,7 +68,9 @@ kinds. The two kinds in #ln are _stack_ ($omega$) and _known size_.
 $omega$ represents a region of memory of unknown size, with extra space
 reserved to store known sized data.
 
-#figure(caption: [Kinding rules in #ln.], align(center, kind_judgements(true)))<KindRules>
+#figure(caption: [Kinding rules in #ln.], align(center, kind_judgements(
+  true,
+)))<KindRules>
 
 
 The kinding rules in @KindRules are mostly self-descriptive, but some things to keep in mind for the rules are:
@@ -88,8 +90,38 @@ The goto style is the most primitive. It can be considered as a one-way
 transfer of control. Consider the function $f : *(A times.circle *B times.circle circle)$.
 From $f$ we can call the continuation $*B$, which is
 just a static function pointer, and because it is only a static function
-pointer, it can not capture any state. The state that $*B$ manipulates is
-exactly the stack $B$, and it is passed by $f$.
+pointer, it can not capture any state (free variables). The stack that $*B$ manipulates is
+exactly the stack $B$, and it is passed by $f$. In
+@Stack the stack for $A times.circle *B times.circle circle$ is shown. The
+stack for $B$ can not be shown, because we do not know its shape.
+
+
+#let frame(stroke) = (x, y) => (
+  if y == 0 or y == 1 {
+    none
+  } else if y == 4 {
+    (top: (dash: "dashed"), bottom: stroke, left: stroke, right: stroke)
+  } else if y == 2 {
+    (bottom: (dash: "dashed"), top: stroke, left: stroke, right: stroke)
+  } else if y == 3 {
+    none
+  } else { stroke }
+)
+
+#figure(
+  caption: [The stack representing $A times.circle *B times.circle circle$],
+
+    table(
+      stroke: black,
+      columns: 10em,
+      rows: (2em, 2em),
+      inset: 0pt,
+      gutter: 0pt,
+      [#align(center + horizon, $A$)],
+      [#align(center + horizon, $*B$)],
+    ),
+) <Stack>
+
 
 The second style, procedural, enables exactly what its name suggests: procedures.
 The type signature $f : *(A times.circle ~B)$ exactly corresponds to the
@@ -128,15 +160,12 @@ top-to-bottom. The rules for commands are read bottom-to-top.
 Kinds are also introduced to the environment $Gamma$. @kinds_env shows the
 rules for the environment.
 
-#figure(
-  caption: [Kinding rules for environments.],
-  flex(
-    prooftree(rule($dot : known$, $$)),
-    prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
-    prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
-    prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
-  ),
-) <kinds_env>
+#figure(caption: [Kinding rules for environments.], flex(
+  prooftree(rule($dot : known$, $$)),
+  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
+  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
+  prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
+)) <kinds_env>
 
 The empty environment is of known size. If the environment is of known size,
 then extending it with a stack makes it have unknown size. The last two rules
@@ -247,37 +276,30 @@ In @id_function we show how we can use the typing rules to give the typing deriv
 
 #figure(
   caption: [The typing derivation for the identity function specialised to $A$ in #ln.],
-  prooftree(
+  prooftree(rule(
+    $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
     rule(
-      $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
+      $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
       rule(
-        $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
-        rule(
-          $dot, t: A, z: ~A tack "call"^~z(t)$,
-          rule($dot, t: A tack t : A$, name: [_var_]),
-          name: [$#math.italic[call]^~$],
-        ),
-        name: [_pair_],
+        $dot, t: A, z: ~A tack "call"^~z(t)$,
+        rule($dot, t: A tack t : A$, name: [_var_]),
+        name: [$#math.italic[call]^~$],
       ),
-      name: [_static function_],
+      name: [_pair_],
     ),
-  ),
+    name: [_static function_],
+  )),
 ) <id_function>
 
 In @id_type we derive the derivation for the type, to ensure that the type is kind correct.
 
 #figure(
   caption: [The kind derivation for the type of the identity function on A.],
-  prooftree(
-    rule(
-      $*(A times.circle ~A) : known$,
-      rule(
-        $(A times.circle ~A) : omega$,
-        $A: known$,
-        rule($~A: omega$, $A: known$),
-      ),
-    ),
-  ),
+  prooftree(rule($*(A times.circle ~A) : known$, rule(
+    $(A times.circle ~A) : omega$,
+    $A: known$,
+    rule($~A: omega$, $A: known$),
+  ))),
 ) <id_type>
 
 The kinding rules and typing rules provide a structured way of constructing

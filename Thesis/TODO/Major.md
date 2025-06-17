@@ -49,13 +49,6 @@
 ## 3. Lithium
 - 3.2 Kinds & types
 
-  - [ ] "The goto style": I don't understand what "capture state" and "the
-    state that *B manipulates" means. I'm not used to read odd "state
-    manipulation" from lambda terms. Perhaps you need to delay this
-    explanation, or expand it with more concrete examples. I'm still
-    at the "kind level" in the reading, and have a hard time imagining
-    pointers, gotos, etc.
-
 - 3.3: Types & values
   - [ ] "the contexts Γ, Δ, must be disjoint" should not be a comment /
     explanation but a part of the requirements of the rule.
