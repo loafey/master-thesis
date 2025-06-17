@@ -66,9 +66,6 @@
     be seen as" is odd. Perhaps: "rho : Var -> List(Reg)". Or
     "rho_Gamma : dom(Gamma) -> List(Reg)". I'm also not sure if empty
     lists are "allowed".
-  - [ ] "The range of �� is a list of pseudo registers": no. The range of a
-    function f : A->B is the _set_ of values of type B it can return.
-    Here a set of lists (of pseudo-registers).
   - [ ] "that ��(��) is correctly loaded with values": perhaps "that the
     registers in ��(��) are correctly loaded with values"?
       - Also, what is "��" here? 
