@@ -45,8 +45,6 @@
 
 ## References
 
-- [ ] "Laurent, O. (2002). Etude de la polarisation en logique.": how to
-  get? what is it?
 
 - [ ] "Nordmark, F. (2024). Towards a Practical Execution Model for
   Functional Languages with Linear Types.": how to get? what is it?
