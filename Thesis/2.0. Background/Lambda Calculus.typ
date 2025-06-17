@@ -148,8 +148,8 @@ requires that the set of free variables in $e$ are a subset of $Gamma$, but rath
 that the set of free variables in $e$ are the set of variables in $Gamma$.
 This means the typing rules App and Var in @stlc_typing are no longer valid.
 
-The typing rules for a linear type system are shown in @linear_rules. Note how the
-environments for $e_1$ and $e_2$ in App are disjoint, i.e. $Gamma$ and $Delta$ must
+The typing rules for a linear type system are shown in @linear_rules. The
+environments for $e_1$ and $e_2$ use different symbols to denote that they must be disjoint, i.e. $Gamma$ and $Delta$ must
 not share any variables. Similarly, the rule for Var, differs from its simply typed variant, which now requires that
 the environment contains only the variable $x: A$. The arrow $lollipop$ is used instead of $->$ to denote linearity.
 

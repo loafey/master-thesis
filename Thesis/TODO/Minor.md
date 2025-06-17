@@ -7,12 +7,6 @@
   suddenly (and with an usual formulation "the direct relation").
 
 
-  - [ ] "Note how the environments for ��1 and ��2 in App are disjoint": I
-    don't think the reader can "note" that from the figure. As you
-    don't present any rules for the comma in |Gamma, Delta|, they
-    could in principle both list the same variable (even with
-    different types).
-
 - 2.2 Continuation-passing Style
   - [ ] "tail call": this enters a bit suddenly - perhaps introduce tail
     calls and evalution order earlier?
