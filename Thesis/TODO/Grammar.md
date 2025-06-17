@@ -10,6 +10,5 @@
     lot of": too informal / different in style from the rest.
 
 - 4.4. Language ABI
-  - [ ] "⟦��⟧�� = ℕ": ? do you mean "⟦��⟧�� : ℕ"?
   - [ ] "⟦��⟧M + ∞"?? ∞ is not in ℕ.
   - [ ] (I had to start skimming here, after too many hours on reading.)

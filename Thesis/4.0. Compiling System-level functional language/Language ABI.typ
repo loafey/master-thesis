@@ -159,8 +159,8 @@ a `Word` is often considered to be 8 bytes.
     },
     ..(
       align(center)[*Type*],
-      align(center)[*Registers* $#sem($A$)^R = NN$],
-      align(center)[*Memory* $#sem($A$)^M = NN$],
+      align(center)[*Registers* $#sem($A$)^R : NN$],
+      align(center)[*Memory* $#sem($A$)^M : NN$],
     ),
   ),
 )
