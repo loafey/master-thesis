@@ -4,9 +4,6 @@
 - [ ] the section heading could be more informative
 
 
-- [ ] It would be nice to state something about "prerequisites" (some
-  familiarity with (untyped) lambda calculus?)
-
 - [ ] Even then (after the swap) the Curry-Howard text comes a bit
   suddenly (and with an usual formulation "the direct relation").
 
