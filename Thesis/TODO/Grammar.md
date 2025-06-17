@@ -9,5 +9,3 @@
   - [ ] style: "a developer can not guarantee", "gives us the ability", "a
     lot of": too informal / different in style from the rest.
 
-- 4.4. Language ABI
-  - [ ] (I had to start skimming here, after too many hours on reading.)
