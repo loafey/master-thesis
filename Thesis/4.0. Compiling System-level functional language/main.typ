@@ -7,7 +7,7 @@ which can then be translated to an assembly language.
 We continue by giving a compilation scheme
 for the language, and describe how the output of the scheme translates to
 assembly. We then give a mapping of types to memory, and specify the
-application binary Interface (ABI).
+application binary interface (ABI).
 
 #include "Transformations.typ"
 #include "Compilation Scheme.typ"

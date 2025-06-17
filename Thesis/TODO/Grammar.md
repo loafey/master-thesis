@@ -5,8 +5,6 @@
     consistent.
 
 ## 4 Compiling Lithium
-- [ ] "application binary Interface" := "application binary interface"
-
 - 4.1 Transformations
   - [ ] "It is important not to forget": I suggest you rephrase/shorten:
     perhaps "The corresponding transformation of the negative fragment
