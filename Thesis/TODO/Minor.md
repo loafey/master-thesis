@@ -26,8 +26,6 @@
     would like to see "∗(�� ⊗ ∗�� ⊗ ∼��)".
 
 ## 4 Compiling Lithium
-- 4.1 Transformations
-
 - 4.2 Compilation Scheme
   - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
     what you are trying to say here. The transformations and
