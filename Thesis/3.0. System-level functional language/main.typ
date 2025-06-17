@@ -33,7 +33,7 @@ and a continuation function $~(A times.circle B)$.
 The first argument, the tuple, is pattern matched on,
 exposing the variables $x$ and $y$.
 The second argument, $k$, is the continuation function.
-To clarify further: the body of the lambda $k((y,x))$ corresponds to the
+To clarify further, the body of the lambda $k((y,x))$ corresponds to the
 command $c$, in this case a function call. $k$ corresponds to the $x$ in $x(v)$, and $(y,x)$ is $v$.
 
 
