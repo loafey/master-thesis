@@ -15,9 +15,6 @@
 
 
 - 3.2 Kinds & types
-  - [ ] "There are four new constructs in Lithium": add "on the type
-    level" somewhere, because you also have "newstack" on the value
-    level.
 
   - [ ] Using a star/asterisk as a prefix operator (instead of infix)
     causes some reading challenges for me. I think you need to help a

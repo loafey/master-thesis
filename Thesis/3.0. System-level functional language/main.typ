@@ -59,7 +59,7 @@ terminates with no value, like in @cps.
 // \
 // #align(center, pll_types)
 
-There are four new constructs in #ln that extend linear logic.
+There are four new constructs on the type level in #ln that extend linear logic.
 These are: _empty stack_
 ($circle$), _linear pointer_ ($square$), _stack closure_ ($~$), and _static function_ ($*$).
 The latter two are variants of negation ($not$).
