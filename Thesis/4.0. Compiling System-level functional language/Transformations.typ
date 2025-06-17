@@ -50,7 +50,7 @@ have to follow the indirection to access the closure.
 )
 
 Because the type $not A$ is transformed
-to $square ~A$, the type checker should allow $square ~A$ where $not A$ is
+to $square ~A$, the type checker allows the type $square ~A$ where the type $not A$ is
 expected.
 
 In the typing rules in @TypesAndValues, we have seen that linear closures

@@ -55,13 +55,6 @@
 ## 4 Compiling Lithium
 
 - 4.1 Transformations
-  - [ ] "Because the type ¬�� is transformed ... the type checker should
-    allow □ ∼ �� where ¬�� is expected": I don't see why this is the
-    case. You should be able to think about the language before and
-    after translation as two slightly different sublanguages, which
-    may require different typing rules, but allowing any mix of the
-    two seems "dangerous".
-
   - [ ] "end up being ill-kinded" - the story-line seems a bit strange:
     you say that 4.1.2 shows how to transform the types to keep them
     well-kinded. But then the closures don't "end up being ill-kinded"
