@@ -152,6 +152,3 @@
 - [ ] clarify that the growth is exponential (for all versions), but also
   give check if the growth rate is the same. Explain Fig 26.
 
-- [ ] It would be nice to see the corresponding comparison for a more
-  clever fibonacci with linear run time (in all the versions). Or is
-  that not possible in Lithium?

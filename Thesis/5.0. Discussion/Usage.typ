@@ -192,26 +192,28 @@ x-axis represents the input to the fibonacci function. Note that the y-axis grow
   )
 })
 
-As can be seen in the benchmark in @fibbo-benchmarks there is quite a
-large gap between the version written in #ln and the version written in C.
-Each input was measured 100 times.
+As can be seen in the benchmark in @fibbo-benchmarks, there is a substantial
+execution time difference between the version written in #ln and the version written in C.
+For instance, when calculating the 40th fibonacci number, #ln took around 8 seconds,
+the unoptimized C version took around 0.8 seconds, and optimized C version took 0.2 seconds.
+Each input was measured 100 times, and the presented result is the average
+execution time for each fibonacci number.
 The C version was compiled using GCC with O0 and O3.
-However, while the #ln version is around one order of magnitude
-slower than the unoptimized C version,
-the growth in execution time is a almost constant factor between all three programs.
 
-This can be observed even more clearly if we overlap the results over
-each other. We can see that the unoptimized C version grows
+The execution time grows exponentially, but the difference remains almost constant.
+This can be observed if we overlap the results over
+each other (see @fibbo-benchmarks-overlap). We can see that the unoptimized C version grows
 the same way as the #ln version, while the optimized C version is slightly
 more efficient.
-#figure(caption: [Benchmark from @fibbo-benchmarks with results overlapped.], overlap)
+#figure(caption: [Benchmark from @fibbo-benchmarks with results overlapped.], overlap)<fibbo-benchmarks-overlap>
 
 The performance difference we can see @fibbo-benchmarks
 can be attributed to several factors but the two most significant ones
 are most likely that #ln is currently not optimized at all, and it
 generates more code than is likely necessary. Also worth to note
 that the calling convention is less performant than System V @SystemVmatz2013system which
-C uses. System V prioritizes passing arguments using registers while #ln strictly passes arguments on stacks.
+C uses. System V prioritizes passing arguments using physical registers while #ln
+strictly passes arguments on stacks.
 
 // Overall a benchmark is currently not necessarily that interesting #todo[Either remove the entire chapter or this paragraph] in #ln current state.
 // They are presented here nonetheless to showcase some of the language's current capabilities.
