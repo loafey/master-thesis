@@ -6,7 +6,7 @@
 
 ## 4 Compiling Lithium
 - 4.1 Transformations
-  - [ ] "pairvars" (one use) or "pairsvars" (two uses)?- 4.2 Compilation Scheme
+  - [ ] 
   - [ ] "The syntax ��, (�� ↦ ���� )" := "The notation ��, (�� ↦ ���� )"
 
 - 4.2 Compilation Scheme
