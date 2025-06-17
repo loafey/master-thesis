@@ -1,8 +1,4 @@
 ## 1 Intro
-- [ ] "the worries of mis- ..." reformulate in a positive / more direct
-  way: explain the two aspects: more restrictive type system -> more
-  powerful laws, rewrites, correctness, efficiency or something in
-  that direction.
 
 - 1.1 Background 
   - [ ] A bit strange heading and content: from the abstract I would

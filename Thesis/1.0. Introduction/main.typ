@@ -19,8 +19,9 @@ linear types in their imperative language Vault.
 
 // @fahndrich2002adoption
 
-A language with linearity allows a developer to write software without the
-worries of mismanaging things such as memory and files.
+The restrictions imposed by a linear type system provides several guarantees.
+For example: files that are opened must be closed, and memory allocated must be
+freed.
 While there are benefits to linearity, not many languages have opted to implement it.
 This concept is most commonly found in functional programming, but one thing
 functional languages commonly do not support is system-level programming.
