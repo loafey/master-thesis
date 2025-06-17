@@ -6,7 +6,6 @@
 
 ## 1 Intro
 - 1.2 Motivation
-  - [ ] 1st sentence is a bit hard to read: mainly a long "list".
   - [ ] There are parts here which seem to be the logic version of the
     systems backgroud from 1.1.
   - [ ] Perhaps restructure to have 1.1 "Context: Functional programming
@@ -55,7 +54,7 @@
 ## 4 Compiling Lithium
 
 - 4.1 Transformations
-      - [ ] 4.1.3: Same here: I find this subsection very hard to penetrate. Examples:
+    - [ ] 4.1.3: Same here: I find this subsection very hard to penetrate. Examples:
     - [ ] "Because ��′ is a stack, and a free variable in ����.��′(��),
       pairvars does not need to construct a newstack." ??
     - [ ] "⟨○, (��∗ (��, ��1 ). freestack ��1 ; foo(��), ����������������)⟩" ??     
