@@ -90,7 +90,7 @@ as the process deallocating a stack does not need to know the size of said stack
 // current one. Mutating or reading data on other stacks is undefined behavior,
 // outside of higher order functions.
 
-All functions in #ln are called through jump(with some discrepancies
+All functions in #ln are called through jump (with some discrepancies
 for FFI). This is implemented by passing around all
 functions as values on the stack, and popping them and jumping to them when
 applicable.

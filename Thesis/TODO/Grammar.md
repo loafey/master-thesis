@@ -10,7 +10,6 @@
     lot of": too informal / different in style from the rest.
 
 - 4.4. Language ABI
-  - [ ] "jump(" := "jump ("
   - [ ] 4.4.2: "following chapter": "subsection" or "table"
   - [ ] "⟦��⟧�� = ℕ": ? do you mean "⟦��⟧�� : ℕ"?
   - [ ] "⟦��⟧M + ∞"?? ∞ is not in ℕ.
