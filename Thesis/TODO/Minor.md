@@ -22,9 +22,6 @@
     level" somewhere, because you also have "newstack" on the value
     level.
 
-  - [ ] "stack (��) and known size": indicate notation for "known size" as
-    well.
-
   - [ ] Using a star/asterisk as a prefix operator (instead of infix)
     causes some reading challenges for me. I think you need to help a
     bit with spacing: make sure the prefix operators are "tightly

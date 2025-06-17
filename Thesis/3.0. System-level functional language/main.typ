@@ -65,7 +65,7 @@ These are: _empty stack_
 The latter two are variants of negation ($not$).
 
 At the core of #ln is the kind system. Where values have types, types have
-kinds. The two kinds in #ln are _stack_ ($omega$) and _known size_.
+kinds. The two kinds in #ln are _stack_ ($omega$) and _known size_ ($known$).
 $omega$ represents a region of memory of unknown size, with extra space
 reserved to store known sized data.
 
