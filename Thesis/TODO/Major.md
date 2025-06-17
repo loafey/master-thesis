@@ -44,9 +44,6 @@
   - [ ] Fig. 14: strange page break (only caption on p17)
 
 ## References
-- [ ] "Girard, J.-Y. (1972). Interprétation fonctionnelle et élimination
-  des coupures de l'arithmétique d'ordre supérieur.": Unclear what it
-  is (A PhD thesis) and how to get it (university, link, etc.)
 
 - [ ] "Laurent, O. (2002). Etude de la polarisation en logique.": how to
   get? what is it?
