@@ -30,7 +30,7 @@ Contrast it to the CPS version, where we use $a -> bot$ to denote a function tha
   center,
   $
     & id : forall a. space a -> (a -> bot) -> bot \
-    & id = lambda x. lambda k. space k(n)
+    & id = lambda x. lambda k. space k(x)
   $,
 )
 

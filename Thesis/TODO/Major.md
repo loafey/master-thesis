@@ -50,7 +50,7 @@
     But the "y" in the bottom is now "unbound"?
 
 - 2.2 Continuation-passing Style
-  - [ ] Example: "id = ����.����. ��(��)" uses unbound "n".
+  - [x] Example: "id = ����.����. ��(��)" uses unbound "n".
 
 - 2.3 Comp Target
   - [ ] It is also a bit of a shift in direction - so far in 2.n you have
