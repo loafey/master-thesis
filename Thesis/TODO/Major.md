@@ -34,8 +34,3 @@
     whole thesis. I suggest you rephrase to keep the text more
     consistent.
 
-## 4 Compiling Lithium
-- 4.2 Compilation Scheme
-  - [ ] "every aspect of Lithium is based on a set of rules": I'm not sure
-    what you are trying to say here. The transformations and
-    compilation is not described in the rules of section 3.3.

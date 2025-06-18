@@ -3,8 +3,8 @@
 
 
 == Compilation Scheme
-As can be seen in @TypesAndValues, every aspect of #ln
-is based on a set of rules, split into positive and negative fragments.
+As can be seen in @TypesAndValues, #ln
+is based on a set of fragments, more specifically, positive and negative fragments.
 
 These rules can by design be translated to x86-64 assembly in a
 straightforward manner. They are first translated into \"pseudo\" instructions which can
