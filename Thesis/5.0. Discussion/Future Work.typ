@@ -107,11 +107,13 @@ To address this issue we would want to introduce exponentials.
 
 Exponentials would let a user reuse a value multiple times opening up
 for some much needed expressiveness. Take Fibonacci again with syntax for
-duplicating exponential variables and reading exponential variables. The variable $z$ has type $!A$
+duplicating exponential variables and reading exponential variables. The variable $z$ has type $!A$:
 
 #indent[
-  - $"let" a + b = z$: the environment is extended with $a: !A$ and $b: !A$
-  - $"let" !z_1 = z$: the environment is extended with $z_1: A$.
+  - $"let" a + b = z$: the environment is extended with $a: !A$ and $b: !A$.\
+    This effectively means $a = b = z$, and $z$ is consumed.
+  - $"let" !z_1 = z$: the environment is extended with $z_1: A$.\
+    This consumes $z$, leaving us with the actual value stored in $z_1$.
 ]
 
 The first extension corresponds to the Duplicate rule in @linear_rules, and the

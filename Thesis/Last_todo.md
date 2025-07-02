@@ -128,6 +128,6 @@
 35. 5.2.5:
   *FIXED* - 36. The second call to __eq__ should have (n,1) as input, not (n,0).
   37. (Optional: Also, the natural construct here would "split" the n into inl
-      () if n==0 or inr n' if n==n'1.1. With that, there would only be two
+      () if n==0 or inr n' if n==n' + 1. With that, there would only be two
       uses, as expected from the two recursive calls.)
-  38. Using "a + b = z" to mean that a = z and b = z is very confusing. Please change. Perhaps "a = b = z"?
+  *FIXED* 38. Using "a + b = z" to mean that a = z and b = z is very confusing. Please change. Perhaps "a = b = z"?
