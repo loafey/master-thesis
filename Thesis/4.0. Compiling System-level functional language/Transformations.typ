@@ -135,20 +135,23 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
   [Source], [Target],
   $~A$, $exists gamma. ast.basic (A times.circle gamma) times.circle gamma$,
   $lambda^~ . c$,
-  $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
+  $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(Gamma, rho); c), "pairvars"(Gamma))$)$,
 )
 $Gamma$ represents the free variables in the closure.
 $times.circle.big Gamma$ is short for $A_1 times.circle A_2 times.circle ... times.circle A_n$.
 If $Gamma$ has kind $known$, then $"pairvars"$ must construct a newstack
-($circle$). For example: if $Gamma = dot, x : A: known, y : B: known$, then the output
-of $"pairvars"$ will be $(x, y, newstack)$.
-$"unpairAll"$ is a macro that inverts this procedure, i.e. if $rho
-= (x,y,newstack)$ then 
+($circle$). For example: if $Gamma = dot, a : A: known, b : B: known$, then the output
+of $"pairvars"$ will be $(a, b, newstack)$.
+$"unpairAll"$ is a macro that inverts this procedure, i.e.
 $ 
-  "unpairAll"(rho) = 
-  & "let" x,rho_1 = rho; \
-  & "let" y,n s = rho_1;
+  "unpairAll"(Gamma, rho) = 
+  & "let" a,rho_1 = rho; \
+  & "let" b,n s = rho_1;
 $
+
+The first argument of $"unpairAll"$ is the statically known environment
+$Gamma$, and the second argument is variable name of the lambda bound
+environment. $"unpairAll"$ should insert the let-binds, keeping the original names of the variables.
 
 Because the closures are converted, the corresponding commands must also be
 transformed to match. Fortunately, the transformation is straightforward:

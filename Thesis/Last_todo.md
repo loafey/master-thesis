@@ -101,7 +101,7 @@
       actually doing because of the many "moving parts" (let, box,
       continuation, types, kinds).
 
-  23. 4.1.3: is still difficult to follow:
+  23. *FIXED* - 4.1.3: is still difficult to follow:
     24. In the example with Gamma, it says that unpairAll is a macro, and we
         can see that it takes rho as its only argument. Now rho is lambda
         bound, thus not statically known. So the explanation of how
