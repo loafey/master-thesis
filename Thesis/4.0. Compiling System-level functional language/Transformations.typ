@@ -4,8 +4,8 @@
 == Transformations <Transformations>
 
 So far we have only seen #ln as a lambda calculus. In this section we
-go into the necessary transformations made to types, values, and commands, to turn
-#ln into a sublanguage which can then be mapped to assembly.
+go into the necessary transformations made to types, values, and commands, to map
+#ln terms into a sublanguage which we then translate to assembly.
 
 The first three phases of the #ln compiler are:
 + Linear closure conversion: makes pointers to stacks explicit (@LinearClosureConversion)
