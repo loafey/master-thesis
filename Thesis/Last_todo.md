@@ -94,10 +94,13 @@
       to treat □ ∼ 𝐴 and ¬𝐴 as equal, couldn't you also "just" add an extra
       rule to the kind-checker as well [which I don't recommend]. Please
       explain.
-  22. 4.1.2 is still hard to get. You provide one example 1. explanatory text,
+
+  22. *BUG FIX (incorrect type): I don't know what to change given the feedback. I agree that it is a bit hard to follow, but there is only one moving part: the let* - 
+      4.1.2 is still hard to get. You provide one example + explanatory text,
       but it is hard for at least this reader to see what the transformation is
       actually doing because of the many "moving parts" (let, box,
       continuation, types, kinds).
+
   23. 4.1.3: is still difficult to follow:
     24. In the example with Gamma, it says that unpairAll is a macro, and we
         can see that it takes rho as its only argument. Now rho is lambda

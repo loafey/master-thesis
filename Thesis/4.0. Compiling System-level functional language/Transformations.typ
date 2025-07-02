@@ -78,7 +78,7 @@ stacks explicit, and how to introduce new stacks.
 Consider the following program:
 $ lambda (f,k). space k(lambda y. space f(y)) : ast.basic (not A times.circle ~not A) $
 
-After making the pointers to stacks explicit we end up with the following program:
+Which, after linear closure conversion, becomes this:
 $
   lambda (f,k). space k(square lambda y. "let" square f' = f; space f'(y))
   : ast.basic (square ~ A times.circle ~(square~A))
@@ -86,7 +86,7 @@ $
 
 Because $k$ has type $~(square~A)$, its environment must be a stack.
 The problem is that the environment is now ill-kinded.
-Fortunately, the variable $f' : square ~ A$ has kind $omega$, but it is
+Fortunately, the variable $f' : ~ A$ has kind $omega$, but it is
 bound inside the closure, which means the pointer to it must be stored on the stack.
 The stack that the closure identifies must be a variable that is bound outside
 the closure i.e. a free variable, or an explicit newstack.
