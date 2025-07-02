@@ -13,7 +13,7 @@
 
 ## More comments:
 
-8. Fig. 5: The final term seems to lack parentheses: "/\ a. \x:a. x y" would be interpreted as "/\ a. \x:a. (x y)" which is a type error. I think you mean "(/\ a. \x:a. x) y". But I'm also not sure about the rule before that: are both the term and the context really unchanged when getting rid of the Forall in the type? Following TApp from Fig. 3 you would get "(/\ a. \x:a. x)[A]" which I guess reduces to "\x:A. x".
+*FIXED* - 8. Fig. 5: The final term seems to lack parentheses: "/\ a. \x:a. x y" would be interpreted as "/\ a. \x:a. (x y)" which is a type error. I think you mean "(/\ a. \x:a. x) y". But I'm also not sure about the rule before that: are both the term and the context really unchanged when getting rid of the Forall in the type? Following TApp from Fig. 3 you would get "(/\ a. \x:a. x)[A]" which I guess reduces to "\x:A. x".
 9. Many things have been fixed, but most of my comments on §3.2 remain, and some other things later - see below.
 10. 3.1:
   11. "To clarify further, the body of the lambda 𝑘((𝑦, 𝑥)) corresponds to the command 𝑐, in this case a function call. 𝑘 corresponds to the 𝑥 in 𝑥(𝑣), and (𝑦, 𝑥) is 𝑣." :=

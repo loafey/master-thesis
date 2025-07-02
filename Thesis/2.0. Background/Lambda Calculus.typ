@@ -111,9 +111,9 @@ applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply
 #let id_proof_tree = prooftree(id_proof)
 #let id_app_proof = prooftree(
   rule(
-    $Gamma tack Lambda alpha. space lambda x : alpha. space x space y : A$,
+    $Gamma tack (Lambda alpha. space lambda x : alpha. space x)[A] space y : A$,
     rule(
-      $Gamma tack Lambda alpha. space lambda x : alpha. space x : A -> A$,
+      $Gamma tack (Lambda alpha. space lambda x : alpha. space x)[A] : A -> A$,
       rule(
         $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
         rule(
