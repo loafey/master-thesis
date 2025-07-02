@@ -136,30 +136,28 @@ x-axis represents the input to the fibonacci function. Note that the y-axis grow
     fibonacci numbers 30 to 40 in the two different
     implementations.
   ],
-  [#canvas(
-      {
-        import draw: *
-        set-style(
-          axes: (stroke: .2pt, tick: (stroke: .2pt)),
-          legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
-        )
-        plot.plot(
-          y-mode: "log",
-          size: (12, 4),
-          x-tick-step: 1,
-          y-tick-step: 1,
-          y-min: 1,
-          y-max: m * 20,
-          axis-style: "left",
-          legend: "north-west",
-          {
-            let domain = (30, 40)
+  [#canvas({
+      import draw: *
+      set-style(
+        axes: (stroke: .2pt, tick: (stroke: .2pt)),
+        legend: (stroke: none, orientation: ttb, item: (spacing: .3), scale: 40%),
+      )
+      plot.plot(
+        y-mode: "log",
+        size: (12, 4),
+        x-tick-step: 1,
+        y-tick-step: 1,
+        y-min: 1,
+        y-max: m * 20,
+        axis-style: "left",
+        legend: "north-west",
+        {
+          let domain = (30, 40)
 
-            for (title, stroke, f) in fn1 { plot.add(f, style: (stroke: stroke), domain: domain, label: title) }
-          },
-        )
-      },
-    ),
+          for (title, stroke, f) in fn1 { plot.add(f, style: (stroke: stroke), domain: domain, label: title) }
+        },
+      )
+    })
   ],
 )<fibbo-benchmarks>
 
