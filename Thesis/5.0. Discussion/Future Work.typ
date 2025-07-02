@@ -128,20 +128,20 @@ We would also need syntax for Promote and Discard, but we leave that to the read
         let n1 & z1 = n; -- duplicate as a pattern, not addition
         let !z2 = z1;
         __eq__((z2, 0), \res -> case res of {
-          inl () ->
+          inl () -> k(0);
+          inr () ->
             let n2 & o1 = n1;
             let !o2 = o1;
             __eq__((o2, 1), \res -> {
-              inl () ->
+              inl () -> k(1);
+              inr () ->
                 let n3 & p = n2;
                 let !n3 = n3;
                 let !n4 = p;
                 fib((n3 - 1, \r1 ->
                 fib((n4 - 2, \r2 ->
                 k(r1 + r2)))));
-              inr () -> k(1);
             });
-          inr () -> k(0);
         });
   ```,
 )
@@ -159,15 +159,15 @@ Rewriting the fibonacci function with this operator would result in:
   fib : *(!int ⊗ ~int)
     = \(n,k) ->
       __eq__((*n, 0), \res -> case res of {
-        inl () ->
+        inl () -> k(0);
+        inr () ->
           __eq__((*n, 1), \res -> case res of {
-            inl () ->
+            inl () -> k(1);
+            inr () ->
               fib((*n - 1, \r1 ->
               fib((*n - 2, \r2 ->
               k(r1 + r2)))));
-            inr () -> k(1);
           });
-        inr () -> k(0);
       });
   ```,
 )

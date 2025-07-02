@@ -19,4 +19,4 @@
 
 *FIXED* 10. 38: I really don't think you should use "a + b = z" as the notation for variable duplication in the same code that also uses "r1 + r2" to mean addition of numbers. If you don't want to use the notation "a = b = z" then please use "a & b = z" or some other operator.
 
-11. New: 5.2.5: The first fib has "inl () -> k(0)" (and -> k(1)), but the second fib has "inr () -> k(0)" (and -> k(1)). Mistake or some unexplained transformation?
+*FIXED* 11. New: 5.2.5: The first fib has "inl () -> k(0)" (and -> k(1)), but the second fib has "inr () -> k(0)" (and -> k(1)). Mistake or some unexplained transformation?
