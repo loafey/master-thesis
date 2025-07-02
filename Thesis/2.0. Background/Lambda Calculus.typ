@@ -19,16 +19,8 @@
   )),
 )
 
-#let tapp = rule(
-  $Gamma tack e[tau]:sigma[tau slash alpha]$,
-  $Gamma tack e:forall alpha. sigma$,
-  name: emph[TApp],
-)
-#let tabs = rule(
-  $Gamma tack Lambda alpha. space e: forall alpha. sigma$,
-  $Gamma, alpha tack e:sigma$,
-  name: emph[TAbs],
-)
+#let tapp = rule($Gamma tack e[tau]:sigma[tau slash alpha]$, $Gamma tack e:forall alpha. sigma$, name: emph[TApp])
+#let tabs = rule($Gamma tack Lambda alpha. space e: forall alpha. sigma$, $Gamma, alpha tack e:sigma$, name: emph[TAbs])
 
 == Lambda calculus and linear types
 
@@ -91,10 +83,10 @@ binders for types. The environment $Gamma$ is no longer only a mapping from
 variables to types, it also includes type variables. Shown in @SystemF_rules
 are the rules for type abstraction and type application.
 
-#figure(
-  caption: [Type abstraction and type application rules in polymorphic lambda calculus.],
-  flex(prooftree(tabs), prooftree(tapp)),
-) <SystemF_rules>
+#figure(caption: [Type abstraction and type application rules in polymorphic lambda calculus.], flex(
+  prooftree(tabs),
+  prooftree(tapp),
+)) <SystemF_rules>
 
 The syntax $sigma[tau slash alpha]$ means replace each occurrence of $alpha$ with $tau$ in $sigma$.
 In the polymorphic lambda calculus we can implement the identity function. The derivation for the identity function and the identity function
@@ -109,38 +101,28 @@ applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply
 )
 
 #let id_proof_tree = prooftree(id_proof)
-#let id_app_proof = prooftree(
-  rule(
-    $Gamma tack (Lambda alpha. space lambda x : alpha. space x)[A] space y : A$,
-    rule(
-      $Gamma tack (Lambda alpha. space lambda x : alpha. space x)[A] : A -> A$,
-      rule(
-        $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
-        rule(
-          $Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$,
-          rule($Gamma, alpha, x : alpha tack x : alpha$),
-        ),
-      ),
-    ),
-    rule($Gamma tack y : A$, $y : A in Gamma$),
-  ),
-)
+#let id_app_proof = prooftree(rule(
+  $Gamma tack (Lambda alpha. space lambda x : alpha. space x)[A] space y : A$,
+  rule($Gamma tack (Lambda alpha. space lambda x : alpha. space x)[A] : A -> A$, rule(
+    $Gamma tack Lambda alpha. space lambda x : alpha. space x : forall alpha. space alpha -> alpha$,
+    rule($Gamma, alpha tack lambda x : alpha. space x : alpha -> alpha$, rule(
+      $Gamma, alpha, x : alpha tack x : alpha$,
+    )),
+  )),
+  rule($Gamma tack y : A$, $y : A in Gamma$),
+))
 
-#figure(
-  caption: [Type derivation for the polymorphic identity function.],
-  flex(id_proof_tree),
-) <id_proof>
+#figure(caption: [Type derivation for the polymorphic identity function.], flex(id_proof_tree)) <id_proof>
 
-#figure(
-  caption: [Applying the identity function to the variable $y$ with type $A$.],
-  flex(id_app_proof),
-) <id_apply_proof>
+#figure(caption: [Applying the identity function to the variable $y$ with type $A$.], flex(
+  id_app_proof,
+)) <id_apply_proof>
 
 === Linear types <LinearTypes>
 
 // Linear types come from linear logic, introduced by Girard in 1987 @girard1987linear.
 // In linear logic, a deduction is no longer an ever-expanding collection of
-// truths, but rather a way of manipulating resources that can not always be discarded our duplicated.
+// truths, but rather a way of manipulating resources that cannot always be discarded our duplicated.
 
 The core idea of a linear type system is that variables must be used _exactly
 once_. This means the typing relation $Gamma tack e : sigma$ no longer only
@@ -167,10 +149,11 @@ the environment contains only the variable $x: A$. The arrow $lollipop$ is used 
 ))
 #let linear_var = prooftree(rule(name: "Var", $dot, x: sigma tack x: sigma$))
 
-#figure(
-  caption: [Typing rules for App, Abs, and Var in a linear type system.],
-  flex(linear_app, linear_abs, linear_var),
-)<linear_rules>
+#figure(caption: [Typing rules for App, Abs, and Var in a linear type system.], flex(
+  linear_app,
+  linear_abs,
+  linear_var,
+))<linear_rules>
 
 How would we derive terms that use a variable twice, or perhaps a term that does not use a variable?
 Linear logic, and in turn linear types, solves this using _exponentials_.
@@ -216,18 +199,15 @@ Now we can create a derivation for the term $lambda x. lambda y. y : !tau
 lollipop sigma lollipop sigma$ that discards the variable $x$. The derivation
 is shown in @const_term.
 
-#figure(
-  caption: [Derivation of a linearly typed term that discards the variable $x$.],
-  prooftree(rule(
+#figure(caption: [Derivation of a linearly typed term that discards the variable $x$.], prooftree(rule(
+  name: [Abs],
+  $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,
+  rule(name: [Discard], $dot, x : !B tack lambda y. y : A lollipop A$, rule(
     name: [Abs],
-    $dot tack lambda x. lambda y. y : !B lollipop A lollipop A$,
-    rule(name: [Discard], $dot, x : !B tack lambda y. y : A lollipop A$, rule(
-      name: [Abs],
-      $dot tack lambda y. y : A lollipop A$,
-      rule(name: [Var], $dot, y : A tack y : A$),
-    )),
+    $dot tack lambda y. y : A lollipop A$,
+    rule(name: [Var], $dot, y : A tack y : A$),
   )),
-) <const_term>
+))) <const_term>
 
 Linear types do not entirely prohibit the duplication and discarding of
 variables, but rather make it explicit.

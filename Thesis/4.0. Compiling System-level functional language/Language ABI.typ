@@ -66,24 +66,18 @@ which exists in most instruction sets.
 When allocating new stacks, the first value on the stack must be the pointer
 which points to the start of the stack. Because stacks grow downward
 their pointers need to be offset by their size on allocation,
-but this creates a problem since we can not deallocate using this updated pointer.
+but this creates a problem since we cannot deallocate using this updated pointer.
 To alleviate this,
 the original pointer is placed on the stack, which can then be popped
 when the stack is empty and `freestack` is called.
 This also opens up for stacks to be allocated at differing sizes,
 as the process deallocating a stack does not need to know the size of said stack.
 
-#figure(
-  caption: [An empty stack only containing the start pointer.],
-  block(
-    breakable: false,
-    table(
-      columns: rep(len, 1fr),
-      ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
-      f(type: "sp", 8, align(center, `start pointer`)), f(8, align(center, `Free space...`)),
-    ),
-  ),
-)
+#figure(caption: [An empty stack only containing the start pointer.], block(breakable: false, table(
+  columns: rep(len, 1fr),
+  ..range(start, start + len).rev().map(a => raw(str(a, base: 16))),
+  f(type: "sp", 8, align(center, `start pointer`)), f(8, align(center, `Free space...`)),
+)))
 
 // At any given moment only one stack is used to execute upon, which means that while
 // other stacks can be allocated and freed, and variables can only be pushed on the
@@ -155,38 +149,32 @@ a `Word` is often considered to be 8 bytes.
 #let fatzero = math.bold[0]
 #let reg(x) = $#sem(x)^"R"$
 #let mem(x) = $#sem(x)^"M"$
-#let eq(name, eq, a, b) = block(
-  breakable: false,
-  table(
-    fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
-    columns: (0.4fr, 0.9fr, 1fr),
-    stroke: 0.1pt,
-    inset: (x, y) => if (calc.rem(y, 2) != 0) {
-      (top: 10pt, left: 4pt, bottom: 10pt)
-    } else {
-      6pt // (top: 10pt, left: 4pt, bottom: 10pt)
-    },
-    ..(table.cell(colspan: 1, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
+#let eq(name, eq, a, b) = block(breakable: false, table(
+  fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
+  columns: (0.4fr, 0.9fr, 1fr),
+  stroke: 0.1pt,
+  inset: (x, y) => if (calc.rem(y, 2) != 0) {
+    (top: 10pt, left: 4pt, bottom: 10pt)
+  } else {
+    6pt // (top: 10pt, left: 4pt, bottom: 10pt)
+  },
+  ..(table.cell(colspan: 1, align(center, name)), $#reg(eq) = #a$, $#mem(eq) = #b$),
+))
+#let title = block(breakable: false, table(
+  fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
+  columns: (0.4fr, 0.9fr, 1fr),
+  stroke: 0.1pt,
+  inset: (x, y) => if (calc.rem(y, 2) != 0) {
+    (top: 10pt, left: 4pt, bottom: 10pt)
+  } else {
+    6pt // (top: 10pt, left: 4pt, bottom: 10pt)
+  },
+  ..(
+    align(center)[*Type*],
+    align(center)[*Registers* $#sem($A$)^R : NN$],
+    align(center)[*Memory* $#sem($A$)^M : NN_infinity$],
   ),
-)
-#let title = block(
-  breakable: false,
-  table(
-    fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
-    columns: (0.4fr, 0.9fr, 1fr),
-    stroke: 0.1pt,
-    inset: (x, y) => if (calc.rem(y, 2) != 0) {
-      (top: 10pt, left: 4pt, bottom: 10pt)
-    } else {
-      6pt // (top: 10pt, left: 4pt, bottom: 10pt)
-    },
-    ..(
-      align(center)[*Type*],
-      align(center)[*Registers* $#sem($A$)^R : NN$],
-      align(center)[*Memory* $#sem($A$)^M : NN_infinity$],
-    ),
-  ),
-)
+))
 #grid(
   // gutter: 4pt,
   title,
@@ -329,24 +317,21 @@ Take this stack that just contains a 16-bit integer with the value `42`.
   Here $A$ is a type with kind
   $known$ and $B$ has kind $omega$, hence it is a stack. Visually this would be represented like this
   (if #mem($A$) = `Word`):
-  #block(
-    breakable: false,
-    table(
-      columns: rep(len, 1fr),
-      table.cell(colspan: 8, `...`),
-      ..range(start, start + 8).rev().map(a => raw(str(a, base: 16))),
-      f(type: "inf", 8, sym.infinity), f(type: "tag", 8, $A$),
-    ),
-  )
+  #block(breakable: false, table(
+    columns: rep(len, 1fr),
+    table.cell(colspan: 8, `...`),
+    ..range(start, start + 8).rev().map(a => raw(str(a, base: 16))),
+    f(type: "inf", 8, sym.infinity), f(type: "tag", 8, $A$),
+  ))
   This means that $B$ is a stack of unknown size, but we know that
   _on top_ of $B$ there are 8 bytes dedicated to a value of type $A$.
-  Without $A$, $B$ could potentially be empty, or it could be huge, but we can not know
+  Without $A$, $B$ could potentially be empty, or it could be huge, but we cannot know
   from the types alone.
 
   // When allocating new stacks the first value on the stack must be the pointer
   // which points to the start of the stack. As said earlier, stacks grow downwards,
   // and thus their pointers need to be offset by their size on allocation.
-  // This however creates a problem because we can not deallocate using this updated pointer,
+  // This however creates a problem because we cannot deallocate using this updated pointer,
   // we need to instead use the original pointer. To combat this
   // the original pointer is placed on the stack, which can then be popped
   // when the stack is empty and `freestack` is called.

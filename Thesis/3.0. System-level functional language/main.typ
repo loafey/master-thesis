@@ -42,7 +42,7 @@ a command in #ln. The continuation $k$ takes the reordered pair as input.
 A module consists of a list of definitions. A definition consists of a name, a type, and
 a value. The distinction between values and commands is the most interesting
 aspect. Commands come into play in the bodies of lambdas. Commands consist of
-let-bindings, case-commands, or function calls. 
+let-bindings, case-commands, or function calls.
 Commands take the shape of a tree, where we branch with the case-command, and the leaves are function calls.
 This means
 #ln programs are written in continuation-passing style.
@@ -78,9 +78,9 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
 
 #indent[
   - There is no sub-kinding; if a type with kind $omega$ is expected, then a type with kind $known$ is not allowed, and vice versa.
-  - It is forbidden to construct a pair of two types that have kind $omega$. 
+  - It is forbidden to construct a pair of two types that have kind $omega$.
   - The kinds in a sum type must match
-  - Type variables are always stacks, which means they can not be used directly for Haskell-style polymorphism
+  - Type variables are always stacks, which means they cannot be used directly for Haskell-style polymorphism
     (see @PointerClosureConversion why type variables must have kind $omega$).
 ]
 
@@ -91,14 +91,14 @@ The goto style is the most primitive. It can be considered as a one-way
 transfer of control. Consider the function $f : ast.basic (A times.circle ast.basic B times.circle circle)$.
 From $f$ we can call the continuation $ast.basic B$, which is
 just a static function pointer, and because it is only a static function
-poiner, it can not capture state, i.e. the lambda term can only use its parameter, or variables declared in its own body.
+poiner, it cannot capture state, i.e. the lambda term can only use its parameter, or variables declared in its own body.
 Static funcions are not allowed to capture state, because the state has to be
 stored in memory. In #ln memory is represented by stacks, and because static
 funcions are labels rather than stacks, it is not possible for static functions to capture
 state.
 
 In @Stack the stack shape for the type $A times.circle ast.basic B times.circle
-circle$ is shown. Because the stack shape for $B$ is unknown, it can not be
+circle$ is shown. Because the stack shape for $B$ is unknown, it cannot be
 given a concrete representation.
 
 
@@ -131,7 +131,7 @@ given a concrete representation.
 
 The second style, procedural, enables exactly what its name suggests: procedures.
 The type signature $f : ast.basic (A times.circle ~B)$ exactly corresponds to the
-C function signature $B space f(A space a)$. 
+C function signature $B space f(A space a)$.
 The type $~B$ corresponds to a stack that expects a value of type $B$ to be pushed on top.
 This stack can store an arbitrary state of kind $omega$. Because of the kinding
 rules of $ast.basic$ and $times.circle$, only a single stack can be passed to a static
@@ -140,7 +140,7 @@ function.
 Finally we have higher-order programming, which
 is not possible with $ast.basic$ and $~$ alone. The type $ast.basic (A times.circle ~B
   times.circle ~C)$ is ill-kinded, and $ast.basic (A times.circle ast.basic B times.circle ~C)$
-would not work either because $ast.basic B$ can not capture state.
+would not work either because $ast.basic B$ cannot capture state.
 To enable higher-order programming we introduce the _linear closure_.
 The linear closure can capture arbitrary state and produces a type with a known size.
 Now we can write the type signature for a higher-order function: $ast.basic (A times.circle not B times.circle ~C)$.
@@ -165,15 +165,12 @@ top-to-bottom. The rules for commands are read bottom-to-top.
 Kinds are also introduced to the environment $Gamma$. @kinds_env shows the
 rules for the environment.
 
-#figure(
-  caption: [Kinding rules for environments.],
-  flex(
-    prooftree(rule($dot : known$, $$)),
-    prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
-    prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
-    prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
-  ),
-) <kinds_env>
+#figure(caption: [Kinding rules for environments.], flex(
+  prooftree(rule($dot : known$, $$)),
+  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: known$, $A : omega$)),
+  prooftree(rule($(Gamma, x: A) : omega$, $Gamma: omega$, $A : known$)),
+  prooftree(rule($(Gamma, x: A) : known$, $Gamma : known$, $A : known$)),
+)) <kinds_env>
 
 The empty environment is of known size. If the environment is of known size,
 then extending it with a stack makes it have unknown size. The last two rules
@@ -193,10 +190,7 @@ rules for the negative fragment.
   grid(
     inset: (bottom: 15pt),
     columns: (0.2fr, 1fr, 1fr, 0.2fr),
-    ..content(
-      newstack_value,
-      [Newstack is a primitive for creating an empty stack],
-    ),
+    ..content(newstack_value, [Newstack is a primitive for creating an empty stack]),
     ..content(var_value, [All variables must be used exactly once.]),
     ..content(unit_value, [The unit value. The environment must be empty]),
     ..content(
@@ -206,13 +200,10 @@ rules for the negative fragment.
     ..content(inj_left_value, [Constructing the left value of a sum type]),
     ..content(inj_right_value, [Constructing the right value of a sum type]),
     ..content(linear_pointer_value, [Making an indirection to a stack]),
-    ..content(
-      exists_intro_value,
-      [Existentially quantifying the term $t : A$ with the type variable $alpha$],
-    ),
+    ..content(exists_intro_value, [Existentially quantifying the term $t : A$ with the type variable $alpha$]),
     ..content(
       static_function_value,
-      [Create a static funcion. The environment must be empty, which means the static function can not capture any free variables.],
+      [Create a static funcion. The environment must be empty, which means the static function cannot capture any free variables.],
     ),
     ..content(
       stack_closure_value,
@@ -232,46 +223,25 @@ rules for the negative fragment.
   grid(
     inset: (bottom: 15pt),
     columns: (0.1fr, 1.5fr, 1fr, 0.1fr),
-    ..content(
-      freestack_command,
-      [Free the stack $z$. The variable $z$ is removed from the environment.],
-    ),
-    ..content(
-      discard_command,
-      [Discard the unit value. The variable $z$ is removed from the environment.],
-    ),
+    ..content(freestack_command, [Free the stack $z$. The variable $z$ is removed from the environment.]),
+    ..content(discard_command, [Discard the unit value. The variable $z$ is removed from the environment.]),
     ..content(
       pair_command,
       [Destruct the pair $z$, introducing the variables $a$ and $b$, and remove $z$ from the environment.],
     ),
-    ..content(
-      case_command,
-      [Pattern match on the sum, binding the value of $z$ to $x_i$ and continue
-        with the continuation $c_i$. The subscript $i$ is used to indicate that
-        there are two possible injections.],
-    ),
+    ..content(case_command, [Pattern match on the sum, binding the value of $z$ to $x_i$ and continue
+      with the continuation $c_i$. The subscript $i$ is used to indicate that
+      there are two possible injections.]),
 
-    ..content(
-      follow_command,
-      [Follow the indirection, binding the stack behind the indirection to $x$],
-    ),
-    ..content(
-      exists_elim_command,
-      [Match the existentially quantified variable $z$ to access the value $x$],
-    ),
+    ..content(follow_command, [Follow the indirection, binding the stack behind the indirection to $x$]),
+    ..content(exists_elim_command, [Match the existentially quantified variable $z$ to access the value $x$]),
     ..content(
       static_call_command,
       [Call the static function $z$ with the value $t$ as argument. Note that the environment does not need to be empty when calling static functions],
     ),
 
-    ..content(
-      stack_call_command,
-      [Call the stack closure $z$ with the value $t$ as argument],
-    ),
-    ..content(
-      linear_call_command,
-      [Call the linear closure $z$ with the value $t$ as argument],
-    ),
+    ..content(stack_call_command, [Call the stack closure $z$ with the value $t$ as argument]),
+    ..content(linear_call_command, [Call the linear closure $z$ with the value $t$ as argument]),
   ),
 ) <typing_negative_fragment>
 
@@ -282,40 +252,26 @@ on use.
 
 In @id_function we show how we can use the typing rules to give the typing derivation for the identity function specialised to the type $A: known$ in #ln.
 
-#figure(
-  caption: [The typing derivation for the identity function specialised to $A$ in #ln.],
-  prooftree(
+#figure(caption: [The typing derivation for the identity function specialised to $A$ in #ln.], prooftree(rule(
+  $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : ast.basic (A times.circle ~A)$,
+  rule(
+    $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
     rule(
-      $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : ast.basic (A times.circle ~A)$,
-      rule(
-        $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
-        rule(
-          $dot, t: A, z:space ~A tack "call"^~z(t)$,
-          rule($dot, t: A tack t : A$, name: [_var_]),
-          name: [$#math.italic[call]^~$],
-        ),
-        name: [_pair_],
-      ),
-      name: [_static function_],
+      $dot, t: A, z:space ~A tack "call"^~z(t)$,
+      rule($dot, t: A tack t : A$, name: [_var_]),
+      name: [$#math.italic[call]^~$],
     ),
+    name: [_pair_],
   ),
-) <id_function>
+  name: [_static function_],
+))) <id_function>
 
 In @id_type we derive the derivation for the type, to ensure that the type is kind correct.
 
-#figure(
-  caption: [The kind derivation for the type of the identity function on A.],
-  prooftree(
-    rule(
-      $ast.basic (A times.circle ~A) : known$,
-      rule(
-        $(A times.circle ~A) : omega$,
-        $A: known$,
-        rule($~A: omega$, $A: known$),
-      ),
-    ),
-  ),
-) <id_type>
+#figure(caption: [The kind derivation for the type of the identity function on A.], prooftree(rule(
+  $ast.basic (A times.circle ~A) : known$,
+  rule($(A times.circle ~A) : omega$, $A: known$, rule($~A: omega$, $A: known$)),
+))) <id_type>
 
 The kinding rules and typing rules provide a structured way of constructing
 correct programs. When creating the compiler for #ln we can leverage these rules to construct the

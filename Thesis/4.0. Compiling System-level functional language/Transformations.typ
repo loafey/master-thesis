@@ -3,11 +3,11 @@
 
 == Transformations <Transformations>
 
-So far we have only seen #ln as a lambda calculus. In this section we 
+So far we have only seen #ln as a lambda calculus. In this section we
 go into the necessary transformations made to types, values, and commands, to turn
 #ln into a sublanguage which can then be mapped to assembly.
 
-The first three phases of the #ln compiler are: 
+The first three phases of the #ln compiler are:
 + Linear closure conversion: makes pointers to stacks explicit (@LinearClosureConversion)
 + Stack selection: ensures that every stack closure contains at most one stack to execute on (@StackSelection)
 + Pointer closure conversion: replaces each stack closure by an explicit pair of a static function and environment (@PointerClosureConversion)
@@ -35,8 +35,7 @@ We must not forget to transform the commands as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
 have to follow the indirection to access the closure.
 
-#block(breakable: false, 
-grid(
+#block(breakable: false, grid(
   columns: (1fr, 1fr),
   stroke: black + 0.1pt,
   inset: 10pt,
@@ -60,7 +59,7 @@ we explain how this is remedied.
 It is important for every stack closure ($~A$) to identify a single unique stack that
 it can execute on. The stack selection phase selects a single unique stack for every
 closure if at least one stack exists, ensuring that every closure has _at most_ one stack
-prepared. The reason we can not guarantee that there is _exactly one_ stack
+prepared. The reason we cannot guarantee that there is _exactly one_ stack
 prepared is because stacks have not been made explicit yet.
 In @PointerClosureConversion we will show the necessary transformations to make
 stacks explicit, and how to introduce new stacks.
@@ -133,10 +132,9 @@ If $Gamma$ has kind $known$, then $"pairvars"$ must construct a newstack
 ($circle$). For example: if $Gamma = dot, a : A: known, b : B: known$, then the output
 of $"pairvars"$ will be $(a, b, newstack)$.
 $"unpairAll"$ is a macro that inverts this procedure, i.e.
-$ 
-  "unpairAll"(Gamma, rho) = 
-  & "let" a,rho_1 = rho; \
-  & "let" b,n s = rho_1;
+$
+  "unpairAll"(Gamma, rho) = & "let" a,rho_1 = rho; \
+                            & "let" b,n s = rho_1;
 $
 
 The first argument of $"unpairAll"$ is the statically known environment
@@ -207,5 +205,5 @@ $
   #angled($circle$, $(lambda^* (x,rho_1). "freestack" rho_1; "foo"(x), newstack)$)
 $
 
-Now the environment is a stack, ensuring we have a stack to execute on. The empty stack must be freed before calling the static function $"foo"()$ to ensure that no memory is leaked. 
+Now the environment is a stack, ensuring we have a stack to execute on. The empty stack must be freed before calling the static function $"foo"()$ to ensure that no memory is leaked.
 
