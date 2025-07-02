@@ -35,13 +35,14 @@ We must not forget to transform the commands as well. Before calling
 a function with type $not A$, which after conversion has type $square ~A$, we
 have to follow the indirection to access the closure.
 
-#grid(
+#block(breakable: false, 
+grid(
   columns: (1fr, 1fr),
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
   $f(x)$, $"let" square g = f; g(x)$,
-)
+))
 
 Because the type $not A$ is transformed
 to $square ~A$, the type checker allows the type $square ~A$ where the type $not A$ is

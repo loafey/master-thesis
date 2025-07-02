@@ -95,7 +95,7 @@
       rule to the kind-checker as well [which I don't recommend]. Please
       explain.
 
-  22. *BUG FIX (incorrect type): I don't know what to change given the feedback. I agree that it is a bit hard to follow, but there is only one moving part: the let* - 
+  22. *BUG FIX (incorrect type): I don't know what to change given the feedback. I agree that it is a bit hard to follow, but there is only one moving part: the let-bind* - 
       4.1.2 is still hard to get. You provide one example + explanatory text,
       but it is hard for at least this reader to see what the transformation is
       actually doing because of the many "moving parts" (let, box,
