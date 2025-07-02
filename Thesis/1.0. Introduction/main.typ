@@ -2,7 +2,7 @@
 #import "../Prelude.typ": ln
 
 = Introduction
-Static anaysis tools and systems have seen use in several compilers and
+Static analysis tools and systems have seen use in several compilers and
 programming languages. By relying on such tools and systems, programmers can
 ensure safety, performance, and also express intent. 
 In this thesis we leverage the system of linear types for all three purposes.

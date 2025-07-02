@@ -127,7 +127,7 @@ applied to the variable $y$ with type $A$ can be seen in @id_proof and @id_apply
 )
 
 #figure(
-  caption: [Type derivation for the the polymorphic identity function.],
+  caption: [Type derivation for the polymorphic identity function.],
   flex(id_proof_tree),
 ) <id_proof>
 
@@ -208,13 +208,13 @@ $
 $
 Note that \"bang\" is both a type constructor ($!A$) and a function on environments ($!Gamma$).
 Because Derelict, Discard, and Duplicate manipulate the left-side of the
-turnstyle, they are read bottom-to-top. The Promote rule manipulates the right-side
-of the turnstyle, and is read top-to-bottom.
+turnstile, they are read bottom-to-top. The Promote rule manipulates the right-side
+of the turnstile, and is read top-to-bottom.
 Syntactically we leave the terms for derelict, discard, and duplicate silent,
 i.e. no explicit syntax is used to derelict, discard, and duplicate variables.
 Now we can create a derivation for the term $lambda x. lambda y. y : !tau
 lollipop sigma lollipop sigma$ that discards the variable $x$. The derivation
-is show in @const_term.
+is shown in @const_term.
 
 #figure(
   caption: [Derivation of a linearly typed term that discards the variable $x$.],

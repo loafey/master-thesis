@@ -1,15 +1,15 @@
 ## Typos:
 *FIXED* - 1. general: you mix "cannot" (3 times) and "can not" (6 times). Please stick with the former.
-2. p4: "Static anaysis":= "Static analysis"
-3. p5: "can be traced back the use" :=
-      "can be traced back to the use"
-4. p5: "a system-level level language" :=
-      "a system-level language"
-5. p8: "the the polymorphic identity function." →
-      "the polymorphic identity function."
-6. p10: "left-side of the turnstyle" :=
-       "left-side of the turnstile" 1. one more use on the next line
-7. p10: "is show in" := "is shown in"
+*FIXED* - 2. p4: "Static anaysis":= "Static analysis"
+*FIXED* - 3. p5: "can be traced back the use" :=
+                 "can be traced back to the use"
+*FIXED* - 4. p5: "a system-level level language" :=
+                 "a system-level language"
+*FIXED* - 5. p8: "the the polymorphic identity function." →
+                 "the polymorphic identity function."
+*FIXED* - 6. p10: "left-side of the turnstyle" :=
+                  "left-side of the turnstile" 1. one more use on the next line
+*FIXED* - 7. p10: "is show in" := "is shown in"
 
 ## More comments:
 
