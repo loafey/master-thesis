@@ -91,7 +91,7 @@ The goto style is the most primitive. It can be considered as a one-way
 transfer of control. Consider the function $f : ast.basic (A times.circle ast.basic B times.circle circle)$.
 From $f$ we can call the continuation $ast.basic B$, which is
 just a static function pointer, and because it is only a static function
-poiner, it cannot capture state, i.e. the lambda term can only use its parameter, or variables declared in its own body.
+pointer, it cannot capture state, i.e. the lambda term can only use its parameter, or variables declared in its own body.
 Static funcions are not allowed to capture state, because the state has to be
 stored in memory. In #ln memory is represented by stacks, and because static
 funcions are labels rather than stacks, it is not possible for static functions to capture
