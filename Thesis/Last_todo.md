@@ -118,12 +118,12 @@
       expression, Function call, ...
   29.       
 30. 4.4. Language ABI
-  *FIXED* 31. Product type: "⟦𝐴⟧M 1. ∞"?? ∞ = inf is not in ℕ=Nat. And also, if you
-      mean Nat1. = Nat `union` {inf}, then (forall x. x 1. inf = inf) which
-      means that any rule involving "1. inf" should be simplified. Similarly
-      with "Word 1. inf" later.
+  31. Product type: "⟦𝐴⟧M 1. ∞"?? ∞ = inf is not in ℕ=Nat. And also, if you
+      mean Nat1. = Nat `union` {inf}, then (forall x. x + inf = inf) which
+      means that any rule involving "+ inf" should be simplified. Similarly
+      with "Word + inf" later.
   32. From page 35 (later on) it looks like intend to keep track of the fact
-      that "n 1. inf" is in the interval [n,inf). If that is what you intend,
+      that "n + inf" is in the interval [n,inf). If that is what you intend,
       you need to adapt your type (from Nat, or Nat1.) accordingly (to an
       interval, or an expression type in one unknown called inf, or ...).
 *FIXED* 33. 5.1.1:
