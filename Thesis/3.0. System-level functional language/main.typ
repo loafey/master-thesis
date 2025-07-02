@@ -91,10 +91,15 @@ The goto style is the most primitive. It can be considered as a one-way
 transfer of control. Consider the function $f : *(A times.circle *B times.circle circle)$.
 From $f$ we can call the continuation $*B$, which is
 just a static function pointer, and because it is only a static function
-pointer, it can not capture any state (free variables). The stack that $*B$ manipulates is
-exactly the stack $B$, and it is passed by $f$. In
-@Stack the stack shape for the type $A times.circle *B times.circle circle$ is shown. Because the
-stack shape for $B$ is unknown, it can not be given a concrete shape. 
+poiner, it can not capture state, i.e. the lambda term can only use its parameter, or variables declared in its own body.
+Static funcions are not allowed to capture state, because the state has to be
+stored in memory. In #ln memory is represented by stacks, and because static
+funcions are labels rather than stacks, it is not possible for static functions to capture
+state.
+
+In @Stack the stack shape for the type $A times.circle *B times.circle
+circle$ is shown. Because the stack shape for $B$ is unknown, it can not be
+given a concrete representation.
 
 
 #let frame(stroke) = (x, y) => (
