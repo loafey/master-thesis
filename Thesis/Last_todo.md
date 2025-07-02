@@ -84,7 +84,9 @@
       slightly different sublanguages, which may require different typing
       rules, but allowing any mix of the two seems "dangerous". And if these
       two types are equal, why have both in the (type) language?
-  21. "end up being ill-kinded": the story-line seems a bit strange: you say
+
+  21. *UNCHANGED: Yes the environment ends up ill-kinded and we have written exactly that* - 
+      "end up being ill-kinded": the story-line seems a bit strange: you say
       that 4.1.2 shows how to transform the types to keep them well-kinded. But
       then the closures don't "end up being ill-kinded" after all. Perhaps you
       meant to motivate why the 4.1.2 transformation is needed? Also, given
