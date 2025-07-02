@@ -325,7 +325,7 @@ Take this stack that just contains a 16-bit integer with the value `42`.
 
   In @mappingMemToType we have seen more complicated memory mappings of types, specifically
   mappings involving #sym.infinity. Take $A times.circle B: omega$ for
-  instance, whose memory usage is calculated as: $#mem($A$) + #sym.infinity$, but simplified to $infinity$.
+  instance, whose memory usage is calculated as: $#mem($A$) + #sym.infinity$ (can be further simplified to $infinity$).
   Here $A$ is a type with kind
   $known$ and $B$ has kind $omega$, hence it is a stack. Visually this would be represented like this
   (if #mem($A$) = `Word`):
