@@ -130,4 +130,4 @@
   37. (Optional: Also, the natural construct here would "split" the n into inl
       () if n==0 or inr n' if n==n'1.1. With that, there would only be two
       uses, as expected from the two recursive calls.)
-  38. Using "a 1. b = z" to mean that a = z and b = z is very confusing. Please change. Perhaps "a = b = z"?
+  38. Using "a + b = z" to mean that a = z and b = z is very confusing. Please change. Perhaps "a = b = z"?
