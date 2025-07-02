@@ -111,7 +111,13 @@
         static function foo()": it seems a bit strange to create a stack and
         then directly(?) free it.
 27. 4.2 Compilation Scheme
-  28. The long figures look impressive, but I'm a bit worried about the
+
+*28. UNCHANGED: That would be an implementation error. For instance, in the stack
+      variables. We know that the list is guaranteed to be a singleton because
+      a stack is represented by a singler register with the address to it.
+      We can see the pattern matching as invariants that must hold.*
+
+      28. The long figures look impressive, but I'm a bit worried about the
       "pattern matching" on things like "𝜌,𝑧↦[𝑟0]": what happens if the list
       that z maps to is not a singleton list? This occurs in at least "Stack
       variable" (what if that variable is stored in more than one register?),
