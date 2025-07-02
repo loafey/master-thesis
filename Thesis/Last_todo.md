@@ -105,7 +105,9 @@
         rho).
     25. Also in the same example, the name "x" bound together with rho will be
         shadowed by the first let. How is this supposed to work?
-    26. This example is hard for me to parse: "⟨○, (𝜆∗ (𝑥, 𝜌1 ). freestack 𝜌1
+
+*26. SMALL CHANGE: If we don't allocate a stack then we have no stack to execute on, and if we don't deallocate it then we have a memory leak.*
+        This example is hard for me to parse: "⟨○, (𝜆∗ (𝑥, 𝜌1 ). freestack 𝜌1
         ; foo(𝑥), 𝑛𝑒𝑤𝑠𝑡𝑎𝑐𝑘)⟩". Also the explanation is confusing: "Now the
         environment is a new empty stack, and we free it before calling the
         static function foo()": it seems a bit strange to create a stack and

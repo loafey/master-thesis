@@ -214,5 +214,5 @@ $
   #angled($circle$, $(lambda^* (x,rho_1). "freestack" rho_1; "foo"(x), newstack)$)
 $
 
-Now the environment is a new empty stack, and we free it before calling the static function $"foo"()$
+Now the environment is a stack, ensuring we have a stack to execute on. The empty stack must be freed before calling the static function $"foo"()$ to ensure that no memory is leaked. 
 
