@@ -27,7 +27,8 @@
       what this means. I see that the rules requires the first type in the pair
       type to be of kind "circle 1", but I lack intuition for why of what that
       may entail.
-*FIXED: Hopefully fixed. We agree that this bit should have been postponed, but JP really wanted the low level explanation here* - 14. "The goto style": I don't understand what "capture state" and "the state
+*FIXED: Hopefully fixed. We agree that this bit should have been postponed, but Jean-Philippe really wanted the low level explanation here* - 
+      14. "The goto style": I don't understand what "capture state" and "the state
       that *B manipulates" means. I'm not used to read off "state manipulation"
       from lambda terms. Perhaps you need to delay this explanation, or expand
       it with more concrete examples. I'm still at the "kind level" in the

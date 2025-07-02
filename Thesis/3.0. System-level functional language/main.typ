@@ -139,7 +139,7 @@ function.
 
 Finally we have higher-order programming, which
 is not possible with $ast.basic$ and $~$ alone. The type $ast.basic (A times.circle ~B
-  times.circle ~C)$ is ill-kinded, and $ast.basic (A times.circle *B times.circle ~C)$
+  times.circle ~C)$ is ill-kinded, and $ast.basic (A times.circle ast.basic B times.circle ~C)$
 would not work either because $ast.basic B$ can not capture state.
 To enable higher-order programming we introduce the _linear closure_.
 The linear closure can capture arbitrary state and produces a type with a known size.

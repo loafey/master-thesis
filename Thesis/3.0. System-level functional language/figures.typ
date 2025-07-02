@@ -87,7 +87,7 @@
 
 #let static_function_value = judge(
   $dot, x: A tack c$,
-  $dot tack lambda^* x. c : *A$,
+  $dot tack lambda^* x. c : ast.basic A$,
   note: "static function",
 )
 #let stack_closure_value = judge(
