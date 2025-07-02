@@ -41,6 +41,7 @@
        actual "stack values" would contain some data of type A on top of some
        of type *B?
       Also, the caption could perhaps be "Illustration of the stack layout for the type 𝐴 ⊗ ∗𝐵 ⊗ ○."
+
 *FIXED* - 15. Using a star/asterisk as a prefix operator (instead of infix) causes some
           reading challenges for me. I think you need to help a bit with spacing:
           make sure the prefix operators are "tightly connected" the the only
