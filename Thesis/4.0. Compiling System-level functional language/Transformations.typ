@@ -140,7 +140,7 @@ $
 $
 
 The first argument of $"unpairAll"$ is the statically known environment
-$Gamma$, and the second argument is variable name of the lambda bound
+$Gamma$, and the second argument is the variable name of the lambda bound
 environment. $"unpairAll"$ should insert the let-binds, keeping the original names of the variables.
 
 Because the closures are converted, the corresponding commands must also be
