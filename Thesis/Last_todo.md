@@ -77,7 +77,8 @@
     calculus. We now explain how general Lithium expressions can be transformed
     into a sublanguage which can then be mapped to assembly."
 19. 4.1 Transformations
-  20. "Because the type ¬𝐴 is transformed ... the type checker should allow
+  20. *UNCHANGED: Because it is only a sublanguage now this should be fine. Technically yes, you could remove ¬, but if you want to write normal higher-order programs it's nice for ergonomy* - 
+      "Because the type ¬𝐴 is transformed ... the type checker should allow
       □ ∼ 𝐴 where ¬𝐴 is expected": I don't see why this is the case. You should
       be able to think about the language before and after translation as two
       slightly different sublanguages, which may require different typing
