@@ -28,7 +28,7 @@
         Department of Computer Science and Engineering\
         C#text(size: 10pt, "HALMERS") U#text(size: 10pt, "NIVERSITY") #text(size: 10pt, "OF") T#text(size: 10pt, "ECHNOLOGY")\
         U#text(size: 10pt, "NIVERSITY") #text(size: 10pt, "OF") G#text(size: 10pt, "OTHENBURG")\
-        Gothenburg, Sweden 2024
+        Gothenburg, Sweden 2025
       ]
     ]
   ],

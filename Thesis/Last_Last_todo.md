@@ -1,4 +1,4 @@
-1. New Detail: bottom of pdf page 3 (in the frontmatter): 2024 := 2025
+*FIXED* 1. New Detail: bottom of pdf page 3 (in the frontmatter): 2024 := 2025
 2. 1: "can not" := "cannot" everywhere (you changed in the opposite direction)
 3. New: "static function poiner" := "static function pointer"
 4. 18: "to turn Lithium into a sublanguage which can then be mapped to assembly" := "to map Lithium terms into a sublanguage which we then translate to assembly"
