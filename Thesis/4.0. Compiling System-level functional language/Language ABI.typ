@@ -317,7 +317,7 @@ Take this stack that just contains a 16-bit integer with the value `42`.
   )
   This means that $B$ is a stack of unknown size, but we know that
   _on top_ of $B$ there are 8 bytes dedicated to a value of type $A$.
-  Without $A$, $B$ could potentially be empty, or it could be huge, but we cannot know
+  Without $A$, $B$ could potentially be empty, or it could be huge, but we can not know
   from the types alone.
 
   // When allocating new stacks the first value on the stack must be the pointer

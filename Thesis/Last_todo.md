@@ -1,5 +1,5 @@
- ** Typos:
-1. general: you mix "cannot" (3 times) and "can not" (6 times). Please stick with the former.
+## Typos:
+*FIXED* - 1. general: you mix "cannot" (3 times) and "can not" (6 times). Please stick with the former.
 2. p4: "Static anaysis":= "Static analysis"
 3. p5: "can be traced back the use" :=
       "can be traced back to the use"
@@ -11,7 +11,7 @@
        "left-side of the turnstile" 1. one more use on the next line
 7. p10: "is show in" := "is shown in"
 
-** More comments:
+## More comments:
 
 8. Fig. 5: The final term seems to lack parentheses: "/\ a. \x:a. x y" would be interpreted as "/\ a. \x:a. (x y)" which is a type error. I think you mean "(/\ a. \x:a. x) y". But I'm also not sure about the rule before that: are both the term and the context really unchanged when getting rid of the Forall in the type? Following TApp from Fig. 3 you would get "(/\ a. \x:a. x)[A]" which I guess reduces to "\x:A. x".
 9. Many things have been fixed, but most of my comments on §3.2 remain, and some other things later - see below.
@@ -30,7 +30,7 @@
   17. "the higher-order function: ∗ (𝐴 ⊗ ¬𝐵 ⊗ ∼ 𝐶)": I don't know _what_ higher order function you mean to write, or how this string of symbols is supposed to represent it.
     1. To clarify my question further: please make sure to clearly separate the use of "function" (which should be an actual function) from "function type" or "type for the representation of a function" or so.
 
-** 4 Compiling Lithium
+## 4 Compiling Lithium
 
 18. You have added more explanations of the "compilation pipeline" which is good. However, the remark "At this stage Lithium is still a calculus" is still confusing, as it soggests that the language/calculus itself will change, rather than the expresions being transformed. My understanding now (and what you write in the text) is that the Lithium languge does not change as you go through this section. But you also have references to "this stage" and "turn Lithium into ..." which clash with the rest of the explanation. I think what you transform are expressions in the language, not the language itself. Perhaps something along these lines: "What we have explained so far, is Lithium as a lambda calculus. We now explain how general Lithium expressions can be transformed into a sublanguage which can then be mapped to assembly."
 19. 4.1 Transformations
@@ -38,7 +38,7 @@
   21. "end up being ill-kinded": the story-line seems a bit strange: you say that 4.1.2 shows how to transform the types to keep them well-kinded. But then the closures don't "end up being ill-kinded" after all. Perhaps you meant to motivate why the 4.1.2 transformation is needed? Also, given that you have just done a (somewhat strange) change to the type checker to treat □ ∼ 𝐴 and ¬𝐴 as equal, couldn't you also "just" add an extra rule to the kind-checker as well [which I don't recommend]. Please explain.
   22. 4.1.2 is still hard to get. You provide one example 1. explanatory text, but it is hard for at least this reader to see what the transformation is actually doing because of the many "moving parts" (let, box, continuation, types, kinds).
   23. 4.1.3: is still difficult to follow:
-    24. In the example with Gamma, it says that unpairAll is a macro, and we can see that it takes rho as its only argument. Now rho is lambda bound, thus not statically known. So the explanation of how unpairAll(rho) expands into a few lets is really confusing as it (unpairAll) cannot know what rho is. I guess you mean that unpairAll takes _Gamma_ as its main argument, and then a variable name (here rho).
+    24. In the example with Gamma, it says that unpairAll is a macro, and we can see that it takes rho as its only argument. Now rho is lambda bound, thus not statically known. So the explanation of how unpairAll(rho) expands into a few lets is really confusing as it (unpairAll) can not know what rho is. I guess you mean that unpairAll takes _Gamma_ as its main argument, and then a variable name (here rho).
     25. Also in the same example, the name "x" bound together with rho will be shadowed by the first let. How is this supposed to work?
     26. This example is hard for me to parse: "⟨○, (𝜆∗ (𝑥, 𝜌1 ). freestack 𝜌1 ; foo(𝑥), 𝑛𝑒𝑤𝑠𝑡𝑎𝑐𝑘)⟩". Also the explanation is confusing: "Now the environment is a new empty stack, and we free it before calling the static function foo()": it seems a bit strange to create a stack and then directly(?) free it.
 27. 4.2 Compilation Scheme

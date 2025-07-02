@@ -70,7 +70,7 @@ we explain how this is remedied.
 It is important for every stack closure ($~A$) to identify a single unique stack that
 it can execute on. The stack selection phase selects a single unique stack for every
 closure if at least one stack exists, ensuring that every closure has _at most_ one stack
-prepared. The reason we cannot guarantee that there is _exactly one_ stack
+prepared. The reason we can not guarantee that there is _exactly one_ stack
 prepared is because stacks have not been made explicit yet.
 In @PointerClosureConversion we will show the necessary transformations to make
 stacks explicit, and how to introduce new stacks.
