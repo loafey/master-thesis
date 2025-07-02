@@ -192,7 +192,7 @@ a `Word` is often considered to be 8 bytes.
     $\ quad quad 1 + max(reg(A), reg(B))$,
     $#`Word` \ quad quad + max(mem(A), mem(B))$,
   ),
-  eq([Static function], $*A: known$, 1, `Word`),
+  eq([Static function], $ast.basic A: known$, 1, `Word`),
   eq([Linear pointer], $square A: known$, 1, `Word`),
   eq([Empty stack], $circle: omega$, 1, sym.infinity),
   eq([Unit\ $$], $fatone: known$, 0, 0),

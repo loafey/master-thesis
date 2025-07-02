@@ -76,12 +76,12 @@ In @PointerClosureConversion we will show the necessary transformations to make
 stacks explicit, and how to introduce new stacks.
 
 Consider the following program:
-$ lambda (f,k). space k(lambda y. space f(y)) : *(not A times.circle ~not A) $
+$ lambda (f,k). space k(lambda y. space f(y)) : ast.basic (not A times.circle ~not A) $
 
 After making the pointers to stacks explicit we end up with the following program:
 $
   lambda (f,k). space k(square lambda y. "let" square f' = f; space f'(y))
-  : *(square ~ A times.circle ~(square~A))
+  : ast.basic (square ~ A times.circle ~(square~A))
 $
 
 Because $k$ has type $~(square~A)$, its environment must be a stack.
@@ -97,7 +97,7 @@ free in the closure, thus making it a valid option.
 The resulting program would end up being:
 $
   lambda (f,k). space "let" square f' = f; space k(lambda y. space f'(y))
-  : *(square ~ A times.circle ~(square~A))
+  : ast.basic (square ~ A times.circle ~(square~A))
 $
 
 // f : #~A
@@ -113,16 +113,16 @@ explicit, replacing a stack closure by an explicit pair of a static function
 pointer and an environment. At the assembly level the concept of procedures and
 closures do not exist, there are only jumps (gotos) and labels.
 
-The representation for $*A$ is straightforward; it is a label. Calling
-a function of type $*A$ corresponds to jumping to the label. Because labels and
+The representation for $ast.basic A$ is straightforward; it is a label. Calling
+a function of type $ast.basic A$ corresponds to jumping to the label. Because labels and
 jumps are the only thing available to us at the assembly level, we need to
-transform $~$ to $*$, and we need to make the closure explicit.
+transform $~$ to $ast.basic$, and we need to make the closure explicit.
 
-The pointer closure conversion phase transforms $~A$ to $exists gamma. *(A
+The pointer closure conversion phase transforms $~A$ to $exists gamma. ast.basic (A
   times.circle gamma) times.circle gamma$, eliminating both procedures and
 closures. The existential quantification is there because the structure of the
 environment is unknown for the callee. Now we can see why type variables must
-have kind $omega$; if they had kind $known$, then $*(A times.circle gamma)$
+have kind $omega$; if they had kind $known$, then $ast.basic (A times.circle gamma)$
 would be ill-kinded, and we would not be able to represent the environment
 in the type.
 
@@ -133,7 +133,7 @@ Stack closures $(lambda^~)$ are transformed in the following manner:
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],
-  $~A$, $exists gamma. *(A times.circle gamma) times.circle gamma$,
+  $~A$, $exists gamma. ast.basic (A times.circle gamma) times.circle gamma$,
   $lambda^~ . c$,
   $#angled($times.circle.big Gamma$, $((lambda^* (x, rho) . "unpairAll"(rho); c), "pairvars"(Gamma))$)$,
 )
@@ -167,7 +167,7 @@ show two examples: one for each kind of the environment.
 Take the resulting program from @StackSelection.
 $
   lambda (f,k). space "let" square f' = f; space k(lambda y. space f'(y))
-  : *(square ~ A times.circle ~(square~A))
+  : ast.basic (square ~ A times.circle ~(square~A))
 $
 
 Because the closure $lambda y. f'(y)$ contains the stack $f'$, $"pairvars"$
@@ -188,7 +188,7 @@ $
                  & "let" angled(alpha, k') = k;   \
                  & "let" g, rho_1 = k';         & \
                  & g(square #angled(
-                       $@ exists gamma. *(A times.circle gamma) times.circle gamma$,
+                       $@ exists gamma. ast.basic (A times.circle gamma) times.circle gamma$,
                        $(lambda^* (y, rho_2). & & "let" angled(beta, x) = rho_2; & \
                          & & & "let" h,rho_4 = x; & \
                          & & & h(y, rho_4), f')$,
@@ -196,14 +196,14 @@ $
                      , rho_1)
 $
 
-Because $k$ has type $exists gamma. *(A times.circle gamma) times.circle gamma$
+Because $k$ has type $exists gamma. ast.basic (A times.circle gamma) times.circle gamma$
 after closure conversion, the second, and third rows are necessary to access the
-static function $g : *(A times.circle gamma)$. The same process is repeated
+static function $g : ast.basic (A times.circle gamma)$. The same process is repeated
 inside the argument of $g$. Also, note how $f'$ is the environment inside $g$
 now.
 
 Let us now consider an example where a stack closure does not contain a stack in the environment.
-Assume that the static function $"foo" : *A$ exists.
+Assume that the static function $"foo" : ast.basic A$ exists.
 
 $ (lambda^~ x. "foo"(x)) : space ~A $
 

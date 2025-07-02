@@ -34,7 +34,7 @@
   $circle$,
   $x$,
   $not t$,
-  $* t$,
+  $ast.basic t$,
   $~ t$,
   $square t$,
   $t times.circle t'$,
@@ -141,7 +141,7 @@
 
 #let static_call_command = judge(
   $Gamma tack t: A$,
-  $Gamma, z: *A tack "call"^* z(t)$,
+  $Gamma, z: ast.basic A tack "call"^* z(t)$,
   note: $#math.italic[call]^*$,
 )
 
@@ -221,7 +221,7 @@
 }
 
 #let static_closure = {
-  judge($A: omega$, $*A: known$, note: [static function])
+  judge($A: omega$, $ast.basic A: known$, note: [static function])
 }
 #let linear_closure = {
   judge($A:known$, $not A: known$, note: [linear closure])

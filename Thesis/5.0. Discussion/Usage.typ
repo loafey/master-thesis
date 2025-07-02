@@ -15,10 +15,10 @@ $
 and a recursive one in C.
 
 The #ln version uses the compiler defined functions `__dup__` and `__eq__`.
-`__dup__` has the type signature $*(int times.circle ~(int times.circle int))$,
+`__dup__` has the type signature $ast.basic (int times.circle ~(int times.circle int))$,
 which means it takes a tuple containing the integer to duplicate, and a continuation that takes the
 two new integers as argument.
-`__eq__` has type signature $*(int times.circle int times.circle ~(fatone plus.circle fatone))$.
+`__eq__` has type signature $ast.basic (int times.circle int times.circle ~(fatone plus.circle fatone))$.
 This function takes two integers to check for equality, and a continuation that takes the result as argument.
 The value `inl ()` represents true and the value `inr ()` represents false.
 

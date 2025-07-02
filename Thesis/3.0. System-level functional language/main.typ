@@ -20,12 +20,12 @@ the language looks. The grammar of #ln is depicted in @slfl_grammar.
 
 Take this top-level function (_Definition_) as an example:
 $
-  & "swap" : *((B times.circle A) times.circle ~(A times.circle B)) \
+  & "swap" : ast.basic ((B times.circle A) times.circle ~(A times.circle B)) \
   & quad = lambda((x,y), k) -> k((y,x));
 $
 $"swap"$ here can be broken up into three parts:
 - The name: $"swap"$
-- The type: $*((B times.circle A) times.circle ~(A times.circle B))$
+- The type: $ast.basic ((B times.circle A) times.circle ~(A times.circle B))$
 - The value: $lambda((x,y), k) -> k((y,x))$
 
 $"swap"$ takes two arguments: a tuple $(B times.circle A)$
@@ -63,7 +63,7 @@ terminates with no value, like in @cps.
 
 There are four new constructs on the type level in #ln that extend linear logic.
 These are: _empty stack_
-($circle$), _linear pointer_ ($square$), _stack closure_ ($~$), and _static function_ ($*$).
+($circle$), _linear pointer_ ($square$), _stack closure_ ($~$), and _static function_ ($ast.basic$).
 The latter two are variants of negation ($not$).
 
 At the core of #ln is the kind system. Where values have types, types have
@@ -84,12 +84,12 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
     (see @PointerClosureConversion why type variables must have kind $omega$).
 ]
 
-Each negation enables one of three programming styles: goto ($*$) , procedural
+Each negation enables one of three programming styles: goto ($ast.basic$) , procedural
 ($~$), and higher-order ($not$).
 
 The goto style is the most primitive. It can be considered as a one-way
-transfer of control. Consider the function $f : *(A times.circle *B times.circle circle)$.
-From $f$ we can call the continuation $*B$, which is
+transfer of control. Consider the function $f : ast.basic (A times.circle ast.basic B times.circle circle)$.
+From $f$ we can call the continuation $ast.basic B$, which is
 just a static function pointer, and because it is only a static function
 poiner, it can not capture state, i.e. the lambda term can only use its parameter, or variables declared in its own body.
 Static funcions are not allowed to capture state, because the state has to be
@@ -97,7 +97,7 @@ stored in memory. In #ln memory is represented by stacks, and because static
 funcions are labels rather than stacks, it is not possible for static functions to capture
 state.
 
-In @Stack the stack shape for the type $A times.circle *B times.circle
+In @Stack the stack shape for the type $A times.circle ast.basic B times.circle
 circle$ is shown. Because the stack shape for $B$ is unknown, it can not be
 given a concrete representation.
 
@@ -115,7 +115,7 @@ given a concrete representation.
 )
 
 #figure(
-  caption: [The stack shape of $A times.circle *B times.circle circle$],
+  caption: [The stack shape of $A times.circle ast.basic B times.circle circle$],
 
   table(
     stroke: black,
@@ -124,26 +124,26 @@ given a concrete representation.
     inset: 0pt,
     gutter: 0pt,
     [#align(center + horizon, $A$)],
-    [#align(center + horizon, $*B$)],
+    [#align(center + horizon, $ast.basic B$)],
   ),
 ) <Stack>
 
 
 The second style, procedural, enables exactly what its name suggests: procedures.
-The type signature $f : *(A times.circle ~B)$ exactly corresponds to the
+The type signature $f : ast.basic (A times.circle ~B)$ exactly corresponds to the
 C function signature $B space f(A space a)$. 
 The type $~B$ corresponds to a stack that expects a value of type $B$ to be pushed on top.
 This stack can store an arbitrary state of kind $omega$. Because of the kinding
-rules of $*$ and $times.circle$, only a single stack can be passed to a static
+rules of $ast.basic$ and $times.circle$, only a single stack can be passed to a static
 function.
 
 Finally we have higher-order programming, which
-is not possible with $*$ and $~$ alone. The type $*(A times.circle ~B
-  times.circle ~C)$ is ill-kinded, and $*(A times.circle *B times.circle ~C)$
-would not work either because $*B$ can not capture state.
+is not possible with $ast.basic$ and $~$ alone. The type $ast.basic (A times.circle ~B
+  times.circle ~C)$ is ill-kinded, and $ast.basic (A times.circle *B times.circle ~C)$
+would not work either because $ast.basic B$ can not capture state.
 To enable higher-order programming we introduce the _linear closure_.
 The linear closure can capture arbitrary state and produces a type with a known size.
-Now we can write the type signature for a higher-order function: $*(A times.circle not B times.circle ~C)$.
+Now we can write the type signature for a higher-order function: $ast.basic (A times.circle not B times.circle ~C)$.
 The function is higher-order because it is passed a function with type $not B$ as argument.
 In @Transformations we explain how closures are transformed to static functions
 and explicit stack environments.
@@ -286,7 +286,7 @@ In @id_function we show how we can use the typing rules to give the typing deriv
   caption: [The typing derivation for the identity function specialised to $A$ in #ln.],
   prooftree(
     rule(
-      $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : *(A times.circle ~A)$,
+      $dot tack lambda^* x. "let" t,z = x; "call"^~ z(t) : ast.basic (A times.circle ~A)$,
       rule(
         $dot, x: (A times.circle ~A) tack "let" t,z = x; "call"^~z(t)$,
         rule(
@@ -307,7 +307,7 @@ In @id_type we derive the derivation for the type, to ensure that the type is ki
   caption: [The kind derivation for the type of the identity function on A.],
   prooftree(
     rule(
-      $*(A times.circle ~A) : known$,
+      $ast.basic (A times.circle ~A) : known$,
       rule(
         $(A times.circle ~A) : omega$,
         $A: known$,

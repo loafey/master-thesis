@@ -9,6 +9,8 @@
 
 #let lollipop = $multimap$
 
+#let star = $ast.basic$
+
 #let bigTodo(content) = box(
   fill: red,
   inset: 30pt,

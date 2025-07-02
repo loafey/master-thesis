@@ -68,7 +68,7 @@ System calls are used under the hood in the language, but it is not something
 that is exposed to a user of the language.
 One simple approach would be to implement a compiler function, similar to
 `__dup__` and `__eq__` called `__sys__`. This function would have the type
-signature $*(int times.circle \"(int + fatone) dot 6\" ~int)$, where the meta
+signature $ast.basic (int times.circle \"(int + fatone) dot 6\" ~int)$, where the meta
 syntax $\"(int + fatone) dot 6\"$ stands for the 6-tuple of $int + fatone$, which is used for optionality. The
 first argument would be the number of the system call, and the 6-tuple
 represents the arguments passed to it.
