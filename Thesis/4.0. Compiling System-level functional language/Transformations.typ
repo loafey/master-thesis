@@ -7,12 +7,6 @@ So far we have only seen #ln as a lambda calculus. In this section we
 go into the necessary transformations made to types, values, and commands, to turn
 #ln into a sublanguage which can then be mapped to assembly.
 
-// The first three phases of the #ln compiler are: linear closure conversion, stack
-// selection, and pointer closure conversion. The first step eliminates linear
-// closures, the second step ensures that each closure contains at most one stack to execute
-// on, and the third transformation, pointer closure conversion, replaces each
-// stack closure by an explicit pair of static function and environment.
-
 The first three phases of the #ln compiler are: 
 + Linear closure conversion: makes pointers to stacks explicit (@LinearClosureConversion)
 + Stack selection: ensures that every stack closure contains at most one stack to execute on (@StackSelection)
@@ -22,11 +16,6 @@ Although the transformations perform source-to-source transformations, only
 a subset of the full #ln syntax remains after pointer closure conversion.
 
 === Linear closure conversion <LinearClosureConversion>
-
-// Linear closure conversion: this is about making the stack pointers explicit.
-// (As we saw earlier, it is critical for 1st order programming to identify the
-// call stack. This phase introduces explicit call stacks.) The starting point
-// is: □(∼ 𝐴)
 
 It is critical for first-order programs to identify the call stack, i.e.
 where a procedure should return control when finishing execution. The
