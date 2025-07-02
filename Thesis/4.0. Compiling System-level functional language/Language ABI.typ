@@ -117,10 +117,21 @@ the number of physical registers needed to store them.
 // this may change in the future, hence why
 // we define the needed amount of physical registers.
 
-In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
-of unknown size, and it is used to represent a stack (see @MemoryAlignment for a more detailed explanation). In other words #sym.infinity can be seen as an unknown number.
-In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
+In the table two functions are used: $#sem($A$)^R : NN_infinity$
+for calculating the amount
+of needed physical registers, and $#sem($A$)^M : NN_infinity$
+for the amount bytes of memory needed.
+Here $NN_infinity = NN union {infinity}$, where $infinity$ is
+used to represent memory sections of an unknown size, and
+can be seen as an unknown natural number.
+The table also uses the variable `Word`,
+which represents 8 bytes. In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
 a `Word` is often considered to be 8 bytes.
+
+// In the table `Word` represents 8 bytes, and #sym.infinity is a memory section
+// of unknown size, and it is used to represent a stack (see @MemoryAlignment for a more detailed explanation). In other words #sym.infinity can be seen as an unknown number.
+// In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
+// a `Word` is often considered to be 8 bytes.
 
 // A combination such as $#`Word` + #sym.infinity$ can be seen as a stack of
 // unknown length, but know we have at least a `Word` on top of it.
@@ -159,8 +170,8 @@ a `Word` is often considered to be 8 bytes.
     },
     ..(
       align(center)[*Type*],
-      align(center)[*Registers* $#sem($A$)^R : NN$],
-      align(center)[*Memory* $#sem($A$)^M : NN$],
+      align(center)[*Registers* $#sem($A$)^R : NN_infinity$],
+      align(center)[*Memory* $#sem($A$)^M : NN_infinity$],
     ),
   ),
 )

@@ -118,7 +118,7 @@
       expression, Function call, ...
   29.       
 30. 4.4. Language ABI
-  31. Product type: "⟦𝐴⟧M 1. ∞"?? ∞ = inf is not in ℕ=Nat. And also, if you
+  *FIXED* 31. Product type: "⟦𝐴⟧M 1. ∞"?? ∞ = inf is not in ℕ=Nat. And also, if you
       mean Nat1. = Nat `union` {inf}, then (forall x. x 1. inf = inf) which
       means that any rule involving "1. inf" should be simplified. Similarly
       with "Word 1. inf" later.
