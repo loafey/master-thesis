@@ -135,10 +135,7 @@ a `Word` is often considered to be 8 bytes.
 // of needed physical registers, and $#sem($A$)^M : NN_infinity$, where
 // $NN_infinity = [0, infinity)$.
 // $[0, infinity)$ is a discrete range between the natural number
-// 0 and $infinity$,
-// and $infinity$ is
-// used to represent memory sections of an unknown size, and
-// can be seen as an unknown natural number.
+// 0 and $infinity$.
 // The table also uses the variable `Word`,
 // which represents 8 bytes. In general a `Word` depends on the architecture of the CPU, but on a 64-bit CPU
 // a `Word` is often considered to be 8 bytes.
@@ -162,7 +159,7 @@ a `Word` is often considered to be 8 bytes.
   breakable: false,
   table(
     fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
-    columns: (0.4fr, 1.01fr, 1fr),
+    columns: (0.4fr, 0.9fr, 1fr),
     stroke: 0.1pt,
     inset: (x, y) => if (calc.rem(y, 2) != 0) {
       (top: 10pt, left: 4pt, bottom: 10pt)
@@ -176,7 +173,7 @@ a `Word` is often considered to be 8 bytes.
   breakable: false,
   table(
     fill: (x, y) => if (x == 0 and calc.rem(y, 2) == 0) { rgb("#0000000b") } else { white },
-    columns: (0.4fr, 1.01fr, 1fr),
+    columns: (0.4fr, 0.9fr, 1fr),
     stroke: 0.1pt,
     inset: (x, y) => if (calc.rem(y, 2) != 0) {
       (top: 10pt, left: 4pt, bottom: 10pt)
@@ -193,19 +190,19 @@ a `Word` is often considered to be 8 bytes.
 #grid(
   // gutter: 4pt,
   title,
-  eq([Product-type], $A times.circle B: omega$, $1$, $infinity$),
+  eq([Product-type], $A times.circle B: omega$, $1$, $\ quad quad #sem($A$)^M + infinity = infinity$),
   eq(
     [Product-type],
     $A times.circle B: known$,
     $\ quad quad #reg($A$) + #reg($B$)$,
     $\ quad quad #mem($A$) + #mem($B$)$,
   ),
-  eq([Sum-type \ $$ ], $A plus.circle B: omega$, $1$, $#sym.infinity$),
+  eq([Sum-type \ $$ ], $A plus.circle B: omega$, $1$, $\ quad quad #`Word` + infinity = infinity$),
   eq(
     [Sum-type],
     $A plus.circle B: known$,
     $\ quad quad 1 + max(reg(A), reg(B))$,
-    $#`Word` \ quad quad + max(mem(A), mem(B))$,
+    $\ quad quad #`Word` + max(mem(A), mem(B))$,
   ),
   eq([Static function], $ast.basic A: known$, 1, `Word`),
   eq([Linear pointer], $square A: known$, 1, `Word`),
@@ -328,7 +325,7 @@ Take this stack that just contains a 16-bit integer with the value `42`.
 
   In @mappingMemToType we have seen more complicated memory mappings of types, specifically
   mappings involving #sym.infinity. Take $A times.circle B: omega$ for
-  instance, whose memory usage is calculated as: $#mem($A$) + #sym.infinity$.
+  instance, whose memory usage is calculated as: $#mem($A$) + #sym.infinity$, but simplified to $infinity$.
   Here $A$ is a type with kind
   $known$ and $B$ has kind $omega$, hence it is a stack. Visually this would be represented like this
   (if #mem($A$) = `Word`):

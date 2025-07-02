@@ -132,12 +132,12 @@
       Pop top of stack, Following an indirection, Stack deallocation, case
       expression, Function call, ...
   29.       
-*LOOK OVER* 30. 4.4. Language ABI
-  *LOOK OVER* 31. Product type: "⟦𝐴⟧M 1. ∞"?? ∞ = inf is not in ℕ=Nat. And also, if you
+*FIXED* 30. 4.4. Language ABI
+  *FIXED* 31. Product type: "⟦𝐴⟧M 1. ∞"?? ∞ = inf is not in ℕ=Nat. And also, if you
       mean Nat1. = Nat `union` {inf}, then (forall x. x + inf = inf) which
       means that any rule involving "+ inf" should be simplified. Similarly
       with "Word + inf" later.
-  *LOOK OVER* 32. From page 35 (later on) it looks like intend to keep track of the fact
+  *FIXED* 32. From page 35 (later on) it looks like intend to keep track of the fact
       that "n + inf" is in the interval [n,inf). If that is what you intend,
       you need to adapt your type (from Nat, or Nat1.) accordingly (to an
       interval, or an expression type in one unknown called inf, or ...).
