@@ -3,9 +3,9 @@
 
 == Transformations <Transformations>
 
-At this stage #ln is still a calculus. How do we bridge the gap between
-calculus and machine? This section goes into the necessary transformations to turn
-#ln into a language that can be transformed to an assembly language.
+So far we have only seen #ln as a lambda calculus. In this section we 
+go into the necessary transformations made to types, values, and commands, to turn
+#ln into a sublanguage which can then be mapped to assembly.
 
 // The first three phases of the #ln compiler are: linear closure conversion, stack
 // selection, and pointer closure conversion. The first step eliminates linear

@@ -65,7 +65,7 @@
 
 ## 4 Compiling Lithium
 
-18. You have added more explanations of the "compilation pipeline" which is
+18. *FIXED* - You have added more explanations of the "compilation pipeline" which is
     good. However, the remark "At this stage Lithium is still a calculus" is still
     confusing, as it soggests that the language/calculus itself will change, rather
     than the expresions being transformed. My understanding now (and what you write
