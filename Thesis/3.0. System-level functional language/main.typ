@@ -93,8 +93,8 @@ From $f$ we can call the continuation $*B$, which is
 just a static function pointer, and because it is only a static function
 pointer, it can not capture any state (free variables). The stack that $*B$ manipulates is
 exactly the stack $B$, and it is passed by $f$. In
-@Stack the stack for $A times.circle *B times.circle circle$ is shown. The
-stack for $B$ can not be shown, because we do not know its shape.
+@Stack the stack shape for the type $A times.circle *B times.circle circle$ is shown. Because the
+stack shape for $B$ is unknown, it can not be given a concrete shape. 
 
 
 #let frame(stroke) = (x, y) => (
@@ -110,7 +110,7 @@ stack for $B$ can not be shown, because we do not know its shape.
 )
 
 #figure(
-  caption: [The stack representing $A times.circle *B times.circle circle$],
+  caption: [The stack shape of $A times.circle *B times.circle circle$],
 
   table(
     stroke: black,
@@ -126,10 +126,11 @@ stack for $B$ can not be shown, because we do not know its shape.
 
 The second style, procedural, enables exactly what its name suggests: procedures.
 The type signature $f : *(A times.circle ~B)$ exactly corresponds to the
-C function signature $B space f(A space a)$. The type $~B$ corresponds to
-a stack that accepts $B$ as a return value to continue with. This stack can
-store an arbitrary state of kind $omega$. Because of the kinding rules of $*$
-and $times.circle$, only a single stack can be passed to a static function.
+C function signature $B space f(A space a)$. 
+The type $~B$ corresponds to a stack that expects a value of type $B$ to be pushed on top.
+This stack can store an arbitrary state of kind $omega$. Because of the kinding
+rules of $*$ and $times.circle$, only a single stack can be passed to a static
+function.
 
 Finally we have higher-order programming, which
 is not possible with $*$ and $~$ alone. The type $*(A times.circle ~B

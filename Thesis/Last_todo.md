@@ -34,6 +34,7 @@
       reading, and have a hard time imagining pointers, gotos, etc.
     1. Explain "capture state" somewhere. It is definitely not something a type
        can do, but possibly something a lambda term or closure can do. 
+*FIXED: Rewrote that it is the stack shape for the type* - 
     1. You have added a Fig. 11 but that is still confusing: two boxes
        containing types is not what I would call a "stack". Perhaps you mean
        that the "shape" or the "type" of the stack is shown, and that the
@@ -45,7 +46,9 @@
       make sure the prefix operators are "tightly connected" the the only
       operand: instead of "∗ (𝐴 ⊗ ∗ 𝐵 ⊗ ∼ 𝐶)" I would like to see "∗(𝐴 ⊗ ∗𝐵
       ⊗ ∼𝐶)".
-  16. "a stack that accepts 𝐵 as a return value to continue with": I'm lost
+
+*FIXED: Rewrote using stack terminology* - 
+   16. "a stack that accepts 𝐵 as a return value to continue with": I'm lost
       here. I know what "stack" means normally as a datastructure, but
       a datastructure does not "accept" anything as a "return value".
     1. Please use "stack" in a way which matches one of the traditional
