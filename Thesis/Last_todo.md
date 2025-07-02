@@ -102,14 +102,14 @@
       continuation, types, kinds).
 
   23. *FIXED* - 4.1.3: is still difficult to follow:
-    24. In the example with Gamma, it says that unpairAll is a macro, and we
+    24. *FIXED* - In the example with Gamma, it says that unpairAll is a macro, and we
         can see that it takes rho as its only argument. Now rho is lambda
         bound, thus not statically known. So the explanation of how
         unpairAll(rho) expands into a few lets is really confusing as it
         (unpairAll) can not know what rho is. I guess you mean that unpairAll
         takes _Gamma_ as its main argument, and then a variable name (here
         rho).
-    25. Also in the same example, the name "x" bound together with rho will be
+    25. *FIXED* - Also in the same example, the name "x" bound together with rho will be
         shadowed by the first let. How is this supposed to work?
 
 *26. SMALL CHANGE: If we don't allocate a stack then we have no stack to execute on, and if we don't deallocate it then we have a memory leak.*
