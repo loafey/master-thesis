@@ -51,9 +51,10 @@
     1. Please use "stack" in a way which matches one of the traditional
        meanings: either an abstract datatype (or a value of that datatype), or
        a call stack (often represented as a region in memory).
-  17. "the higher-order function: ∗ (𝐴 ⊗ ¬𝐵 ⊗ ∼ 𝐶)": I don't know _what_ higher
-      order function you mean to write, or how this string of symbols is
-      supposed to represent it.
+
+*FIXED* - 17. "the higher-order function: ∗ (𝐴 ⊗ ¬𝐵 ⊗ ∼ 𝐶)": I don't know _what_ higher
+              order function you mean to write, or how this string of symbols is
+              supposed to represent it.
     1. To clarify my question further: please make sure to clearly separate the
        use of "function" (which should be an actual function) from "function
        type" or "type for the representation of a function" or so.

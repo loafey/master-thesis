@@ -78,7 +78,7 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
 
 #indent[
   - There is no sub-kinding; if a type with kind $omega$ is expected, then a type with kind $known$ is not allowed, and vice versa.
-  - It is forbidden to construct a pair of two stacks
+  - It is forbidden to construct a pair of two stacks. 
   - The kinds in a sum type must match
   - Type variables are always stacks, which means they can not be used directly for Haskell-style polymorphism
     (see @PointerClosureConversion why type variables must have kind $omega$).
@@ -137,8 +137,8 @@ is not possible with $*$ and $~$ alone. The type $*(A times.circle ~B
 would not work either because $*B$ can not capture state.
 To enable higher-order programming we introduce the _linear closure_.
 The linear closure can capture arbitrary state and produces a type with a known size.
-Now we can write the higher-order function: $*(A times.circle not B times.circle ~C)$.
-The function is higher-order because it is passed the function $not B$ as an argument.
+Now we can write the type signature for a higher-order function: $*(A times.circle not B times.circle ~C)$.
+The function is higher-order because it is passed a function with type $not B$ as argument.
 In @Transformations we explain how closures are transformed to static functions
 and explicit stack environments.
 
