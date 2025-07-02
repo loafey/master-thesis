@@ -16,5 +16,7 @@
 8. New: detail: p21: the last cell of the table does not quite fit: I suggest you shrink the width of the first column to fix it.
 
 9. 28: OK, but note that the semantics is just a function, and a "user" could call that function with anything of the right type (any rho : Var -> List Reg). Perhaps you are saved by "Lastly, the number of registers 𝜌 maps the variable 𝑥 to must be exactly ⟦Γ(𝑥)⟧R , i.e |𝜌(𝑥)| = ⟦Γ(𝑥)⟧R ."? If so, explain that (briefly).
+
 10. 38: I really don't think you should use "a + b = z" as the notation for variable duplication in the same code that also uses "r1 + r2" to mean addition of numbers. If you don't want to use the notation "a = b = z" then please use "a & b = z" or some other operator.
-11. New: 5.2.5: The first fib has "inl () -> k(0)" (and -> k(1)), but the second fib has "inr () -> k(0)" (and -> k(1)). Mistake or some unexplained transformation?
+
+*FIXED* 11. New: 5.2.5: The first fib has "inl () -> k(0)" (and -> k(1)), but the second fib has "inr () -> k(0)" (and -> k(1)). Mistake or some unexplained transformation?
