@@ -23,7 +23,7 @@
 *FIXED* - 11. "To clarify further, the body of the lambda 𝑘((𝑦, 𝑥)) corresponds to the command 𝑐, in this case a function call. 𝑘 corresponds to the 𝑥 in 𝑥(𝑣), and (𝑦, 𝑥) is 𝑣." :=
               "In this case, the body k((y, x)) is a function call, which corresponds to a command in Lithium. The continuation k takes the reordered pair as input."
 12. 3.2 Kinds & types
-  13. "It is forbidden to construct a pair of two stacks": I don't understand
+  *FIXED: Reworded* - 13. "It is forbidden to construct a pair of two stacks": I don't understand
       what this means. I see that the rules requires the first type in the pair
       type to be of kind "circle 1", but I lack intuition for why of what that
       may entail.

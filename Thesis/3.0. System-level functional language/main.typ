@@ -78,7 +78,7 @@ The kinding rules in @KindRules are mostly self-descriptive, but some things to 
 
 #indent[
   - There is no sub-kinding; if a type with kind $omega$ is expected, then a type with kind $known$ is not allowed, and vice versa.
-  - It is forbidden to construct a pair of two stacks. 
+  - It is forbidden to construct a pair of two types that have kind $omega$. 
   - The kinds in a sum type must match
   - Type variables are always stacks, which means they can not be used directly for Haskell-style polymorphism
     (see @PointerClosureConversion why type variables must have kind $omega$).
