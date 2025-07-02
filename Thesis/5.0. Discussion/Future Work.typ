@@ -91,7 +91,7 @@ fib : *(int ⊗ ~int)
     case res of {
         inl () -> k(0);
         inr () ->
-          __eq__((n,0), \res -> case res of {
+          __eq__((n,1), \res -> case res of {
             inl () -> k(1);
             inr () ->
               fib((n-1, \r1 ->

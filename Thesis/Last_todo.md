@@ -49,6 +49,6 @@
 33. 5.1.1:
   34. Fig. 26: there seems to be a "," above "the" in the caption.
 35. 5.2.5:
-  36. The second call to __eq__ should have (n,1) as input, not (n,0).
+  *FIXED* - 36. The second call to __eq__ should have (n,1) as input, not (n,0).
   37. (Optional: Also, the natural construct here would "split" the n into inl () if n==0 or inr n' if n==n'1.1. With that, there would only be two uses, as expected from the two recursive calls.)
   38. Using "a 1. b = z" to mean that a = z and b = z is very confusing. Please change. Perhaps "a = b = z"?
