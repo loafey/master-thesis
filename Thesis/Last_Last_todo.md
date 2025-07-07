@@ -3,6 +3,7 @@
 *FIXED* 3. New: "static function poiner" := "static function pointer"
 *FIXED* 4. 18: "to turn Lithium into a sublanguage which can then be mapped to assembly" := "to map Lithium terms into a sublanguage which we then translate to assembly"
   (As discussed, you don't change the language, only the terms / expressions / etc. in the language.)
+
 *NOTE: I agree. This was something that we did with JP in a short meeting. If we had more time, we would discuss this further* 5. (20+21: I'll let this slip, but I think this indicates that the design is not finished.)
 
 *FIXED: You are correct. The box that is removed is a bug, it should still be there* 
@@ -13,6 +14,7 @@
     t2 = 𝜆(𝑓, 𝑘). let □𝑓′ = 𝑓; 𝑘(𝜆𝑦. 𝑓′(𝑦)) : *(□∼𝐴 ⊗ ∼(□∼𝐴))
   Note that k is now applied to a lambda directly, without a box. Is this still type correct?
   Has the type of k changed in the process? I have not read your typing rules in enough detail to know, but it feels fishy.
+
 7. 22b: The reader won't need a complete and detailed explanation if you include a link to the actual code somewhere. So please do that.
 
 *FIXED* 8. New: detail: p21: the last cell of the table does not quite fit: I suggest you shrink the width of the first column to fix it.
