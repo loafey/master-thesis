@@ -27,6 +27,8 @@ Additionally, we will use $r_0 : r s$ to mean the non-empty list with $r_0$ as t
 $s_0 plus.double s_1$ means the concatenation of the lists $s_0$ and $s_1$.
 Lastly, the number of registers $rho$ maps the variable $x$ to must be exactly
 $#sem[$Gamma(x)$]^("R")$, i.e $|rho(x)| = #sem[$Gamma(x)$]^"R"$.
+If one of the three aforementioned functions are called without fulfilling
+$|rho(x)| = #sem[$Gamma(x)$]^"R"$, then the output is undefined.
 
 The function $#sem[$A$]^("R")$ is a mapping from a type $A$ to the number of registers needed to store a value $v$ with type $A$.
 The definition for it can be found in
