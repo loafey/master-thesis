@@ -3,7 +3,8 @@
 *FIXED* 3. New: "static function poiner" := "static function pointer"
 *FIXED* 4. 18: "to turn Lithium into a sublanguage which can then be mapped to assembly" := "to map Lithium terms into a sublanguage which we then translate to assembly"
   (As discussed, you don't change the language, only the terms / expressions / etc. in the language.)
-5. (20+21: I'll let this slip, but I think this indicates that the design is not finished.)
+*NOTE: I agree. This was something that we did with JP in a short meeting. If we had more time, we would discuss this further* 5. (20+21: I'll let this slip, but I think this indicates that the design is not finished.)
+
 6. 22a: No, not only the let is moving; you also get rid of a box. You start from 
     t1 = 𝜆(𝑓, 𝑘). 𝑘(□𝜆𝑦. let □𝑓′ = 𝑓; 𝑓′(𝑦)) : *(□∼𝐴 ⊗ ∼(□∼𝐴))
   Note that k is applied to a box (with a lambda-expr inside).
