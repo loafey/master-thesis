@@ -85,7 +85,7 @@ free in the closure, thus making it a valid option.
 
 The resulting program would end up being:
 $
-  lambda (f,k). space "let" square f' = f; space k(lambda y. space f'(y))
+  lambda (f,k). space "let" square f' = f; space k(square lambda y. space f'(y))
   : ast.basic (square ~ A times.circle ~(square~A))
 $
 

@@ -5,6 +5,7 @@
   (As discussed, you don't change the language, only the terms / expressions / etc. in the language.)
 *NOTE: I agree. This was something that we did with JP in a short meeting. If we had more time, we would discuss this further* 5. (20+21: I'll let this slip, but I think this indicates that the design is not finished.)
 
+*FIXED: You are correct. The box that is removed is a bug, it should still be there* 
 6. 22a: No, not only the let is moving; you also get rid of a box. You start from 
     t1 = 𝜆(𝑓, 𝑘). 𝑘(□𝜆𝑦. let □𝑓′ = 𝑓; 𝑓′(𝑦)) : *(□∼𝐴 ⊗ ∼(□∼𝐴))
   Note that k is applied to a box (with a lambda-expr inside).
