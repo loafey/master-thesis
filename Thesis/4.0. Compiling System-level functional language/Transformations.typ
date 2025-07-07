@@ -118,7 +118,7 @@ in the type.
 Values and commands need to be transformed as well to ensure that they match the types.
 Stack closures $(lambda^~)$ are transformed in the following manner:
 #grid(
-  columns: (1fr, 2fr),
+  columns: (0.8fr, 2fr),
   stroke: black + 0.1pt,
   inset: 10pt,
   [Source], [Target],

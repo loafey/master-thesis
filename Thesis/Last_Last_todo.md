@@ -15,7 +15,7 @@
   Has the type of k changed in the process? I have not read your typing rules in enough detail to know, but it feels fishy.
 7. 22b: The reader won't need a complete and detailed explanation if you include a link to the actual code somewhere. So please do that.
 
-8. New: detail: p21: the last cell of the table does not quite fit: I suggest you shrink the width of the first column to fix it.
+*FIXED* 8. New: detail: p21: the last cell of the table does not quite fit: I suggest you shrink the width of the first column to fix it.
 
 *FIXED: Added an important note that this must be fulfilled* 9. 28: OK, but note that the semantics is just a function, and a "user" could call that function with anything of the right type (any rho : Var -> List Reg). Perhaps you are saved by "Lastly, the number of registers 𝜌 maps the variable 𝑥 to must be exactly ⟦Γ(𝑥)⟧R , i.e |𝜌(𝑥)| = ⟦Γ(𝑥)⟧R ."? If so, explain that (briefly).
 
